@@ -1,2 +1,2 @@
 # Project_IT_Resource
-IT Resource on Ruby On Rails
+This repository contains all the documents and development code related to IT Resource Project based on Ruby On Rails.
