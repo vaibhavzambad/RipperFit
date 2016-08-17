@@ -1,0 +1,1 @@
+Purpose : This Doc describes the Use Case Diagram and detailed description of the functionalities of users.
