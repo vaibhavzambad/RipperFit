@@ -11,6 +11,8 @@ Basic Requirements :
 6. User can request for IT Resource .
 7. There will be priority of each request assigned by the manager.
 8. Helpdesk will assign the resource and the status for the request.
+9. Manager should be able to assign the employee access features.
+10. Admin should be able to assign the manager access features.
 
 Nice To Have :
 	
