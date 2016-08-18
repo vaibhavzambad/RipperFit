@@ -13,6 +13,8 @@ Basic Requirements :
 8. Helpdesk will assign the resource and the status for the request.
 9. Manager should be able to assign the employee access features.
 10. Admin should be able to assign the manager access features.
+11.Employee can view their current status of all their resources.
+12.Employee should be able to delete resource request during the time when it is not fulfilled but requested.
 
 Nice To Have :
 	
