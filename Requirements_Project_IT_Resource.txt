@@ -6,6 +6,11 @@ Basic Requirements :
 1. Custom Login / Signup Page
 2. Signup with Google Plus , Facebook etc
 3. Merge custom accounts and accounts made through google plus , facebook etc
+4. Users are authorized to access application features based on their roles.
+5. Admin will verify the managers and managers will verify the employee that explains the hierarchy.
+6. User can request for IT Resource .
+7. There will be priority of each request assigned by the manager.
+8. Helpdesk will assign the resource and the status for the request.
 
 Nice To Have :
 	
