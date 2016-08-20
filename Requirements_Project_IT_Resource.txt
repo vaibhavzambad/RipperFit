@@ -1,23 +1,28 @@
 Purpose : This Doc Specifies the basic requirements for the IT Resource Project. Please add the 
-	       Requirements for the project. Seperatly add Basic and Nice To Have Requirements 
+	  requirements for the project. Seperatly add Basic and Nice To Have Requirements.
 
 Basic Requirements :
 
-1. Custom Login / Signup Page
-2. Signup with Google Plus , Facebook etc
-3. Merge custom accounts and accounts made through google plus , facebook etc
-4. Users are authorized to access application features based on their roles.
-5. Admin will verify the managers and managers will verify the employee that explains the hierarchy.
-6. User can request for IT Resource .
-7. There will be priority of each request assigned by the manager.
-8. Helpdesk will assign the resource and the status for the request.
-9. Manager should be able to assign the employee access features.
-10. Admin should be able to assign the manager access features.
-11.Employee can view their current status of all their resources.
-12.Employee should be able to delete resource request during the time when it is not fulfilled but requested.
+1. Custom Login / Signup Page.
+2. Signup with Google Plus , Facebook etc.
+3. Merge custom accounts and accounts made through google plus , facebook etc.
+4. Authentication based on Username and Password.
+5. Users are authorized to access application features based on their roles.
+6. Admin will verify the managers and managers will verify the employee that explains the hierarchy.
+7. User can request for IT Resource.
+8. There will be priority of each request assigned by the manager.
+9. Helpdesk will assign the resource and the status for the request.
+10. Manager should be able to assign the employee access features.
+11. Admin should be able to assign the manager access features.
+12. Employee can view their current status of all their resources.
+13. Employee should be able to delete resource request during the time when it is not fulfilled but requested.
+14. Manager should be able to request resources directly to helpdesk. 
 
 Nice To Have :
 	
-1. Decide efficiency based on the time required to complete the request.
-2. After completion of the request , the employee can add the satisfaction level.
-3. Option to raise a missing ticket for a resource not allotted.
+1. Token based authentication.
+2. Decide efficiency based on the time required to complete the request.
+3. After completion of the request , the employee can add the satisfaction level.
+4. Option to raise a missing ticket for a resource not allotted.
+5. Comments option  - employee or manager can add comments while requesting a resource and after the resource is provided.
+6. Chat options - employee can chat with manager , manager can chat with helpdesk , admin etc.
