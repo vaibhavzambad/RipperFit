@@ -26,3 +26,4 @@ Nice To Have :
 4. Option to raise a missing ticket for a resource not allotted.
 5. Comments option  - employee or manager can add comments while requesting a resource and after the resource is provided.
 6. Chat options - employee can chat with manager , manager can chat with helpdesk , admin etc.
+7. User can change its designation that is from employee to manager.
