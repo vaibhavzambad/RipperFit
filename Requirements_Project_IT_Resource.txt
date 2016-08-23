@@ -17,6 +17,7 @@ Basic Requirements :
 12. Employee can view their current status of all their resources.
 13. Employee should be able to delete resource request during the time when it is not fulfilled but requested.
 14. Manager should be able to request resources directly to helpdesk. 
+15. Manager will assign priority of request of his/her employee as 1,2,3....Then helpdesk will able to view requests according to ascending order of priority.
 
 Nice To Have :
 	
