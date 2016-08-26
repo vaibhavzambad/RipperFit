@@ -1,5 +1,4 @@
-Purpose : This Doc Specifies the basic requirements for the IT Resource Project. Please add the 
-	  requirements for the project. Seperatly add Basic and Nice To Have Requirements.
+Purpose : This Doc Specifies the basic requirements for the IT Resource Project.Seperatly add Basic and Nice To Have Requirements.
 
 Basic Requirements :
 
@@ -28,3 +27,4 @@ Nice To Have :
 5. Comments option  - employee or manager can add comments while requesting a resource and after the resource is provided.
 6. Chat options - employee can chat with manager , manager can chat with helpdesk , admin etc.
 7. User can change its designation that is from employee to manager.
+8. A graph can be made for helpdesk for the resouce requests with respect to an employee, a manager or a team to get a precise view. 
