@@ -52,7 +52,7 @@ public class Employee {
 	
 	@Column(name="profile_picture")
 	private byte[] profilePicture;
-
+	
 	/**
 	 * @return the employeeId
 	 */

@@ -1,5 +1,8 @@
 package com.ripperfit.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -23,9 +26,13 @@ public class Designation {
 	@Column(name="designation_name")
 	private String designationName;
 	
-	@OneToMany(cascade={CascadeType.ALL},fetch=FetchType.LAZY)
+	@ManyToMany(cascade={CascadeType.ALL},fetch=FetchType.LAZY)
 	@JoinColumn(name="parent_designation_id")
-	private Designation designation;
+	private List<Designation> designation;
+	
+	@ManyToMany(mappedBy="designation")
+	private List<Designation> subordinates = new ArrayList<Designation>();
+	
 
 	/**
 	 * @return the designationId
@@ -56,17 +63,31 @@ public class Designation {
 	}
 
 	/**
-	 * @return the parentDesignationId
+	 * @return the designation
 	 */
-	public Designation getParentDesignationId() {
+	public List<Designation> getDesignation() {
 		return designation;
 	}
 
 	/**
-	 * @param parentDesignationId the parentDesignationId to set
+	 * @param designation the designation to set
 	 */
-	public void setParentDesignationId(Designation designation) {
+	public void setDesignation(List<Designation> designation) {
 		this.designation = designation;
-	} 
+	}
+
+	/**
+	 * @return the subordinates
+	 */
+	public List<Designation> getSubordinates() {
+		return subordinates;
+	}
+
+	/**
+	 * @param subordinates the subordinates to set
+	 */
+	public void setSubordinates(List<Designation> subordinates) {
+		this.subordinates = subordinates;
+	}
 	
 }

@@ -1,5 +1,7 @@
 package com.ripperfit.model;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
@@ -18,15 +20,15 @@ public class ResourceRequest {
 	
 	@ManyToMany(cascade={CascadeType.ALL},fetch=FetchType.LAZY)
 	@JoinColumn(name="resource_id")
-	private Resource resource;
+	private List<Resource> resource;
 	
 	@ManyToMany(cascade={CascadeType.ALL},fetch=FetchType.LAZY)
 	@JoinColumn(name="requestor_id")
-	private Employee employee;
+	private List<Employee> employee;
 	
 	@ManyToMany(cascade={CascadeType.ALL},fetch=FetchType.LAZY)
 	@JoinColumn(name="current_approval_designation_id")
-	private Designation designation;
+	private List<Designation> designation;
 	
 	@Column(name="priority")
 	private String priority;
@@ -51,45 +53,46 @@ public class ResourceRequest {
 		this.request_id = request_id;
 	}
 
+
 	/**
 	 * @return the resource
 	 */
-	public Resource getResource() {
+	public List<Resource> getResource() {
 		return resource;
 	}
 
 	/**
 	 * @param resource the resource to set
 	 */
-	public void setResource(Resource resource) {
+	public void setResource(List<Resource> resource) {
 		this.resource = resource;
 	}
 
 	/**
 	 * @return the employee
 	 */
-	public Employee getEmployee() {
+	public List<Employee> getEmployee() {
 		return employee;
 	}
 
 	/**
 	 * @param employee the employee to set
 	 */
-	public void setEmployee(Employee employee) {
+	public void setEmployee(List<Employee> employee) {
 		this.employee = employee;
 	}
 
 	/**
 	 * @return the designation
 	 */
-	public Designation getDesignation() {
+	public List<Designation> getDesignation() {
 		return designation;
 	}
 
 	/**
 	 * @param designation the designation to set
 	 */
-	public void setDesignation(Designation designation) {
+	public void setDesignation(List<Designation> designation) {
 		this.designation = designation;
 	}
 

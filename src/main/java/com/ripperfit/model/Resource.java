@@ -1,5 +1,7 @@
 package com.ripperfit.model;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +27,7 @@ public class Resource {
 	
 	@ManyToMany(cascade={CascadeType.ALL},fetch=FetchType.LAZY)
 	@JoinColumn(name="final_approval_designation_id")
-	private Designation designation;
+	private List<Designation> designation;
 	
 	@Column(name="quantity")
 	private int quantity;
@@ -58,17 +60,18 @@ public class Resource {
 		this.resourceName = resourceName;
 	}
 
+
 	/**
 	 * @return the designation
 	 */
-	public Designation getDesignation() {
+	public List<Designation> getDesignation() {
 		return designation;
 	}
 
 	/**
 	 * @param designation the designation to set
 	 */
-	public void setDesignation(Designation designation) {
+	public void setDesignation(List<Designation> designation) {
 		this.designation = designation;
 	}
 
