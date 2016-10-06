@@ -67,13 +67,7 @@
 	<beans:bean id="ripperFitService" class="com.ripperfit.service.RipperFitServiceImpl">
 		<beans:property name="ripperFitDao" ref="ripperFitDao"></beans:property>
 	</beans:bean>
-        <beans:bean id="userDao" class="com.ripperfit.daoLayer.UserDao">
-		<beans:property name="sessionFactory"
-			ref="hibernate4AnnotatedSessionFactory" />
-	</beans:bean>
-	<beans:bean id="userService" class="com.ripperfit.service.UserService">
-		<beans:property name="userDao" ref="userDao"></beans:property>
-	</beans:bean>
+
 	<context:component-scan base-package="com.ripperfit.controller" />
 	<context:component-scan base-package="com.ripperfit.daoLayer" />
 	<context:component-scan base-package="com.ripperfit.model" />

@@ -6,10 +6,10 @@ public class SecurityContext {
 
 	public static Employee1 getCurrentEmployee() {
 		Employee1 employee = currentEmployee.get();
-		/*if (employee == null) {
+		if (employee == null) {
 			
 			throw new IllegalStateException("No user is currently signed in");
-		}*/
+		}
 		return employee;
 	}
 
