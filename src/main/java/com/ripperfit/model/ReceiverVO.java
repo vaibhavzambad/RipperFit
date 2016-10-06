@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * class to set and get the email addresses of the recipients
  */
 @Component
-public class ReceiverVO {
+public class ReceiverVO  {
 
 	private List<String> receiver = new ArrayList<String>();
 

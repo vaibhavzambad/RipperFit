@@ -24,12 +24,25 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
+	
+	<!-- Configure to plugin JSON as request and response in method handler -->
+	<beans:bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<beans:property name="messageConverters">
+			<beans:list>
+				<beans:ref bean="jsonMessageConverter"/>
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+	
+	<!-- Configure bean to convert JSON to POJO and vice versa -->
+	<beans:bean id="jsonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+	</beans:bean>	
 
 	<beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<beans:property name="url"
-			value="jdbc:mysql://localhost:3306/resource_tracker" />
+			value="jdbc:mysql://localhost:3306/ripper_fit" />
 		<beans:property name="username" value="root" />
 		<beans:property name="password" value="" />
 	</beans:bean>
@@ -56,22 +69,31 @@
 		</beans:property>
 	</beans:bean>
 	
-	<!-- Beans for Google Api  -->
-	
-
-	<!-- Change the beans accordingly .. Define the beans -->
-	<beans:bean id="ripperFitDao" class="com.ripperfit.daoLayer.RipperFitDaoImpl">
+	<!--  Dao Beans -->
+	<beans:bean id="userDao" class="com.ripperfit.daoLayer.UserDao">
 		<beans:property name="sessionFactory"
 			ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
-	<beans:bean id="ripperFitService" class="com.ripperfit.service.RipperFitServiceImpl">
-		<beans:property name="ripperFitDao" ref="ripperFitDao"></beans:property>
+	
+	<beans:bean id="resourceDao" class="com.ripperfit.daoLayer.ResourceDao">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	
+	<!-- Service Beans -->
+	<beans:bean id="userService" class="com.ripperfit.service.UserService">
+		<beans:property name="userDao" ref="userDao"></beans:property>
+	</beans:bean>
+	
+	<beans:bean id="resourceRequestService" class="com.ripperfit.service.ResourceRequestService">
+		<beans:property name="resourceDao" ref="resourceDao"></beans:property>
 	</beans:bean>
 
 	<context:component-scan base-package="com.ripperfit.controller" />
 	<context:component-scan base-package="com.ripperfit.daoLayer" />
 	<context:component-scan base-package="com.ripperfit.model" />
 	<context:component-scan base-package="com.ripperfit.service" />
+	<context:component-scan base-package="com.ripperfit.util"/>
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
 

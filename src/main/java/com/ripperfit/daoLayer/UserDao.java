@@ -30,31 +30,32 @@ public class UserDao {
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
-	
+
 	/**
 	 * method to register employee
 	 * 
 	 */
 	@Transactional
 	public Boolean registerUser(Employee employee) {
-		
+
 		Session session = this.sessionFactory.getCurrentSession();
 		int i=0;
+		boolean result=false;
 		try
 		{
 			System.out.println("start");
 			System.out.println("dfdf"+employee.getEmployeeId());
-		 i=(Integer)session.save(employee);
+			i=(Integer)session.save(employee);
+			if(i>0){
+				result = true;
+			}
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
-		if(i>0)
-			return true;
-		else
-			return false;
-		
+		return result;
+
 	}
 	/**
 	 * method to get Employee By EmployeeId 
@@ -66,7 +67,7 @@ public class UserDao {
 		Employee emp=null;
 		try
 		{
-		 emp=(Employee) session.load(Employee.class,id);
+			emp=(Employee) session.load(Employee.class,id);
 		}
 		catch(Exception e)
 		{
@@ -80,12 +81,12 @@ public class UserDao {
 	 */
 	@Transactional
 	public Employee getUserByEmail(String email) {
-		
+
 		Session session=this.sessionFactory.getCurrentSession();
 		Employee emp=null;
 		try
 		{
-	emp=(Employee) session.createCriteria( Employee.class).add( Restrictions.eq("email",email) ).uniqueResult();
+			emp=(Employee) session.createCriteria( Employee.class).add( Restrictions.eq("email",email) ).uniqueResult();
 		}
 		catch(Exception e)
 		{
@@ -111,38 +112,35 @@ public class UserDao {
 		Employee emp=null;
 		try
 		{
-		emp=(Employee) session.createCriteria( Employee.class).add( Restrictions.eq("email",email) ).add( Restrictions.eq("password",password) ).uniqueResult();
-		
+			emp=(Employee) session.createCriteria( Employee.class).add( Restrictions.eq("email",email) ).add( Restrictions.eq("password",password) ).uniqueResult();
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
-		
+
 		return emp;
 	}
 	/**
 	 * method to check that employee exists or not
 	 */
 	public Boolean ifUserExists(String email) {
-		
+
 		Session session=this.sessionFactory.getCurrentSession();
-		Employee emp=null;
+		Employee employee=null;
+		boolean result=false;
 		try
 		{
-		emp=(Employee) session.createCriteria( Employee.class).add( Restrictions.eq("email",email) ).uniqueResult();
-		
+			employee=(Employee) session.createCriteria( Employee.class).add( Restrictions.eq("email",email) ).uniqueResult();
+			if(employee != null){
+				result = true;
+			}
+			
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
-		
-		if(emp==null)
-			return false;
-		else
-			return true;
+		return result;
 	}
-
-	
 }

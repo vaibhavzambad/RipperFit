@@ -11,7 +11,7 @@ import com.ripperfit.model.Employee;
 @Transactional
 public class UserService {
 
-	
+
 	@Autowired
 	private UserDao userDao;
 	/**
@@ -33,22 +33,16 @@ public class UserService {
 	 * @return boolean status
 	 */
 	@Transactional
-	public Boolean registerUser(Employee employee)
+	public int registerUser(Employee employee)
 	{
-		System.out.println("email is"+employee.getEmail());
-		Boolean flag=ifUserExists(employee.getEmail());
-		if(flag==false)
-		{
-			System.out.println("dao is");
-		 flag=this.userDao.registerUser(employee);
-		return flag;
-		}
-		else
-		{
-			return false;
+		int result = 0;
+		if( this.ifUserExists(employee.getEmail()) ){
+			result = 1;
+		} else if(this.userDao.registerUser(employee)) {
+			result = 2;
 		}
 		
-		
+		return result;
 	}
 	/**
 	 * method to exists that employee exists or not
@@ -68,7 +62,7 @@ public class UserService {
 	{
 		Employee emp=this.userDao.getUserById(id);
 		return emp;
-		
+
 	}
 	/**
 	 * method to get employee by email
@@ -79,24 +73,24 @@ public class UserService {
 	{
 		Employee emp=this.userDao.getUserByEmail(email);
 		return emp;
-		
+
 	}
 	/**
 	 * method to update employee
-	
+
 	 */
 	@Transactional
 	public void updateUser(Employee employee)
 	{
 		this.userDao.updateUser(employee);
 	}
-	
+
 	@Transactional
 	public Employee login(String email,String password)
 	{
 		Employee emp=this.userDao.login(email,password);
 		return emp;
-		
+
 	}
-	
+
 }

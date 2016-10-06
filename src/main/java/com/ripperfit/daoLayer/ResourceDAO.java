@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.ripperfit.model.ResourceRequest;
 
 @Repository
-public class ResourceDAO {
+public class ResourceDao {
 
 	private SessionFactory sessionFactory;
 
@@ -39,20 +39,21 @@ public class ResourceDAO {
 	public void addRequestDao(ResourceRequest resourceRequest) {
 		
 		Session session = this.sessionFactory.getCurrentSession();
-		session.persist(resourceRequest);
+		session.save(resourceRequest);
 	}
 	
 	/**
 	 * method to delete resource request
 	 * @param resourceRequest
 	 */
-	public void deleteRequestDao(int request_id) {
+	public int deleteRequestDao(int request_id) {
 		
 		Session session = this.sessionFactory.getCurrentSession();
 		String hql = "DELETE FROM ResourceRequest WHERE request_id = :request_id";
 		Query query = session.createQuery(hql);
 		query.setParameter("request_id", request_id);
-		query.executeUpdate();
+		int result = query.executeUpdate();
+		return result;
 	}
 	
 	/**

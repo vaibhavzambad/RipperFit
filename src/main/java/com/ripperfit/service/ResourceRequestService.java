@@ -6,19 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ripperfit.daoLayer.ResourceDAO;
+import com.ripperfit.daoLayer.ResourceDao;
 import com.ripperfit.model.ResourceRequest;
 
 @Service
 public class ResourceRequestService {
 
-	private ResourceDAO resourceDao;
+	private ResourceDao resourceDao;
 	
 	/**
 	 * method to get the ResourceDAO object
 	 * @return ResourceDAO object
 	 */
-	public ResourceDAO getResourceDao() {
+	public ResourceDao getResourceDao() {
 		return resourceDao;
 	}
 
@@ -27,7 +27,7 @@ public class ResourceRequestService {
 	 * @param resourceDao object
 	 */
 	@Autowired(required=true)
-	public void setResourceDao(ResourceDAO resourceDao) {
+	public void setResourceDao(ResourceDao resourceDao) {
 		this.resourceDao = resourceDao;
 	}
 
@@ -45,8 +45,9 @@ public class ResourceRequestService {
 	 * @param request : Resource Request object
 	 */
 	@Transactional
-	public void deleteResourceRequest(int request_id) {
-		this.resourceDao.deleteRequestDao(request_id);
+	public int deleteResourceRequest(int request_id) {
+		int result = this.resourceDao.deleteRequestDao(request_id);
+		return result;
 	}
 	
 	/**

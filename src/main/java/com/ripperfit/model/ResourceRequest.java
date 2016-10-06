@@ -1,34 +1,42 @@
 package com.ripperfit.model;
 
-import java.util.List;
+import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-public class ResourceRequest {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@Entity
+@Table(name="resource_request")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class ResourceRequest implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name="request_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int request_id;
 	
-	@ManyToMany(cascade={CascadeType.ALL},fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="resource_id")
-	private List<Resource> resource;
+	private Resource resource;
 	
-	@ManyToMany(cascade={CascadeType.ALL},fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="requestor_id")
-	private List<Employee> employee;
+	private Employee employee;
 	
-	@ManyToMany(cascade={CascadeType.ALL},fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="current_approval_designation_id")
-	private List<Designation> designation;
+	private Designation designation;
 	
 	@Column(name="priority")
 	private String priority;
@@ -57,42 +65,42 @@ public class ResourceRequest {
 	/**
 	 * @return the resource
 	 */
-	public List<Resource> getResource() {
+	public Resource getResource() {
 		return resource;
 	}
 
 	/**
 	 * @param resource the resource to set
 	 */
-	public void setResource(List<Resource> resource) {
+	public void setResource(Resource resource) {
 		this.resource = resource;
 	}
 
 	/**
 	 * @return the employee
 	 */
-	public List<Employee> getEmployee() {
+	public Employee getEmployee() {
 		return employee;
 	}
 
 	/**
 	 * @param employee the employee to set
 	 */
-	public void setEmployee(List<Employee> employee) {
+	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
 
 	/**
 	 * @return the designation
 	 */
-	public List<Designation> getDesignation() {
+	public Designation getDesignation() {
 		return designation;
 	}
 
 	/**
 	 * @param designation the designation to set
 	 */
-	public void setDesignation(List<Designation> designation) {
+	public void setDesignation(Designation designation) {
 		this.designation = designation;
 	}
 

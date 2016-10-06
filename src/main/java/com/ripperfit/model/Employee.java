@@ -1,8 +1,8 @@
 package com.ripperfit.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,10 +13,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name="employee")
-public class Employee {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Employee implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name="employee_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -46,7 +51,7 @@ public class Employee {
 	@Column(name="address")
 	private String address;
 	
-	@ManyToOne(cascade={CascadeType.ALL},optional=false,fetch=FetchType.LAZY)
+	@ManyToOne(optional=false,fetch=FetchType.LAZY)
 	@JoinColumn(name="designation_id")
 	private Designation designation;
 	

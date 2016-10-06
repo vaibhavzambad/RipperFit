@@ -1,8 +1,7 @@
 package com.ripperfit.model;
 
-import java.util.List;
+import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,13 +9,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="resource")
-public class Resource {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Resource implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name="resource_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -25,9 +29,9 @@ public class Resource {
 	@Column(name="resource_name",unique=true)
 	private String resourceName;
 	
-	@ManyToMany(cascade={CascadeType.ALL},fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="final_approval_designation_id")
-	private List<Designation> designation;
+	private Designation designation;
 	
 	@Column(name="quantity")
 	private int quantity;
@@ -64,14 +68,14 @@ public class Resource {
 	/**
 	 * @return the designation
 	 */
-	public List<Designation> getDesignation() {
+	public Designation getDesignation() {
 		return designation;
 	}
 
 	/**
 	 * @param designation the designation to set
 	 */
-	public void setDesignation(List<Designation> designation) {
+	public void setDesignation(Designation designation) {
 		this.designation = designation;
 	}
 

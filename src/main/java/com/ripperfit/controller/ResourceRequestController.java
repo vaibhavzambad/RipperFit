@@ -2,8 +2,10 @@ package com.ripperfit.controller;
 
 import java.util.List;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.core.MediaType;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.ripperfit.model.ResourceRequest;
 import com.ripperfit.service.ResourceRequestService;
@@ -48,13 +49,12 @@ public class ResourceRequestController {
 	 * @param ucBuilder : UriComponentsBuilder object
 	 * @return : ResponseEntity blank object
 	 */
-	@RequestMapping(value = "/addRequest/{employee_id}", method = RequestMethod.POST)
-	public ResponseEntity<Void> addResourceRequest(@RequestBody ResourceRequest request, UriComponentsBuilder ucBuilder) {
+	@Consumes(MediaType.APPLICATION_JSON)
+	@RequestMapping(value = "/addRequest", method = RequestMethod.POST)
+	public ResponseEntity<Void> addResourceRequest(@RequestBody ResourceRequest request) {
 		
-        resourceRequestService.addResourceRequest(request);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/employee/{id}").buildAndExpand(request.getRequest_id()).toUri());
-        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+		resourceRequestService.addResourceRequest(request);
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
 	/**
@@ -65,8 +65,13 @@ public class ResourceRequestController {
 	@RequestMapping(value = "/deleteRequest/{request_id}", method = RequestMethod.DELETE)
 	public ResponseEntity<ResourceRequest> deleteResourceRequest(@PathVariable("request_id") int request_id) {
 		
-		this.resourceRequestService.deleteResourceRequest(request_id);
-		 return new ResponseEntity<ResourceRequest>(HttpStatus.NO_CONTENT);
+		int result = this.resourceRequestService.deleteResourceRequest(request_id);
+		if(result == 0) {
+			
+			return new ResponseEntity<ResourceRequest>(HttpStatus.NO_CONTENT);
+		} else {
+			return new ResponseEntity<ResourceRequest>(HttpStatus.OK);
+		}
 	}
 	
 	/**
