@@ -12,4 +12,22 @@ public class HomeController {
 	public String home() {
 		return "index";
 	}
+	@RequestMapping(value="signUp", method=GET)
+	public String signUp() {
+		return "signUpModal";
+	}
+	@RequestMapping(value="login", method=GET)
+	public String login() {
+		return "signIn";
+	}
+	
+	@RequestMapping(value="welcome", method=GET)
+	public String welcome() {
+		return "Welcome";
+	}
+	
+	@RequestMapping(value="success", method=GET)
+	public String success() {
+		return "success";
+	}
 }

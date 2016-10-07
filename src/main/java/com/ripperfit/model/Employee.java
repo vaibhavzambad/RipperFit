@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -40,6 +41,7 @@ public class Employee implements Serializable {
 	private String lastName;
 	
 	@Column(name="dob")
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date dateOfBirth;
 	
 	@Column(name="gender")
@@ -51,12 +53,12 @@ public class Employee implements Serializable {
 	@Column(name="address")
 	private String address;
 	
-	@ManyToOne(optional=false,fetch=FetchType.LAZY)
+	@ManyToOne(optional=true,fetch=FetchType.LAZY)
 	@JoinColumn(name="designation_id")
 	private Designation designation;
 	
 	@Column(name="profile_picture")
-	private byte[] profilePicture;
+	private String profilePicture;
 	
 	/**
 	 * @return the employeeId
@@ -201,14 +203,14 @@ public class Employee implements Serializable {
 	/**
 	 * @return the profilePicture
 	 */
-	public byte[] getProfilePicture() {
+	public String getProfilePicture() {
 		return profilePicture;
 	}
 
 	/**
 	 * @param profilePicture the profilePicture to set
 	 */
-	public void setProfilePicture(byte[] profilePicture) {
+	public void setProfilePicture(String profilePicture) {
 		this.profilePicture = profilePicture;
 	}
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ripperfit.model.Employee;
+import com.ripperfit.model.Login;
 import com.ripperfit.service.UserService;
 
 /**
@@ -94,11 +95,10 @@ public class UserController {
 	 * 
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ResponseEntity<Void> login(@RequestBody String credentials) {
-		String[] credentialArray = credentials.split(",");
-		String email = credentialArray[0].trim();
-		String password = credentialArray[1].trim();
-		Employee employee = this.userService.login(email, password);
+	public ResponseEntity<Void> login(@RequestBody Login login) {
+		System.out.println("email: "+login.getEmail());
+		System.out.println("password: "+login.getPassword());
+		Employee employee = this.userService.login(login.getEmail(), login.getPassword());
 		if (employee != null) {
 			return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
 		} else {
@@ -113,6 +113,7 @@ public class UserController {
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@RequestBody Employee employee) {
 		
+		System.out.println("dfd"+employee.getAddress());
 		int result = this.userService.registerUser(employee);
 		if(result == 1){
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
@@ -121,7 +122,7 @@ public class UserController {
 		}else{
 			return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
-
+		
 	}
 	/**
 	 * method to Update Employee
