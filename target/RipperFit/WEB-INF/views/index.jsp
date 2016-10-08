@@ -53,8 +53,8 @@
 				</a>
 			</div>
 			<div class="navbar-form navbar-right" role="search">
-				<button type="submit" class="btn btn-primary">LogIn</button>
-				<button type="submit" class="btn btn-primary">SignUp</button>
+				<a href="login">Login</a>
+				<a href="signUp">SignUp</a>
 			</div>
 		</div>
 	</nav>

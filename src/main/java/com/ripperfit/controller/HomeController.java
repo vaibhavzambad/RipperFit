@@ -20,7 +20,6 @@ public class HomeController {
 	}
 	@RequestMapping(value="login", method=GET)
 	public String login() {
-		
 		return "signIn";
 	}
 	
