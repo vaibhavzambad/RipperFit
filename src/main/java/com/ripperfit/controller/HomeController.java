@@ -20,6 +20,7 @@ public class HomeController {
 	}
 	@RequestMapping(value="login", method=GET)
 	public String login() {
+		
 		return "signIn";
 	}
 	
@@ -36,5 +37,11 @@ public class HomeController {
 	@RequestMapping(value="success", method=GET)
 	public String success() {
 		return "success";
+	}
+	
+	@RequestMapping(value="mailController", method=GET)
+	public String mailController() {
+		
+		return "mailMessage";
 	}
 }

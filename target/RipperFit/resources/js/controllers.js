@@ -21,6 +21,7 @@ signUp.controller('signUpCtrl', function($scope, $http,$window){
 
 	$scope.getFormDetails=function(user) {
 
+		$scope.email="";
 		$scope.userDetails=angular.copy(user);
 		$scope.userDetails = {
 			"employeeId": "",
@@ -36,7 +37,7 @@ signUp.controller('signUpCtrl', function($scope, $http,$window){
 			"profilePicture" :null
 		};
 
-		$http({
+/*		$http({
 			method: 'POST',
 			url: "/RipperFit/employee/addEmployee",
 			data: $scope.userDetails,
@@ -44,11 +45,24 @@ signUp.controller('signUpCtrl', function($scope, $http,$window){
 				'Content-Type': 'application/json'
 			}
 		}).then( function (){
-			$window.location.href = '/RipperFit/success';
-		}, function (){ 
+*/		
+			$scope.email = $scope.userDetails.email;
+			$http({
+				method: 'POST',
+				url: "/RipperFit/mail/registrationMail",
+				data: $scope.email,
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).then( function (){
+				$window.location.href = '/RipperFit/mailController';
+			}, function (){ 
+				alert("Registration failed!!");
+			});
+/*		}, function (){ 
 			alert("Registration failed!!");
 		});
-	}
+*/	}
 	
 	$scope.login = function(user){
 
