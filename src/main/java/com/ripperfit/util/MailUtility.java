@@ -1,93 +1,53 @@
 package com.ripperfit.util;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-
-import javax.mail.Authenticator;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import com.ripperfit.model.ReceiverVO;
-import com.ripperfit.model.SenderVO;
+import org.springframework.web.bind.annotation.RestController;
 	  
 /**
  * class to send email to the users
  */
+@RestController
+@RequestMapping(value = "/mail")
 public class MailUtility {
 	
-	/**
-	 * method to take sender and recipients email addresses to map them in Internet addresses and call sendMail method 
-	 * @param sender : SenderVO object
-	 * @param receivers : Variable number of ReceiverVO objects
-	 * @throws MessagingException 
-	 */
-	public static String mail(String subject, String body, SenderVO sender, ReceiverVO... receivers) throws MessagingException {
-		
-		List<ReceiverVO> receiverList = new ArrayList<ReceiverVO>();
-		for(int index = 0 ; index < 3 ; index++) {
-			receiverList.add(new ReceiverVO());
-		}
-		
-		int index = 0;
-		for(ReceiverVO reciever : receivers) {
-			if(index < 3) {
-				receiverList.set(index, reciever);
-				index++;
-			}
-		}
-		
-		//Getting the recipients list
-		List<String> toList = receiverList.get(0).getReceiver();
-		List<String> bccList = receiverList.get(1).getReceiver();
-		List<String> ccList = receiverList.get(2).getReceiver();
-
-		//check if there is atleast one recipient in TO block
-		if(toList.size() == 0) {
-			
-			return "Please specify atleast one receiver in TO block.";
-		}
-		
-		//converting in email addresses
-		InternetAddress[] toAddress = createInternetAddress(toList);
-		InternetAddress[] bccAddress = createInternetAddress(bccList);
-		InternetAddress[] ccAddress = createInternetAddress(ccList);
-		
-		return sendMail(subject, body, sender, toAddress, bccAddress, ccAddress);
-	}
+    private JavaMailSender mailSender;
 	
+    /**
+     * 
+     * @return
+     */
+	public JavaMailSender getMailSender() {
+		return mailSender;
+	}
+
 	/**
-	 * method to convert email addresses from String addresses 
-	 * @param address : List of email addresses
-	 * @throws MessagingException
-	 * @return : List of email addresses
+	 * 
+	 * @param mailSender
 	 */
-	public static InternetAddress[] createInternetAddress(List<String> address) throws MessagingException {
+	@Autowired(required=true)
+	public void setMailSender(JavaMailSender mailSender) {
+		this.mailSender = mailSender;
+	}
+
+	/**
+	 * 
+	 * @param email
+	 * @return
+	 */
+	@RequestMapping(value = "registrationMail")
+	public ResponseEntity<Void> registrationMail(@RequestBody String email) {
 		
-		int counter = 0;
-		InternetAddress[] internetAddress = null;
-		
-		//converting the String addresses into Internet addresses if there is atleast one recipient
-		if(address.size() > 0) {
-			
-			//giving memory to InternetAddress object
-			internetAddress = new InternetAddress[address.size()];
-			//creating Internet Addresses
-			for (String recipient : address) {
-				
-				internetAddress[counter] = new InternetAddress(recipient.trim());
-				counter++;
-			}
-		}
-		return internetAddress;
+		System.out.println("email: "+email);
+		String subject = "Register your email account to RipperFit";
+		String body = "Hello "+email+", You are successfully registered";
+		sendMail(subject, body, email);
+		return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
 	}
 	
 	/**
@@ -98,60 +58,14 @@ public class MailUtility {
 	 * @param bcc : Internet address of recipients who will be in BCC block
 	 * @return : String message
 	 */
-	@RequestMapping(value = "/addRequest", method = RequestMethod.PUT)
-	public static String sendMail(String subject, String body, SenderVO from, InternetAddress[] toAddress, InternetAddress[] bccAddress, InternetAddress[] ccAddress) {
+	public void sendMail(String subject, String body, String receiver) {
 		
-		//sender's email address
-		final String senderAddress = from.getSender();
-		//sender's email password
-		final String senderPassword = from.getPassword();
-		
-		//setting the mail properties
-		Properties properties = System.getProperties();
-		properties.setProperty("mail.smtp.host", "smtp.gmail.com");
-		properties.put("mail.debug", "true");
-		properties.put("mail.smtp.auth", "true");
-		
-		//properties.put("mail.smtp.port", "587");
-		//TLS (Transport Layer Security) mechanism
-		properties.put("mail.smtp.starttls.enable", "true");
-		
-	/*
-		//SSL (Secure Socket Layer) mechanism
-		properties.put("mail.smtp.socketFactory.port", "465");
-		properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-	*/
-		
-		//Get the session object
-		Session session = Session.getDefaultInstance(properties, new Authenticator() {
-			//authenticating the sender
-			@Override
-			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(senderAddress, senderPassword);
-			}
-		});
-	  
-		try {
-					
-			//Composing the message
-			MimeMessage message = new MimeMessage(session);									//creating MimeMessage object
-			message.setFrom(new InternetAddress(senderAddress));							//setting sender's information
-			message.setRecipients(Message.RecipientType.TO, toAddress);						//setting recipient's in TO block
-			message.setRecipients(Message.RecipientType.BCC, bccAddress);					//setting recipient's in BCC block
-			message.setRecipients(Message.RecipientType.CC, ccAddress);						//setting recipient's in CC block
-			message.setSubject(subject);													//setting message's subject
-			message.setContent(body, "text/html");											//setting message's content
-			
-	  
-			//Send message
-			Transport.send(message);
-			
-			return "message sent successfully....";
-	  
-		} catch (MessagingException mex) {
-			
-			mex.printStackTrace();
-			return "Message sending failed...";
-		}
+		SimpleMailMessage email = new SimpleMailMessage();
+        email.setTo(receiver);
+        email.setSubject(subject);
+        email.setText(body);
+         
+        // sends the e-mail
+        mailSender.send(email);
 	}
 }

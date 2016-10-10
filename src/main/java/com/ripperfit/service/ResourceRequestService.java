@@ -6,20 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ripperfit.daoLayer.ResourceDao;
+import com.ripperfit.daoLayer.ResourceRequestDao;
 import com.ripperfit.model.ResourceRequest;
 
 @Service
 public class ResourceRequestService {
-
-	private ResourceDao resourceDao;
+	
+	private ResourceRequestDao resourceRequestDao;
 	
 	/**
 	 * method to get the ResourceDAO object
 	 * @return ResourceDAO object
 	 */
-	public ResourceDao getResourceDao() {
-		return resourceDao;
+	public ResourceRequestDao getResourceDao() {
+		return resourceRequestDao;
 	}
 
 	/**
@@ -27,8 +27,8 @@ public class ResourceRequestService {
 	 * @param resourceDao object
 	 */
 	@Autowired(required=true)
-	public void setResourceDao(ResourceDao resourceDao) {
-		this.resourceDao = resourceDao;
+	public void setResourceDao(ResourceRequestDao resourceDao) {
+		this.resourceRequestDao = resourceDao;
 	}
 
 	/**
@@ -37,7 +37,7 @@ public class ResourceRequestService {
 	 */
 	@Transactional
 	public void addResourceRequest(ResourceRequest request) {	
-		this.resourceDao.addRequestDao(request);
+		this.resourceRequestDao.addRequestDao(request);
 	}
 	
 	/**
@@ -46,7 +46,7 @@ public class ResourceRequestService {
 	 */
 	@Transactional
 	public int deleteResourceRequest(int request_id) {
-		int result = this.resourceDao.deleteRequestDao(request_id);
+		int result = this.resourceRequestDao.deleteRequestDao(request_id);
 		return result;
 	}
 	
@@ -57,7 +57,7 @@ public class ResourceRequestService {
 	 */
 	@Transactional
 	public List<ResourceRequest> viewResourceRequest(int employee_id) {
-		return this.resourceDao.viewRequestDao(employee_id);
+		return this.resourceRequestDao.viewRequestDao(employee_id);
 	}
 	
 	/**
@@ -67,6 +67,6 @@ public class ResourceRequestService {
 	 */
 	@Transactional
 	public List<ResourceRequest> viewAllResourceRequest() {
-		return this.resourceDao.viewAllRequestsDao();
+		return this.resourceRequestDao.viewAllRequestsDao();
 	}
 }

@@ -26,6 +26,7 @@
 
 <script src="<c:url value="/resources/js/jquery.min.js" />"></script>
 <script src="<c:url value="/resources/js/Chart.js" />"></script>
+<script src="<c:url value="/resources/js/googleApi.js" />"></script>
 
 
 
@@ -40,6 +41,7 @@
       <script src="assets/js/html5shiv.js"></script>
       <script src="assets/js/respond.min.js"></script>
     <![endif]-->
+    
 </head>
 
 <body data-spy="scroll" data-offset="0" data-target="#theMenu">
