@@ -11,19 +11,14 @@
 <!-- CSS -->
 <link rel="stylesheet"
 	href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
-<link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="resources/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="resources/font-awesome/css/font-awesome.min.css">
 <link rel="stylesheet" href="resources/css/form-elements.css">
 <link rel="stylesheet" href="resources/css/style.css">
 <link rel="stylesheet"
 	href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-
-
-<!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
+	
 
 <!-- Favicon and touch icons -->
 
@@ -35,6 +30,7 @@
 	href="resources/ico/apple-touch-icon-72-precomposed.png">
 <link rel="apple-touch-icon-precomposed"
 	href="resources/ico/apple-touch-icon-57-precomposed.png">
+<<<<<<< HEAD
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script src="resources/js/jquery-3.1.0.min.js" type="text/javascript"></script>
@@ -58,6 +54,8 @@
 						});
 	}
 </script>
+=======
+>>>>>>> 2d0817804549089a1e76cbea5641bc972a9afc42
 
 </head>
 
@@ -68,9 +66,6 @@
 
 		<div class="inner-bg">
 			<div class="container">
-
-
-
 				<div class="row">
 					<div class="col-md-12">
 
@@ -143,6 +138,19 @@
 								</script>
 							</div>
 						</div>
+<<<<<<< HEAD
+=======
+					</div>
+
+					<!-- Javascript -->
+					<script src="resources/js/jquery-3.1.1.min.js"></script>
+					<script src="resources/js/angular.min.js"></script>
+					<script src="resources/js/bootstrap.min.js"></script>
+					<script src="resources/js/jquery.backstretch.min.js"></script>
+					<script src="resources/js/scripts.js"></script>
+					<script src="resources/js/applications.js"></script>
+					<script src="resources/js/controllers.js"></script>
+>>>>>>> 2d0817804549089a1e76cbea5641bc972a9afc42
 
 						<script>
 function signInCallback(authResult) {

@@ -16,7 +16,14 @@
 		<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
 	</context-param>
 	
-	
+	<!-- <filter>
+		<filter-name>LoginInterceptor</filter-name>
+		<filter-class>com.ripperfit.interceptor.LoginInterceptor</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>LoginInterceptor</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping> -->
 	
 	<!-- Ensure UTF-8 character encoding is used -->
 	<filter>

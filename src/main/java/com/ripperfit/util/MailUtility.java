@@ -8,6 +8,11 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+<<<<<<< HEAD
+=======
+
+import com.ripperfit.model.Employee;
+>>>>>>> 2d0817804549089a1e76cbea5641bc972a9afc42
 	  
 /**
  * class to send email to the users
@@ -41,12 +46,20 @@ public class MailUtility {
 	 * @return
 	 */
 	@RequestMapping(value = "registrationMail")
+<<<<<<< HEAD
 	public ResponseEntity<Void> registrationMail(@RequestBody String email) {
 		
 		System.out.println("email: "+email);
 		String subject = "Register your email account to RipperFit";
 		String body = "Hello "+email+", You are successfully registered";
 		sendMail(subject, body, email);
+=======
+	public ResponseEntity<Void> registrationMail(@RequestBody Employee employee) {
+		
+		String subject = "Register your email account to RipperFit";
+		String body = "Hello "+employee.getFirstName()+" "+employee.getLastName()+", You are successfully registered";
+		sendMail(subject, body, employee.getEmail());
+>>>>>>> 2d0817804549089a1e76cbea5641bc972a9afc42
 		return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
 	}
 	
