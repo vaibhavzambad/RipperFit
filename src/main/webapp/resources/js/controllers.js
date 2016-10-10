@@ -1,18 +1,20 @@
 signUp.controller('logoutCtrl',function($scope,$http,$window){
 	
 	$scope.logout = function() {
-		$http({
-			method: 'POST',
-			url: "/RipperFit/employee/logout",
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		}).then( function (){
-			$window.location.href = '/RipperFit/login';
-		}, function (){ 
-			alert("Registration failed!!");
-		});
+	$http({
+		method: 'POST',
+		url: "/RipperFit/employee/logout",
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	}).then( function (){
+		$window.location.href = '/RipperFit/login';
+	}, function (){ 
+		alert("Registration failed!!");
+	});
+	
 	}
+	
 });
 
 signUp.controller('signUpCtrl', function($scope, $http,$window){
@@ -32,8 +34,7 @@ signUp.controller('signUpCtrl', function($scope, $http,$window){
 			"contactNumber": $scope.userDetails.contactNumber,
 			"address": $scope.userDetails.address,
 			"designation" : null,
-			"profilePicture" :null,
-			"is_verified" : "yes"
+			"profilePicture" :null
 		};
 
 		$http({
@@ -49,11 +50,7 @@ signUp.controller('signUpCtrl', function($scope, $http,$window){
 			$http({
 				method: 'POST',
 				url: "/RipperFit/mail/registrationMail",
-<<<<<<< HEAD
 				data: $scope.email,
-=======
-				data: $scope.userDetails,
->>>>>>> 2d0817804549089a1e76cbea5641bc972a9afc42
 				headers: {
 					'Content-Type': 'application/json'
 				}
@@ -79,16 +76,11 @@ signUp.controller('signUpCtrl', function($scope, $http,$window){
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).then(function(response){
-			$scope.employeeDetails = response.data;
-			console.log("login"+$scope.employeeDetails.firstName);
+		}).then( function (response){
+			$scope.employeeDetails = response.data; 
 			$window.location.href = '/RipperFit/welcome';
-		}, function (response){ 
-			if(response.status == 403) {
-				alert("Please verify your account!!");
-			} else {
-				alert("Wrong username and password!!");
-			}
+		}, function (){ 
+			alert("Wrong username and password!!");
 		});
 	}
 });

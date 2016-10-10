@@ -94,8 +94,6 @@
 			<artifactId>jersey-server</artifactId>
 			<version>1.19.2</version>
 		</dependency>
-		
-		
 
 
 

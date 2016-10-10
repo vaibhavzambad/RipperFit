@@ -60,9 +60,6 @@ public class Employee implements Serializable {
 	@Column(name="profile_picture")
 	private String profilePicture;
 	
-	@Column(name="verified")
-	private String is_verified;
-
 	/**
 	 * @return the employeeId
 	 */
@@ -215,21 +212,5 @@ public class Employee implements Serializable {
 	 */
 	public void setProfilePicture(String profilePicture) {
 		this.profilePicture = profilePicture;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public String getIs_verified() {
-		return is_verified;
-	}
-
-	/**
-	 * 
-	 * @param is_verified
-	 */
-	public void setIs_verified(String is_verified) {
-		this.is_verified = is_verified;
 	}
 }

@@ -81,19 +81,16 @@ public class UserController {
 	 * @return : ResponseEntity with no object
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ResponseEntity<Employee> login(@RequestBody Login login,HttpServletRequest request) {	
+	public ResponseEntity<Void> login(@RequestBody Login login,HttpServletRequest request) {	
 		
 		HttpSession session = request.getSession();
 		Employee employee = this.userService.login(login.getEmail(), login.getPassword());
+		
 		if (employee != null) {
-			if(employee.getIs_verified().equals("yes")) {
-				session.setAttribute("email", login.getEmail());
-				return new ResponseEntity<Employee>(employee, HttpStatus.ACCEPTED);
-			} else {
-				return new ResponseEntity<Employee>(HttpStatus.FORBIDDEN);
-			}
+			session.setAttribute("email", login.getEmail());
+			return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
 		} else {
-			return new ResponseEntity<Employee>(HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
 		}
 	}
 	
@@ -133,6 +130,8 @@ public class UserController {
 	@RequestMapping(value="/logout",method= RequestMethod.POST)
 	public ResponseEntity<Void> logout(HttpSession session){
 		
+		String email = (String)session.getAttribute("email");
+		System.out.println(email);
 		session.invalidate();
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}

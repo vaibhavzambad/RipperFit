@@ -5,6 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
+<script src="resources/js/jquery-3.1.0.min.js" type="text/javascript"></script>
+<script src="resources/js/angular.js"></script>
 </head>
 <body ng-app="signUp">
 	<h1>Hi You are signed in successfully</h1>
@@ -14,12 +16,13 @@
 	</div>
 
 	<!-- Javascript -->
-	<script src="resources/js/jquery-3.1.1.min.js"></script>
-	<script src="resources/js/angular.min.js"></script>
-	<script src="resources/js/bootstrap.min.js"></script>
+	<script src="resources/js/jquery-1.11.1.min.js"></script>
+	<script src="resources/bootstrap/js/bootstrap.min.js"></script>
 	<script src="resources/js/jquery.backstretch.min.js"></script>
 	<script src="resources/js/scripts.js"></script>
 	<script src="resources/js/applications.js"></script>
 	<script src="resources/js/controllers.js"></script>
 </body>
+
+
 </html>
