@@ -8,6 +8,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.ripperfit.model.Employee;
 	  
 /**
  * class to send email to the users
@@ -41,12 +43,11 @@ public class MailUtility {
 	 * @return
 	 */
 	@RequestMapping(value = "registrationMail")
-	public ResponseEntity<Void> registrationMail(@RequestBody String email) {
+	public ResponseEntity<Void> registrationMail(@RequestBody Employee employee) {
 		
-		System.out.println("email: "+email);
 		String subject = "Register your email account to RipperFit";
-		String body = "Hello "+email+", You are successfully registered";
-		sendMail(subject, body, email);
+		String body = "Hello "+employee.getFirstName()+" "+employee.getLastName()+", You are successfully registered";
+		sendMail(subject, body, employee.getEmail());
 		return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
 	}
 	
