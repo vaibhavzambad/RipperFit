@@ -1,9 +1,13 @@
 package com.ripperfit.daoLayer;
 
+import java.util.List;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.ripperfit.model.Designation;
 
 public class DesignationDao {
 
@@ -48,4 +52,12 @@ public class DesignationDao {
 		return parentDesignationId;		
 		
 	}
+	public List<Designation> viewAllRoles() {
+		Session session = this.sessionFactory.getCurrentSession();
+		@SuppressWarnings("unchecked")
+		List<Designation> des = session.createCriteria(Designation.class).list();
+		return des;
+	}
+
+	
 }
