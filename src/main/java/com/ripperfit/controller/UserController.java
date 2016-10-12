@@ -1,5 +1,7 @@
 package com.ripperfit.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ripperfit.model.Designation;
 import com.ripperfit.model.Employee;
 import com.ripperfit.model.Login;
 import com.ripperfit.service.UserService;
@@ -134,5 +137,16 @@ public class UserController {
 		System.out.println(email);
 		session.invalidate();
 		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	@RequestMapping(value = "/getEmployee", method = RequestMethod.GET)
+	public ResponseEntity<List<Employee>> viewRoles() {
+		
+		List<Employee> list = this.userService.viewAllEmployee();
+		if(list.isEmpty()) {
+
+			return new ResponseEntity<List<Employee>>(HttpStatus.NO_CONTENT);
+		} else {
+			return new ResponseEntity<List<Employee>>(list, HttpStatus.OK);
+		}
 	}
 }

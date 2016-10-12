@@ -62,7 +62,7 @@ public class SocialController {
 		boolean emailVerified = Boolean.valueOf(payload.getEmailVerified());
 		String name = (String) payload.get("name");
 		String pictureUrl = (String) payload.get("picture");
-		
+		System.out.println("kljfr:    "+email);
 		
 	}
 

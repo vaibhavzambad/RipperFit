@@ -48,7 +48,7 @@
 		<beans:property name="url"
 			value="jdbc:mysql://localhost:3306/ripper_fit" />
 		<beans:property name="username" value="root" />
-		<beans:property name="password" value="root" />
+		<beans:property name="password" value="riya" />
 	</beans:bean>
 
 	<!-- Hibernate 4 SessionFactory Bean definition. All beans are defined -->
@@ -83,14 +83,34 @@
 		<beans:property name="sessionFactory"
 			ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
+	
+	<beans:bean id="resourceRequestDao" class="com.ripperfit.daoLayer.ResourceRequestDao">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	
+	<beans:bean id="designationDao" class="com.ripperfit.daoLayer.DesignationDao">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
 
 	<!-- Service Beans -->
 	<beans:bean id="userService" class="com.ripperfit.service.UserService">
 		<beans:property name="userDao" ref="userDao"></beans:property>
 	</beans:bean>
+		<beans:bean id="roleService" class="com.ripperfit.service.RoleService">
+		<beans:property name="designationDao" ref="designationDao"></beans:property>
+	</beans:bean>
 
-	<beans:bean id="resourceRequestService"
+	<!-- <beans:bean id="resourceRequestService"
 		class="com.ripperfit.service.ResourceRequestService">
+		<beans:property name="resourceRequestDao" ref="resourceRequestDao"></beans:property>
+	</beans:bean> -->
+	
+	<beans:bean id="resourceApprovalService"
+		class="com.ripperfit.service.RequestApprovalService">
+		<beans:property name="resourceRequestDao" ref="resourceRequestDao"></beans:property>
+		
 		<beans:property name="resourceDao" ref="resourceDao"></beans:property>
 	</beans:bean>
 	
@@ -113,7 +133,6 @@
 	<context:component-scan base-package="com.ripperfit.model" />
 	<context:component-scan base-package="com.ripperfit.service" />
 	<context:component-scan base-package="com.ripperfit.util" />
-	<context:component-scan base-package="com.ripperfit.socialLogin" />
 
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
@@ -123,78 +142,4 @@
 		<beans:property name="sessionFactory"
 			ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
-
-	<!-- connection factories for social login -->
-
-	<beans:bean id="connectionFactoryLocator"
-		class="org.springframework.social.connect.support.ConnectionFactoryRegistry">
-		<beans:property name="connectionFactories">
-			<beans:list>
-				<!-- <beans:bean class="org.springframework.social.facebook.connect.FacebookConnectionFactory"> 
-					<beans:constructor-arg name="appId" value="${facebook.clientId}" /> <beans:constructor-arg 
-					name="appSecret" value="${facebook.clientSecret}" /> </beans:bean> <beans:bean 
-					class="org.springframework.social.twitter.connect.TwitterConnectionFactory"> 
-					<beans:constructor-arg name="consumerKey" value="${twitter.consumerKey}" 
-					/> <beans:constructor-arg name="consumerSecret" value="${twitter.consumerSecret}" 
-					/> </beans:bean> <beans:bean class="org.springframework.social.linkedin.connect.LinkedInConnectionFactory"> 
-					<beans:constructor-arg name="consumerKey" value="${linkedin.consumerKey}" 
-					/> <beans:constructor-arg name="consumerSecret" value="${linkedin.consumerSecret}" 
-					/> </beans:bean> -->
-				<beans:bean
-					class="org.springframework.social.google.connect.GoogleConnectionFactory">
-					<beans:constructor-arg name="clientId"
-						value="412974983923-jg7l8j84308pughfqt5o8q0gc0pslh83.apps.googleusercontent.com" />
-					<beans:constructor-arg name="clientSecret"
-						value="5rruLfFv-Fd2namhidKImesR" />
-				</beans:bean>
-			</beans:list>
-		</beans:property>
-	</beans:bean>
-
-	<!-- User Connection repository for social login -->
-
-	<beans:bean id="usersConnectionRepository"
-		class="org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository">
-		<beans:constructor-arg ref="dataSource" />
-		<beans:constructor-arg ref="connectionFactoryLocator" />
-		<beans:constructor-arg ref="textEncryptor" />
-	</beans:bean>
-
-	<!-- Text Encryptor for social login -->
-
-	<beans:bean id="textEncryptor"
-		class="org.springframework.security.crypto.encrypt.Encryptors"
-		factory-method="noOpText" />
-
-	<!-- Connection Repository for social login -->
-	<beans:bean id="connectionRepository" factory-method="createConnectionRepository"
-		factory-bean="usersConnectionRepository" scope="request">
-		<beans:constructor-arg value="#{request.userPrincipal.name}" />
-		<aop:scoped-proxy proxy-target-class="false" />
-	</beans:bean>
-
-	<beans:bean id="providerSignInController"
-		class="org.springframework.social.connect.web.ProviderSignInController">
-		<beans:constructor-arg ref="simpleSignInAdapter" />
-		<beans:property name="signInUrl" value="/login"></beans:property>
-		<beans:property name="signUpUrl" value="/RipperFit/signUp" />
-		<beans:property name="postSignInUrl" value="/RipperFit/Welcome"></beans:property>
-	</beans:bean>
-
-	<beans:bean
-		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-		<beans:property name="targetObject" ref="providerSignInController" />
-		<beans:property name="targetMethod" value="setApplicationUrl" />
-		<beans:property name="arguments">
-			<beans:list>
-				<beans:bean class="java.lang.String">
-					<beans:constructor-arg value="http://localhost:8080/RipperFit" />
-				</beans:bean>
-			</beans:list>
-		</beans:property>
-	</beans:bean>
-
-	<beans:bean id="simpleSignInAdapter"
-		class="com.ripperfit.socialLogin.SimpleSignInAdapter" />
-
 </beans:beans>

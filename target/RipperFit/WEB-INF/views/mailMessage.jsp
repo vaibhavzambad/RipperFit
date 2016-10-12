@@ -10,7 +10,7 @@
 
 </head>
 <body ng-app="signUp">
-	<div ng-controller="signUpCtrl">
+	<div ng-controller="signUpCtrl" >
 		<h1>A mail has been sent to your gmail account {{email}}. Please
 			confirm your account.</h1>
 	</div>
