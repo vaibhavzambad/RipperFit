@@ -1,58 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="RipperFit">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="RipperFit - A Resource Tracking App">
 <meta name="author" content="VARAAS">
-<link rel="shortcut icon"
-	href="resources/ico/favicon.png">
+<link rel="shortcut icon" href="resources/ico/favicon.png">
 
 <title>RipperFit</title>
 
 <!-- Bootstrap core CSS -->
-<link href="resources/css/bootstrap.min.css"
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	rel="stylesheet">
-
 <!-- Custom styles for this template -->
 <link href="resources/css/main.css" rel="stylesheet">
-<link href="resources/css/font-awesome.min.css" 
+<link
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"
 	rel="stylesheet">
-
-<!--Newly Added for Features Icons
-    <link rel='stylesheet' id='layerslider-group-css' href='https://www.lucep.com/wp-content/plugins/bwp-minify/min/?f=wp-content/plugins/LayerSlider/static/css/layerslider.css,wp-content/plugins/revslider/public/assets/css/settings.css,wp-content/themes/Avada/style.css,wp-content/themes/Avada/assets/fonts/fontawesome/font-awesome.css,wp-content/themes/Avada/ilightbox.css,wp-content/themes/Avada/animations.css,wp-content/uploads/avada-styles/avada-791.css' type='text/css' media='all' />-->
-
-
-<script src="resources/js/jquery-3.1.1.min.js" ></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="resources/js/Chart.js"></script>
-
-
-
 <link
 	href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic'
 	rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700'
 	rel='stylesheet' type='text/css'>
 
-<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!--[if lt IE 9]>
-      <script src="assets/js/html5shiv.js"></script>
-      <script src="assets/js/respond.min.js"></script>
-    <![endif]-->
 </head>
 
 <body data-spy="scroll" data-offset="0" data-target="#theMenu">
+<div ng-view="">
 	<nav class="navbar navbar-default mynavbar">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="#">
-					<h1 class="header-logo">
-						<b>RipperFit</b>
-					</h1>
-				</a>
+				<h1 class="header-logo">
+					<a class="navbar-brand" href="#"> <b>RipperFit</b>
+					</a>
+				</h1>
 			</div>
 			<div class="navbar-form navbar-right" role="search">
-				<a href="login">Login</a> <a href="signUp">SignUp</a><a href="admin">Admin</a>
+				<a href="#/login">Login</a>
+				<a href="#/signUp">SignUp</a>
+				<a href="#/admin">Admin</a>
 			</div>
 		</div>
 	</nav>
@@ -80,14 +70,10 @@
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2">
 					<h3>
-						Welcome To
-						<bold>RipperFit</bold>
-						,
-						<bold>A Resource Tracking Engine </bold>
-						Brought To You By
-						<bold>VARAAS</bold>
-						. <br />
-						<bold>Ideal For Companies & Organisations!!!</bold>
+						Welcome To <strong>RipperFit</strong>,
+						<strong>A Resource Tracking Engine </strong>
+						Brought To You By <strong>VARAAS</strong>. <br />
+						<strong>Ideal For Companies & Organizations!!!</strong>
 					</h3>
 				</div>
 			</div>
@@ -104,30 +90,24 @@
 				<h3>FEATURES</h3>
 				<br> <br>
 				<div class="col-lg-3">
-					<!--  <span style="height:40px;width:40px;line-height:60px;border-color:transparent;border-width:0px;border-style:solid;background-color:#ffffff;border-radius:50%;">
-                        <i class="fa fontawesome-icon fa-bolt circle-yes" style="border-color:#ffffff;border-width:0px;background-color:#ffffff;height:60px;width:60px;line-height:124px;border-radius:50%;border-width:0;position:relative;top:0px;left:0px;margin:0;border-radius:calc(50% - 0px);color:#333333;font-size:47px;"></i>
-                     </span>-->
 					<h4>Lightning Notifications</h4>
 					<p>Lorem Ipsum is simply dummy text of the printing and
 						typesetting industry. Lorem Ipsum has been the industry's standard
 						dummy text ever.</p>
 				</div>
 				<div class="col-lg-3">
-
 					<h4>Resource Buddy</h4>
 					<p>Lorem Ipsum is simply dummy text of the printing and
 						typesetting industry. Lorem Ipsum has been the industry's standard
 						dummy text ever.</p>
 				</div>
 				<div class="col-lg-3">
-
 					<h4>In-Depth Reporting</h4>
 					<p>Lorem Ipsum is simply dummy text of the printing and
 						typesetting industry. Lorem Ipsum has been the industry's standard
 						dummy text ever.</p>
 				</div>
 				<div class="col-lg-3">
-
 					<h4>Splendid Dashboard</h4>
 					<p>Lorem Ipsum is simply dummy text of the printing and
 						typesetting industry. Lorem Ipsum has been the industry's standard
@@ -146,11 +126,8 @@
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2">
 					<h3>
-						We Work Hard To Deliver
-						<bold>Transcendence Services</bold>
-						. Our Core Aim Is Your Complete
-						<bold>Satisfaction</bold>
-						.
+						We Work Hard To Deliver	<strong>Transcendence Services</strong>.
+						 Our Core Aim Is Your Complete <strong>Satisfaction</strong>.
 					</h3>
 				</div>
 			</div>
@@ -186,8 +163,7 @@
 				<div class="col-lg-1"></div>
 				<div class="col-lg-10">
 					<div class="col-lg-4 team">
-						<img class="img-circle"
-							src="resources/img/aman.jpg" height="90"
+						<img class="img-circle" src="resources/img/aman.jpg" height="90"
 							width="90">
 						<h4>Aman Agarwal</h4>
 						<h5>
@@ -196,16 +172,14 @@
 						<p>Lorem Ipsum is simply dummy text of the printing and
 							typesetting industry.</p>
 						<p>
-							<a href="index.html#"><i class="icon-facebook"></i></a> <a
-								href="index.html#"><i class="icon-twitter"></i></a> <a
-								href="index.html#"><i class="icon-envelope"></i></a>
-
+							<a href="index.html#"><i class="icon-facebook"></i></a>
+							<a href="index.html#"><i class="icon-twitter"></i></a>
+							<a href="index.html#"><i class="icon-envelope"></i></a>
 						</p>
 					</div>
 
 					<div class="col-lg-4 team">
-						<img class="img-circle"
-							src="resources/img/amit.jpg" height="90"
+						<img class="img-circle" src="resources/img/amit.jpg" height="90"
 							width="90">
 						<h4>Amit Kumar</h4>
 						<h5>
@@ -214,17 +188,15 @@
 						<p>Lorem Ipsum is simply dummy text of the printing and
 							typesetting industry.</p>
 						<p>
-							<a href="index.html#"><i class="icon-facebook"></i></a> <a
-								href="index.html#"><i class="icon-twitter"></i></a> <a
-								href="index.html#"><i class="icon-envelope"></i></a>
-
+							<a href="index.html#"><i class="icon-facebook"></i></a>
+							<a href="index.html#"><i class="icon-twitter"></i></a>
+							<a href="index.html#"><i class="icon-envelope"></i></a>
 						</p>
 					</div>
 
 					<div class="col-lg-4 team">
-						<img class="img-circle"
-							src="resources/img/vaibhav.jpg"  height="90"
-							width="90">
+						<img class="img-circle" src="resources/img/vaibhav.jpg"
+							height="90" width="90">
 						<h4>Vaibhav Pravin Zambad</h4>
 						<h5>
 							<i>Back-End Guru</i>
@@ -232,10 +204,9 @@
 						<p>Lorem Ipsum is simply dummy text of the printing and
 							typesetting industry.</p>
 						<p>
-							<a href="index.html#"><i class="icon-facebook"></i></a> <a
-								href="index.html#"><i class="icon-twitter"></i></a> <a
-								href="index.html#"><i class="icon-envelope"></i></a>
-
+							<a href="index.html#"><i class="icon-facebook"></i></a>
+							<a href="index.html#"><i class="icon-twitter"></i></a>
+							<a href="index.html#"><i class="icon-envelope"></i></a>
 						</p>
 					</div>
 				</div>
@@ -245,8 +216,7 @@
 				<div class="col-lg-1"></div>
 				<div class="col-lg-10">
 					<div class="col-lg-4 team">
-						<img class="img-circle"
-							src="resources/img/riya.jpg" height="90"
+						<img class="img-circle" src="resources/img/riya.jpg" height="90"
 							width="90">
 						<h4>Riya Nuwal</h4>
 						<h5>
@@ -255,16 +225,14 @@
 						<p>Lorem Ipsum is simply dummy text of the printing and
 							typesetting industry.</p>
 						<p>
-							<a href="index.html#"><i class="icon-facebook"></i></a> <a
-								href="index.html#"><i class="icon-twitter"></i></a> <a
-								href="index.html#"><i class="icon-envelope"></i></a>
-
+							<a href="index.html#"><i class="icon-facebook"></i></a>
+							<a href="index.html#"><i class="icon-twitter"></i></a>
+							<a href="index.html#"><i class="icon-envelope"></i></a>
 						</p>
 					</div>
 
 					<div class="col-lg-4 team">
-						<img class="img-circle"
-							src="resources/img/amita.jpg"  height="90"
+						<img class="img-circle" src="resources/img/amita.jpg" height="90"
 							width="90">
 						<h4>Amita Sharma</h4>
 						<h5>
@@ -273,17 +241,15 @@
 						<p>Lorem Ipsum is simply dummy text of the printing and
 							typesetting industry.</p>
 						<p>
-							<a href="index.html#"><i class="icon-facebook"></i></a> <a
-								href="index.html#"><i class="icon-twitter"></i></a> <a
-								href="index.html#"><i class="icon-envelope"></i></a>
-
+							<a href="index.html#"><i class="icon-facebook"></i></a>
+							<a href="index.html#"><i class="icon-twitter"></i></a>
+							<a href="index.html#"><i class="icon-envelope"></i></a>
 						</p>
 					</div>
 
 					<div class="col-lg-4 team">
-						<img class="img-circle"
-							src="resources/img/shobhit.jpg" height="90"
-							width="90">
+						<img class="img-circle" src="resources/img/shobhit.jpg"
+							height="90" width="90">
 						<h4>Shobhit Agarwal</h4>
 						<h5>
 							<i>Front-end Developer</i>
@@ -291,10 +257,9 @@
 						<p>Lorem Ipsum is simply dummy text of the printing and
 							typesetting industry.</p>
 						<p>
-							<a href="index.html#"><i class="icon-facebook"></i></a> <a
-								href="index.html#"><i class="icon-twitter"></i></a> <a
-								href="index.html#"><i class="icon-envelope"></i></a>
-
+							<a href="index.html#"><i class="icon-facebook"></i></a>
+							<a href="index.html#"><i class="icon-twitter"></i></a>
+							<a href="index.html#"><i class="icon-envelope"></i></a>
 						</p>
 					</div>
 				</div>
@@ -321,7 +286,6 @@
 					<h3>reachus@ripperfit.com</h3>
 					<br>
 				</div>
-
 				<div class="col-lg-4">
 					<h3>
 						<b>Call Us:</b>
@@ -329,15 +293,14 @@
 					<h3>+91-9785057113</h3>
 					<br>
 				</div>
-
 				<div class="col-lg-4">
 					<h3>
 						<b>We Are Social</b>
 					</h3>
 					<p>
-						<a href="index.html#"><i class="icon-facebook"></i></a> <a
-							href="index.html#"><i class="icon-twitter"></i></a> <a
-							href="index.html#"><i class="icon-envelope"></i></a>
+						<a href="index.html#"><i class="icon-facebook"></i></a>
+						<a href="index.html#"><i class="icon-twitter"></i></a>
+						<a href="index.html#"><i class="icon-envelope"></i></a>
 					</p>
 					<br>
 				</div>
@@ -352,17 +315,14 @@
 			<p>
 				Created by <a href="#">VARAAS</a>
 			</p>
-
 		</div>
 	</div>
-
-
-
+	</div>
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="resources/js/classie.js" ></script>
-	<script src="resources/js/bootstrap.min.js" ></script>
+	<script src="resources/js/classie.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="resources/js/smoothscroll.js"></script>
 	<script src="resources/js/main.js"></script>
 </body>

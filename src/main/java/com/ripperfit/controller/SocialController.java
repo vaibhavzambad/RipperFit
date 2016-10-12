@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +15,6 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.ripperfit.model.Employee;
-
 
 @RequestMapping(value="/social")
 @Controller
@@ -42,17 +39,15 @@ public class SocialController {
 						clientSecrets.getDetails().getClientSecret(),
 						authCode,
 						"http://localhost:8080").execute();
-							
+
 		// Specify the same redirect URI that you use with your web
 		// app. If you don't have a web version of your app, you can
 		// specify an empty string.
-
 
 		String accessToken = tokenResponse.getAccessToken();
 
 		// Use access token to call API
 		//GoogleCredential credential = new GoogleCredential().setAccessToken(accessToken);
-		
 
 		// Get profile info from ID token
 		GoogleIdToken idToken = tokenResponse.parseIdToken();
@@ -62,8 +57,6 @@ public class SocialController {
 		boolean emailVerified = Boolean.valueOf(payload.getEmailVerified());
 		String name = (String) payload.get("name");
 		String pictureUrl = (String) payload.get("picture");
-		System.out.println("kljfr:    "+email);
-		
+		System.out.println("kljfr:    "+email);	
 	}
-
 }
