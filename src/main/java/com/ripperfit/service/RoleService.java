@@ -13,7 +13,6 @@ public class RoleService {
 	@Autowired
 	private RoleDao roleDao;
 	
-	
 
 	public RoleDao getRoleDao() {
 		return roleDao;

@@ -1,4 +1,3 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,25 +6,25 @@
 <meta name="description" content="RipperFit - A Resource Tracking App">
 <meta name="author" content="VARAAS">
 <link rel="shortcut icon"
-	href="<c:url value="/resources/ico/favicon.png" />">
+	href="resources/ico/favicon.png">
 
 <title>RipperFit</title>
 
 <!-- Bootstrap core CSS -->
-
-<link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet" />
+<link href="resources/css/bootstrap.min.css"
+	rel="stylesheet">
 
 <!-- Custom styles for this template -->
-<link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
-<link href="<c:url value="/resources/css/font-awesome.min.css" />"
+<link href="resources/css/main.css" rel="stylesheet">
+<link href="resources/css/font-awesome.min.css" 
 	rel="stylesheet">
 
 <!--Newly Added for Features Icons
     <link rel='stylesheet' id='layerslider-group-css' href='https://www.lucep.com/wp-content/plugins/bwp-minify/min/?f=wp-content/plugins/LayerSlider/static/css/layerslider.css,wp-content/plugins/revslider/public/assets/css/settings.css,wp-content/themes/Avada/style.css,wp-content/themes/Avada/assets/fonts/fontawesome/font-awesome.css,wp-content/themes/Avada/ilightbox.css,wp-content/themes/Avada/animations.css,wp-content/uploads/avada-styles/avada-791.css' type='text/css' media='all' />-->
 
 
-<script src="<c:url value="/resources/js/jquery.min.js" />"></script>
-<script src="<c:url value="/resources/js/Chart.js" />"></script>
+<script src="resources/js/jquery-3.1.1.min.js" ></script>
+<script src="resources/js/Chart.js"></script>
 
 
 
@@ -53,37 +52,10 @@
 				</a>
 			</div>
 			<div class="navbar-form navbar-right" role="search">
-				<a href="login">Login</a>
-				<a href="signUp">SignUp</a>
+				<a href="login">Login</a> <a href="signUp">SignUp</a><a href="admin">Admin</a>
 			</div>
 		</div>
 	</nav>
-	<!-- Menu 
-	<nav class="menu" id="theMenu">
-		<div class="menu-wrap">
-			<h1 class="logo">
-				<a href="index.html#home">RipperFit</a>
-			</h1>
-			<i class="icon-remove menu-close"></i> <a href="#home"
-				class="smoothScroll">Home</a> <a href="#signup" class="smoothScroll">SignUp</a>
-			<a href="#signin" class="smoothScroll">Login</a> <a href="#services"
-				class="smoothScroll">Features</a> <a href="#pricing"
-				class="smoothScroll">Pricing</a> <a href="#about"
-				class="smoothScroll">About</a> <a href="#testimonials"
-				class="smoothScroll">Testimonials</a> <a href="#contact"
-				class="smoothScroll">Contact</a> <a href="#"><i
-				class="icon-facebook"></i></a> <a href="#"><i class="icon-twitter"></i></a>
-			<a href="#"><i class="icon-dribbble"></i></a> <a href="#"><i
-				class="icon-envelope"></i></a>
-		</div>
-		
-		<!-- Menu button 
-		<div id="menuToggle">
-			<i class="icon-reorder"></i>
-		</div>
-	</nav> -->
-
-
 
 	<!-- ========== HEADER SECTION ========== -->
 	<section id="home" name="home"></section>
@@ -167,96 +139,6 @@
 	</div>
 	<!-- /g -->
 
-	<!-- ========== CHARTS - DARK GREY SECTION ========== -->
-	<!--	<div id="dg">
-		<div class="container">
-			<div class="row">
-				<h3>SOME CHARTS</h3>
-				<br>
-				<br>
-				<div class="col-lg-4">
-					<canvas id="javascript" height="130" width="130"></canvas>
-					<br>
-					<h4>Javascript</h4>
-					<br>
-					<script>
-						var doughnutData = [
-								{
-									value: 70,
-									color:"#f85c37"
-								},
-								{
-									value : 30,
-									color : "#ecf0f1"
-								}
-							];
-							var myDoughnut = new Chart(document.getElementById("javascript").getContext("2d")).Doughnut(doughnutData);
-					</script>
-
-				</div>
-				<div class="col-lg-4">
-					<canvas id="bootstrap" height="130" width="130"></canvas>
-					<br>
-					<h4>Bootstrap</h4>
-					<br>
-					<script>
-						var doughnutData = [
-								{
-									value: 90,
-									color:"#f85c37"
-								},
-								{
-									value : 10,
-									color : "#ecf0f1"
-								}
-							];
-							var myDoughnut = new Chart(document.getElementById("bootstrap").getContext("2d")).Doughnut(doughnutData);
-					</script>
-				</div>
-				<div class="col-lg-4">
-					<canvas id="wordpress" height="130" width="130"></canvas>
-					<br>
-					<h4>Wordpress</h4>
-					<br>
-					<script>
-						var doughnutData = [
-								{
-									value: 55,
-									color:"#f85c37"
-								},
-								{
-									value : 45,
-									color : "#ecf0f1"
-								}
-							];
-							var myDoughnut = new Chart(document.getElementById("wordpress").getContext("2d")).Doughnut(doughnutData);
-					</script>
-				</div>
-			
-			</div>
-		</div><!-- /container -->
-	</div>
-	<!-- /dg -->
-
-	<!--	<section id="portfolio" name="portfolio"></section>
-	<div id="portfoliowrap">
-		<div class="container">
-			<div class="row">
-				<h3>COOL WORKS</h3>
-				<br>
-				<br>
-				<div class="col-lg-4 port-space">
-					<a href="item.html"><img src="assets/img/work1.png"></a>
-				</div>
-				<div class="col-lg-4 port-space">
-					<a href="item.html"><img src="assets/img/work2.png"></a>
-				</div>
-				<div class="col-lg-4 port-space">
-					<a href="item.html"><img src="assets/img/work3.png"></a>
-				</div>				
-			</div>	
-		</div><!-- /container -->
-	</div>
 	<!-- /portfoliowrap -->
 	<!-- ========== WHITE SECTION ========== -->
 	<div id="w">
@@ -305,7 +187,7 @@
 				<div class="col-lg-10">
 					<div class="col-lg-4 team">
 						<img class="img-circle"
-							src="<c:url value="/resources/img/aman.jpg" />" height="90"
+							src="resources/img/aman.jpg" height="90"
 							width="90">
 						<h4>Aman Agarwal</h4>
 						<h5>
@@ -323,7 +205,7 @@
 
 					<div class="col-lg-4 team">
 						<img class="img-circle"
-							src="<c:url value="/resources/img/amit.jpg" />" height="90"
+							src="resources/img/amit.jpg" height="90"
 							width="90">
 						<h4>Amit Kumar</h4>
 						<h5>
@@ -341,7 +223,7 @@
 
 					<div class="col-lg-4 team">
 						<img class="img-circle"
-							src="<c:url value="/resources/img/vaibhav.jpg" />" height="90"
+							src="resources/img/vaibhav.jpg"  height="90"
 							width="90">
 						<h4>Vaibhav Pravin Zambad</h4>
 						<h5>
@@ -364,7 +246,7 @@
 				<div class="col-lg-10">
 					<div class="col-lg-4 team">
 						<img class="img-circle"
-							src="<c:url value="/resources/img/riya.jpg" />" height="90"
+							src="resources/img/riya.jpg" height="90"
 							width="90">
 						<h4>Riya Nuwal</h4>
 						<h5>
@@ -382,7 +264,7 @@
 
 					<div class="col-lg-4 team">
 						<img class="img-circle"
-							src="<c:url value="/resources/img/amita.jpg" />" height="90"
+							src="resources/img/amita.jpg"  height="90"
 							width="90">
 						<h4>Amita Sharma</h4>
 						<h5>
@@ -400,7 +282,7 @@
 
 					<div class="col-lg-4 team">
 						<img class="img-circle"
-							src="<c:url value="/resources/img/shobhit.jpg" />" height="90"
+							src="resources/img/shobhit.jpg" height="90"
 							width="90">
 						<h4>Shobhit Agarwal</h4>
 						<h5>
@@ -463,7 +345,6 @@
 		</div>
 	</div>
 	<!-- /container -->
-	</div>
 	<!-- /f -->
 
 	<div id="c">
@@ -480,9 +361,9 @@
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="<c:url value="/resources/js/classie.js" />"></script>
-	<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
-	<script src="<c:url value="/resources/js/smoothscroll.js" />"></script>
-	<script src="<c:url value="/resources/js/main.js" />"></script>
+	<script src="resources/js/classie.js" ></script>
+	<script src="resources/js/bootstrap.min.js" ></script>
+	<script src="resources/js/smoothscroll.js"></script>
+	<script src="resources/js/main.js"></script>
 </body>
 </html>

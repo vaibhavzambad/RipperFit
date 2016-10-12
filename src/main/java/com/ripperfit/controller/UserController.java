@@ -81,7 +81,7 @@ public class UserController {
 	 * @return : ResponseEntity with no object
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ResponseEntity<Void> login(@RequestBody Login login,HttpServletRequest request) {	
+	public ResponseEntity<Void> login(@RequestBody Login login, HttpServletRequest request) {	
 		
 		HttpSession session = request.getSession();
 		Employee employee = this.userService.login(login.getEmail(), login.getPassword());
@@ -130,8 +130,6 @@ public class UserController {
 	@RequestMapping(value="/logout",method= RequestMethod.POST)
 	public ResponseEntity<Void> logout(HttpSession session){
 		
-		String email = (String)session.getAttribute("email");
-		System.out.println(email);
 		session.invalidate();
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}

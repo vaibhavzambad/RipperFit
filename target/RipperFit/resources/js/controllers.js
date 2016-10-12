@@ -37,7 +37,7 @@ signUp.controller('signUpCtrl', function($scope, $http,$window){
 			"profilePicture" :null
 		};
 
-/*		$http({
+		$http({
 			method: 'POST',
 			url: "/RipperFit/employee/addEmployee",
 			data: $scope.userDetails,
@@ -45,7 +45,7 @@ signUp.controller('signUpCtrl', function($scope, $http,$window){
 				'Content-Type': 'application/json'
 			}
 		}).then( function (){
-*/		
+		
 			$scope.email = $scope.userDetails.email;
 			$http({
 				method: 'POST',
@@ -59,10 +59,10 @@ signUp.controller('signUpCtrl', function($scope, $http,$window){
 			}, function (){ 
 				alert("Registration failed!!");
 			});
-/*		}, function (){ 
+		}, function (){ 
 			alert("Registration failed!!");
 		});
-*/	}
+	}
 	
 	$scope.login = function(user){
 
