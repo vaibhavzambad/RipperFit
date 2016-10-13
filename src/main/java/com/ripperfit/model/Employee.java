@@ -28,6 +28,10 @@ public class Employee implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int employeeId;
 	
+	@ManyToOne(optional=true,fetch=FetchType.LAZY)
+	@JoinColumn(name="organization_id")
+	private Organization organization;
+	
 	@Column(name="email",unique = true)
 	private String email;
 	
@@ -213,4 +217,19 @@ public class Employee implements Serializable {
 	public void setProfilePicture(String profilePicture) {
 		this.profilePicture = profilePicture;
 	}
+
+	/**
+	 * @return the organization
+	 */
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	/**
+	 * @param organization the organization to set
+	 */
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
+	}
+	
 }

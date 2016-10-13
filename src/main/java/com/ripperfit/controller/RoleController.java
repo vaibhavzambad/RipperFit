@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ripperfit.model.Designation;
-import com.ripperfit.model.ResourceRequest;
 import com.ripperfit.service.RoleService;
-import com.ripperfit.service.UserService;
 
 @RequestMapping(value = "/role")
 @RestController

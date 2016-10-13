@@ -3,9 +3,9 @@ package com.ripperfit.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ripperfit.daoLayer.DesignationDao;
-import com.ripperfit.daoLayer.ResourceDao;
-import com.ripperfit.daoLayer.ResourceRequestDao;
+import com.ripperfit.dao.DesignationDao;
+import com.ripperfit.dao.ResourceDao;
+import com.ripperfit.dao.ResourceRequestDao;
 
 @Service
 public class RequestApprovalService {

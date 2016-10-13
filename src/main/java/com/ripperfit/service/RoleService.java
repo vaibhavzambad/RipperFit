@@ -1,28 +1,31 @@
 package com.ripperfit.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.ripperfit.daoLayer.RoleDao;
+import com.ripperfit.dao.DesignationDao;
 import com.ripperfit.model.Designation;
+
 
 @Transactional
 public class RoleService {
 
 	@Autowired
-	private RoleDao roleDao;
+	private DesignationDao designationDao;
 	
 
-	public RoleDao getRoleDao() {
-		return roleDao;
+	public DesignationDao getDesignationDao() {
+		return designationDao;
 	}
 
-	public void setRoleDao(RoleDao roleDao) {
-		this.roleDao = roleDao;
+	public void setDesignationDao(DesignationDao designationDao) {
+		this.designationDao = designationDao;
 	}
 	
-	@Transactional
+	/*@Transactional
 	Boolean addRole(Designation designation)
 	{
 		
@@ -41,11 +44,21 @@ public class RoleService {
 		Boolean flag=this.roleDao.updateRoleByName(designation,updatedDesignation);
 		return flag;
 	}
-	
+	@Transactional
 	Designation getDesignationByRole(String designation )
 	{
 		Designation desig=getDesignationByRole(designation);
 		return desig;
 		
+	}*/
+	
+	@Transactional
+	public
+	
+	List<Designation> viewAllRoles()
+	{
+		List<Designation> des=this.designationDao.viewAllRoles();
+		return des;
 	}
+	
 }

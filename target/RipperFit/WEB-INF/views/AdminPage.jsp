@@ -21,27 +21,55 @@
 	<nav class="navbar navbar-inverse">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="#">RipperFit</a>
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#myNavbar">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="">RipperFit</a>
 			</div>
-			<ul class="nav navbar-nav">
-				<li class="active"><a href="#">Home</a></li>
+			<div class="collapse navbar-collapse" id="myNavbar">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#admin/home">Home</a></li>
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="">Designation<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#/admin/viewRole">View Designations</a></li>
+							<li><a href="">Add Designation</a></li>
+							<li><a href="">Update Designation</a></li>
+						</ul></li>
+					<li><a href="#/admin/viewRequest">View Resource Request</a></li>
+					<li><a href="#/admin/viewEmployee">View Employees</a></li>
+					<li><a href="">View Resources</a></li>
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="">Resource request<span
+							class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="">Add Own Request</a></li>
+							<li><a href="">Delete Own Request</a></li>
+							<li><a href="">Update Own Request</a></li>
+						</ul></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
 
-				<li><a href="#/admin/viewRequest">View Resource Request</a></li>
-				<li><a href="#/admin/viewRole">View Designations</a></li>
-			</ul>
-			<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="">AdminPanel<span class="caret"></span></a>
+						<ul class="dropdown-menu" ng-controller="logoutCtrl">
+							<li><a href="">View Profile</a></li>
+							<li><a href="">Log Out</a></li>
 
-				<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#">Admin<span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li><a href="#">View Profile</a></li>
-						<li><a href="#">Log Out</a></li>
-					</ul></li>
-			</ul>
+						</ul></li>
+
+				</ul>
+			</div>
 		</div>
 	</nav>
 	<div ng-view="">Welcome to RipperFit</div>
+	<div ng-app="">
+		<div ng-include="" src="'footer.jsp'"></div>
+	</div>
 	<footer class="navbar-fixed-bottom text-center"
 		style="background-color: black"> @copyright Ripperfit.com </footer>
+	</div>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="RipperFit">
+<html lang="en" ng-app="signUp">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,7 +30,6 @@
 </head>
 
 <body data-spy="scroll" data-offset="0" data-target="#theMenu">
-<div ng-view="">
 	<nav class="navbar navbar-default mynavbar">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -40,9 +39,8 @@
 				</h1>
 			</div>
 			<div class="navbar-form navbar-right" role="search">
-				<a href="#/login">Login</a>
-				<a href="#/signUp">SignUp</a>
-				<a href="#/admin">Admin</a>
+				<a href="login">Login</a>
+				<a href="signUp">SignUp</a>
 			</div>
 		</div>
 	</nav>
@@ -70,9 +68,8 @@
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2">
 					<h3>
-						Welcome To <strong>RipperFit</strong>,
-						<strong>A Resource Tracking Engine </strong>
-						Brought To You By <strong>VARAAS</strong>. <br />
+						Welcome To <strong>RipperFit</strong>, <strong>A Resource
+							Tracking Engine </strong> Brought To You By <strong>VARAAS</strong>. <br />
 						<strong>Ideal For Companies & Organizations!!!</strong>
 					</h3>
 				</div>
@@ -126,8 +123,8 @@
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2">
 					<h3>
-						We Work Hard To Deliver	<strong>Transcendence Services</strong>.
-						 Our Core Aim Is Your Complete <strong>Satisfaction</strong>.
+						We Work Hard To Deliver <strong>Transcendence Services</strong>.
+						Our Core Aim Is Your Complete <strong>Satisfaction</strong>.
 					</h3>
 				</div>
 			</div>
@@ -172,9 +169,9 @@
 						<p>Lorem Ipsum is simply dummy text of the printing and
 							typesetting industry.</p>
 						<p>
-							<a href="index.html#"><i class="icon-facebook"></i></a>
-							<a href="index.html#"><i class="icon-twitter"></i></a>
-							<a href="index.html#"><i class="icon-envelope"></i></a>
+							<a href="index.html#"><i class="icon-facebook"></i></a> <a
+								href="index.html#"><i class="icon-twitter"></i></a> <a
+								href="index.html#"><i class="icon-envelope"></i></a>
 						</p>
 					</div>
 
@@ -188,9 +185,9 @@
 						<p>Lorem Ipsum is simply dummy text of the printing and
 							typesetting industry.</p>
 						<p>
-							<a href="index.html#"><i class="icon-facebook"></i></a>
-							<a href="index.html#"><i class="icon-twitter"></i></a>
-							<a href="index.html#"><i class="icon-envelope"></i></a>
+							<a href="index.html#"><i class="icon-facebook"></i></a> <a
+								href="index.html#"><i class="icon-twitter"></i></a> <a
+								href="index.html#"><i class="icon-envelope"></i></a>
 						</p>
 					</div>
 
@@ -204,9 +201,9 @@
 						<p>Lorem Ipsum is simply dummy text of the printing and
 							typesetting industry.</p>
 						<p>
-							<a href="index.html#"><i class="icon-facebook"></i></a>
-							<a href="index.html#"><i class="icon-twitter"></i></a>
-							<a href="index.html#"><i class="icon-envelope"></i></a>
+							<a href="index.html#"><i class="icon-facebook"></i></a> <a
+								href="index.html#"><i class="icon-twitter"></i></a> <a
+								href="index.html#"><i class="icon-envelope"></i></a>
 						</p>
 					</div>
 				</div>
@@ -225,9 +222,9 @@
 						<p>Lorem Ipsum is simply dummy text of the printing and
 							typesetting industry.</p>
 						<p>
-							<a href="index.html#"><i class="icon-facebook"></i></a>
-							<a href="index.html#"><i class="icon-twitter"></i></a>
-							<a href="index.html#"><i class="icon-envelope"></i></a>
+							<a href="index.html#"><i class="icon-facebook"></i></a> <a
+								href="index.html#"><i class="icon-twitter"></i></a> <a
+								href="index.html#"><i class="icon-envelope"></i></a>
 						</p>
 					</div>
 
@@ -241,9 +238,9 @@
 						<p>Lorem Ipsum is simply dummy text of the printing and
 							typesetting industry.</p>
 						<p>
-							<a href="index.html#"><i class="icon-facebook"></i></a>
-							<a href="index.html#"><i class="icon-twitter"></i></a>
-							<a href="index.html#"><i class="icon-envelope"></i></a>
+							<a href="index.html#"><i class="icon-facebook"></i></a> <a
+								href="index.html#"><i class="icon-twitter"></i></a> <a
+								href="index.html#"><i class="icon-envelope"></i></a>
 						</p>
 					</div>
 
@@ -257,9 +254,9 @@
 						<p>Lorem Ipsum is simply dummy text of the printing and
 							typesetting industry.</p>
 						<p>
-							<a href="index.html#"><i class="icon-facebook"></i></a>
-							<a href="index.html#"><i class="icon-twitter"></i></a>
-							<a href="index.html#"><i class="icon-envelope"></i></a>
+							<a href="index.html#"><i class="icon-facebook"></i></a> <a
+								href="index.html#"><i class="icon-twitter"></i></a> <a
+								href="index.html#"><i class="icon-envelope"></i></a>
 						</p>
 					</div>
 				</div>
@@ -298,9 +295,9 @@
 						<b>We Are Social</b>
 					</h3>
 					<p>
-						<a href="index.html#"><i class="icon-facebook"></i></a>
-						<a href="index.html#"><i class="icon-twitter"></i></a>
-						<a href="index.html#"><i class="icon-envelope"></i></a>
+						<a href="index.html#"><i class="icon-facebook"></i></a> <a
+							href="index.html#"><i class="icon-twitter"></i></a> <a
+							href="index.html#"><i class="icon-envelope"></i></a>
 					</p>
 					<br>
 				</div>
@@ -317,13 +314,13 @@
 			</p>
 		</div>
 	</div>
-	</div>
+
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="resources/js/classie.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="resources/js/smoothscroll.js"></script>
-	<script src="resources/js/main.js"></script>
 </body>
 </html>

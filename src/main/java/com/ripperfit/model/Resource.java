@@ -29,9 +29,12 @@ public class Resource implements Serializable {
 	@Column(name="resource_name",unique=true)
 	private String resourceName;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="final_approval_designation_id")
-	private Designation designation;
+	@Column(name="final_approval_tier_level")
+	private int finalApprovalTierLevel;
+	
+	@ManyToOne(optional=false,fetch=FetchType.LAZY)
+	@JoinColumn(name="organization_id")
+	private Organization organization;
 	
 	@Column(name="quantity")
 	private int quantity;
@@ -64,19 +67,32 @@ public class Resource implements Serializable {
 		this.resourceName = resourceName;
 	}
 
-
 	/**
-	 * @return the designation
+	 * @return the finalApprovalTierLevel
 	 */
-	public Designation getDesignation() {
-		return designation;
+	public int getFinalApprovalTierLevel() {
+		return finalApprovalTierLevel;
 	}
 
 	/**
-	 * @param designation the designation to set
+	 * @param finalApprovalTierLevel the finalApprovalTierLevel to set
 	 */
-	public void setDesignation(Designation designation) {
-		this.designation = designation;
+	public void setFinalApprovalTierLevel(int finalApprovalTierLevel) {
+		this.finalApprovalTierLevel = finalApprovalTierLevel;
+	}
+
+	/**
+	 * @return the organization
+	 */
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	/**
+	 * @param organization the organization to set
+	 */
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
 	}
 
 	/**

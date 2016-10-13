@@ -43,7 +43,6 @@ public class MailUtility {
 	@RequestMapping(value = "registrationMail")
 	public ResponseEntity<Void> registrationMail(@RequestBody String email) {
 		
-		System.out.println("email: "+email);
 		String subject = "Register your email account to RipperFit";
 		String body = "Hello "+email+", You are successfully registered";
 		sendMail(subject, body, email);

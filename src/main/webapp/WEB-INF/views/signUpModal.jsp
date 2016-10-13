@@ -146,7 +146,7 @@ $('#i_file').change( function(event) {
                                         
                                         <div class="form-group"> 
                                           <label class="control-label" for="form-dob">Date Of Birth:</label>
-                                       <input class="form-control" id="form-dob" name="form-dob" placeholder="MM/DD/YYY" type="text" ng-model="user.dateOfBirth"/>
+                                       <input class="form-control" id="form-do" name="form-dob" placeholder="YYYY-MM-DD" type="text" ng-model="user.dateOfBirth"/>
                                          </div>
                                         
 				                        <div class="form-group">
@@ -166,7 +166,7 @@ $('#i_file').change( function(event) {
                                              <p class="help-block">Please confirm password</p>
                                         </div>
 				                        </div>
-				                        <input type="button" class="col-xs-12 btnSubmit" ng-click="getFormDetails(user)" onclick="" value="Sign me up!">Sign me up!</input>
+				                        <input type="button" class="col-xs-12 btnSubmit" ng-click="getFormDetails(user)" onclick="" value="Sign me up!">
 				                    </form>
 			                    </div>
                         	</div>

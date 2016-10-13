@@ -94,76 +94,23 @@
 						<div class="social-login">
 							<h3>...or login with:</h3>
 							<div class="social-login-buttons">
-								<a class="btn btn-link-2 custom-login" href="#"> <i
-									class="fa fa-facebook"></i> Facebook</a>
-								<a class="btn btn-link-2 custom-login" href="#"> <i
-									class="fa fa-twitter"></i> Twitter</a>
-								<!-- <a class="btn btn-link-2 custom-login"
-									href='https://accounts.google.com/o/oauth2/auth?access_type=offline&
-								client_id=412974983923-jg7l8j84308pughfqt5o8q0gc0pslh83.apps.googleusercontent.com&scope=https://www.googleapis.com/auth/userinfo.email+
-								https://www.googleapis.com/auth/plus.me+https://www.googleapis.com/auth/plus.login
-								&response_type=code&redirect_uri=http://localhost:8080/RipperFit/'>
-									<i class="fa fa-google"></i> Google							</a>
-								<form action="https://accounts.google.com/o/oauth2/auth"
-									method="POST">
-									<button type="submit" class="btn btn-large btn-primary">Sign
-										in with Google</button>
-									<input type="hidden" name="scope"
-										value="https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.me" />
-									<input type="hidden" name="access_type" value="offline" /> <input
-										type="hidden" name="response_type" value="code" /> <input
-										type="hidden" name="redirect_uri"
-										value="http://localhost:8080/RipperFit/" />
-								</form>
-								<div class="g-signin2" data-onsuccess="onSignIn"
-									data-accesstype="offline"
-									data-redirecturi="http://localhost:8080/RipperFit/"></div>
-							</div> -->
-							<button id="signinButton">Sign in with Google</button>
+								<button id="signinButton" ng-controller="socialCtrl">Sign in with Google</button>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<script>
-		$('#signinButton').click(function() {
-			// signInCallback defined in step 6.
-			auth2.grantOfflineAccess({
-				'redirect_uri' : 'postmessage'
-			}).then(signInCallback);
-		});
-	</script>
 
-	<script>
-		function signInCallback(authResult) {
-			if (authResult['code']) {
-				// Hide the sign-in button now that the user is authorized, for example:
-				$('#signinButton').attr('style', 'display: none');
-				// Send the code to the server
-				$.ajax({
-					type : 'POST',
-					url : '/RipperFit/social/getDetails',
-					contentType : 'application/octet-stream; charset=utf-8',
-					success : function(result) {
-						// Handle or verify the server response.
-					},
-					processData : false,
-					data : authResult['code']
-				});
-			} else {
-				// There was an error.
-			}
-		}
-	</script>
 
-	<!-- Javascript -->
-	<script src="resources/js/googleApi.js"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="resources/js/jquery.backstretch.min.js"></script>
-	<script src="resources/js/scripts.js"></script>
-	<script src="resources/js/applications.js"></script>
-	<script src="resources/js/controllers.js"></script>
+		<!-- Javascript -->
+		<script src="resources/js/googleApi.js"></script>
+		<script
+			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="resources/js/jquery.backstretch.min.js"></script>
+		<script src="resources/js/scripts.js"></script>
+		<script src="resources/js/applications.js"></script>
+		<script src="resources/js/controllers.js"></script>
+		<script src="resources/js/socialLoginController.js"></script>
 </body>
 </html>

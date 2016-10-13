@@ -12,7 +12,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 
 </head>
-<body ng-app="signUp">
+<body ng-app="ripperFit">
 	<div ng-controller="signUpCtrl">
 		<h1>A mail has been sent to your gmail account {{email}}. Please
 			confirm your account.</h1>

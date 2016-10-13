@@ -1,4 +1,4 @@
-signUp.controller('logoutCtrl',function($scope,$http,$window){
+/*signUp.controller('logoutCtrl',function($scope,$http,$window){
 	
 	$scope.logout = function() {
 	$http({
@@ -15,10 +15,9 @@ signUp.controller('logoutCtrl',function($scope,$http,$window){
 	
 	}
 	
-});
+});*/
 
-
-signUp.controller('signUpCtrl', function($scope, $http,$window){
+signUp.controller('signUpCtrl', function($scope, $http, $window, $filter){
 
 	$scope.getDesignations=function()
 	{
@@ -32,10 +31,22 @@ signUp.controller('signUpCtrl', function($scope, $http,$window){
 		$scope.designationDetails = response.data; 
 	}, function (){ 
 		alert("No designations found");
-	});}
-	
-	
-	
+	});
+	}
+	$scope.logout = function() {
+		$http({
+			method: 'POST',
+			url: "/RipperFit/employee/logout",
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).then( function (){
+			$window.location.href = '/RipperFit/login';
+		}, function (){ 
+			alert("Registration failed!!");
+		});
+		
+		}
 	$scope.getFormDetails=function(user) {
 
 		$scope.email="";
@@ -43,6 +54,7 @@ signUp.controller('signUpCtrl', function($scope, $http,$window){
 		$scope.userDetails = {
 			"employeeId": "",
 			"email": $scope.userDetails.email,
+			"organization": null,
 			"password": $scope.userDetails.password,
 			"firstName": $scope.userDetails.firstName,
 			"lastName": $scope.userDetails.lastName,
@@ -53,7 +65,6 @@ signUp.controller('signUpCtrl', function($scope, $http,$window){
 			"designation" : null,
 			"profilePicture" :null
 		};
-		
 
 		$http({
 			method: 'POST',
@@ -77,14 +88,11 @@ signUp.controller('signUpCtrl', function($scope, $http,$window){
 			}, function (){ 
 				alert("Registration failed!!");
 			});
-		}, function (){ 
-			alert("Registration failed!!");
 		});
 	}
 	
 	$scope.login = function(user){
 
-		console.log("login");
 		$scope.loginDetails=angular.copy(user);
 
 		$http({
@@ -95,8 +103,15 @@ signUp.controller('signUpCtrl', function($scope, $http,$window){
 				'Content-Type': 'application/json'
 			}
 		}).then( function (response){
-			$scope.employeeDetails = response.data; 
-			$window.location.href = '/RipperFit/welcome';
+			$scope.employeeDetails = response.data;
+			var str = $filter('uppercase')($scope.employeeDetails.designation.designationName);
+			if(str == "ADMIN") {
+				$window.location.href = '/RipperFit/admin';
+			} else if(str == "HELPDESK") {
+				$window.location.href = '/RipperFit/helpdesk';
+			} else {
+				$window.location.href = '/RipperFit/employee';
+			}
 		}, function (){ 
 			alert("Wrong username and password!!");
 		});

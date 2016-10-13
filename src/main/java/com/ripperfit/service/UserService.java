@@ -1,10 +1,12 @@
 package com.ripperfit.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.ripperfit.daoLayer.UserDao;
+import com.ripperfit.dao.UserDao;
 import com.ripperfit.model.Employee;
 
 @Transactional
@@ -90,6 +92,17 @@ public class UserService {
 	public Employee login(String email,String password) {
 		
 		Employee emp = this.userDao.login(email,password);
+		return emp;
+	}
+
+	
+	
+	
+	@Transactional
+	
+	public List<Employee> viewAllEmployee() {
+		// TODO Auto-generated method stub
+		List<Employee> emp=this.userDao.viewAllEmployee();
 		return emp;
 	}
 }

@@ -6,18 +6,14 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class HomeController {
 
-	@RequestMapping(value="/", method=GET)
-	public String home(HttpSession session) {
-		
-		/*if(session.getAttribute("email") != null) {
-			return "Welcome";
-		} else {*/
-			return "index";
-		/*}*/
+	@RequestMapping(value="/", method=RequestMethod.GET)
+	public String home() {
+		return "index";
 	}
 	
 	@RequestMapping(value="signUp", method=GET)
@@ -25,28 +21,20 @@ public class HomeController {
 		return "signUpModal";
 	}
 	
+	@RequestMapping(value="signUpAfterSocialLogin", method=GET)
+	public String signUpAfterSocialLogin() {
+		return "SignUpAfterSocialLogin";
+	}
+	
 	@RequestMapping(value="login", method=GET)
 	public String login() {
 		return "signIn";
 	}
-	@RequestMapping(value="HelpDesk", method=GET)
-	public String HelpDesk() {
-		return "HelpDesk";
-	}
-	@RequestMapping(value="Employee", method=GET)
-	public String EmployeeDb() {
-		return "UserDB";
-	}
 
-	@RequestMapping(value="welcome", method=GET)
+	/*@RequestMapping(value="welcome", method=GET)
 	public String welcome(HttpSession session) {
-
-		/*if(session.getAttribute("email") != null) {*/
-			return "Welcome";
-		/*} else {
-			return "signIn";
-		}*/
-	}
+		return "Welcome";
+	}*/
 
 	@RequestMapping(value="success", method=GET)
 	public String success() {
@@ -63,6 +51,16 @@ public class HomeController {
 		return "AdminPage";
 	}
 	
+	@RequestMapping(value="helpdesk", method=GET)
+	public String helpdesk() {
+		return "HelpDesk";
+	}
+	
+	@RequestMapping(value="employee", method=GET)
+	public String employee() {
+		return "UserDB";
+	}
+	
 	@RequestMapping(value="request", method=GET)
 	public String request() {
 		return "viewRequest";
@@ -72,14 +70,17 @@ public class HomeController {
 	public String role() {
 		return "ViewRole";
 	}
-	@RequestMapping(value="employee", method=GET)
-	public String employee() {
+	
+	@RequestMapping(value="viewEmployee", method=GET)
+	public String viewEmployee() {
 		return "viewEmployee";
 	}
+	
 	@RequestMapping(value="requestemployee", method=GET)
 	public String requestemployee() {
 		return "ViewEmployeeRequest";
 	}
+	
 	@RequestMapping(value="DBHome")
 	public String HomedashBoard() {
 		return "DBHome";

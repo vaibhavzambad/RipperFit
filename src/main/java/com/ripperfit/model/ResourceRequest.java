@@ -30,13 +30,16 @@ public class ResourceRequest implements Serializable {
 	@JoinColumn(name="resource_id")
 	private Resource resource;
 	
+	@ManyToOne(optional=false,fetch=FetchType.LAZY)
+	@JoinColumn(name="organization_id")
+	private Organization organization;
+	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="requestor_id")
 	private Employee employee;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="current_approval_designation_id")
-	private Designation designation;
+	@Column(name="current_approval_tier_level")
+	private int currentApprovalTieLevel;
 	
 	@Column(name="priority")
 	private String priority;
@@ -91,20 +94,6 @@ public class ResourceRequest implements Serializable {
 	}
 
 	/**
-	 * @return the designation
-	 */
-	public Designation getDesignation() {
-		return designation;
-	}
-
-	/**
-	 * @param designation the designation to set
-	 */
-	public void setDesignation(Designation designation) {
-		this.designation = designation;
-	}
-
-	/**
 	 * @return the priority
 	 */
 	public String getPriority() {
@@ -144,6 +133,34 @@ public class ResourceRequest implements Serializable {
 	 */
 	public void setComments(String comments) {
 		this.comments = comments;
+	}
+
+	/**
+	 * @return the organization
+	 */
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	/**
+	 * @param organization the organization to set
+	 */
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
+	}
+
+	/**
+	 * @return the currentApprovalTieLevel
+	 */
+	public int getCurrentApprovalTieLevel() {
+		return currentApprovalTieLevel;
+	}
+
+	/**
+	 * @param currentApprovalTieLevel the currentApprovalTieLevel to set
+	 */
+	public void setCurrentApprovalTieLevel(int currentApprovalTieLevel) {
+		this.currentApprovalTieLevel = currentApprovalTieLevel;
 	}
 	
 }

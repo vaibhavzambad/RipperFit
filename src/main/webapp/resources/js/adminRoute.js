@@ -9,13 +9,17 @@ var app=angular.module("admin",["ngRoute"])
 		templateUrl:"/RipperFit/role",
 		controller:"viewRoleController"
 	})
-	.when("/admin/viewEmployee",{
-		templateUrl:"/RipperFit/employee",
+		.when("/admin/viewEmployee",{
+		templateUrl:"/RipperFit/viewEmployee",
 		controller:"viewEmployeeController"
 	})
 	.when("/admin/viewRequest/:employeeId",{
 		templateUrl:"/RipperFit/requestemployee/",
 		controller:"viewEmployeeRequestController",
+		
+	}).when("/admin/logOut",{
+		templateUrl:"/RipperFit/login/",
+		controller:"logOutController",
 		
 	}).when("/admin/home",{
 		templateUrl:"/RipperFit/DBHome/",
@@ -54,4 +58,9 @@ var app=angular.module("admin",["ngRoute"])
 										console.log("ddf"+$scope.request[0].status);
 									});
 							      
-							})
+							
+							
+								
+								
+						      
+						})

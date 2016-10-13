@@ -1,4 +1,4 @@
-signUp.controller('logoutCtrl',function($scope,$http,$window){
+/*signUp.controller('logoutCtrl',function($scope,$http,$window){
 	
 	$scope.logout = function() {
 	$http({
@@ -15,9 +15,9 @@ signUp.controller('logoutCtrl',function($scope,$http,$window){
 	
 	}
 	
-});
+});*/
 
-signUp.controller('signUpCtrl', function($scope, $http,$window){
+signUp.controller('signUpCtrl', function($scope, $http, $window, $filter){
 
 	$scope.getFormDetails=function(user) {
 
@@ -66,7 +66,6 @@ signUp.controller('signUpCtrl', function($scope, $http,$window){
 	
 	$scope.login = function(user){
 
-		console.log("login");
 		$scope.loginDetails=angular.copy(user);
 
 		$http({
@@ -77,8 +76,15 @@ signUp.controller('signUpCtrl', function($scope, $http,$window){
 				'Content-Type': 'application/json'
 			}
 		}).then( function (response){
-			$scope.employeeDetails = response.data; 
-			$window.location.href = '/RipperFit/welcome';
+			$scope.employeeDetails = response.data;
+			var str = $filter('uppercase')($scope.employeeDetails.designation.designationName);
+			if(str == "ADMIN") {
+				$window.location.href = '/RipperFit/admin';
+			} else if(str == "HELPDESK") {
+				$window.location.href = '/RipperFit/helpdesk';
+			} else {
+				$window.location.href = '/RipperFit/employee';
+			}
 		}, function (){ 
 			alert("Wrong username and password!!");
 		});
