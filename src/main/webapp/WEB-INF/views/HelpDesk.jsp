@@ -4,7 +4,7 @@
 <head>
  
     <meta charset="utf-8">
-    <title>Admin App</title>
+    <title>HelpDesk</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css" />">
@@ -28,32 +28,42 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="">RipperFit</a>
+      <a class="navbar-brand" href="#">RipperFit</a>
     </div>
       <div class="collapse navbar-collapse" id="myNavbar">
     <ul class="nav navbar-nav">
-      <li class="active"><a href="#admin/home">Home</a></li>
-        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">Designation<span class="caret"></span></a>
+     
+        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">Inventory<span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href="#/admin/viewRole">View Designations</a></li>
-          <li><a href="">Add Designation</a></li>
-          <li><a href="">Update Designation</a></li>
+          <li><a href="">Available Resources</a></li>
+          <li><a href="">Add Resources</a></li>
+          <li><a href="">Delete resources</a></li>
+          <li><a href="">Update resources</a></li>
         </ul>
       </li>
-      <li><a href="#/admin/viewRequest">View Resource Request</a></li>
-      <li><a href="#/admin/viewEmployee">View Employees</a></li>
-	   <li><a href="">View Resources</a></li>
-	   <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">Resource request<span class="caret"></span></a>
+        
+        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">Requests<span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href="">Add Own Request</a></li>
-          <li><a href="">Delete Own Request</a></li>
-          <li><a href="">Update Own Request</a></li>
+          <li><a href="">View all requests</a></li>
+          <li><a href="">Approved requests</a></li>
+          <li><a href="">Declined requests</a></li>
+          <li><a href="">Special Requests</a></li>
         </ul>
       </li>
+       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">My Actions<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="">Pending Requests</a></li>
+          <li><a href="">Delivered Requests</a></li>
+         
+        </ul>
+      </li>
+      <li><a href="">ShootOut</a></li>
+      
+     
     </ul>
     <ul class="nav navbar-nav navbar-right">
 
-        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">AdminPanel<span class="caret"></span></a>
+        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">HelpDesk<span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li><a href="">View Profile</a></li>
           <li><a href="">Log Out</a></li>
