@@ -6,14 +6,18 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class HomeController {
 
-	@RequestMapping(value="/", method=RequestMethod.GET)
-	public String home() {
-		return "index";
+	@RequestMapping(value="/", method=GET)
+	public String home(HttpSession session) {
+		
+		/*if(session.getAttribute("email") != null) {
+			return "Welcome";
+		} else {*/
+			return "index";
+		/*}*/
 	}
 	
 	@RequestMapping(value="signUp", method=GET)
@@ -25,11 +29,23 @@ public class HomeController {
 	public String login() {
 		return "signIn";
 	}
+	@RequestMapping(value="HelpDesk", method=GET)
+	public String HelpDesk() {
+		return "HelpDesk";
+	}
+	@RequestMapping(value="Employee", method=GET)
+	public String EmployeeDb() {
+		return "UserDB";
+	}
 
 	@RequestMapping(value="welcome", method=GET)
 	public String welcome(HttpSession session) {
 
-		return "Welcome";
+		/*if(session.getAttribute("email") != null) {*/
+			return "Welcome";
+		/*} else {
+			return "signIn";
+		}*/
 	}
 
 	@RequestMapping(value="success", method=GET)
@@ -55,5 +71,17 @@ public class HomeController {
 	@RequestMapping(value="role", method=GET)
 	public String role() {
 		return "ViewRole";
+	}
+	@RequestMapping(value="employee", method=GET)
+	public String employee() {
+		return "viewEmployee";
+	}
+	@RequestMapping(value="requestemployee", method=GET)
+	public String requestemployee() {
+		return "ViewEmployeeRequest";
+	}
+	@RequestMapping(value="DBHome")
+	public String HomedashBoard() {
+		return "DBHome";
 	}
 }
