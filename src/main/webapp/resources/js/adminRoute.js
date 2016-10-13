@@ -13,17 +13,21 @@ var app=angular.module("admin",["ngRoute"])
 		templateUrl:"/RipperFit/employee",
 		controller:"viewEmployeeController"
 	})
-	.when("/admin/viewRequest/:employeeeId",{
+	.when("/admin/viewRequest/:employeeId",{
 		templateUrl:"/RipperFit/requestemployee/",
 		controller:"viewEmployeeRequestController",
 		
-	})
+	}).when("/admin/home",{
+		templateUrl:"/RipperFit/DBHome/",
+		
+		})
 		})
 		.controller("viewRequestController",function($scope,$http)
 				{
 			$http.get("/RipperFit/request/viewAllRequests")
 			.then(function(response) {
 				$scope.requests = response.data;
+				
 			});
 
 				})
@@ -35,14 +39,19 @@ var app=angular.module("admin",["ngRoute"])
 					});
 						})
 						.controller("viewEmployeeController",function($scope,$http)
-								{$http.get("/RipperFit/employee/getEmployee")
+								{ $http.get("/RipperFit/employee/getEmployee")
 							.then(function(response) {
 								$scope.employee = response.data;
-								console.log($scope.employee);
+								console.log("fdf"+$scope.employee);
 							});
 								})
-								.controller("viewEmployeeRequestController",function($scope, $routeParams)
+								.controller("viewEmployeeRequestController",function($scope,$http,$routeParams)
 								{
 									
-							      console.log($routeParams.employeeId); 
+									$http.get("/RipperFit/request/viewRequests/"+$routeParams.employeeId+" ")
+									.then(function(response) {
+										$scope.request = response.data;
+										console.log("ddf"+$scope.request[0].status);
+									});
+							      
 							})
