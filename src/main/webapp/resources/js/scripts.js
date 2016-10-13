@@ -3,7 +3,8 @@ jQuery(document).ready(function() {
     /*
         Fullscreen background
     */
-    $.backstretch("resources/img/backgrounds/1.jpg");
+   $.backstretch("resources/img/header-bg.jpg");
+    $('form').backstretch("resources/img/header-bg.jpg");
     
     /*
         Login form validation
