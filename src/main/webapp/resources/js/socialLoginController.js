@@ -8,8 +8,6 @@ signUp.controller('socialCtrl',function($scope,$http,$window){
 		}).then(signInCallback);
 	});
 
-});
-
 	function signInCallback(authResult) {
 		if (authResult['code']) {
 			// Hide the sign-in button now that the user is authorized, for example:
@@ -24,13 +22,13 @@ signUp.controller('socialCtrl',function($scope,$http,$window){
 				processData : false,
 				data : authResult['code']
 			}).then( function(response) {
-					$scope.user = response.data;
-					console.log($scope.user);
-					//$window.location.href="/RipperFit/signUpAfterSocialLogin";
-				}, function (){ 
-					alert("Something went wrong");
-				});
+				$scope.user = response.data;
+				console.log($scope.user);
+				$window.location.href="/RipperFit/signUpAfterSocialLogin";
+			}, function (){ 
+				alert("Something went wrong");
+			});
 		} else {
-			// There was an error.
 		}
 	}
+});
