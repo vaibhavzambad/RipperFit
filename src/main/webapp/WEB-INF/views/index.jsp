@@ -15,9 +15,8 @@
 	rel="stylesheet">
 <!-- Custom styles for this template -->
 <link href="resources/css/main.css" rel="stylesheet">
-<link
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"
-	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="resources/js/Chart.js"></script>
@@ -39,8 +38,7 @@
 				</h1>
 			</div>
 			<div class="navbar-form navbar-right" role="search">
-				<a href="login">Login</a>
-				<a href="signUp">SignUp</a>
+				<a href="login">Login</a> <a href="signUp">SignUp</a>
 			</div>
 		</div>
 	</nav>

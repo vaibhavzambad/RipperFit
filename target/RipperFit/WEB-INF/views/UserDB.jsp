@@ -57,7 +57,7 @@
 
 					<li class="dropdown"><a class="dropdown-toggle"
 						data-toggle="dropdown" href="">Employee<span class="caret"></span></a>
-						<ul class="dropdown-menu" ng-controller="logoutCtrl">
+						<ul class="dropdown-menu" >
 							<li><a href="">View Profile</a></li>
 							<li><a href="">Log Out</a></li>
 

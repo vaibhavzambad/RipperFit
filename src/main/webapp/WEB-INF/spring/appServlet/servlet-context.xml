@@ -84,12 +84,12 @@
 		<beans:property name="sessionFactory"
 			ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
-	
+
 	<beans:bean id="resourceRequestDao" class="com.ripperfit.dao.ResourceRequestDao">
 		<beans:property name="sessionFactory"
 			ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
-	
+
 	<beans:bean id="designationDao" class="com.ripperfit.dao.DesignationDao">
 		<beans:property name="sessionFactory"
 			ref="hibernate4AnnotatedSessionFactory" />
@@ -99,23 +99,18 @@
 	<beans:bean id="userService" class="com.ripperfit.service.UserService">
 		<beans:property name="userDao" ref="userDao"></beans:property>
 	</beans:bean>
-		<beans:bean id="roleService" class="com.ripperfit.service.RoleService">
+	<beans:bean id="roleService" class="com.ripperfit.service.RoleService">
 		<beans:property name="designationDao" ref="designationDao"></beans:property>
 	</beans:bean>
 
-	<!-- <beans:bean id="resourceRequestService"
-		class="com.ripperfit.service.ResourceRequestService">
-		<beans:property name="resourceRequestDao" ref="resourceRequestDao"></beans:property>
-	</beans:bean> -->
-	
 	<beans:bean id="resourceApprovalService"
 		class="com.ripperfit.service.RequestApprovalService">
 		<beans:property name="resourceRequestDao" ref="resourceRequestDao"></beans:property>
-		
 		<beans:property name="resourceDao" ref="resourceDao"></beans:property>
 	</beans:bean>
-	
-	<beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+
+	<beans:bean id="mailSender"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<beans:property name="host" value="smtp.gmail.com" />
 		<beans:property name="port" value="587" />
 		<beans:property name="username" value="amit12t34t@gmail.com" />
@@ -134,8 +129,7 @@
 	<context:component-scan base-package="com.ripperfit.model" />
 	<context:component-scan base-package="com.ripperfit.service" />
 	<context:component-scan base-package="com.ripperfit.util" />
-
-
+	
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
 	<beans:bean id="transactionManager"

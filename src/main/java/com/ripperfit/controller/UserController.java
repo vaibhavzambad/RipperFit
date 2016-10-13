@@ -1,8 +1,12 @@
 package com.ripperfit.controller;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -127,13 +131,21 @@ public class UserController {
 	}
 	
 	/**
+	 * @throws IOException 
 	 * 
 	 */
-	@RequestMapping(value="/logout",method= RequestMethod.POST)
+	/*@RequestMapping(value="/logout",method= RequestMethod.POST)
 	public ResponseEntity<Void> logout(HttpSession session){
 		
 		session.invalidate();
 		return new ResponseEntity<Void>(HttpStatus.OK);
+	}*/
+	@RequestMapping(value="/logout", method= RequestMethod.GET)
+	public void logout(HttpSession session, final ServletResponse response) throws IOException{
+		
+		final HttpServletResponse httpResponse = (HttpServletResponse) response;
+		session.invalidate();
+		httpResponse.sendRedirect("/RipperFit/");
 	}
 	
 	@RequestMapping(value = "/getEmployee", method = RequestMethod.GET)

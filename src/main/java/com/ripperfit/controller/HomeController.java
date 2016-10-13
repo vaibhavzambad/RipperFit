@@ -2,8 +2,6 @@ package com.ripperfit.controller;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,16 +27,6 @@ public class HomeController {
 	@RequestMapping(value="login", method=GET)
 	public String login() {
 		return "signIn";
-	}
-
-	/*@RequestMapping(value="welcome", method=GET)
-	public String welcome(HttpSession session) {
-		return "Welcome";
-	}*/
-
-	@RequestMapping(value="success", method=GET)
-	public String success() {
-		return "success";
 	}
 
 	@RequestMapping(value="mailController", method=GET)

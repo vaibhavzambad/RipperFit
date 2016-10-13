@@ -19,6 +19,34 @@
 
 signUp.controller('signUpCtrl', function($scope, $http, $window, $filter){
 
+	$scope.getDesignations=function()
+	{
+	$http({
+		method: 'GET',
+		url: "/RipperFit/role/getDesignations",
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	}).then( function (response){
+		$scope.designationDetails = response.data; 
+	}, function (){ 
+		alert("No designations found");
+	});
+	}
+	$scope.logout = function() {
+		$http({
+			method: 'POST',
+			url: "/RipperFit/employee/logout",
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).then( function (){
+			$window.location.href = '/RipperFit/login';
+		}, function (){ 
+			alert("Registration failed!!");
+		});
+		
+		}
 	$scope.getFormDetails=function(user) {
 
 		$scope.email="";
@@ -26,6 +54,7 @@ signUp.controller('signUpCtrl', function($scope, $http, $window, $filter){
 		$scope.userDetails = {
 			"employeeId": "",
 			"email": $scope.userDetails.email,
+			"organization": null,
 			"password": $scope.userDetails.password,
 			"firstName": $scope.userDetails.firstName,
 			"lastName": $scope.userDetails.lastName,
@@ -59,8 +88,6 @@ signUp.controller('signUpCtrl', function($scope, $http, $window, $filter){
 			}, function (){ 
 				alert("Registration failed!!");
 			});
-		}, function (){ 
-			alert("Registration failed!!");
 		});
 	}
 	

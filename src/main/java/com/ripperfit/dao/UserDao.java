@@ -123,6 +123,7 @@ public class UserDao {
 		}
 		return emp;
 	}
+	
 	public List<Employee> viewAllEmployee() {
 		Session session = this.sessionFactory.getCurrentSession();
 		@SuppressWarnings("unchecked")

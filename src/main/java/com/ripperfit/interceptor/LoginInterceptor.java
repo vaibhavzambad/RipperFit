@@ -42,28 +42,31 @@ public class LoginInterceptor extends GenericFilterBean {
 		final HttpServletResponse httpResponse = (HttpServletResponse) response;
 
 		HttpSession session = httpRequest.getSession(false);
-		String email = (String)session.getAttribute("email");
-		System.out.println("email: "+email);
-		if (session == null || email == null) {
+		try {
+			
+			String email = (String)session.getAttribute("email");
+			if (session == null || email == null) {
 
-			httpResponse.sendRedirect("login");
-
-		}/*else{
-
-			System.out.println("uswsjd: "+userService);
-			Employee employee = userService.getEmployeeByEmail(email);
-			if(employee != null){
-				if(employee.getDesignation().getDesignationName().toUpperCase() == "ADMIN"){
-					httpResponse.sendRedirect("admin");
-				}else if(employee.getDesignation().getDesignationName().toUpperCase() == "HELPDESK"){
-					httpResponse.sendRedirect("helpdesk");
-				}else{
-					httpResponse.sendRedirect("employee");
-				}
-			}else{
 				httpResponse.sendRedirect("login");
-			}
-		}*/
-		filterChain.doFilter(request, response);
+			}/*else{
+
+				System.out.println("uswsjd: "+userService);
+				Employee employee = userService.getEmployeeByEmail(email);
+				if(employee != null){
+					if(employee.getDesignation().getDesignationName().toUpperCase() == "ADMIN"){
+						httpResponse.sendRedirect("admin");
+					}else if(employee.getDesignation().getDesignationName().toUpperCase() == "HELPDESK"){
+						httpResponse.sendRedirect("helpdesk");
+					}else{
+						httpResponse.sendRedirect("employee");
+					}
+				}else{
+					httpResponse.sendRedirect("login");
+				}
+			}*/
+			filterChain.doFilter(request, response);
+		} catch(NullPointerException npe) {
+			httpResponse.sendRedirect("login");
+		}
 	}
 }

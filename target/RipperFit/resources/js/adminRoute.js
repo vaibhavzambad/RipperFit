@@ -17,6 +17,10 @@ var app=angular.module("admin",["ngRoute"])
 		templateUrl:"/RipperFit/requestemployee/",
 		controller:"viewEmployeeRequestController",
 		
+	}).when("/admin/logOut",{
+		templateUrl:"/RipperFit/login/",
+		controller:"logOutController",
+		
 	}).when("/admin/home",{
 		templateUrl:"/RipperFit/DBHome/",
 		
@@ -54,4 +58,9 @@ var app=angular.module("admin",["ngRoute"])
 										console.log("ddf"+$scope.request[0].status);
 									});
 							      
-							})
+							
+							
+								
+								
+						      
+						})
