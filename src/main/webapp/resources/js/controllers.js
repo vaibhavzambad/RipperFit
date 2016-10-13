@@ -17,8 +17,25 @@ signUp.controller('logoutCtrl',function($scope,$http,$window){
 	
 });
 
+
 signUp.controller('signUpCtrl', function($scope, $http,$window){
 
+	$scope.getDesignations=function()
+	{
+	$http({
+		method: 'GET',
+		url: "/RipperFit/role/getDesignations",
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	}).then( function (response){
+		$scope.designationDetails = response.data; 
+	}, function (){ 
+		alert("No designations found");
+	});}
+	
+	
+	
 	$scope.getFormDetails=function(user) {
 
 		$scope.email="";
@@ -36,6 +53,7 @@ signUp.controller('signUpCtrl', function($scope, $http,$window){
 			"designation" : null,
 			"profilePicture" :null
 		};
+		
 
 		$http({
 			method: 'POST',
