@@ -9,17 +9,13 @@ var app=angular.module("admin",["ngRoute"])
 		templateUrl:"/RipperFit/role",
 		controller:"viewRoleController"
 	})
-		.when("/admin/viewEmployee",{
-		templateUrl:"/RipperFit/viewEmployee",
+	.when("/admin/viewEmployee",{
+		templateUrl:"/RipperFit/employee",
 		controller:"viewEmployeeController"
 	})
 	.when("/admin/viewRequest/:employeeId",{
 		templateUrl:"/RipperFit/requestemployee/",
 		controller:"viewEmployeeRequestController",
-		
-	}).when("/admin/logOut",{
-		templateUrl:"/RipperFit/login/",
-		controller:"logOutController",
 		
 	}).when("/admin/home",{
 		templateUrl:"/RipperFit/DBHome/",
@@ -31,6 +27,38 @@ var app=angular.module("admin",["ngRoute"])
 			$http.get("/RipperFit/request/viewAllRequests")
 			.then(function(response) {
 				$scope.requests = response.data;
+				
+				var length=$scope.requests.length;
+			for(var i=0;i<length;i++)
+					{
+					
+					if($scope.requests[i].status=="completed")
+					{
+					$scope.requests[i].color="success";
+					
+					
+					}
+					if($scope.requests[i].status=="running")
+					{
+					$scope.requests[i].color="primary";
+					
+					}
+					if($scope.requests[i].status=="rejected")
+					{
+						$scope.requests[i].color="danger";
+					
+					}
+					if($scope.requests[i].status=="approved")
+					{
+						$scope.requests[i].color="warning";
+					
+					}
+					
+					}
+				
+				
+				
+				
 				
 			});
 
@@ -58,9 +86,4 @@ var app=angular.module("admin",["ngRoute"])
 										console.log("ddf"+$scope.request[0].status);
 									});
 							      
-							
-							
-								
-								
-						      
-						})
+							})
