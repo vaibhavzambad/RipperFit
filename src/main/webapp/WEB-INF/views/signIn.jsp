@@ -4,29 +4,15 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bootstrap Login &amp; Register Templates</title>
+<title>SignIn to RipperFit</title>
 
 <!-- CSS -->
-<link rel="stylesheet"
-	href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-<link rel="stylesheet" href="resources/css/form-elements.css">
+<link rel="stylesheet" href="resources/css/signUpStyle.css">
 <link rel="stylesheet" href="resources/css/style.css">
 <link rel="stylesheet"
 	href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 
-<!-- Favicon and touch icons -->
-<link rel="apple-touch-icon-precomposed" sizes="144x144"
-	href="resources/ico/apple-touch-icon-144-precomposed.png">
-<link rel="apple-touch-icon-precomposed" sizes="114x114"
-	href="resources/ico/apple-touch-icon-114-precomposed.png">
-<link rel="apple-touch-icon-precomposed" sizes="72x72"
-	href="resources/ico/apple-touch-icon-72-precomposed.png">
-<link rel="apple-touch-icon-precomposed"
-	href="resources/ico/apple-touch-icon-57-precomposed.png">
+
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script
@@ -54,26 +40,25 @@
 </script>
 
 </head>
-<body ng-app="signUp">
+<body ng-app="ripperfit">
 
-	<!-- Top content -->
-	<div class="top-content">
-		<div class="inner-bg">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-12">
-						<div class="form-box">
-							<div class="form-top">
-								<div class="form-top-left">
-									<h3>Login to RipperFit</h3>
-									<p>Enter Email and password to log on:</p>
+	<nav class="navbar navbar-inverse">
+								<div class="container-fluid">
+									<div class="navbar-header">
+										<a class="navbar-brand" href="#">RipperFit</a>
+									</div>
+									<ul class="nav navbar-nav">
+										<li class="active"><a href="#">Home</a></li>
+      
+									</ul>
 								</div>
-								<div class="form-top-right">
-									<i class="fa fa-lock"></i>
-								</div>
-							</div>
-							<div class="form-bottom" ng-controller="signUpCtrl">
-								<form role="form" action="" method="post" class="login-form">
+							</nav>
+                            <div class="container">
+							<div class="blank">
+							  
+				              <h3>SignIn to Ripperfit</h3><hr />
+                                    <div class="signInBlank">
+			                         <form role="form" action="" method="post" class="login-form" ng-controller="signUpctrl">
 									<div class="form-group">
 										<label class="sr-only" for="form-email">Username</label> <input
 											type="text" name="form-email" placeholder="Email-id..."
@@ -86,12 +71,10 @@
 											placeholder="Password..." class="form-password form-control"
 											id="form-password" ng-model="user.password">
 									</div>
-									<input type="button" class="col-md-12 btnSubmit"
-										ng-click="login(user)" value="Log-in" />
+									<input type="button" class="col-xs-12 btn btn-info"
+										ng-click="login(user)" value="Log-in" onclick="validate()"/>
 								</form>
-							</div>
-						</div>
-						<div class="social-login">
+	                            <div class="social-login text-center">
 							<h3>...or login with:</h3>
 							<div class="social-login-buttons">
 								<button id="signinButton" ng-controller="socialCtrl">Sign in with Google</button>
