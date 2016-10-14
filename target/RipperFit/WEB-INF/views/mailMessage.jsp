@@ -16,6 +16,9 @@
 	<div ng-controller="signUpCtrl">
 		<h1>A mail has been sent to your gmail account {{userDetails.email}}. Please
 			confirm your account.</h1>
+			
+		<a href="/RipperFit/"> Home </a>
+		<a href="/RipperFit/login"> Login </a>
 	</div>
 	
 	<!-- Javascript -->

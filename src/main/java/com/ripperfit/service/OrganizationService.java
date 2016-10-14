@@ -35,4 +35,31 @@ public class OrganizationService {
 		List<Organization> organizationList=this.organizationDao.getAllOrganizations();
 		return organizationList;
 	}
+	
+	@Transactional
+	public Organization getOrganizationByName(String organizationName){
+		
+		Organization organization = this.organizationDao.getOrganizationByName(organizationName);
+		return organization;
+	}
+	
+	@Transactional
+	public Organization getOrganizationById(int organizationId){
+		
+		Organization organization = this.organizationDao.getOrganizationById(organizationId);
+		return organization;
+	}
+	
+	@Transactional
+	public int addOrganization(Organization organization) {
+		
+		int result = 0;
+		if(this.organizationDao.getOrganizationByName(organization.getOrganizationName()) != null) {
+			result = 1;
+		} else if(this.organizationDao.addOrganization(organization)) {
+			result = 2;
+		}
+		return result;
+	}
+	
 }

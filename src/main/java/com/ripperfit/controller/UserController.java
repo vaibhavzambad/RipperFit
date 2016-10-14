@@ -165,7 +165,7 @@ public class UserController {
 	
 	@RequestMapping(value = "/getEmployee", method = RequestMethod.GET)
 	public ResponseEntity<List<Employee>> viewRoles() {
-		System.out.println("emp");
+		
 		List<Employee> list = this.userService.viewAllEmployee();
 		if(list.isEmpty()) {
 
@@ -173,5 +173,12 @@ public class UserController {
 		} else {
 			return new ResponseEntity<List<Employee>>(list, HttpStatus.OK);
 		}
+	}
+	
+	@RequestMapping(value="/deleteEmployeebyId",method = RequestMethod.DELETE)
+	public ResponseEntity<Void> deleteEmployeeById(@RequestBody int employeeId){
+		
+		this.userService.deleteEmployeeById(employeeId);
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 }

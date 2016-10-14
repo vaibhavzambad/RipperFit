@@ -61,7 +61,6 @@ public class HomeController {
 	
 	@RequestMapping(value="viewEmployee", method=GET)
 	public String viewEmployee() {
-		System.out.println("dfd0");
 		return "viewEmployee";
 	}
 	

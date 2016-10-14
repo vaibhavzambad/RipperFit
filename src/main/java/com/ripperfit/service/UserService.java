@@ -94,15 +94,19 @@ public class UserService {
 		Employee emp = this.userDao.login(email,password);
 		return emp;
 	}
-
-	
-	
 	
 	@Transactional
-	
 	public List<Employee> viewAllEmployee() {
 		// TODO Auto-generated method stub
 		List<Employee> emp=this.userDao.viewAllEmployee();
 		return emp;
+	}
+	
+	@Transactional
+	public boolean deleteEmployeeById(int employeeId){
+		
+		boolean result = this.userDao.deleteEmployeeById(employeeId);
+		return result;
+		
 	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -129,5 +130,16 @@ public class UserDao {
 		@SuppressWarnings("unchecked")
 		List<Employee> emp = session.createCriteria(Employee.class).list();
 		return emp;
+	}
+	
+	public boolean deleteEmployeeById(int employeeId){
+		
+		Session session = this.sessionFactory.getCurrentSession();
+		String hql = "delete from Employee where employee_id= :employeeId";
+		Query query = session.createQuery(hql);
+		query.setParameter("employee_id", employeeId);
+		query.executeUpdate();
+		return true;
+		
 	}
 }

@@ -2,11 +2,13 @@ package com.ripperfit.dao;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.ripperfit.model.Designation;
 import com.ripperfit.model.Organization;
 
 public class OrganizationDao {
@@ -30,12 +32,57 @@ public class OrganizationDao {
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
-	
+
 	public List<Organization> getAllOrganizations() {
 		Session session = this.sessionFactory.getCurrentSession();
 		@SuppressWarnings("unchecked")
 		List<Organization> organizationList = session.createCriteria(Organization.class).list();
 		System.out.println("organi: "+organizationList.size());
 		return organizationList;
+	}
+
+	@Transactional
+	public Boolean addOrganization(Organization organization) {
+
+		Session session = this.sessionFactory.getCurrentSession();
+		boolean result = false;
+		int i=0;
+		try {
+			i = (Integer) session.save(organization);
+			if(i > 0) {
+				result = true;
+			}
+		} catch(Exception e) {
+
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Transactional
+	public Organization getOrganizationByName(String organizationName){
+
+		Session session = this.sessionFactory.getCurrentSession();
+		Query query = session.createQuery("from Organization where organization_name= :organizationName"); 
+		query.setParameter("organization_name", organizationName);
+
+		@SuppressWarnings("unchecked")
+		List<Organization> organizationList = query.list();
+		Organization organization = (Organization) organizationList.get(0);
+		return organization;
+	}
+
+	@Transactional
+	public Organization getOrganizationById(int organizationId){
+
+		Session session = this.sessionFactory.getCurrentSession();
+		Query query = session.createQuery("from Organization where organization_id= :organizationId"); 
+		query.setParameter("organization_id", organizationId);
+
+		@SuppressWarnings("unchecked")
+		List<Organization> organizationList = query.list();
+		Organization organization = (Organization) organizationList.get(0);
+		return organization;
+		
 	}
 }
