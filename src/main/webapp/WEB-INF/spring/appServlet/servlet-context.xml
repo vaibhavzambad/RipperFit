@@ -94,13 +94,23 @@
 		<beans:property name="sessionFactory"
 			ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
+	
+	<beans:bean id="organizationDao" class="com.ripperfit.dao.OrganizationDao">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
 
 	<!-- Service Beans -->
 	<beans:bean id="userService" class="com.ripperfit.service.UserService">
 		<beans:property name="userDao" ref="userDao"></beans:property>
 	</beans:bean>
+	
 	<beans:bean id="roleService" class="com.ripperfit.service.RoleService">
 		<beans:property name="designationDao" ref="designationDao"></beans:property>
+	</beans:bean>
+	
+	<beans:bean id="organizationService" class="com.ripperfit.service.OrganizationService">
+		<beans:property name="organizationDao" ref="organizationDao"></beans:property>
 	</beans:bean>
 
 	<beans:bean id="resourceApprovalService"

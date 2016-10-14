@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -108,10 +107,26 @@ public class UserController {
 	@RequestMapping(value = "/addEmployee", method = RequestMethod.POST)
 	public ResponseEntity<Void> addEmployee(@RequestBody Employee employee) {
 		
+		System.out.println("here");
 		int result = this.userService.registerEmployee(employee);
 		if(result == 1) {
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		} else if(result == 2) {
+			return new ResponseEntity<Void>(HttpStatus.CREATED);
+		} else {
+			return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
+		}
+	}
+	
+	@RequestMapping(value = "/socialLogin", method = RequestMethod.POST)
+	public ResponseEntity<Void> addEmployeeThroughSocialLogin(@RequestBody Employee employee,HttpSession session) {
+		
+		System.out.println("here");
+		int result = this.userService.registerEmployee(employee);
+		if(result == 1) {
+			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+		} else if(result == 2) {
+			session.setAttribute("email", employee.getEmail());
 			return new ResponseEntity<Void>(HttpStatus.CREATED);
 		} else {
 			return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);

@@ -33,10 +33,12 @@
 </head>
 
 <body ng-app="signUp">
+
 	<div class="form-box">
 		<div class="form-top">
 			<div class="form-top-left">
 				<h3>Sign up now</h3>
+
 			</div>
 			<div class="form-top-right">
 				<i class="fa fa-pencil"></i>
@@ -44,7 +46,7 @@
 		</div>
 		<div class="form-bottom">
 			<form role="form" action="" method="post" class="registration-form"
-				ng-controller="socialCtrl">
+				ng-controller="formPopulateCtrl">
 				<div class="row">
 					<div class="col-md-8">
 						<div class="row">
@@ -77,6 +79,7 @@
 									<option>Male</option>
 									<option>Female</option>
 								</select>
+
 							</div>
 							<div class="form-group col-md-6">
 								<label class="sr-only" for="form-contact">Contact:</label> <input
@@ -84,24 +87,55 @@
 									data-format="+1 (ddd) ddd-dddd" id="form-contact"
 									placeholder="Contact Number..." ng-model="user.contactNumber">
 							</div>
+
 						</div>
 						<div class="row">
-							<div class="form-group col-md-12">
+							<div class="form-group col-md-6">
 								<label class="sr-only" for="form-designation">Designation:</label>
+								
 								<select class="form-control" id="form-designation"
-									ng-repeat="deg in designation" ng-model="user.designation">
-									<option>Employee</option>
-									<option>Manager</option>
+									ng-init="getDesignations()" ng-model="user.designation"
+									ng-options="designation as designation.designationName for designation in designationDetails ">
+								</select>
+								<!-- <select class="form-control" id="form-designation"
+									ng-init="getDesignations()" ng-model="user.designation">
+									<option>Select Designation</option>
+									<option ng-repeat="deg in designationDetails">{{deg.designationName}}</option>
+
+								</select> -->
+							</div>
+							<div class="form-group col-md-6" id="organizationDv">
+								<label class="sr-only" for="form-organization">Organization:</label>
+
+								<select class="form-control" id="form-organization" ng-init="getAllOrganizations()"
+									ng-model="user.organization"
+									ng-options="organization as organization.organizationName for organization in organizationDetails ">
 								</select>
 							</div>
 						</div>
 					</div>
+
+					<div class="form-group col-md-4 text-center">
+						<p>Upload Profile Picture</p>
+						<img class="img img-rounded" width="132" id="image1"
+							ng-src="{{user.profilePicture}}" /><br>
+						<button id="upload-picture" class="btn">
+							<label for="i_file" class="custom-file-upload">upload...</label>
+						</button>
+						<input type="file" class="text-center" id="i_file" value=""
+							style="display: none;" ng-model="user.profilePicture">
+					</div>
+
 				</div>
+
+
+
 				<div class="form-group">
-					<label class="sr-only" for="form-dob">Date Of Birth:</label> <input
-						type="text" id="form-dob" name="dob" placeholder="DOB.."
-						class="form-control input-lg" ng-model="user.dateOfBirth">
+					<label class="control-label" for="form-dob">Date Of Birth:</label>
+					<input class="form-control" id="form-do" name="form-dob"
+						placeholder="YYYY-MM-DD" type="text" ng-model="user.dateOfBirth" />
 				</div>
+
 				<div class="form-group">
 					<label class="sr-only" for="Address">Address</label>
 					<textarea name="Address" placeholder="Address..."
@@ -125,11 +159,12 @@
 					</div>
 				</div>
 				<input type="button" class="col-xs-12 btnSubmit"
-					ng-click="getFormDetails(user)">Sign me up!
-				</button>
+					ng-click="addUser(user)" value="Sign me up!">
 			</form>
 		</div>
 	</div>
+
+
 
 	<!-- Javascript -->
 	<script
@@ -138,8 +173,6 @@
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="resources/js/jquery.backstretch.min.js"></script>
 	<script src="resources/js/scripts.js"></script>
-	<script src="resources/js/applications.js"></script>
 	<script src="resources/js/controllers.js"></script>
-	<script src="resources/js/socialLoginController.js"></script>
 </body>
 </html>

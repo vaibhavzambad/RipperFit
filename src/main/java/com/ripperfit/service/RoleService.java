@@ -53,9 +53,7 @@ public class RoleService {
 	}*/
 	
 	@Transactional
-	public
-	
-	List<Designation> viewAllRoles()
+	public List<Designation> viewAllRoles()
 	{
 		List<Designation> des=this.designationDao.viewAllRoles();
 		return des;

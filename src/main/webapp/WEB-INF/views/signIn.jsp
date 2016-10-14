@@ -109,7 +109,6 @@
 			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script src="resources/js/jquery.backstretch.min.js"></script>
 		<script src="resources/js/scripts.js"></script>
-		<script src="resources/js/applications.js"></script>
 		<script src="resources/js/controllers.js"></script>
 		<script src="resources/js/socialLoginController.js"></script>
 </body>

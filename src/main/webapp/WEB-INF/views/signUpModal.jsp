@@ -130,22 +130,24 @@
 						<div class="row">
 							<div class="form-group col-md-6">
 								<label class="sr-only" for="form-designation">Designation:</label>
-
+								
 								<select class="form-control" id="form-designation"
+									ng-init="getDesignations()" ng-model="user.designation"
+									ng-options="designation as designation.designationName for designation in designationDetails ">
+								</select>
+								<!-- <select class="form-control" id="form-designation"
 									ng-init="getDesignations()" ng-model="user.designation">
 									<option>Select Designation</option>
 									<option ng-repeat="deg in designationDetails">{{deg.designationName}}</option>
 
-								</select>
+								</select> -->
 							</div>
 							<div class="form-group col-md-6" id="organizationDv">
 								<label class="sr-only" for="form-organization">Organization:</label>
 
-								<select class="form-control" id="form-organization"
-									ng-model="user.designation">
-									<option>Select organization</option>
-									<option ng-repeat="org in organization"></option>
-
+								<select class="form-control" id="form-organization" ng-init="getAllOrganizations()"
+									ng-model="user.organization"
+									ng-options="organization as organization.organizationName for organization in organizationDetails ">
 								</select>
 							</div>
 						</div>
@@ -209,7 +211,6 @@
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="resources/js/jquery.backstretch.min.js"></script>
 	<script src="resources/js/scripts.js"></script>
-	<script src="resources/js/applications.js"></script>
 	<script src="resources/js/controllers.js"></script>
 	
 </body>
