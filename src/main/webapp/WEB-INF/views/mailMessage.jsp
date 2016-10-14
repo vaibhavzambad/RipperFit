@@ -16,13 +16,15 @@
 	<div ng-controller="signUpCtrl">
 		<h1>A mail has been sent to your gmail account {{userDetails.email}}. Please
 			confirm your account.</h1>
+			
+		<a href="/RipperFit/"> Home </a>
+		<a href="/RipperFit/login"> Login </a>
 	</div>
 	
 	<!-- Javascript -->
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="resources/js/scripts.js"></script>
-	<script src="resources/js/applications.js"></script>
 	<script src="resources/js/controllers.js"></script>
 </body>
 </html>

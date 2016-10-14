@@ -10,56 +10,56 @@ var app=angular.module("admin",["ngRoute"])
 		controller:"viewRoleController"
 	})
 	.when("/admin/viewEmployee",{
-		templateUrl:"/RipperFit/employee",
+		templateUrl:"/RipperFit/viewEmployee",
 		controller:"viewEmployeeController"
 	})
 	.when("/admin/viewRequest/:employeeId",{
 		templateUrl:"/RipperFit/requestemployee/",
 		controller:"viewEmployeeRequestController",
-		
+
 	}).when("/admin/home",{
 		templateUrl:"/RipperFit/DBHome/",
-		
-		})
+
+	})
 		})
 		.controller("viewRequestController",function($scope,$http)
 				{
 			$http.get("/RipperFit/request/viewAllRequests")
 			.then(function(response) {
 				$scope.requests = response.data;
-				
+
 				var length=$scope.requests.length;
-			for(var i=0;i<length;i++)
-					{
-					
+				for(var i=0;i<length;i++)
+				{
+
 					if($scope.requests[i].status=="completed")
 					{
-					$scope.requests[i].color="success";
-					
-					
+						$scope.requests[i].color="success";
+
+
 					}
 					if($scope.requests[i].status=="running")
 					{
-					$scope.requests[i].color="primary";
-					
+						$scope.requests[i].color="primary";
+
 					}
 					if($scope.requests[i].status=="rejected")
 					{
 						$scope.requests[i].color="danger";
-					
+
 					}
 					if($scope.requests[i].status=="approved")
 					{
 						$scope.requests[i].color="warning";
-					
+
 					}
-					
-					}
-				
-				
-				
-				
-				
+
+				}
+
+
+
+
+
 			});
 
 				})
@@ -78,12 +78,12 @@ var app=angular.module("admin",["ngRoute"])
 							});
 								})
 								.controller("viewEmployeeRequestController",function($scope,$http,$routeParams)
-								{
-									
+										{
+
 									$http.get("/RipperFit/request/viewRequests/"+$routeParams.employeeId+" ")
 									.then(function(response) {
 										$scope.request = response.data;
 										console.log("ddf"+$scope.request[0].status);
 									});
-							      
-							})
+
+										})

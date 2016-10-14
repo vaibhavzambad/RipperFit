@@ -7,7 +7,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ripperfit.dao.OrganizationDao;
-import com.ripperfit.model.Designation;
 import com.ripperfit.model.Organization;
 
 @Transactional

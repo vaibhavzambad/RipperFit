@@ -4,16 +4,22 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SignIn to RipperFit</title>
+<title>Bootstrap Login &amp; Register Templates</title>
 
 <!-- CSS -->
 <link rel="stylesheet" href="resources/css/signUpStyle.css">
+<link rel="stylesheet"
+	href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="resources/css/form-elements.css">
 <link rel="stylesheet" href="resources/css/style.css">
 <link rel="stylesheet"
 	href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 
-
-
+<!-- scripts -->
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"
@@ -40,59 +46,54 @@
 </script>
 
 </head>
-<body ng-app="ripperfit">
+<body ng-app="signUp">
 
-	<nav class="navbar navbar-inverse">
-								<div class="container-fluid">
-									<div class="navbar-header">
-										<a class="navbar-brand" href="#">RipperFit</a>
-									</div>
-									<ul class="nav navbar-nav">
-										<li class="active"><a href="#">Home</a></li>
-      
-									</ul>
-								</div>
-							</nav>
-                            <div class="container">
-							<div class="blank">
-							  
-				              <h3>SignIn to Ripperfit</h3><hr />
-                                    <div class="signInBlank">
-			                         <form role="form" action="" method="post" class="login-form" ng-controller="signUpctrl">
-									<div class="form-group">
-										<label class="sr-only" for="form-email">Username</label> <input
-											type="text" name="form-email" placeholder="Email-id..."
-											class="form-username form-control" id="form-email"
-											ng-model="user.email">
-									</div>
-									<div class="form-group">
-										<label class="sr-only" for="form-password">Password</label> <input
-											type="password" name="form-password"
-											placeholder="Password..." class="form-password form-control"
-											id="form-password" ng-model="user.password">
-									</div>
-									<input type="button" class="col-xs-12 btn btn-info"
-										ng-click="login(user)" value="Log-in" onclick="validate()"/>
-								</form>
-	                            <div class="social-login text-center">
-							<h3>...or login with:</h3>
-							<div class="social-login-buttons">
-								<button id="signinButton" ng-controller="socialCtrl">Sign in with Google</button>
-							</div>
-						</div>
+	<div class="container_fluid">
+		<nav class="navbar navbar-inverse">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">RipperFit</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="#">Home</a></li>
+			</ul>
+		</nav>
+		<div class="blank">
+			<h3>SignIn to Ripperfit</h3>
+			<hr />
+			<div class="signInBlank" ng-controller="signUpCtrl">
+				<form role="form" action="" method="post" class="login-form">
+					<div class="form-group">
+						<label class="sr-only" for="form-email">Username</label> <input
+							type="text" name="form-email" placeholder="Email-id..."
+							class="form-username form-control" id="form-email"
+							ng-model="user.email">
+					</div>
+					<div class="form-group">
+						<label class="sr-only" for="form-password">Password</label> <input
+							type="password" name="form-password" placeholder="Password..."
+							class="form-password form-control" id="form-password"
+							ng-model="user.password">
+					</div>
+					<input type="button" class="col-xs-12 btn btn-info"
+						ng-click="login(user)" value="Log-in" onclick="validate()" />
+				</form>
+				<div class="social-login text-center">
+					<h3>...or login with:</h3>
+					<div class="social-login-buttons">
+						<button id="signinButton" class="btn btn-danger"
+							ng-controller="socialCtrl">Sign in with Google</button>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 
-
-		<!-- Javascript -->
-		<script src="resources/js/googleApi.js"></script>
-		<script
-			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<script src="resources/js/jquery.backstretch.min.js"></script>
-		<script src="resources/js/scripts.js"></script>
-		<script src="resources/js/controllers.js"></script>
-		<script src="resources/js/socialLoginController.js"></script>
+	<!-- Javascript -->
+	<script src="resources/js/googleApi.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="resources/js/jquery.backstretch.min.js"></script>
+	<script src="resources/js/scripts.js"></script>
+	<script src="resources/js/controllers.js"></script>
 </body>
 </html>

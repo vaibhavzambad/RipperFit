@@ -16,9 +16,11 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
 <script src="resources/js/adminRoute.js"></script>
+
+
 </head>
 <body>
-	<nav class="navbar navbar-inverse">
+	<nav class="navbar navbar-inverse" style="border-radius: 0px">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -34,25 +36,24 @@
 					<li class="dropdown"><a class="dropdown-toggle"
 						data-toggle="dropdown" href="">Designation<span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="#/admin/viewRole">View Designations</a></li>
+							<li><a href="#/admin/viewRole">Designations</a></li>
 							<li><a href="">Add Designation</a></li>
-							<li><a href="">Update Designation</a></li>
+
 						</ul></li>
-					<li><a href="#/admin/viewRequest">View Resource Request</a></li>
-					<li><a href="#/admin/viewEmployee">View Employees</a></li>
-					<li><a href="">View Resources</a></li>
+					<li><a href="#/admin/viewRequest">Resource Request</a></li>
+					<li><a href="#/admin/viewEmployee">Employees</a></li>
+					<li><a href="">Resources</a></li>
 					<li class="dropdown"><a class="dropdown-toggle"
 						data-toggle="dropdown" href="">Resource request<span
 							class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="">Add Own Request</a></li>
-							<li><a href="">Delete Own Request</a></li>
-							<li><a href="">Update Own Request</a></li>
+
 						</ul></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 
-					<li class="dropdown" ><a class="dropdown-toggle"
+					<li class="dropdown"><a class="dropdown-toggle"
 						data-toggle="dropdown" href="">AdminPanel<span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="">View Profile</a></li>

@@ -165,7 +165,7 @@ public class UserController {
 	
 	@RequestMapping(value = "/getEmployee", method = RequestMethod.GET)
 	public ResponseEntity<List<Employee>> viewRoles() {
-		
+		System.out.println("emp");
 		List<Employee> list = this.userService.viewAllEmployee();
 		if(list.isEmpty()) {
 
