@@ -17,6 +17,10 @@ var app=angular.module("admin",["ngRoute"])
 		templateUrl:"/RipperFit/requestemployee/",
 		controller:"viewEmployeeRequestController",
 
+	}).when("/admin/addPosition",{
+		templateUrl:"/RipperFit/addPosition",
+		controller:"addPositionController"
+
 	}).when("/admin/home",{
 		templateUrl:"/RipperFit/DBHome/",
 
@@ -87,3 +91,8 @@ var app=angular.module("admin",["ngRoute"])
 									});
 
 										})
+										.controller("addPositionController",function($scope,$http,$routeParams)
+											{
+										
+
+												})
