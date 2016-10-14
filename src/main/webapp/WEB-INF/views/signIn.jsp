@@ -57,42 +57,51 @@
 				<li class="active"><a href="#">Home</a></li>
 			</ul>
 		</nav>
-		<div class="blank">
-			<h3>SignIn to Ripperfit</h3>
-			<hr />
-			<div class="signInBlank" ng-controller="signUpCtrl">
-				<form role="form" action="" method="post" class="login-form">
-					<div class="form-group">
-						<label class="sr-only" for="form-email">Username</label> <input
-							type="text" name="form-email" placeholder="Email-id..."
-							class="form-username form-control" id="form-email"
-							ng-model="user.email">
-					</div>
-					<div class="form-group">
-						<label class="sr-only" for="form-password">Password</label> <input
-							type="password" name="form-password" placeholder="Password..."
-							class="form-password form-control" id="form-password"
-							ng-model="user.password">
-					</div>
-					<input type="button" class="col-xs-12 btn btn-info"
-						ng-click="login(user)" value="Log-in" onclick="validate()" />
-				</form>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-3"></div>
+			<div class="col-xs-6">
+				<h3>LogIn to Ripperfit</h3>
+				<hr />
+				<div class="signInBlank" ng-controller="signUpCtrl">
+					<form role="form" action="" method="post" class="login-form">
+						<div class="form-group">
+							<label class="sr-only" for="form-email">Username</label> <input
+								type="text" name="form-email" placeholder="Email-id..."
+								class="form-username form-control" id="form-email"
+								ng-model="user.email">
+						</div>
+						<div class="form-group">
+							<label class="sr-only" for="form-password">Password</label> <input
+								type="password" name="form-password" placeholder="Password..."
+								class="form-password form-control" id="form-password"
+								ng-model="user.password">
+						</div>
+
+						<div class="col-xs-4"></div>
+						<input type="button" class="col-xs-4 btn btn-info text-center"
+							ng-click="login(user)" value="Log-in" onclick="validate()" />
+
+					</form>
+				</div>
 				<div class="social-login text-center">
 					<h3>...or login with:</h3>
 					<div class="social-login-buttons">
-						<button id="signinButton" class="btn btn-danger"
-							ng-controller="socialCtrl">Sign in with Google</button>
+						<button id="signinButton" class="btn"
+							style="background-color: red;" ng-controller="socialCtrl">
+							<i class="fa fa-google"></i> Google
+						</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
 	<!-- Javascript -->
 	<script src="resources/js/googleApi.js"></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="resources/js/jquery.backstretch.min.js"></script>
+
 	<script src="resources/js/scripts.js"></script>
 	<script src="resources/js/controllers.js"></script>
 </body>

@@ -56,7 +56,7 @@ signUp.controller('formPopulateCtrl',function($scope,StoreService,$http,$window,
 	{
 		$http({
 			method: 'GET',
-			url: "/RipperFit/role/getDesignations",
+			url: "/RipperFit/designation/getDesignations",
 			headers: {
 				'Content-Type': 'application/json'
 			}
@@ -130,7 +130,7 @@ signUp.controller('signUpCtrl', function($scope, $http, $window, $filter){
 	{
 		$http({
 			method: 'GET',
-			url: "/RipperFit/role/getDesignations",
+			url: "/RipperFit/designation/getDesignations",
 			headers: {
 				'Content-Type': 'application/json'
 			}
