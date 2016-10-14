@@ -1,34 +1,37 @@
 
 
 <div class="container">
-	<h2>View Designations</h2>
-
-	<table class="table table-bordered">
-		<thead>
-			<tr>
-				<th>Organization name</th>
-				<th>Employee Id</th>
-				<th>Employee Email</th>
-				<th>Employee Name</th>
-				<th>Designation</th>
-				<th>View resource request</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr ng-repeat="emp in employee">
-				<td>{{emp.organization.organizationName}}</td>
-				<td>{{emp.employeeId}}</td>
-				<td>{{emp.email}}</td>
-				<td>{{emp.firstName}}</td>
-				<td>{{emp.designation.designationName}}</td>
-				<td><a href="#/admin/viewRequest/{{emp.employeeId}}">View
-						Resource request</a></a></td>
-
-			</tr>
-
-
-		</tbody>
-	</table>
+  <h2>Employees</h2>
+           
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Employee Name</th>
+          <th>Employee Email</th>
+        
+        <th>Designation</th>
+        <th>Resource Request</th>
+         <th>Delete Employee</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="emp in employee">
+       
+      	<td>{{emp.firstName}}</td>
+        <td>{{emp.email}}</td>
+	
+		<td>{{emp.designation.designationName}}</td>
+		 <td>
+		
+		 <a href="#/admin/viewRequest/{{emp.employeeId}}"><span class="label label-primary">Resource request</span></a>
+		 </td>
+		 <td><button type="button" class="btn btn-danger">Delete</button></td>
+ 
+      </tr>
+      
+    
+    </tbody>
+  </table>
 </div>
 
 
