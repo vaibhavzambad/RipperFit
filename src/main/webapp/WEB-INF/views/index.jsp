@@ -29,24 +29,37 @@
 </head>
 
 <body data-spy="scroll" data-offset="0" data-target="#theMenu">
-	<nav class="navbar navbar-default mynavbar">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<h1 class="header-logo">
-					<a class="navbar-brand" href="#"> <b>RipperFit</b>
-					</a>
-				</h1>
-			</div>
-			<div class="navbar-form navbar-right" role="search">
-				<a href="login">Login</a> <a href="signUp">SignUp</a>
-			</div>
-		</div>
-	</nav>
+	
 
 	<!-- ========== HEADER SECTION ========== -->
 	<section id="home" name="home"></section>
 	<div id="headerwrap">
+	<div class="container-fluid">
+			<nav class="navbar navbar-default navbar-fixed-top" style="background-color: transparent; border-color: transparent;">
+			      <div class="container-fluid ">
+			        <div class="navbar-header">
+			         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+			            <span class="icon-bar"></span>
+			            <span class="icon-bar"></span>
+			            <span class="icon-bar"></span>
+			          </button>
+			     <!--   <a class="navbar-brand" href="#"><b>RipperFit</b></a>-->
+			        </div>
+			        <div class="navbar-collapse collapse">
+          				<ul class="nav navbar-nav navbar-right" style=" font-weight:bold;">
+           					 <li><a href="#">HOME</a></li>
+           					 <li><a href="#services">FEATURES</a></li>
+           					 <li><a href="#about">ABOUT</a></li>
+           					 <li><a href="login">LOGIN</a></li>
+           					 <li><a href="signUp">SIGNUP</a></li>
+           					 <li><a href="#contact">CONTACT</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+			      </div>
+   			 </nav>
+	</div> 
 		<div class="container">
+	
 			<br>
 			<h1>RipperFit</h1>
 			<h2>Resource Tracking in a Flash!!!</h2>
