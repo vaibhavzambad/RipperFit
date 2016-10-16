@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.filter.GenericFilterBean;
 
-@WebFilter({"/admin", "/helpdesk", "/employee"})
+@WebFilter({"/dashboard"})
 public class LoginInterceptor extends GenericFilterBean {
 
 

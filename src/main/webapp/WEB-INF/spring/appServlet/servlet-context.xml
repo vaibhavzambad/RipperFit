@@ -62,6 +62,9 @@
 				<beans:value>com.ripperfit.model.Employee</beans:value>
 				<beans:value>com.ripperfit.model.Resource</beans:value>
 				<beans:value>com.ripperfit.model.ResourceRequest</beans:value>
+				<beans:value>com.ripperfit.model.ApproveRequest</beans:value>
+				<beans:value>com.ripperfit.model.Comments</beans:value>
+				<beans:value>com.ripperfit.model.Department</beans:value>
 			</beans:list>
 		</beans:property>
 		<beans:property name="hibernateProperties">
@@ -99,8 +102,6 @@
 		<beans:property name="sessionFactory"
 			ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
-	
-	
 
 	<!-- Service Beans -->
 	<beans:bean id="userService" class="com.ripperfit.service.UserService">

@@ -44,8 +44,6 @@ public class ResourceRequestController {
 		this.resourceRequestService = resourceRequestService;
 	}
 
-
-
 	/**
 	 * @return the userService
 	 */
@@ -139,7 +137,4 @@ public class ResourceRequestController {
 		}
 		return new ResponseEntity<ResourceRequest>(HttpStatus.NO_CONTENT);
 	}
-	
-	
-
 }

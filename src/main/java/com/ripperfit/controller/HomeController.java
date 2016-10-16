@@ -16,7 +16,7 @@ public class HomeController {
 	
 	@RequestMapping(value="signUp", method=GET)
 	public String signUp() {
-		return "signUpModal";
+		return "signUp";
 	}
 	
 	@RequestMapping(value="signUpAfterSocialLogin", method=GET)
@@ -34,45 +34,39 @@ public class HomeController {
 		return "mailMessage";
 	}
 	
-	@RequestMapping(value="admin", method=GET)
+	@RequestMapping(value="dashboard", method=GET)
 	public String admin() {
-		return "AdminPage";
+		return "dashboard";
 	}
 	
-	@RequestMapping(value="helpdesk", method=GET)
-	public String helpdesk() {
-		return "HelpDesk";
+	@RequestMapping(value="viewRequests", method=GET)
+	public String viewRequests() {
+		return "viewRequests";
+	}
+
+	@RequestMapping(value="viewResources", method=GET)
+	public String viewResources() {
+		return "viewResources";
 	}
 	
-	@RequestMapping(value="employee", method=GET)
-	public String employee() {
-		return "UserDB";
+	@RequestMapping(value="addRequest", method=GET)
+	public String addRequest() {
+		return "addRequest";
 	}
 	
-	@RequestMapping(value="request", method=GET)
-	public String request() {
-		return "viewRequest";
+	@RequestMapping(value="viewDesignations", method=GET)
+	public String viewDesignations() {
+		return "ViewDesignations";
 	}
 	
-	@RequestMapping(value="role", method=GET)
-	public String role() {
-		return "ViewRole";
+	@RequestMapping(value="viewEmployees", method=GET)
+	public String viewEmployees() {
+		return "viewEmployees";
 	}
 	
-	@RequestMapping(value="viewEmployee", method=GET)
-	public String viewEmployee() {
-		System.out.println("dfd0");
-		return "viewEmployee";
-	}
-	
-	@RequestMapping(value="requestemployee", method=GET)
-	public String requestemployee() {
-		return "ViewEmployeeRequest";
-	}
-	
-	@RequestMapping(value="DBHome")
-	public String HomedashBoard() {
-		return "DBHome";
+	@RequestMapping(value="viewEmployeeRequests", method=GET)
+	public String viewEmployeeRequests() {
+		return "ViewEmployeeRequests";
 	}
 	
 	@RequestMapping(value="addPosition")

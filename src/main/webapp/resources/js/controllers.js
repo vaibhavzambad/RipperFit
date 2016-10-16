@@ -1,19 +1,18 @@
-var signUp = angular.module('signUp',[]);
+var RipperFit = angular.module('RipperFit',[])
 
-signUp.factory('StoreService',["$window",function($window){
+.factory('StoreService',["$window",function($window) {
 
-	function set(data){
+	function set(data) {
 		$window.sessionStorage.setItem('userInfo',$window.JSON.stringify(data));
-	}function get(){
+	} function get() {
 		return $window.JSON.parse($window.sessionStorage.getItem('userInfo'));
-	}
-	return {
+	} return {
 		set: set,
 		get: get
 	}
-}]);
+}])
 
-signUp.controller('socialCtrl',function($scope,$http,$window,StoreService){
+.controller('socialCtrl',function($scope,$http,$window,StoreService) {
 
 	$('#signinButton').click(function() {
 		// signInCallback defined in step 6.
@@ -36,55 +35,48 @@ signUp.controller('socialCtrl',function($scope,$http,$window,StoreService){
 				processData : false,
 				data : authResult['code']
 			}).then( function(response) {
-				console.log(response.data);
 				$scope.user = response.data;
 				StoreService.set($scope.user);
 				$window.location.href="/RipperFit/signUpAfterSocialLogin";
-			}, function (){ 
+			}, function () {
 				alert("Something went wrong");
 			});
-		} else {
 		}
 	}
-});
-
-signUp.controller('formPopulateCtrl',function($scope,StoreService,$http,$window,$filter){
+})
+.controller('formPopulateCtrl',function($scope,StoreService,$http,$window,$filter) {
 
 	$scope.user = StoreService.get();
-
-	$scope.getDesignations=function()
-	{
+	$scope.getDesignations=function() {
 		$http({
 			method: 'GET',
 			url: "/RipperFit/designation/getDesignations",
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).then( function (response){
+		}).then( function (response) {
 			$scope.designationDetails = response.data; 
-		}, function (){ 
+		}, function () {
 			alert("No designations found");
 		});
 	}
-	
-	$scope.getAllOrganizations=function()
-	{
+
+	$scope.getAllOrganizations=function() {
 		$http({
 			method: 'GET',
 			url: "/RipperFit/organization/getAllOrganizations",
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).then( function (response){
+		}).then( function (response) {
 			$scope.organizationDetails = response.data; 
-		}, function (){ 
+		}, function () { 
 			alert("No Organizations found");
 		});
 	}
 
 	$scope.addUser=function(user) {
 		$scope.userDetails=angular.copy(user);
-		console.log("org: "+$scope.userDetails.organization);
 		$scope.userDetails = {
 				"employeeId": "",
 				"email": $scope.userDetails.email,
@@ -107,7 +99,7 @@ signUp.controller('formPopulateCtrl',function($scope,StoreService,$http,$window,
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).then( function (){
+		}).then( function () {
 			if($scope.userDetails.designation != null){
 				var str = $filter('uppercase')($scope.userDetails.designation.designationName);
 				if(str == "ADMIN") {
@@ -117,56 +109,39 @@ signUp.controller('formPopulateCtrl',function($scope,StoreService,$http,$window,
 				} else {
 					$window.location.href = '/RipperFit/employee';
 				}
-			}else{
+			}else {
 				$window.location.href = '/RipperFit/employee';
 			}
 		});
 	}
-});
+})
+.controller('signUpCtrl', function($scope, $http, $window, $filter){
 
-signUp.controller('signUpCtrl', function($scope, $http, $window, $filter){
-
-	$scope.getDesignations=function()
-	{
+	$scope.getDesignations=function() {
 		$http({
 			method: 'GET',
 			url: "/RipperFit/designation/getDesignations",
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).then( function (response){
+		}).then( function (response) {
 			$scope.designationDetails = response.data; 
-		}, function (){ 
+		}, function (response) {
 			alert("No designations found");
 		});
 	}
-	$scope.getAllOrganizations=function()
-	{
+	$scope.getAllOrganizations=function() {
 		$http({
 			method: 'GET',
 			url: "/RipperFit/organization/getAllOrganizations",
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).then( function (response){
+		}).then( function (response) {
 			$scope.organizationDetails = response.data; 
-		}, function (){ 
+		}, function () {
 			alert("No Organizations found");
 		});
-	}
-	$scope.logout = function() {
-		$http({
-			method: 'POST',
-			url: "/RipperFit/employee/logout",
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		}).then( function (){
-			$window.location.href = '/RipperFit/login';
-		}, function (){ 
-			alert("Registration failed!!");
-		});
-
 	}
 	$scope.getFormDetails=function(user) {
 
@@ -186,7 +161,6 @@ signUp.controller('signUpCtrl', function($scope, $http, $window, $filter){
 				"designation" : $scope.userDetails.designation,
 				"profilePicture" :null
 		};
-
 		$http({
 			method: 'POST',
 			url: "/RipperFit/employee/addEmployee",
@@ -194,7 +168,7 @@ signUp.controller('signUpCtrl', function($scope, $http, $window, $filter){
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).then( function (){
+		}).then( function () {
 
 			$scope.email = $scope.userDetails.email;
 			$http({
@@ -204,18 +178,16 @@ signUp.controller('signUpCtrl', function($scope, $http, $window, $filter){
 				headers: {
 					'Content-Type': 'application/json'
 				}
-			}).then( function (){
+			}).then( function () {
 				$window.location.href = '/RipperFit/mailController';
-			}, function (){ 
+			}, function () {
 				alert("Registration failed!!");
 			});
 		});
 	}
-
-	$scope.login = function(user){
+	$scope.login = function(user) {
 
 		$scope.loginDetails=angular.copy(user);
-
 		$http({
 			method: 'POST',
 			url: "/RipperFit/employee/login",
@@ -223,21 +195,9 @@ signUp.controller('signUpCtrl', function($scope, $http, $window, $filter){
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).then( function (response){
-			$scope.employeeDetails = response.data;
-			if($scope.employeeDetails.designation != null){
-				var str = $filter('uppercase')($scope.employeeDetails.designation.designationName);
-				if(str == "ADMIN") {
-					$window.location.href = '/RipperFit/admin';
-				} else if(str == "HELPDESK") {
-					$window.location.href = '/RipperFit/helpdesk';
-				} else {
-					$window.location.href = '/RipperFit/employee';
-				}
-			} else {
-				$window.location.href = '/RipperFit/employee';
-			}
-		}, function (){ 
+		}).then( function (response) {
+			$window.location.href = '/RipperFit/dashboard';
+		}, function (response) {
 			alert("Wrong username and password!!");
 		});
 	}

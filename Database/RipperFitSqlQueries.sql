@@ -31,18 +31,17 @@ CREATE TABLE `employee` (
   `password` varchar(30) DEFAULT NULL,
   `first_name` varchar(20) NOT NULL,
   `last_name` varchar(20) DEFAULT NULL,
-  `dob` date DEFAULT NULL,
   `gender` varchar(6) DEFAULT NULL,
   `contact_number` varchar(10) DEFAULT NULL,
-  `address` varchar(200) DEFAULT NULL,
   `designation_id` int(11) DEFAULT NULL,
+  `reportTo_id` int(11) DEFAULT NULL,
   `profile_picture` varchar(500) DEFAULT NULL,
+  `approval_status` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`employee_id`),
   UNIQUE KEY `email_UNIQUE` (`email`),
-  KEY `designation_id` (`designation_id`),
-  KEY `employee_ibfk_3` (`organization_id`),
   CONSTRAINT `employee_ibfk_3` FOREIGN KEY (`organization_id`) REFERENCES `organization` (`organization_id`),
-  CONSTRAINT `employee_ibfk_2` FOREIGN KEY (`designation_id`) REFERENCES `designation` (`designation_id`)
+  CONSTRAINT `employee_ibfk_4` FOREIGN KEY (`designation_id`) REFERENCES `designation` (`designation_id`),
+  CONSTRAINT `employee_ibfk_6` FOREIGN KEY (`reportTo_id`) REFERENCES `employee` (`employee_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -52,7 +51,6 @@ CREATE TABLE `employee` (
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` VALUES (4,NULL,'vaibhav.zambad@metacube.com','123456','Vaibhav','Pravin Zambad ','2003-09-09','Male','89541247','sadjaslkfhsd h',NULL,NULL);
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -65,20 +63,20 @@ DROP TABLE IF EXISTS `resource_request`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `resource_request` (
   `request_id` int(11) NOT NULL AUTO_INCREMENT,
-  `organization_id` int(11) NOT NULL,
   `resource_id` int(11) NOT NULL,
   `requestor_id` int(11) NOT NULL,
-  `current_approval_tier_level` int(11) NOT NULL,
+  `current_approval_level` int(11) DEFAULT NULL,
   `priority` varchar(30) DEFAULT 'low',
   `status` varchar(30) NOT NULL,
-  `comments` varchar(500) DEFAULT NULL,
+  `message` varchar(1000) DEFAULT NULL,
+  `request_date` DATE DEFAULT NULL,
+  `comment_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`request_id`),
   KEY `resource_id` (`resource_id`),
   KEY `requestor_id` (`requestor_id`),
-  KEY `resource_request_ibfk_4` (`organization_id`),
   CONSTRAINT `resource_request_ibfk_1` FOREIGN KEY (`resource_id`) REFERENCES `resource` (`resource_id`),
   CONSTRAINT `resource_request_ibfk_2` FOREIGN KEY (`requestor_id`) REFERENCES `employee` (`employee_id`),
-  CONSTRAINT `resource_request_ibfk_4` FOREIGN KEY (`organization_id`) REFERENCES `organization` (`organization_id`)
+  CONSTRAINT `resource_request_ibfk_5` FOREIGN KEY (`comment_id`) REFERENCES `comments` (`comment_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -101,12 +99,9 @@ DROP TABLE IF EXISTS `resource`;
 CREATE TABLE `resource` (
   `resource_id` int(11) NOT NULL AUTO_INCREMENT,
   `resource_name` varchar(30) NOT NULL,
-  `final_approval_tier_level` int(11) NOT NULL,
-  `organization_id` int(11) NOT NULL,
+  `final_approval_level` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  PRIMARY KEY (`resource_id`),
-  KEY `resource_ibfk_1` (`organization_id`),
-  CONSTRAINT `resource_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `organization` (`organization_id`)
+  PRIMARY KEY (`resource_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -129,12 +124,10 @@ DROP TABLE IF EXISTS `designation`;
 CREATE TABLE `designation` (
   `designation_id` int(11) NOT NULL AUTO_INCREMENT,
   `designation_name` varchar(30) NOT NULL,
-  `organization_id` int(11) NOT NULL,
-  `designation_tier_level` int(11) NOT NULL,
-  `parent_designation_id` int(11) DEFAULT NULL,
+  `designation_level` int(11) DEFAULT NULL,
+  `department_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`designation_id`),
-  KEY `designation_ibfk_1` (`organization_id`),
-  CONSTRAINT `designation_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `organization` (`organization_id`)
+  CONSTRAINT `department_ibfk_2` FOREIGN KEY (`department_id`) REFERENCES `department` (`department_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -147,37 +140,6 @@ LOCK TABLES `designation` WRITE;
 /*!40000 ALTER TABLE `designation` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `employee_team_approval`
---
-
-DROP TABLE IF EXISTS `employee_team_approval`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `employee_team_approval` (
-  `employee_id` int(11) NOT NULL AUTO_INCREMENT,
-  `approvee_id` int(11) DEFAULT NULL,
-  `organization_id` int(11) NOT NULL,
-  `status` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`employee_id`),
-  KEY `employee_team_approval_ibfk_2` (`approvee_id`),
-  KEY `employee_team_approval_ibfk_3` (`organization_id`),
-  CONSTRAINT `employee_team_approval_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`),
-  CONSTRAINT `employee_team_approval_ibfk_2` FOREIGN KEY (`approvee_id`) REFERENCES `employee` (`employee_id`),
-  CONSTRAINT `employee_team_approval_ibfk_3` FOREIGN KEY (`organization_id`) REFERENCES `organization` (`organization_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `employee_team_approval`
---
-
-LOCK TABLES `employee_team_approval` WRITE;
-/*!40000 ALTER TABLE `employee_team_approval` DISABLE KEYS */;
-/*!40000 ALTER TABLE `employee_team_approval` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `organization`
 --
 
@@ -187,8 +149,44 @@ DROP TABLE IF EXISTS `organization`;
 CREATE TABLE `organization` (
   `organization_id` int(11) NOT NULL AUTO_INCREMENT,
   `organization_name` varchar(100) NOT NULL,
+  `domain_name` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`organization_id`),
   UNIQUE KEY `organization_name_UNIQUE` (`organization_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+DROP TABLE IF EXISTS `department`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `department` (
+  `department_id` int(11) NOT NULL AUTO_INCREMENT,
+  `department_name` varchar(200) NOT NULL,
+  PRIMARY KEY (`department_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+DROP TABLE IF EXISTS `comments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `comments` (
+  `comment_id` int(11) NOT NULL AUTO_INCREMENT,
+  `commentor_id` int(11) NOT NULL,
+  PRIMARY KEY (`comment_id`),
+  CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`commentor_id`) REFERENCES `employee` (`employee_id`)
+  
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+DROP TABLE IF EXISTS `approve_request`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `approve_request` (
+  `approvee_id` int(11) NOT NULL,
+  `request_id` int(11) NOT NULL,
+  PRIMARY KEY (`approvee_id`,`request_id`),
+  CONSTRAINT `ApproveRequest_ibfk_1` FOREIGN KEY (`approvee_id`) REFERENCES `employee` (`employee_id`),
+  CONSTRAINT `ApproveRequest_ibfk_2` FOREIGN KEY (`request_id`) REFERENCES `resource_request` (`request_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -198,11 +196,9 @@ CREATE TABLE `organization` (
 
 LOCK TABLES `organization` WRITE;
 /*!40000 ALTER TABLE `organization` DISABLE KEYS */;
-INSERT INTO `organization` VALUES (1,'Metacube');
 /*!40000 ALTER TABLE `organization` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;

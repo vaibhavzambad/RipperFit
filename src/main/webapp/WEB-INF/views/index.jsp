@@ -5,61 +5,59 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="RipperFit - A Resource Tracking App">
 <meta name="author" content="VARAAS">
-<link rel="shortcut icon" href="resources/ico/favicon.png">
 
 <title>RipperFit</title>
 
 <!-- Bootstrap core CSS -->
-<link
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+	
 <!-- Custom styles for this template -->
 <link href="resources/css/main.css" rel="stylesheet">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="resources/js/Chart.js"></script>
-<link
-	href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic'
-	rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700'
-	rel='stylesheet' type='text/css'>
+
+<!-- <link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" /> -->
+
+<!-- <script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+	
+ <link rel='stylesheet' type='text/css'
+	href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' />
+<link rel='stylesheet' type='text/css'
+	href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' />
 
 </head>
 
 <body data-spy="scroll" data-offset="0" data-target="#theMenu">
-	
 
 	<!-- ========== HEADER SECTION ========== -->
 	<section id="home" name="home"></section>
 	<div id="headerwrap">
-	<div class="container-fluid">
-			<nav class="navbar navbar-default navbar-fixed-top" style="background-color: transparent; border-color: transparent;">
-			      <div class="container-fluid ">
-			        <div class="navbar-header">
-			         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-			            <span class="icon-bar"></span>
-			            <span class="icon-bar"></span>
-			            <span class="icon-bar"></span>
-			          </button>
-			     <!--   <a class="navbar-brand" href="#"><b>RipperFit</b></a>-->
-			        </div>
-			        <div class="navbar-collapse collapse">
-          				<ul class="nav navbar-nav navbar-right" style=" font-weight:bold;">
-           					 <li><a href="#">HOME</a></li>
-           					 <li><a href="#services">FEATURES</a></li>
-           					 <li><a href="#about">ABOUT</a></li>
-           					 <li><a href="login">LOGIN</a></li>
-           					 <li><a href="signUp">SIGNUP</a></li>
-           					 <li><a href="#contact">CONTACT</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-			      </div>
-   			 </nav>
-	</div> 
+		<div class="container-fluid">
+			<nav class="navbar navbar-default navbar-fixed-top"
+				style="background-color: transparent; border-color: transparent;">
+				<div class="container-fluid ">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse"
+							data-target=".navbar-collapse">
+							<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+								class="icon-bar"></span>
+						</button>
+					</div>
+					<div class="navbar-collapse collapse">
+						<ul class="nav navbar-nav navbar-right" style="font-weight: bold;">
+							<li><a href="#">HOME</a></li>
+							<li><a href="#services">FEATURES</a></li>
+							<li><a href="#about">ABOUT</a></li>
+							<li><a href="login">LOGIN</a></li>
+							<li><a href="signUp">SIGNUP</a></li>
+							<li><a href="#contact">CONTACT</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</div>
 		<div class="container">
-	
 			<br>
 			<h1>RipperFit</h1>
 			<h2>Resource Tracking in a Flash!!!</h2>
@@ -71,7 +69,6 @@
 		<!-- /container -->
 	</div>
 	<!-- /headerwrap -->
-
 
 	<!-- ========== WHITE SECTION ========== -->
 	<div id="w">
@@ -185,7 +182,6 @@
 								href="index.html#"><i class="icon-envelope"></i></a>
 						</p>
 					</div>
-
 					<div class="col-lg-4 team">
 						<img class="img-circle" src="resources/img/amit.jpg" height="90"
 							width="90">
@@ -329,9 +325,10 @@
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="resources/js/classie.js"></script>
+	
+	<!-- <script src="resources/js/classie.js"></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="resources/js/smoothscroll.js"></script>
+	<script src="resources/js/smoothscroll.js"></script> -->
 </body>
 </html>

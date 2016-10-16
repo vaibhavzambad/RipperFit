@@ -159,12 +159,6 @@ public class UserController {
 	 * @throws IOException 
 	 * 
 	 */
-	/*@RequestMapping(value="/logout",method= RequestMethod.POST)
-	public ResponseEntity<Void> logout(HttpSession session){
-		
-		session.invalidate();
-		return new ResponseEntity<Void>(HttpStatus.OK);
-	}*/
 	@RequestMapping(value="/logout", method= RequestMethod.GET)
 	public void logout(HttpSession session, final ServletResponse response) throws IOException{
 		
@@ -190,5 +184,13 @@ public class UserController {
 		
 		this.userService.deleteEmployeeById(employeeId);
 		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/getCurrentEmployeeObject",method = RequestMethod.GET)
+	public ResponseEntity<Employee> getCurrentEmployeeObject(HttpServletRequest request){
+		
+		HttpSession session = request.getSession();
+		Employee employee = this.userService.getEmployeeByEmail((String) session.getAttribute("email"));
+		return new ResponseEntity<Employee>(employee, HttpStatus.OK);
 	}
 }

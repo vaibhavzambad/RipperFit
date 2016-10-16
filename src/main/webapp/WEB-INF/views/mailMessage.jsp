@@ -10,17 +10,16 @@
 	type="text/javascript"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-
 </head>
+
 <body ng-app="signUp">
 	<div ng-controller="signUpCtrl">
-		<h1>A mail has been sent to your gmail account {{userDetails.email}}. Please
-			confirm your account.</h1>
-			
-		<a href="/RipperFit/"> Home </a>
-		<a href="/RipperFit/login"> Login </a>
+		<h1>A mail has been sent to your gmail account
+			{{userDetails.email}}. Please confirm your account.</h1>
+		<a href="/RipperFit/"> Home </a> <a href="/RipperFit/login"> Login
+		</a>
 	</div>
-	
+
 	<!-- Javascript -->
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
