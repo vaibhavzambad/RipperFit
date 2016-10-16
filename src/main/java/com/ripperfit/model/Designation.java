@@ -2,6 +2,7 @@ package com.ripperfit.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,7 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.ripperfit.model.Organization;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -30,16 +30,16 @@ public class Designation implements Serializable {
 	@Column(name="designation_name")
 	private String designationName;
 	
-	@ManyToOne(optional=false,fetch=FetchType.LAZY)
+	/*@ManyToOne(optional=false,fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name="organization_id")
-	private Organization organization;
+	private Organization organization;*/
 	
-	@Column(name="designation_tier_level")
-	private int designationTierLevel;
+	@Column(name="designation_level")
+	private int designationLevel;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="parent_designation_id")
-	private Designation designation;
+	@ManyToOne(optional=false,fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@JoinColumn(name="department_id")
+	private Department department;
 
 	/**
 	 * @return the designationId
@@ -72,43 +72,43 @@ public class Designation implements Serializable {
 	/**
 	 * @return the organization
 	 */
-	public Organization getOrganization() {
+	/*public Organization getOrganization() {
 		return organization;
-	}
+	}*/
 
 	/**
 	 * @param organization the organization to set
 	 */
-	public void setOrganization(Organization organization) {
+	/*public void setOrganization(Organization organization) {
 		this.organization = organization;
+	}*/
+
+	/**
+	 * @return the designationLevel
+	 */
+	public int getDesignationLevel() {
+		return designationLevel;
 	}
 
 	/**
-	 * @return the designationTierLevel
+	 * @param designationLevel the designationLevel to set
 	 */
-	public int getDesignationTierLevel() {
-		return designationTierLevel;
+	public void setDesignationLevel(int designationLevel) {
+		this.designationLevel = designationLevel;
 	}
 
 	/**
-	 * @param designationTierLevel the designationTierLevel to set
+	 * @return the department
 	 */
-	public void setDesignationTierLevel(int designationTierLevel) {
-		this.designationTierLevel = designationTierLevel;
+	public Department getDepartment() {
+		return department;
 	}
 
 	/**
-	 * @return the designation
+	 * @param department the department to set
 	 */
-	public Designation getDesignation() {
-		return designation;
-	}
-
-	/**
-	 * @param designation the designation to set
-	 */
-	public void setDesignation(Designation designation) {
-		this.designation = designation;
+	public void setDepartment(Department department) {
+		this.department = department;
 	}
 	
 }

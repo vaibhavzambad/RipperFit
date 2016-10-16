@@ -1,8 +1,8 @@
 package com.ripperfit.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,7 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -28,7 +27,7 @@ public class Employee implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int employeeId;
 	
-	@ManyToOne(optional=true,fetch=FetchType.LAZY)
+	@ManyToOne(optional=true,fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name="organization_id")
 	private Organization organization;
 	
@@ -43,27 +42,31 @@ public class Employee implements Serializable {
 	
 	@Column(name="last_name")
 	private String lastName;
-	
-	@Column(name="dob")
-	@JsonFormat(pattern="yyyy-MM-dd")
-	private Date dateOfBirth;
-	
+
 	@Column(name="gender")
 	private String gender;
 	
 	@Column(name="contact_number")
 	private String contactNumber;
 	
-	@Column(name="address")
-	private String address;
-	
-	@ManyToOne(optional=true,fetch=FetchType.LAZY)
+	@ManyToOne(optional=true,fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name="designation_id")
 	private Designation designation;
+	
+	/*@ManyToOne(optional=true,fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@JoinColumn(name="department_id")
+	private Department department;*/
+	
+	@ManyToOne(optional=true,fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@JoinColumn(name="reportTo_id")
+	private Employee employee;
 	
 	@Column(name="profile_picture")
 	private String profilePicture;
 	
+	@Column(name="approval_status")
+	private String approvalStatus;
+
 	/**
 	 * @return the employeeId
 	 */
@@ -76,6 +79,20 @@ public class Employee implements Serializable {
 	 */
 	public void setEmployeeId(int employeeId) {
 		this.employeeId = employeeId;
+	}
+
+	/**
+	 * @return the organization
+	 */
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	/**
+	 * @param organization the organization to set
+	 */
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
 	}
 
 	/**
@@ -135,20 +152,6 @@ public class Employee implements Serializable {
 	}
 
 	/**
-	 * @return the dateOfBirth
-	 */
-	public Date getDateOfBirth() {
-		return dateOfBirth;
-	}
-
-	/**
-	 * @param dateOfBirth the dateOfBirth to set
-	 */
-	public void setDateOfBirth(Date dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
-
-	/**
 	 * @return the gender
 	 */
 	public String getGender() {
@@ -177,20 +180,6 @@ public class Employee implements Serializable {
 	}
 
 	/**
-	 * @return the address
-	 */
-	public String getAddress() {
-		return address;
-	}
-
-	/**
-	 * @param address the address to set
-	 */
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	/**
 	 * @return the designation
 	 */
 	public Designation getDesignation() {
@@ -202,6 +191,34 @@ public class Employee implements Serializable {
 	 */
 	public void setDesignation(Designation designation) {
 		this.designation = designation;
+	}
+
+	/**
+	 * @return the department
+	 */
+	/*public Department getDepartment() {
+		return department;
+	}*/
+
+	/**
+	 * @param department the department to set
+	 */
+	/*public void setDepartment(Department department) {
+		this.department = department;
+	}*/
+
+	/**
+	 * @return the employee
+	 */
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	/**
+	 * @param employee the employee to set
+	 */
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 
 	/**
@@ -219,17 +236,17 @@ public class Employee implements Serializable {
 	}
 
 	/**
-	 * @return the organization
+	 * @return the approvalStatus
 	 */
-	public Organization getOrganization() {
-		return organization;
+	public String getApprovalStatus() {
+		return approvalStatus;
 	}
 
 	/**
-	 * @param organization the organization to set
+	 * @param approvalStatus the approvalStatus to set
 	 */
-	public void setOrganization(Organization organization) {
-		this.organization = organization;
+	public void setApprovalStatus(String approvalStatus) {
+		this.approvalStatus = approvalStatus;
 	}
 	
 }

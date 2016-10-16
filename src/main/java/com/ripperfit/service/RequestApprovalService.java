@@ -2,10 +2,9 @@ package com.ripperfit.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.ripperfit.dao.DesignationDao;
 import com.ripperfit.dao.ResourceDao;
 import com.ripperfit.dao.ResourceRequestDao;
+import com.ripperfit.dao.UserDao;
 
 @Service
 public class RequestApprovalService {
@@ -14,10 +13,10 @@ public class RequestApprovalService {
 	private ResourceDao resourceDao;
 	
 	@Autowired
-	private DesignationDao designationDao;
+	private ResourceRequestDao resourceRequestDao;
 	
 	@Autowired
-	private ResourceRequestDao resourceRequestDao;
+	private UserDao userDao;
 
 	/**
 	 * @return the resourceDao
@@ -34,20 +33,6 @@ public class RequestApprovalService {
 	}
 
 	/**
-	 * @return the designationDao
-	 */
-	public DesignationDao getDesignationDao() {
-		return designationDao;
-	}
-
-	/**
-	 * @param designationDao the designationDao to set
-	 */
-	public void setDesignationDao(DesignationDao designationDao) {
-		this.designationDao = designationDao;
-	}
-
-	/**
 	 * @return the resourceRequestDao
 	 */
 	public ResourceRequestDao getResourceRequestDao() {
@@ -60,11 +45,47 @@ public class RequestApprovalService {
 	public void setResourceRequestDao(ResourceRequestDao resourceRequestDao) {
 		this.resourceRequestDao = resourceRequestDao;
 	}
+
+	/**
+	 * @return the userDao
+	 */
+	public UserDao getUserDao() {
+		return userDao;
+	}
+
+	/**
+	 * @param userDao the userDao to set
+	 */
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
+	}
 	
-	/*public int forwardResourceRequestToUpperRoles(int resourceRequestId){
+	public int getCurrentApprovalLevel(int requestId){
 		
-		int currentApprovalDesignationId = resourceRequestDao.getCurrentApprovalDesignationIdByRequestId(resourceRequestId);
+		int currentApprovalLevel = this.resourceRequestDao.getCurrentApprovalLevel(requestId);
+		return currentApprovalLevel;
+	}
+	
+	public int getFinalApprovalLevel(int resourceId){
 		
-	}*/
+		int finalApprovalLevel = this.resourceDao.getFinalApprovalLevel(resourceId);
+		return finalApprovalLevel;
+	}
+	
+	public void forwardRequest(int requestId,int resourceId){
+		
+		int currentApprovalLevel = getCurrentApprovalLevel(requestId);
+		int finalApprovalLevel = getFinalApprovalLevel(resourceId);
+		if(currentApprovalLevel >= finalApprovalLevel){
+			// forward request to helpdesk
+			// update approvee_request table
+		}else{
+			// forward request to reportToId
+			// update approvee_request table
+		}
+	}
+	
+	
+	
 
 }

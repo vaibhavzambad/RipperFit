@@ -61,9 +61,9 @@ public class ResourceDao {
 	public boolean deleteResourceById(int resourceId){
 
 		Session session = this.sessionFactory.getCurrentSession();
-		String hql = "delete from Employee where resource_id= :resourceId";
+		String hql = "delete from Resource where resourceId= :resourceId";
 		Query query = session.createQuery(hql);
-		query.setParameter("resource_id", resourceId);
+		query.setParameter("resourceId", resourceId);
 		query.executeUpdate();
 		return true;
 	}
@@ -71,9 +71,9 @@ public class ResourceDao {
 	public boolean deleteResourceByName(String resourceName){
 
 		Session session = this.sessionFactory.getCurrentSession();
-		String hql = "delete from Employee where resource_name= :resourceName";
+		String hql = "delete from Resource where resourceName= :resourceName";
 		Query query = session.createQuery(hql);
-		query.setParameter("resource_name", resourceName);
+		query.setParameter("resourceName", resourceName);
 		query.executeUpdate();
 		return true;
 	}
@@ -81,8 +81,8 @@ public class ResourceDao {
 	public Resource getResourceById(int resourceId){
 
 		Session session = this.sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from Resource where resource_id= :resourceId"); 
-		query.setParameter("resource_id", resourceId);
+		Query query = session.createQuery("from Resource where resourceId= :resourceId"); 
+		query.setParameter("resourceId", resourceId);
 		@SuppressWarnings("unchecked")
 		List<Resource> resourceList = query.list();
 		Resource resource = (Resource) resourceList.get(0);
@@ -93,12 +93,24 @@ public class ResourceDao {
 	public Resource getResourceByName(String resourceName){
 
 		Session session = this.sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from Resource where resource_name= :resourceName"); 
-		query.setParameter("resource_name", resourceName);
+		Query query = session.createQuery("from Resource where resourceName= :resourceName"); 
+		query.setParameter("resourceName", resourceName);
 		@SuppressWarnings("unchecked")
 		List<Resource> resourceList = query.list();
 		Resource resource = (Resource) resourceList.get(0);
 		return resource;
+	}
+
+	public int getFinalApprovalLevel(int resourceId){
+
+		Session session = this.sessionFactory.getCurrentSession();
+		Query query = session.createQuery("select resource.finalApprovalLevel from Resource"
+				+ "resource where resourceId= :resourceId");
+
+		query.setParameter("resourceId", resourceId);
+		int finalApprovalLevel = (int) query.uniqueResult();
+		return finalApprovalLevel;
+
 	}
 
 }

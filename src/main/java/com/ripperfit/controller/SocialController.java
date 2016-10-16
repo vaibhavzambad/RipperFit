@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +22,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.ripperfit.model.Employee;
+import com.ripperfit.service.UserService;
 
 
 @RequestMapping(value="/social")
@@ -65,6 +67,7 @@ public class SocialController {
 		String name = (String) payload.get("name");
 		String pictureUrl = (String) payload.get("picture");
 		if(userId != null){
+			
 			Employee employee = new Employee();
 			if(email != null){
 				employee.setEmail(email);

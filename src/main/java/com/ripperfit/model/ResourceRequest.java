@@ -1,7 +1,9 @@
 package com.ripperfit.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,22 +26,22 @@ public class ResourceRequest implements Serializable {
 	@Id
 	@Column(name="request_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int request_id;
+	private int requestId;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	/*@ManyToOne(optional=false,fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@JoinColumn(name="organization_id")
+	private Organization organization;*/
+	
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name="resource_id")
 	private Resource resource;
 	
-	@ManyToOne(optional=false,fetch=FetchType.LAZY)
-	@JoinColumn(name="organization_id")
-	private Organization organization;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name="requestor_id")
 	private Employee employee;
 	
-	@Column(name="current_approval_tier_level")
-	private int currentApprovalTieLevel;
+	@Column(name="current_approval_level")
+	private int currentApprovalLevel;
 	
 	@Column(name="priority")
 	private String priority;
@@ -47,23 +49,43 @@ public class ResourceRequest implements Serializable {
 	@Column(name="status")
 	private String status;
 	
-	@Column(name="comments")
-	private String comments;
+	@Column(name="message")
+	private String message;
+	
+	@Column(name="request_date")
+	private Date requestDate;
+	
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@JoinColumn(name="comment_id")
+	private Comments comment;
 
 	/**
-	 * @return the request_id
+	 * @return the requestId
 	 */
-	public int getRequest_id() {
-		return request_id;
+	public int getRequestId() {
+		return requestId;
 	}
 
 	/**
-	 * @param request_id the request_id to set
+	 * @param requestId the requestId to set
 	 */
-	public void setRequest_id(int request_id) {
-		this.request_id = request_id;
+	public void setRequestId(int requestId) {
+		this.requestId = requestId;
 	}
 
+	/**
+	 * @return the organization
+	 */
+	/*public Organization getOrganization() {
+		return organization;
+	}*/
+
+	/**
+	 * @param organization the organization to set
+	 */
+	/*public void setOrganization(Organization organization) {
+		this.organization = organization;
+	}*/
 
 	/**
 	 * @return the resource
@@ -91,6 +113,20 @@ public class ResourceRequest implements Serializable {
 	 */
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
+	}
+
+	/**
+	 * @return the currentApprovalLevel
+	 */
+	public int getCurrentApprovalLevel() {
+		return currentApprovalLevel;
+	}
+
+	/**
+	 * @param currentApprovalLevel the currentApprovalLevel to set
+	 */
+	public void setCurrentApprovalLevel(int currentApprovalLevel) {
+		this.currentApprovalLevel = currentApprovalLevel;
 	}
 
 	/**
@@ -122,45 +158,45 @@ public class ResourceRequest implements Serializable {
 	}
 
 	/**
-	 * @return the comments
+	 * @return the message
 	 */
-	public String getComments() {
-		return comments;
+	public String getMessage() {
+		return message;
 	}
 
 	/**
-	 * @param comments the comments to set
+	 * @param message the message to set
 	 */
-	public void setComments(String comments) {
-		this.comments = comments;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	/**
-	 * @return the organization
+	 * @return the requestDate
 	 */
-	public Organization getOrganization() {
-		return organization;
+	public Date getRequestDate() {
+		return requestDate;
 	}
 
 	/**
-	 * @param organization the organization to set
+	 * @param requestDate the requestDate to set
 	 */
-	public void setOrganization(Organization organization) {
-		this.organization = organization;
+	public void setRequestDate(Date requestDate) {
+		this.requestDate = requestDate;
 	}
 
 	/**
-	 * @return the currentApprovalTieLevel
+	 * @return the comment
 	 */
-	public int getCurrentApprovalTieLevel() {
-		return currentApprovalTieLevel;
+	public Comments getComment() {
+		return comment;
 	}
 
 	/**
-	 * @param currentApprovalTieLevel the currentApprovalTieLevel to set
+	 * @param comment the comment to set
 	 */
-	public void setCurrentApprovalTieLevel(int currentApprovalTieLevel) {
-		this.currentApprovalTieLevel = currentApprovalTieLevel;
+	public void setComment(Comments comment) {
+		this.comment = comment;
 	}
 	
 }

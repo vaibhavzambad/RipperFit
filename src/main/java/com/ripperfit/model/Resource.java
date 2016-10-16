@@ -4,12 +4,9 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -26,15 +23,15 @@ public class Resource implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int resourceId;
 	
-	@Column(name="resource_name",unique=true)
+	@Column(name="resource_name")
 	private String resourceName;
 	
-	@Column(name="final_approval_tier_level")
-	private int finalApprovalTierLevel;
+	@Column(name="final_approval_level")
+	private int finalApprovalLevel;
 	
-	@ManyToOne(optional=false,fetch=FetchType.LAZY)
+/*	@ManyToOne(optional=false,fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name="organization_id")
-	private Organization organization;
+	private Organization organization;*/
 	
 	@Column(name="quantity")
 	private int quantity;
@@ -68,32 +65,32 @@ public class Resource implements Serializable {
 	}
 
 	/**
-	 * @return the finalApprovalTierLevel
+	 * @return the finalApprovalLevel
 	 */
-	public int getFinalApprovalTierLevel() {
-		return finalApprovalTierLevel;
+	public int getFinalApprovalLevel() {
+		return finalApprovalLevel;
 	}
 
 	/**
-	 * @param finalApprovalTierLevel the finalApprovalTierLevel to set
+	 * @param finalApprovalLevel the finalApprovalLevel to set
 	 */
-	public void setFinalApprovalTierLevel(int finalApprovalTierLevel) {
-		this.finalApprovalTierLevel = finalApprovalTierLevel;
+	public void setFinalApprovalLevel(int finalApprovalLevel) {
+		this.finalApprovalLevel = finalApprovalLevel;
 	}
 
 	/**
 	 * @return the organization
 	 */
-	public Organization getOrganization() {
+	/*public Organization getOrganization() {
 		return organization;
-	}
+	}*/
 
 	/**
 	 * @param organization the organization to set
 	 */
-	public void setOrganization(Organization organization) {
+	/*public void setOrganization(Organization organization) {
 		this.organization = organization;
-	}
+	}*/
 
 	/**
 	 * @return the quantity
@@ -108,5 +105,5 @@ public class Resource implements Serializable {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-
+	
 }

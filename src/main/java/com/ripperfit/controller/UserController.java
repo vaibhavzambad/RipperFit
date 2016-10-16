@@ -54,9 +54,11 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/getEmployeeByEmail", method = RequestMethod.GET)
 	public ResponseEntity<Employee> getEmployeeByEmail(@RequestParam String email) {
-
+			
+		System.out.println("in get controller"+email);
 		Employee employee = this.userService.getEmployeeByEmail(email);
 		if (employee != null) {
+			System.out.println("ffds: "+employee);
 			return new ResponseEntity<Employee>(employee,HttpStatus.OK);
 		} else {
 			return new ResponseEntity<Employee>(HttpStatus.NO_CONTENT);
@@ -92,11 +94,19 @@ public class UserController {
 		Employee employee = this.userService.login(login.getEmail(), login.getPassword());
 		
 		if (employee != null) {
-			session.setAttribute("email", login.getEmail());
+			createSession(employee.getEmail(), session);
 			return new ResponseEntity<Employee>(employee, HttpStatus.ACCEPTED);
 		} else {
 			return new ResponseEntity<Employee>(HttpStatus.UNAUTHORIZED);
 		}
+	}
+	
+	@RequestMapping(value = "/createSession", method = RequestMethod.GET)
+	public ResponseEntity<Void> createSession(@RequestParam String email,HttpSession session) {	
+		
+		session.setAttribute("email", email);
+		return new ResponseEntity<Void>(HttpStatus.OK);
+		
 	}
 	
 	/**

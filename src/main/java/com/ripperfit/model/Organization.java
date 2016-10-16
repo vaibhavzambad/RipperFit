@@ -16,9 +16,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Organization implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -28,6 +25,9 @@ public class Organization implements Serializable {
 	
 	@Column(name="organization_name")
 	private String organizationName;
+	
+	@Column(name="domain_name")
+	private String domainName;
 
 	/**
 	 * @return the organizationId
@@ -57,5 +57,18 @@ public class Organization implements Serializable {
 		this.organizationName = organizationName;
 	}
 
+	/**
+	 * @return the domainName
+	 */
+	public String getDomainName() {
+		return domainName;
+	}
+
+	/**
+	 * @param domainName the domainName to set
+	 */
+	public void setDomainName(String domainName) {
+		this.domainName = domainName;
+	}
 	
 }

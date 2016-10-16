@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.ripperfit.dao.ResourceRequestDao;
+import com.ripperfit.model.Employee;
 import com.ripperfit.model.ResourceRequest;
 
 @Service
@@ -28,6 +28,7 @@ public class ResourceRequestService {
 	 */
 	@Autowired(required=true)
 	public void setResourceDao(ResourceRequestDao resourceDao) {
+		
 		this.resourceRequestDao = resourceDao;
 	}
 
@@ -36,8 +37,9 @@ public class ResourceRequestService {
 	 * @param request : Resource Request object
 	 */
 	@Transactional
-	public void addResourceRequest(ResourceRequest request) {	
-		this.resourceRequestDao.addRequestDao(request);
+	public void addResourceRequest(ResourceRequest resourceRequest) {	
+		
+		this.resourceRequestDao.addRequest(resourceRequest);
 	}
 	
 	/**
@@ -45,8 +47,16 @@ public class ResourceRequestService {
 	 * @param request : Resource Request object
 	 */
 	@Transactional
-	public int deleteResourceRequest(int request_id) {
-		int result = this.resourceRequestDao.deleteRequestDao(request_id);
+	public boolean deleteResourceRequestById(int requestId) {
+		
+		ResourceRequest resourceRequest = this.resourceRequestDao.getResourceRequestById(requestId);
+		boolean result = false;
+		
+		if(resourceRequest != null){
+			this.resourceRequestDao.deleteRequestById(requestId);
+			result = true;
+		}
+		
 		return result;
 	}
 	
@@ -56,9 +66,20 @@ public class ResourceRequestService {
 	 * @return : list of resource requests
 	 */
 	@Transactional
-	public List<ResourceRequest> viewResourceRequest(int employee_id) {
-		return this.resourceRequestDao.viewRequestDao(employee_id);
+	public List<ResourceRequest> getResourceRequestByEmployeeId(Employee employee) {
+		
+		List<ResourceRequest> resourceRequestListByEmployee = this.resourceRequestDao.getRequestByEmployeeId(employee);
+		return resourceRequestListByEmployee;
 	}
+	
+	@Transactional
+	public ResourceRequest getResourceRequestById(int requestId){
+		
+		ResourceRequest resourceRequest = this.resourceRequestDao.getResourceRequestById(requestId);
+		return resourceRequest;
+	}
+	
+	
 	
 	/**
 	 * method to view all resource requests
@@ -66,7 +87,9 @@ public class ResourceRequestService {
 	 * @return : list of resource requests
 	 */
 	@Transactional
-	public List<ResourceRequest> viewAllResourceRequest() {
-		return this.resourceRequestDao.viewAllRequestsDao();
+	public List<ResourceRequest> getAllResourceRequest() {
+		
+		List<ResourceRequest> resourceRequestList= this.resourceRequestDao.getAllRequests();
+		return resourceRequestList;
 	}
 }

@@ -8,9 +8,11 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.ripperfit.model.Organization;
 
+@Repository
 public class OrganizationDao {
 
 
@@ -43,7 +45,7 @@ public class OrganizationDao {
 
 	@Transactional
 	public Boolean addOrganization(Organization organization) {
-
+		
 		Session session = this.sessionFactory.getCurrentSession();
 		boolean result = false;
 		int i=0;
@@ -63,8 +65,8 @@ public class OrganizationDao {
 	public Organization getOrganizationByName(String organizationName){
 
 		Session session = this.sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from Organization where organization_name= :organizationName"); 
-		query.setParameter("organization_name", organizationName);
+		Query query = session.createQuery("from Organization where organizationName= :organizationName"); 
+		query.setParameter("organizationName", organizationName);
 
 		@SuppressWarnings("unchecked")
 		List<Organization> organizationList = query.list();
@@ -76,8 +78,8 @@ public class OrganizationDao {
 	public Organization getOrganizationById(int organizationId){
 
 		Session session = this.sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from Organization where organization_id= :organizationId"); 
-		query.setParameter("organization_id", organizationId);
+		Query query = session.createQuery("from Organization where organizationId= :organizationId"); 
+		query.setParameter("organizationId", organizationId);
 
 		@SuppressWarnings("unchecked")
 		List<Organization> organizationList = query.list();

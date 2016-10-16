@@ -135,9 +135,9 @@ public class UserDao {
 	public boolean deleteEmployeeById(int employeeId){
 		
 		Session session = this.sessionFactory.getCurrentSession();
-		String hql = "delete from Employee where employee_id= :employeeId";
+		String hql = "delete from Employee where employeeId= :employeeId";
 		Query query = session.createQuery(hql);
-		query.setParameter("employee_id", employeeId);
+		query.setParameter("employeeId", employeeId);
 		query.executeUpdate();
 		return true;
 		

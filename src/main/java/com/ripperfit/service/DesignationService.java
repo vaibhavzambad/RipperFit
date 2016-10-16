@@ -35,13 +35,14 @@ public class DesignationService {
 	@Transactional
 	public int addDesignation(Designation designation) {
 
-		int result = 0;
-
-		if(this.designationDao.getDesignationByName(designation.getDesignationName()) != null) {
+		int result = 2;
+		
+		this.designationDao.addDesignation(designation);
+		/*if(this.designationDao.getDesignationByName(designation.getDesignationName()) != null) {
 			result = 1;
 		} else if(this.designationDao.addDesignation(designation)) {
 			result = 2;
-		}
+		}*/
 
 		return result;
 	}
