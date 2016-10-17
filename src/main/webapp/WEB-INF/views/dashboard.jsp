@@ -19,6 +19,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
 <script src="resources/js/adminRoute.js"></script>
 <!-- Font Awesome Javascript -->
+	<script src="https://use.fontawesome.com/8cbee58684.js"></script>
 </head>
 <body>
 	<div class="navbar navbar-default navbar-fixed-top" ng-controller="headerCtrl">
