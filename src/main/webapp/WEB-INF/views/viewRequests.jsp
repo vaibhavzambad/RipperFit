@@ -30,6 +30,6 @@
 	</table>
 	<br>
 	<div class=" btn btn-group btn-primary">
-		<a style="color: white;" href="#/addRequest">Add Request</a>
+		<a style="color: white;" href="#/addRequest"><span class="glyphicon glyphicon-plus"> </span> Add Request</a>
 	</div>
 </div>
