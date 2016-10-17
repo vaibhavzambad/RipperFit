@@ -32,7 +32,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#"><b>RipperFit</b></a>
+				<a class="navbar-brand" href="#"><i class="fa fa-futbol-o top-icon" id="logo-icon" aria-hidden="true"> </i><b> RipperFit</b></a>
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse"
@@ -56,7 +56,8 @@
 							{{loggedEmployee}} <span class="caret"></span></i></a>
 						<ul class="dropdown-menu">
 							<li ng-repeat="userList in loggedUserList"><a href="{{userList.href}}">{{userList.text}}</a></li>
-							<li><a href="/RipperFit/employee/logout">Logout</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="/RipperFit/employee/logout"><span class="glyphicon glyphicon-off"></span> Logout</a></li>
 						</ul></li>
 					<li>&nbsp;&nbsp;&nbsp;</li>
 				</ul>
