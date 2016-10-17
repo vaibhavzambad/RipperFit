@@ -122,6 +122,7 @@ public class UserDao {
 			
 			e.printStackTrace();
 		}
+		System.out.println(emp.getEmployeeId());
 		return emp;
 	}
 	

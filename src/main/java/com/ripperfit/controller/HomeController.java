@@ -73,4 +73,8 @@ public class HomeController {
 	public String addPosition() {
 		return "addPosition";
 	}
+	@RequestMapping(value=" changePassword")
+	public String changepassword() {
+	return "resetPassword";
+	}
 }

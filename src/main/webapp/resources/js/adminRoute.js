@@ -21,7 +21,10 @@ var app=angular.module("RipperFit",["ngRoute"])
 	}).when("/addRequest",{
 		templateUrl:"/RipperFit/addRequest", 
 		controller:"addRequestController"
-	})
+	}).when("/changePassword",{
+templateUrl:"/RipperFit/changePassword", 
+
+})
 })
 .controller("headerCtrl",function($scope,$http, $filter) {
 	$http({

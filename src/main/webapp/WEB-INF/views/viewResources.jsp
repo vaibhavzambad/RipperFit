@@ -19,8 +19,8 @@
 				<td>{{resource.resourceName}}</td>
 				<td>{{resource.finalApprovalTierLevel}}</td>
 				<td>{{resource.quantity}}</td>
-				<td>&nbsp&nbsp&nbsp<i class="fa fa-pencil" aria-hidden="true"></i>&nbsp&nbsp
-					<a href="#/deleteResource/{{resource.resourceId}}"
+				<td>&nbsp&nbsp&nbsp<i class="fa fa-pencil" aria-hidden="true"></i>&nbsp
+					<a style="color: red;" href="#/deleteResource/{{resource.resourceId}}"
 					style="text-decoration: none;"> <i class="fa fa-trash-o"
 						aria-hidden="true"></i>
 				</a>
