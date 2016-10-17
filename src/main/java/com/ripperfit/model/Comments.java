@@ -1,6 +1,7 @@
 package com.ripperfit.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -33,15 +34,35 @@ public class Comments implements Serializable {
 	@JoinColumn(name="commentor_id")
 	private Employee employee;
 	
-	/*@ManyToOne(optional=true,fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-	@JoinColumn(name="organization_id")
-	private Organization organization;*/
+	@Column(name="comments")
+	private String comments;
+	
+	@ManyToOne(optional=true,fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@JoinColumn(name="request_id")
+	private ResourceRequest resourceRequest;
 
+	@Column(name="comment_date")
+	private Date commentDate;
+	
 	/**
 	 * @return the commentId
 	 */
 	public int getCommentId() {
 		return commentId;
+	}
+
+	/**
+	 * @return the commentDate
+	 */
+	public Date getCommentDate() {
+		return commentDate;
+	}
+
+	/**
+	 * @param commentDate the commentDate to set
+	 */
+	public void setCommentDate(Date commentDate) {
+		this.commentDate = commentDate;
 	}
 
 	/**
@@ -66,18 +87,39 @@ public class Comments implements Serializable {
 	}
 
 	/**
-	 * @return the organization
+	 * @return the comments
 	 */
-	/*public Organization getOrganization() {
-		return organization;
-	}*/
+	public String getComments() {
+		return comments;
+	}
 
 	/**
-	 * @param organization the organization to set
+	 * @param comments the comments to set
 	 */
-	/*public void setOrganization(Organization organization) {
-		this.organization = organization;
-	}*/
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+
+	/**
+	 * @return the resourceRequest
+	 */
+	public ResourceRequest getResourceRequest() {
+		return resourceRequest;
+	}
+
+	/**
+	 * @param resourceRequest the resourceRequest to set
+	 */
+	public void setResourceRequest(ResourceRequest resourceRequest) {
+		this.resourceRequest = resourceRequest;
+	}
+
+	
+	
+	/*@ManyToOne(optional=true,fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@JoinColumn(name="organization_id")
+	private Organization organization;*/
+	
 	
 
 }

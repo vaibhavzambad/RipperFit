@@ -191,6 +191,7 @@ public class UserController {
 		
 		HttpSession session = request.getSession();
 		Employee employee = this.userService.getEmployeeByEmail((String) session.getAttribute("email"));
+		System.out.println("ddf"+employee);
 		return new ResponseEntity<Employee>(employee, HttpStatus.OK);
 	}
 }

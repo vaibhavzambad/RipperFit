@@ -48,6 +48,10 @@ public class HomeController {
 	public String viewResources() {
 		return "viewResources";
 	}
+	@RequestMapping(value="viewRequestDetail", method=GET)
+	public String viewRequestDetail() {
+		return "viewRequestDetail";
+	}
 	
 	@RequestMapping(value="addRequest", method=GET)
 	public String addRequest() {

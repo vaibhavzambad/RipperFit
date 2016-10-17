@@ -67,7 +67,7 @@ public class ResourceRequestController {
 	 */
 	@RequestMapping(value = "/addRequest", method = RequestMethod.POST)
 	public ResponseEntity<Void> addResourceRequest(@RequestBody ResourceRequest request) {
-
+System.out.println("fdd");
 		resourceRequestService.addResourceRequest(request);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
@@ -130,7 +130,7 @@ public class ResourceRequestController {
 
 	@RequestMapping(value = "/getRequest/{requestId}", method = RequestMethod.GET)
 	public ResponseEntity<ResourceRequest> viewResourceRequestById(@PathVariable("requestId") int requestId) {
-
+       System.out.println("fddfddf");
 		ResourceRequest resourceRequest = this.resourceRequestService.getResourceRequestById(requestId);
 		if(resourceRequest != null){
 			return new ResponseEntity<ResourceRequest>(resourceRequest, HttpStatus.OK);

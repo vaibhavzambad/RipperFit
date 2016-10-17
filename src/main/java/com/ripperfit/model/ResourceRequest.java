@@ -55,9 +55,7 @@ public class ResourceRequest implements Serializable {
 	@Column(name="request_date")
 	private Date requestDate;
 	
-	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-	@JoinColumn(name="comment_id")
-	private Comments comment;
+	
 
 	/**
 	 * @return the requestId
@@ -185,18 +183,6 @@ public class ResourceRequest implements Serializable {
 		this.requestDate = requestDate;
 	}
 
-	/**
-	 * @return the comment
-	 */
-	public Comments getComment() {
-		return comment;
-	}
-
-	/**
-	 * @param comment the comment to set
-	 */
-	public void setComment(Comments comment) {
-		this.comment = comment;
-	}
+	
 	
 }
