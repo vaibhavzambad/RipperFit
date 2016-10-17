@@ -21,6 +21,8 @@
 <!-- <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
 	
+		<!-- Font Awesome Javascript -->
+	<script src="https://use.fontawesome.com/8cbee58684.js"></script>
  <link rel='stylesheet' type='text/css'
 	href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' />
 <link rel='stylesheet' type='text/css'
@@ -28,35 +30,40 @@
 
 </head>
 
-<body data-spy="scroll" data-offset="0" data-target="#theMenu">
+<body id="page-top" data-spy="scroll" data-target=".navbar-custom">
+
 
 	<!-- ========== HEADER SECTION ========== -->
 	<section id="home" name="home"></section>
 	<div id="headerwrap">
-		<div class="container-fluid">
-			<nav class="navbar navbar-default navbar-fixed-top"
-				style="background-color: transparent; border-color: transparent;">
-				<div class="container-fluid ">
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle" data-toggle="collapse"
-							data-target=".navbar-collapse">
-							<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-								class="icon-bar"></span>
-						</button>
-					</div>
-					<div class="navbar-collapse collapse">
-						<ul class="nav navbar-nav navbar-right" style="font-weight: bold;">
-							<li><a href="#">HOME</a></li>
-							<li><a href="#services">FEATURES</a></li>
-							<li><a href="#about">ABOUT</a></li>
-							<li><a href="login">LOGIN</a></li>
-							<li><a href="signUp">SIGNUP</a></li>
-							<li><a href="#contact">CONTACT</a></li>
-						</ul>
-					</div>
-				</div>
-			</nav>
+		<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+	<div class="container">
+		<div class="navbar-header page-scroll">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+				<i class="fa fa-bars"></i>
+			</button>
+			<a class="navbar-brand" href="#page-top">
+				<i class="fa fa-futbol-o top-icon" id="logo-icon" aria-hidden="true"></i>
+			</a>
 		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+			<ul class="nav navbar-nav" id="nav-ul">
+				<!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+						<li><a href="#">HOME</a></li>
+						<li><a href="#services">FEATURES</a></li>
+						<li><a href="#about">ABOUT</a></li>
+						<li><a href="login">LOGIN</a></li>
+						<li><a href="signUp">SIGNUP</a></li>
+						<li><a href="#contact">CONTACT</a></li>
+			</ul>
+		</div>
+		<!-- /.navbar-collapse -->
+	</div>
+	<!-- /.container -->
+</nav>
+
 		<div class="container">
 			<br>
 			<h1>RipperFit</h1>

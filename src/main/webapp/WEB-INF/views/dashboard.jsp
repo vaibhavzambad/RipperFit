@@ -18,9 +18,8 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
 <script src="resources/js/adminRoute.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
-
 <!-- Font Awesome Javascript -->
+	<script src="https://use.fontawesome.com/8cbee58684.js"></script>
 </head>
 <body>
 	<div class="navbar navbar-default navbar-fixed-top" ng-controller="headerCtrl">
@@ -33,7 +32,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/RipperFit/"><b>RipperFit</b></a>
+				<a class="navbar-brand" href="#"><i class="fa fa-futbol-o top-icon" id="logo-icon" aria-hidden="true"> </i><b> RipperFit</b></a>
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse"
@@ -57,7 +56,9 @@
 							{{loggedEmployee}} <span class="caret"></span></i></a>
 						<ul class="dropdown-menu">
 							<li ng-repeat="userList in loggedUserList"><a href="{{userList.href}}">{{userList.text}}</a></li>
-							<li><a href="/RipperFit/employee/logout">Logout</a></li>
+							<li><a href="#"><i class="fa fa-cog" aria-hidden="true"> </i> Change Password</a>
+							<li role="separator" class="divider"></li>
+							<li><a href="/RipperFit/employee/logout"><span  style="font-size: smaller;" class="glyphicon glyphicon-off"></span> Logout</a></li>
 						</ul></li>
 					<li>&nbsp;&nbsp;&nbsp;</li>
 				</ul>

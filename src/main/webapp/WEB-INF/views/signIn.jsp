@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bootstrap Login &amp; Register Templates</title>
+<title>RipperFit</title>
 
 <!-- CSS -->
 <link rel="stylesheet" href="resources/css/signUpStyle.css">
@@ -54,7 +54,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#"><b>RipperFit</b></a>
+				<a class="navbar-brand" href="home"><i class="fa fa-futbol-o top-icon" id="logo-icon" aria-hidden="true"> </i><b> RipperFit</b></a>
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse"
@@ -110,12 +110,17 @@
 			</div>
 		</div>
 	</div>
-
+	<footer class="footer text-center"
+		style="position: absolute; bottom: 0; width: 100%; background-color: #f8f8f8; border-top: 1.5px solid #e7e7e7; padding: 17px">
+		<p style="margin: 0;">
+			&copy;2016 RipperFit. All Rights Reserved| Designed by <b>VARAAS</b>
+		</p>
+	</footer>
 	<!-- Javascript -->
 	<script src="resources/js/googleApi.js"></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<!-- <script src="resources/js/jquery.backstretch.min.js"></script> -->
+	<script src="resources/js/jquery.backstretch.min.js"></script>
 	<script src="resources/js/scripts.js"></script>
 	<script src="resources/js/controllers.js"></script>
 
