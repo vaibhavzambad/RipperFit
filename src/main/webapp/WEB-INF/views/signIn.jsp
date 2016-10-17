@@ -54,8 +54,6 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				
-			</a>
 				<a class="navbar-brand" href="#"><i class="fa fa-futbol-o top-icon" id="logo-icon" aria-hidden="true"> </i><b> RipperFit</b></a>
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
