@@ -98,18 +98,7 @@ var RipperFit = angular.module('RipperFit',[])
 				'Content-Type': 'application/json'
 			}
 		}).then( function () {
-			if($scope.userDetails.designation != null){
-				var str = $filter('uppercase')($scope.userDetails.designation.designationName);
-				if(str == "ADMIN") {
-					$window.location.href = '/RipperFit/admin';
-				} else if(str == "HELPDESK") {
-					$window.location.href = '/RipperFit/helpdesk';
-				} else {
-					$window.location.href = '/RipperFit/employee';
-				}
-			}else {
-				$window.location.href = '/RipperFit/employee';
-			}
+			$window.location.href = '/RipperFit/dashboard';
 		});
 	}
 })
