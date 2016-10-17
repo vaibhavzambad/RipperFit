@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ripperfit.model.Employee;
 import com.ripperfit.model.ResourceRequest;
+import com.ripperfit.service.ApproveeRequestService;
 import com.ripperfit.service.ResourceRequestService;
 import com.ripperfit.service.UserService;
 
@@ -26,6 +27,8 @@ public class ResourceRequestController {
 	private ResourceRequestService resourceRequestService;
 
 	private UserService userService;
+
+	private ApproveeRequestService approveRequestService;
 
 	/**
 	 * method to get ResourceRequestService object
@@ -59,6 +62,23 @@ public class ResourceRequestController {
 		this.userService = userService;
 	}
 
+
+	/**
+	 * @return the approveRequestService
+	 */
+	public ApproveeRequestService getApproveRequestService() {
+		return approveRequestService;
+	}
+
+	/**
+	 * @param approveRequestService the approveRequestService to set
+	 */
+	@Autowired(required=true)
+	public void setApproveRequestService(
+			ApproveeRequestService approveRequestService) {
+		this.approveRequestService = approveRequestService;
+	}
+
 	/**
 	 * method to add resource request
 	 * @param request : ResourceRequest object
@@ -86,6 +106,7 @@ public class ResourceRequestController {
 		}else{
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		}
+
 	}
 
 	/**
@@ -129,11 +150,26 @@ public class ResourceRequestController {
 
 	@RequestMapping(value = "/getRequest/{requestId}", method = RequestMethod.GET)
 	public ResponseEntity<ResourceRequest> viewResourceRequestById(@PathVariable("requestId") int requestId) {
-       System.out.println("fddfddf");
+
 		ResourceRequest resourceRequest = this.resourceRequestService.getResourceRequestById(requestId);
 		if(resourceRequest != null){
 			return new ResponseEntity<ResourceRequest>(resourceRequest, HttpStatus.OK);
 		}
 		return new ResponseEntity<ResourceRequest>(HttpStatus.NO_CONTENT);
 	}
+
+	@RequestMapping(value="/getAllRequestToApprove/{forwardToId}",method = RequestMethod.GET)
+	public ResponseEntity<List<ResourceRequest>> getAllRequestToApprove(@PathVariable("forwardToId") int forwardToId){
+
+		Employee employee = this.userService.getEmployeeById(forwardToId);
+		if(employee != null){
+			
+			List<ResourceRequest> resourceRequestList = this.approveRequestService.getResourceRequestListByForwardToId(employee);
+			if(!resourceRequestList.isEmpty()){
+				return new ResponseEntity<List<ResourceRequest>>(resourceRequestList, HttpStatus.OK);
+			}
+		}
+		return new ResponseEntity<List<ResourceRequest>>(HttpStatus.NO_CONTENT);
+	}
+
 }

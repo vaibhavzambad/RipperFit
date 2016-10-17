@@ -11,6 +11,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ripperfit.model.Designation;
 import com.ripperfit.model.Employee;
 
 @Repository
@@ -51,12 +52,12 @@ public class UserDao {
 				result = true;
 			}
 		} catch(Exception e) {
-			
+
 			e.printStackTrace();
 		}
 		return result;
 	}
-	
+
 	/**
 	 * method to get Employee By EmployeeId
 	 * @param id : employee id
@@ -64,18 +65,18 @@ public class UserDao {
 	 */
 	@Transactional
 	public Employee getEmployeeById(int id) {
-		
+
 		Session session = this.sessionFactory.getCurrentSession();
 		Employee emp = null;
 		try {
 			emp = (Employee) session.load(Employee.class, id);
 		} catch(Exception e) {
-			
+
 			e.printStackTrace();
 		}
 		return emp;
 	}
-	
+
 	/**
 	 * method to get Employee By Email
 	 * @param email : employee's email address
@@ -89,23 +90,23 @@ public class UserDao {
 		try {
 			emp = (Employee) session.createCriteria(Employee.class).add( Restrictions.eq("email",email) ).uniqueResult();
 		} catch(Exception e) {
-			
+
 			e.printStackTrace();
 		}
 		return emp;
 	}
-	
+
 	/**
 	 * Method to update employee
 	 * @param employee : employee object
 	 */
 	@Transactional
 	public void updateEmployee(Employee employee) {
-		
+
 		Session session = this.sessionFactory.getCurrentSession();
 		session.update(employee);
 	}
-	
+
 	/**
 	 * method to register employee
 	 * @param email : employee's email address
@@ -113,33 +114,42 @@ public class UserDao {
 	 * @return Employee object
 	 */
 	public Employee login(String email, String password) {
-		
+
 		Session session = this.sessionFactory.getCurrentSession();
 		Employee emp = null;
 		try {
 			emp = (Employee) session.createCriteria( Employee.class).add( Restrictions.eq("email",email) ).add( Restrictions.eq("password",password) ).uniqueResult();
 		} catch(Exception e) {
-			
+
 			e.printStackTrace();
 		}
 		return emp;
 	}
-	
+
 	public List<Employee> viewAllEmployee() {
 		Session session = this.sessionFactory.getCurrentSession();
 		@SuppressWarnings("unchecked")
 		List<Employee> emp = session.createCriteria(Employee.class).list();
 		return emp;
 	}
-	
+
 	public boolean deleteEmployeeById(int employeeId){
-		
+
 		Session session = this.sessionFactory.getCurrentSession();
 		String hql = "delete from Employee where employeeId= :employeeId";
 		Query query = session.createQuery(hql);
 		query.setParameter("employeeId", employeeId);
 		query.executeUpdate();
 		return true;
-		
+
+	}
+
+	public Employee getEmployeeByDesignation(Designation designation) {
+
+		Session session = this.sessionFactory.getCurrentSession();
+		Query query = session.createQuery("from Employee where designation= :designation"); 
+		query.setParameter("designation", designation);
+		Employee employee = (Employee) query.uniqueResult();
+		return employee;
 	}
 }

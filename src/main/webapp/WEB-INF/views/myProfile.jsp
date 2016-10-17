@@ -8,11 +8,6 @@
 			<div class="blank" style="margin-top: 60px;">
 				<h1>My Profile</h1>
 				<hr>
-
-				<div class="alert alert-info alert-dismissable">
-					<a class="panel-close close" data-dismiss="alert">×</a> <i
-						class="fa fa-flag" aria-hidden="true"></i>
-				</div>
 				<h3>Personal info</h3>
 
 				<form class="form-horizontal" role="form">
@@ -20,7 +15,7 @@
 						<label class="col-lg-3 control-label">Name:</label>
 						<div class="col-lg-8">
 							<input class="form-control" type="text"
-								ng-model="employeeDetails.firstName+employeeDetails.lastName">
+								ng-model="employeeDetails.firstName+' '+employeeDetails.lastName">
 						</div>
 					</div>
 					<div class="form-group">
@@ -34,41 +29,30 @@
 						<label class="col-lg-3 control-label">Gender:</label>
 						<div class="col-lg-8">
 							<input class="form-control" type="text"
-								value="{{employeeDetails.gender}}" ng-model="user.gender">
+								ng-model="employeeDetails.gender">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-lg-3 control-label">Contact :</label>
 						<div class="col-lg-8">
 							<input class="form-control" type="text"
-								value="{{employeeDetails.contactNumber}}"
-								ng-model="user.contactNumber">
+								ng-model="employeeDetails.contactNumber">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">Designation:</label>
 						<div class="col-md-8">
 							<input class="form-control" type="text"
-								value="{{employeeDetails.designation.designationName}}"
-								ng-model="user.designation.designationName">
+								ng-model="employeeDetails.designation.designationName">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">Organization:</label>
 						<div class="col-md-8">
 							<input class="form-control" type="text"
-								value="{{employeeDetails.organization.organizationName}}"
-								ng-model="user.organization.organizationName">
+								ng-model="employeeDetails.organization.organizationName">
 						</div>
 					</div>
-					<div class="form-group">
-						<label class="col-md-3 control-label">Password:</label>
-						<div class="col-md-8">
-							<input class="form-control" type="password"
-								value="{{employeeDetails.password}}" ng-model="user.password">
-						</div>
-					</div>
-
 					<div class="form-group">
 						<label class="col-md-3 control-label"></label>
 						<div class="col-md-8">

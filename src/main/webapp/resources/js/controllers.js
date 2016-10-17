@@ -81,13 +81,11 @@ var RipperFit = angular.module('RipperFit',[])
 				"employeeId": "",
 				"email": $scope.userDetails.email,
 				"organization": $scope.userDetails.organization,
-				"password": $scope.userDetails.password,
+				"password": null,
 				"firstName": $scope.userDetails.firstName,
 				"lastName": $scope.userDetails.lastName,
-				"dateOfBirth": $scope.userDetails.dateOfBirth,
 				"gender": $scope.userDetails.gender,
 				"contactNumber": $scope.userDetails.contactNumber,
-				"address": $scope.userDetails.address,
 				"designation" : $scope.userDetails.designation,
 				"profilePicture" :null
 		};
@@ -154,10 +152,8 @@ var RipperFit = angular.module('RipperFit',[])
 				"password": $scope.userDetails.password,
 				"firstName": $scope.userDetails.firstName,
 				"lastName": $scope.userDetails.lastName,
-				"dateOfBirth": $scope.userDetails.dateOfBirth,
 				"gender": $scope.userDetails.gender,
 				"contactNumber": $scope.userDetails.contactNumber,
-				"address": $scope.userDetails.address,
 				"designation" : $scope.userDetails.designation,
 				"profilePicture" :null
 		};

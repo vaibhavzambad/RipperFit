@@ -71,20 +71,11 @@
 								<div class="col-xs-12">
 									<label class="sr-only" for="form-gender">Gender:</label> <select
 										class="form-control" id="form-gender" ng-model="user.gender">
+										<option value="" disabled selected hidden>Gender</option>
 										<option>Male</option>
 										<option>Female</option>
 									</select>
 									<p class="help-block gender"></p>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-xs-12">
-									<!-- <div class="form-group"> -->
-									<label class="sr-only" for="form-dob">Date Of Birth:</label> <input
-										class="form-control" id="form-do" name="form-dob"
-										placeholder="Date-Of-Birth(YYYY-MM-DD)" type="text"
-										ng-model="user.dateOfBirth" />
-									<p class="help-block DOB"></p>
 								</div>
 							</div>
 							<div class="row">
@@ -103,6 +94,15 @@
 								<h4>Upload </h4><input type="file" class="text-center" id="i_file"
 								name="img" style="display: none;" ng-model="user.profilePicture" />
 							</label>
+						</div>
+						<div class="row">
+							<div class="form-group col-xs-12">
+								<label class="sr-only" for="form-email">Email</label> <input
+									type="text" name="form-email" placeholder="Email..."
+									class="form-email form-control" id="form-email"
+									ng-model="user.email">
+								<p class="help-block email"></p>
+							</div>
 						</div>
 					</div>
 					<div class="row">
@@ -130,6 +130,7 @@
 							<select class="form-control" id="form-designation"
 								ng-init="getDesignations()" ng-model="user.designation"
 								ng-options="designation as designation.designationName for designation in designationDetails ">
+								<option value="" disabled selected hidden>Designation</option>
 							</select>
 							<p class="help-block designation"></p>
 						</div>
@@ -139,20 +140,11 @@
 							<select class="form-control" id="form-organization"
 								ng-init="getAllOrganizations()" ng-model="user.organization"
 								ng-options="organization as organization.organizationName for organization in organizationDetails ">
+								<option value="" disabled selected hidden>Organization</option>
 							</select>
 							<p class="help-block organization"></p>
 						</div>
 					</div>
-					<div class="row">
-						<div class="form-group col-xs-12">
-							<label class="sr-only" for="Address">Address</label>
-							<textarea name="Address" placeholder="Address..."
-								class="Address form-control" id="Address"
-								ng-model="user.address"></textarea>
-							<p class="help-block address"></p>
-						</div>
-					</div>
-
 					<div class="col-xs-4"></div>
 					<input type="button" class="col-xs-4 btn btn-info text-center"
 							ng-click="getFormDetails(user)" value="Sign me up!" />

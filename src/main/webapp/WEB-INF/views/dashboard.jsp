@@ -56,7 +56,7 @@
 							{{loggedEmployee}} <span class="caret"></span></i></a>
 						<ul class="dropdown-menu">
 							<li ng-repeat="userList in loggedUserList"><a href="{{userList.href}}">{{userList.text}}</a></li>
-							<li><a href="#/changePassword/"><i class="fa fa-cog" aria-hidden="true"> </i> Change Password</a>
+							<li><a href="#/changePassword"><i class="fa fa-cog" aria-hidden="true"> </i> Change Password</a>
 							<li role="separator" class="divider"></li>
 							<li><a href="/RipperFit/employee/logout"><span  style="font-size: smaller;" class="glyphicon glyphicon-off"></span> Logout</a></li>
 						</ul></li>

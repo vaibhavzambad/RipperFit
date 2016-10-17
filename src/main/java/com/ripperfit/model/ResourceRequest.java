@@ -3,7 +3,6 @@ package com.ripperfit.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -32,11 +31,11 @@ public class ResourceRequest implements Serializable {
 	@JoinColumn(name="organization_id")
 	private Organization organization;*/
 	
-	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="resource_id")
 	private Resource resource;
 	
-	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="requestor_id")
 	private Employee employee;
 	
@@ -54,8 +53,6 @@ public class ResourceRequest implements Serializable {
 	
 	@Column(name="request_date")
 	private Date requestDate;
-	
-	
 
 	/**
 	 * @return the requestId
@@ -70,20 +67,6 @@ public class ResourceRequest implements Serializable {
 	public void setRequestId(int requestId) {
 		this.requestId = requestId;
 	}
-
-	/**
-	 * @return the organization
-	 */
-	/*public Organization getOrganization() {
-		return organization;
-	}*/
-
-	/**
-	 * @param organization the organization to set
-	 */
-	/*public void setOrganization(Organization organization) {
-		this.organization = organization;
-	}*/
 
 	/**
 	 * @return the resource
@@ -182,7 +165,6 @@ public class ResourceRequest implements Serializable {
 	public void setRequestDate(Date requestDate) {
 		this.requestDate = requestDate;
 	}
-
 	
 	
 }

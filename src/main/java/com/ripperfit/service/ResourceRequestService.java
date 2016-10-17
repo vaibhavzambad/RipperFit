@@ -5,7 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.ripperfit.dao.ApproveeRequestDao;
 import com.ripperfit.dao.ResourceRequestDao;
+import com.ripperfit.model.ApproveRequest;
 import com.ripperfit.model.Employee;
 import com.ripperfit.model.ResourceRequest;
 
@@ -13,6 +16,8 @@ import com.ripperfit.model.ResourceRequest;
 public class ResourceRequestService {
 	
 	private ResourceRequestDao resourceRequestDao;
+	
+	private ApproveeRequestDao approveeRequestDao;
 	
 	/**
 	 * method to get the ResourceDAO object
@@ -31,6 +36,23 @@ public class ResourceRequestService {
 		
 		this.resourceRequestDao = resourceDao;
 	}
+	
+	
+
+	/**
+	 * @return the approveeRequestDao
+	 */
+	public ApproveeRequestDao getApproveeRequestDao() {
+		return approveeRequestDao;
+	}
+
+	/**
+	 * @param approveeRequestDao the approveeRequestDao to set
+	 */
+	@Autowired(required=true)
+	public void setApproveeRequestDao(ApproveeRequestDao approveeRequestDao) {
+		this.approveeRequestDao = approveeRequestDao;
+	}
 
 	/**
 	 * method to add the resource request
@@ -40,6 +62,14 @@ public class ResourceRequestService {
 	public void addResourceRequest(ResourceRequest resourceRequest) {	
 		
 		this.resourceRequestDao.addRequest(resourceRequest);
+		Employee employee = resourceRequest.getEmployee();
+		Employee employeeToForward  =resourceRequest.getEmployee().getEmployee();
+		ApproveRequest approveeRequest = new ApproveRequest();
+		approveeRequest.setResourceRequest(resourceRequest);
+		approveeRequest.setEmployee(employee);
+		approveeRequest.setEmployeeToForward(employeeToForward);
+		this.approveeRequestDao.addApproveeRequest(approveeRequest);
+		
 	}
 	
 	/**
@@ -91,5 +121,12 @@ public class ResourceRequestService {
 		
 		List<ResourceRequest> resourceRequestList= this.resourceRequestDao.getAllRequests();
 		return resourceRequestList;
+	}
+	
+	@Transactional
+	public int getCurrentApprovalLevelByRequestId(int requestId){
+		
+		int currentApprovalLevel = this.resourceRequestDao.getCurrentApprovalLevel(requestId);
+		return currentApprovalLevel;
 	}
 }

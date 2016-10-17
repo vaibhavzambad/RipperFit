@@ -2,53 +2,75 @@ package com.ripperfit.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name="comments")
+@Table(name="approve_request")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class ApproveRequest implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	@Column(name="approvee_id")
-	private int approveeId;
 	
 	@Id
-	@Column(name="request_id")
-	private int requestId;
+	@ManyToOne(optional=true,fetch=FetchType.LAZY)
+	@JoinColumn(name="request_id")
+	private ResourceRequest resourceRequest;
+	
+	@ManyToOne(optional=true,fetch=FetchType.LAZY)
+	@JoinColumn(name="approvee_id")
+	private Employee employee;
+	
+	@ManyToOne(optional=true,fetch=FetchType.LAZY)
+	@JoinColumn(name="forwardTo_id")
+	private Employee employeeToForward;
 
 	/**
-	 * @return the approveeId
+	 * @return the employee
 	 */
-	public int getApproveeId() {
-		return approveeId;
+	public Employee getEmployee() {
+		return employee;
 	}
 
 	/**
-	 * @param approveeId the approveeId to set
+	 * @param employee the employee to set
 	 */
-	public void setApproveeId(int approveeId) {
-		this.approveeId = approveeId;
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 
 	/**
-	 * @return the requestId
+	 * @return the resourceRequest
 	 */
-	public int getRequestId() {
-		return requestId;
+	public ResourceRequest getResourceRequest() {
+		return resourceRequest;
 	}
 
 	/**
-	 * @param requestId the requestId to set
+	 * @param resourceRequest the resourceRequest to set
 	 */
-	public void setRequestId(int requestId) {
-		this.requestId = requestId;
+	public void setResourceRequest(ResourceRequest resourceRequest) {
+		this.resourceRequest = resourceRequest;
 	}
+
+	/**
+	 * @return the employeeToForward
+	 */
+	public Employee getEmployeeToForward() {
+		return employeeToForward;
+	}
+
+	/**
+	 * @param employeeToForward the employeeToForward to set
+	 */
+	public void setEmployeeToForward(Employee employeeToForward) {
+		this.employeeToForward = employeeToForward;
+	}
+
 }

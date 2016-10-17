@@ -2,7 +2,6 @@ package com.ripperfit.model;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,7 +26,7 @@ public class Employee implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int employeeId;
 	
-	@ManyToOne(optional=true,fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@ManyToOne(optional=true,fetch=FetchType.LAZY)
 	@JoinColumn(name="organization_id")
 	private Organization organization;
 	
@@ -49,7 +48,7 @@ public class Employee implements Serializable {
 	@Column(name="contact_number")
 	private String contactNumber;
 	
-	@ManyToOne(optional=true,fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@ManyToOne(optional=true,fetch=FetchType.LAZY)
 	@JoinColumn(name="designation_id")
 	private Designation designation;
 	
@@ -57,7 +56,7 @@ public class Employee implements Serializable {
 	@JoinColumn(name="department_id")
 	private Department department;*/
 	
-	@ManyToOne(optional=true,fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@ManyToOne(optional=true,fetch=FetchType.LAZY)
 	@JoinColumn(name="reportTo_id")
 	private Employee employee;
 	

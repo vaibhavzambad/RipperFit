@@ -2,7 +2,6 @@ package com.ripperfit.model;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -37,7 +36,7 @@ public class Designation implements Serializable {
 	@Column(name="designation_level")
 	private int designationLevel;
 	
-	@ManyToOne(optional=false,fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@ManyToOne(optional=false,fetch=FetchType.LAZY)
 	@JoinColumn(name="department_id")
 	private Department department;
 

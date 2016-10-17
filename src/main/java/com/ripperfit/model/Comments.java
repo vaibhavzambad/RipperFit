@@ -3,7 +3,6 @@ package com.ripperfit.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,39 +29,25 @@ public class Comments implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int commentId;
 	
-	@ManyToOne(optional=true,fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@ManyToOne(optional=true,fetch=FetchType.LAZY)
 	@JoinColumn(name="commentor_id")
 	private Employee employee;
 	
 	@Column(name="comments")
 	private String comments;
 	
-	@ManyToOne(optional=true,fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@ManyToOne(optional=true,fetch=FetchType.LAZY)
 	@JoinColumn(name="request_id")
-	private ResourceRequest resourceRequest;
-
-	@Column(name="comment_date")
-	private Date commentDate;
+	private ResourceRequest requestId;
 	
+	@Column(name="comment_date")
+	private Date date;
+
 	/**
 	 * @return the commentId
 	 */
 	public int getCommentId() {
 		return commentId;
-	}
-
-	/**
-	 * @return the commentDate
-	 */
-	public Date getCommentDate() {
-		return commentDate;
-	}
-
-	/**
-	 * @param commentDate the commentDate to set
-	 */
-	public void setCommentDate(Date commentDate) {
-		this.commentDate = commentDate;
 	}
 
 	/**
@@ -101,20 +86,18 @@ public class Comments implements Serializable {
 	}
 
 	/**
-	 * @return the resourceRequest
+	 * @return the requestId
 	 */
-	public ResourceRequest getResourceRequest() {
-		return resourceRequest;
+	public ResourceRequest getRequestId() {
+		return requestId;
 	}
 
 	/**
-	 * @param resourceRequest the resourceRequest to set
+	 * @param requestId the requestId to set
 	 */
-	public void setResourceRequest(ResourceRequest resourceRequest) {
-		this.resourceRequest = resourceRequest;
+	public void setRequestId(ResourceRequest requestId) {
+		this.requestId = requestId;
 	}
-
-	
 	
 	/*@ManyToOne(optional=true,fetch=FetchType.LAZY,cascade=CascadeType.ALL)
 	@JoinColumn(name="organization_id")

@@ -102,10 +102,17 @@
 		<beans:property name="sessionFactory"
 			ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
+	
+	<beans:bean id="approveeRequestDao" class="com.ripperfit.dao.ApproveeRequestDao">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	
 	<beans:bean id="departmentDao" class="com.ripperfit.dao.DepartmentDao">
 		<beans:property name="sessionFactory"
 			ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
+	
 	<beans:bean id="commentDao" class="com.ripperfit.dao.CommentDao">
 		<beans:property name="sessionFactory"
 			ref="hibernate4AnnotatedSessionFactory" />
@@ -127,16 +134,21 @@
 	<beans:bean id="resourceService" class="com.ripperfit.service.ResourceService">
 		<beans:property name="resourceDao" ref="resourceDao"></beans:property>
 	</beans:bean>
-<beans:bean id="commmentService" class="com.ripperfit.service.CommentsService">
-		<beans:property name="commentDao" ref="commentDao"></beans:property>
-	</beans:bean>
-	<beans:bean id="departmentService" class="com.ripperfit.service.DepartmentService">
-		<beans:property name="departmentDao" ref="departmentDao"></beans:property>
-	</beans:bean>
+	
 	<beans:bean id="resourceApprovalService"
 		class="com.ripperfit.service.RequestApprovalService">
 		<beans:property name="resourceRequestDao" ref="resourceRequestDao"></beans:property>
 		<beans:property name="resourceDao" ref="resourceDao"></beans:property>
+		<beans:property name="userDao" ref="userDao"></beans:property>
+		<beans:property name="approveeRequestDao" ref="approveeRequestDao"></beans:property>
+	</beans:bean>
+	
+	<beans:bean id="commmentService" class="com.ripperfit.service.CommentsService">
+		<beans:property name="commentDao" ref="commentDao"></beans:property>
+	</beans:bean>
+	
+	<beans:bean id="departmentService" class="com.ripperfit.service.DepartmentService">
+		<beans:property name="departmentDao" ref="departmentDao"></beans:property>
 	</beans:bean>
 
 	<beans:bean id="mailSender"

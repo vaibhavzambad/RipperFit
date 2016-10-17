@@ -47,7 +47,7 @@ public class ResourceRequestDao {
 			i = (Integer) session.save(resourceRequest);
 			if(i > 0) {
 				result = true;
-			}
+							}
 		} catch(Exception e) {
 
 			e.printStackTrace();
@@ -126,18 +126,15 @@ public class ResourceRequestDao {
 		return currentApprovalLevel;
 	}
 
-	public boolean updateCurrentApprovalLevel(int requestId,int currentApprovalLevel){
+	public boolean updateCurrentApprovalLevel(int requestId,int updatedLevel){
 		
 		Session session = this.sessionFactory.getCurrentSession();
 		Query q = session.createQuery("update ResourceRequest set currentApprovalLevel= :updatedCurrentApprovalLevel"
 				+ " where requestId= :requestId");
-		q.setParameter("updatedCurrentApprovalLevel", currentApprovalLevel+1);
+		q.setParameter("updatedCurrentApprovalLevel", updatedLevel);
 		q.setParameter("requestId", requestId);
 		q.executeUpdate();
 		return true;
 	}
-
-
-
 
 }

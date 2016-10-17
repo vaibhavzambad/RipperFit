@@ -18,6 +18,180 @@ USE `ripper_fit`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `approve_request`
+--
+
+DROP TABLE IF EXISTS `approve_request`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `approve_request` (
+  `approvee_id` int(11) NOT NULL,
+  `request_id` int(11) NOT NULL,
+  `forwardTo_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`request_id`),
+  KEY `ApproveRequest_ibfk_2` (`request_id`),
+  KEY `ApproveRequest_ibfk_3` (`forwardTo_id`),
+  KEY `ApproveRequest_ibfk_1` (`approvee_id`),
+  CONSTRAINT `ApproveRequest_ibfk_3` FOREIGN KEY (`forwardTo_id`) REFERENCES `employee` (`employee_id`),
+  CONSTRAINT `ApproveRequest_ibfk_1` FOREIGN KEY (`approvee_id`) REFERENCES `employee` (`employee_id`),
+  CONSTRAINT `ApproveRequest_ibfk_2` FOREIGN KEY (`request_id`) REFERENCES `resource_request` (`request_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `approve_request`
+--
+
+LOCK TABLES `approve_request` WRITE;
+/*!40000 ALTER TABLE `approve_request` DISABLE KEYS */;
+/*!40000 ALTER TABLE `approve_request` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `resource`
+--
+
+DROP TABLE IF EXISTS `resource`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `resource` (
+  `resource_id` int(11) NOT NULL AUTO_INCREMENT,
+  `resource_name` varchar(30) NOT NULL,
+  `final_approval_level` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  PRIMARY KEY (`resource_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `resource`
+--
+
+LOCK TABLES `resource` WRITE;
+/*!40000 ALTER TABLE `resource` DISABLE KEYS */;
+INSERT INTO `resource` VALUES (1,'mouse',2,20);
+/*!40000 ALTER TABLE `resource` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `designation`
+--
+
+DROP TABLE IF EXISTS `designation`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `designation` (
+  `designation_id` int(11) NOT NULL AUTO_INCREMENT,
+  `designation_name` varchar(30) NOT NULL,
+  `designation_level` int(11) DEFAULT NULL,
+  `department_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`designation_id`),
+  KEY `department_ibfk_2` (`department_id`),
+  CONSTRAINT `department_ibfk_2` FOREIGN KEY (`department_id`) REFERENCES `department` (`department_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `designation`
+--
+
+LOCK TABLES `designation` WRITE;
+/*!40000 ALTER TABLE `designation` DISABLE KEYS */;
+INSERT INTO `designation` VALUES (1,'Employee',1,1),(2,'TechLead',2,1),(3,'Manager',3,1),(4,'Helpdesk',0,2),(5,'Admin',0,3);
+/*!40000 ALTER TABLE `designation` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `resource_request`
+--
+
+DROP TABLE IF EXISTS `resource_request`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `resource_request` (
+  `request_id` int(11) NOT NULL AUTO_INCREMENT,
+  `resource_id` int(11) NOT NULL,
+  `requestor_id` int(11) NOT NULL,
+  `current_approval_level` int(11) DEFAULT NULL,
+  `priority` varchar(30) DEFAULT 'low',
+  `status` varchar(30) NOT NULL,
+  `message` varchar(1000) DEFAULT NULL,
+  `request_date` date DEFAULT NULL,
+  PRIMARY KEY (`request_id`),
+  KEY `resource_id` (`resource_id`),
+  KEY `requestor_id` (`requestor_id`),
+  CONSTRAINT `resource_request_ibfk_1` FOREIGN KEY (`resource_id`) REFERENCES `resource` (`resource_id`),
+  CONSTRAINT `resource_request_ibfk_2` FOREIGN KEY (`requestor_id`) REFERENCES `employee` (`employee_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `resource_request`
+--
+
+LOCK TABLES `resource_request` WRITE;
+/*!40000 ALTER TABLE `resource_request` DISABLE KEYS */;
+/*!40000 ALTER TABLE `resource_request` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `comments`
+--
+
+DROP TABLE IF EXISTS `comments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `comments` (
+  `comment_id` int(11) NOT NULL AUTO_INCREMENT,
+  `commentor_id` int(11) NOT NULL,
+  `comments` varchar(500) NOT NULL,
+  `request_id` int(11) NOT NULL,
+  `comment_date` date NOT NULL,
+  PRIMARY KEY (`comment_id`),
+  KEY `comments_ibfk_1` (`commentor_id`),
+  KEY `comments_ibfk_2` (`request_id`),
+  CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`commentor_id`) REFERENCES `employee` (`employee_id`),
+  CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`request_id`) REFERENCES `resource_request` (`request_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `comments`
+--
+
+LOCK TABLES `comments` WRITE;
+/*!40000 ALTER TABLE `comments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `comments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `department`
+--
+
+DROP TABLE IF EXISTS `department`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `department` (
+  `department_id` int(11) NOT NULL AUTO_INCREMENT,
+  `department_name` varchar(200) NOT NULL,
+  `organization_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`department_id`),
+  KEY `department_ibfk_1` (`organization_id`),
+  CONSTRAINT `department_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `organization` (`organization_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `department`
+--
+
+LOCK TABLES `department` WRITE;
+/*!40000 ALTER TABLE `department` DISABLE KEYS */;
+INSERT INTO `department` VALUES (1,'Technical',1),(2,'Helpdesk',1),(3,'Admin',1);
+/*!40000 ALTER TABLE `department` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `employee`
 --
 
@@ -39,10 +213,13 @@ CREATE TABLE `employee` (
   `approval_status` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`employee_id`),
   UNIQUE KEY `email_UNIQUE` (`email`),
+  KEY `employee_ibfk_3` (`organization_id`),
+  KEY `employee_ibfk_4` (`designation_id`),
+  KEY `employee_ibfk_6` (`reportTo_id`),
   CONSTRAINT `employee_ibfk_3` FOREIGN KEY (`organization_id`) REFERENCES `organization` (`organization_id`),
   CONSTRAINT `employee_ibfk_4` FOREIGN KEY (`designation_id`) REFERENCES `designation` (`designation_id`),
   CONSTRAINT `employee_ibfk_6` FOREIGN KEY (`reportTo_id`) REFERENCES `employee` (`employee_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -51,95 +228,11 @@ CREATE TABLE `employee` (
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
+INSERT INTO `employee` VALUES (8,1,'vaibhav.zambad@metacube.com','123456','Vaibhav','zambad','Male','874521456',1,NULL,NULL,NULL),(9,1,'amit.kumar@metacube.com','amit','amit','kumar','Male','7845123654',5,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `resource_request`
---
-
-DROP TABLE IF EXISTS `resource_request`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `resource_request` (
-  `request_id` int(11) NOT NULL AUTO_INCREMENT,
-  `resource_id` int(11) NOT NULL,
-  `requestor_id` int(11) NOT NULL,
-  `current_approval_level` int(11) DEFAULT NULL,
-  `priority` varchar(30) DEFAULT 'low',
-  `status` varchar(30) NOT NULL,
-  `message` varchar(1000) DEFAULT NULL,
-  `request_date` DATE DEFAULT NULL,
-  `comment_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`request_id`),
-  KEY `resource_id` (`resource_id`),
-  KEY `requestor_id` (`requestor_id`),
-  CONSTRAINT `resource_request_ibfk_1` FOREIGN KEY (`resource_id`) REFERENCES `resource` (`resource_id`),
-  CONSTRAINT `resource_request_ibfk_2` FOREIGN KEY (`requestor_id`) REFERENCES `employee` (`employee_id`),
-  CONSTRAINT `resource_request_ibfk_5` FOREIGN KEY (`comment_id`) REFERENCES `comments` (`comment_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `resource_request`
---
-
-LOCK TABLES `resource_request` WRITE;
-/*!40000 ALTER TABLE `resource_request` DISABLE KEYS */;
-/*!40000 ALTER TABLE `resource_request` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `resource`
---
-
-DROP TABLE IF EXISTS `resource`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `resource` (
-  `resource_id` int(11) NOT NULL AUTO_INCREMENT,
-  `resource_name` varchar(30) NOT NULL,
-  `final_approval_level` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  PRIMARY KEY (`resource_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `resource`
---
-
-LOCK TABLES `resource` WRITE;
-/*!40000 ALTER TABLE `resource` DISABLE KEYS */;
-/*!40000 ALTER TABLE `resource` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `designation`
---
-
-DROP TABLE IF EXISTS `designation`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `designation` (
-  `designation_id` int(11) NOT NULL AUTO_INCREMENT,
-  `designation_name` varchar(30) NOT NULL,
-  `designation_level` int(11) DEFAULT NULL,
-  `department_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`designation_id`),
-  CONSTRAINT `department_ibfk_2` FOREIGN KEY (`department_id`) REFERENCES `department` (`department_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `designation`
---
-
-LOCK TABLES `designation` WRITE;
-/*!40000 ALTER TABLE `designation` DISABLE KEYS */;
-/*!40000 ALTER TABLE `designation` ENABLE KEYS */;
-UNLOCK TABLES;
-
 -- Table structure for table `organization`
 --
 
@@ -155,50 +248,17 @@ CREATE TABLE `organization` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-DROP TABLE IF EXISTS `department`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `department` (
-  `department_id` int(11) NOT NULL AUTO_INCREMENT,
-  `department_name` varchar(200) NOT NULL,
-  PRIMARY KEY (`department_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
-
-DROP TABLE IF EXISTS `comments`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `comments` (
-  `comment_id` int(11) NOT NULL AUTO_INCREMENT,
-  `commentor_id` int(11) NOT NULL,
-  PRIMARY KEY (`comment_id`),
-  CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`commentor_id`) REFERENCES `employee` (`employee_id`)
-  
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
-DROP TABLE IF EXISTS `approve_request`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `approve_request` (
-  `approvee_id` int(11) NOT NULL,
-  `request_id` int(11) NOT NULL,
-  PRIMARY KEY (`approvee_id`,`request_id`),
-  CONSTRAINT `ApproveRequest_ibfk_1` FOREIGN KEY (`approvee_id`) REFERENCES `employee` (`employee_id`),
-  CONSTRAINT `ApproveRequest_ibfk_2` FOREIGN KEY (`request_id`) REFERENCES `resource_request` (`request_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
 --
 -- Dumping data for table `organization`
 --
 
 LOCK TABLES `organization` WRITE;
 /*!40000 ALTER TABLE `organization` DISABLE KEYS */;
+INSERT INTO `organization` VALUES (1,'Metacube','metacube.com');
 /*!40000 ALTER TABLE `organization` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
@@ -207,4 +267,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-10-14 11:58:52
+-- Dump completed on 2016-10-17 22:11:08

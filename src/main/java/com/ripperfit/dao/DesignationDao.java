@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ripperfit.model.Department;
 import com.ripperfit.model.Designation;
 
 @Repository
@@ -30,29 +31,6 @@ public class DesignationDao {
 	@Autowired(required=true)
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
-	}
-
-	public int getParentDesignationIdByDesignationId(int designationId){
-
-		Session session = this.getSessionFactory().getCurrentSession();
-
-		String hql = "SELECT parent_designation_id FROM Designation WHERE designationId = :designationId";
-		Query query = session.createQuery(hql);
-		query.setParameter("designationId", designationId);
-		int parentDesignationId = query.executeUpdate();
-		return parentDesignationId;		
-	}
-
-	public int getParentDesignationIdByDesignationName(String designationName){
-
-		Session session = this.getSessionFactory().getCurrentSession();
-
-		String hql = "SELECT parent_designation_id FROM Designation WHERE designationName = :designationName";
-		Query query = session.createQuery(hql);
-		query.setParameter("designationName", designationName);
-		int parentDesignationId = query.executeUpdate();
-		return parentDesignationId;		
-
 	}
 
 	public List<Designation> viewAllRoles() {
@@ -124,6 +102,15 @@ public class DesignationDao {
 		Designation designation = (Designation) designationList.get(0);
 		return designation;
 		
+	}
+	
+	public Designation getDesignationByDepartment(Department department){
+		
+		Session session = this.sessionFactory.getCurrentSession();
+		Query query = session.createQuery("from Designation where department= :department"); 
+		query.setParameter("department", department);
+		Designation designation = (Designation) query.uniqueResult();
+		return designation;
 	}
 
 }

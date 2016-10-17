@@ -71,16 +71,6 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-xs-12">
-										<!-- <div class="form-group"> -->
-										<label class="sr-only" for="form-dob">Date Of Birth:</label> <input
-											class="form-control" id="form-do" name="form-dob"
-											placeholder="Date-Of-Birth(YYYY-MM-DD)" type="text"
-											ng-model="user.dateOfBirth" required />
-										<p class="help-block DOB"></p>
-									</div>
-								</div>
-								<div class="row">
 									<div class="form-group col-xs-12">
 										<label class="sr-only" for="form-contact">Contact:</label> <input
 											type="text" class="form-control" id="form-contact"
@@ -125,16 +115,6 @@
 								<p class="help-block organization"></p>
 							</div>
 						</div>
-						<div class="row">
-							<div class="form-group col-xs-12">
-								<label class="sr-only" for="Address">Address</label>
-								<textarea name="Address" placeholder="Address..."
-									class="Address form-control" id="Address"
-									ng-model="user.address"></textarea>
-								<p class="help-block address"></p>
-							</div>
-						</div>
-
 						<div class="col-xs-4"></div>
 						<input type="button" style="margin-bottom: 20px;"
 							class="col-xs-4 btnSubmit btn btn-info"
