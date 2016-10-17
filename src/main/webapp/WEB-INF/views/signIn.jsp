@@ -54,7 +54,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="home"><i class="fa fa-futbol-o top-icon" id="logo-icon" aria-hidden="true"> </i><b> RipperFit</b></a>
+				<a class="navbar-brand" href="#"><b>RipperFit</b></a>
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse"
@@ -94,7 +94,7 @@
 							</div>
 							<div class="col-xs-4"></div>
 							<input type="button" class="col-xs-4 btn btn-info text-center"
-							ng-click="login(user)" value="Log-in" />
+								ng-click="login(user)" value="Log-in" />
 						</form>
 					</div>
 					<div class="social-login text-center">
@@ -120,7 +120,7 @@
 	<script src="resources/js/googleApi.js"></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="resources/js/jquery.backstretch.min.js"></script>
+	<!-- <script src="resources/js/jquery.backstretch.min.js"></script> -->
 	<script src="resources/js/scripts.js"></script>
 	<script src="resources/js/controllers.js"></script>
 

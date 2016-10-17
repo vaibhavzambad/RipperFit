@@ -20,7 +20,7 @@
 				<td>{{request.employee.firstName +"
 					"+request.employee.lastName}}</td>
 				<td>{{request.resource.resourceName}}</td>
-				<td>DatePending</td>
+				<td>{{request.requestDate}}</td>
 				<td><span class="label label-{{request.color}}">{{request.status}}</span></td>
 				<td><i class="fa fa-pencil" aria-hidden="true"></i> &nbsp&nbsp<i
 					class="fa fa-trash-o" aria-hidden="true"></i> &nbsp&nbsp<i
@@ -29,7 +29,4 @@
 		</tbody>
 	</table>
 	<br>
-	<div class=" btn btn-group btn-primary">
-		<a style="color: white;" href="#/addRequest"><span class="glyphicon glyphicon-plus"> </span> Add Request</a>
-	</div>
 </div>

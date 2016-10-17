@@ -86,7 +86,6 @@ public class ResourceRequestController {
 		}else{
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		}
-
 	}
 
 	/**
@@ -130,7 +129,7 @@ public class ResourceRequestController {
 
 	@RequestMapping(value = "/getRequest/{requestId}", method = RequestMethod.GET)
 	public ResponseEntity<ResourceRequest> viewResourceRequestById(@PathVariable("requestId") int requestId) {
-
+       System.out.println("fddfddf");
 		ResourceRequest resourceRequest = this.resourceRequestService.getResourceRequestById(requestId);
 		if(resourceRequest != null){
 			return new ResponseEntity<ResourceRequest>(resourceRequest, HttpStatus.OK);

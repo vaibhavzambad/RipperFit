@@ -55,10 +55,8 @@ public class UserController {
 	@RequestMapping(value = "/getEmployeeByEmail", method = RequestMethod.GET)
 	public ResponseEntity<Employee> getEmployeeByEmail(@RequestParam String email) {
 			
-		System.out.println("in get controller"+email);
 		Employee employee = this.userService.getEmployeeByEmail(email);
 		if (employee != null) {
-			System.out.println("ffds: "+employee);
 			return new ResponseEntity<Employee>(employee,HttpStatus.OK);
 		} else {
 			return new ResponseEntity<Employee>(HttpStatus.NO_CONTENT);
@@ -117,7 +115,6 @@ public class UserController {
 	@RequestMapping(value = "/addEmployee", method = RequestMethod.POST)
 	public ResponseEntity<Void> addEmployee(@RequestBody Employee employee) {
 		
-		System.out.println("here");
 		int result = this.userService.registerEmployee(employee);
 		if(result == 1) {
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
@@ -131,7 +128,6 @@ public class UserController {
 	@RequestMapping(value = "/socialLogin", method = RequestMethod.POST)
 	public ResponseEntity<Void> addEmployeeThroughSocialLogin(@RequestBody Employee employee,HttpSession session) {
 		
-		System.out.println("here");
 		int result = this.userService.registerEmployee(employee);
 		if(result == 1) {
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);

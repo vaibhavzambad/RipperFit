@@ -2,7 +2,7 @@
 jQuery(document).ready(function() {
 	
 	//background
-   $.backstretch("resources/img/form-bg.jpg");
+   /*$.backstretch("resources/img/form-bg.jpg");*/
    
    //upload profile picture
    $('#i_file').change( function(event) {

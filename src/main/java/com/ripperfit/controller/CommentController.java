@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ripperfit.model.Comments;
-import com.ripperfit.model.Employee;
 import com.ripperfit.model.ResourceRequest;
 import com.ripperfit.service.CommentsService;
 import com.ripperfit.service.ResourceRequestService;

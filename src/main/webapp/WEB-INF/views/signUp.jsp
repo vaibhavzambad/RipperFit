@@ -26,7 +26,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#"><i class="fa fa-futbol-o top-icon" id="logo-icon" aria-hidden="true"> </i><b> RipperFit</b></a>
+				<a class="navbar-brand" href="#"><b>RipperFit</b></a>
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse"
@@ -45,7 +45,7 @@
 		<div class="blank">
 			<div class="col-xs-2"></div>
 			<div class="col-xs-8">
-				<h3 class="text-center" style="color: white;">Sign up now</h3>
+				<h3 class="text-center">Sign up now</h3>
 				<hr />
 				<form role="form" action="" method="post" class="signUp-form"
 					ng-controller="signUpCtrl">
@@ -100,7 +100,7 @@
 							<img class="img img-circle" width="110" height="110" id="image1"
 								ng-src="{{user.profilePicture}}" src="resources/img/profile.png"
 								style="background-color: white;" /><br> <label>
-								<h4 style="color: white;">Upload </h4><input type="file" class="text-center" id="i_file"
+								<h4>Upload </h4><input type="file" class="text-center" id="i_file"
 								name="img" style="display: none;" ng-model="user.profilePicture" />
 							</label>
 						</div>
@@ -171,7 +171,7 @@
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="resources/js/jquery.backstretch.min.js"></script>
+	<!-- <script src="resources/js/jquery.backstretch.min.js"></script> -->
 	<script src="resources/js/scripts.js"></script>
 	<script src="resources/js/controllers.js"></script>
 </body>

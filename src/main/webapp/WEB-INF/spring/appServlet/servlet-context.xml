@@ -48,7 +48,7 @@
 		<beans:property name="url"
 			value="jdbc:mysql://localhost:3306/ripper_fit" />
 		<beans:property name="username" value="root" />
-		<beans:property name="password" value="gogogo" />
+		<beans:property name="password" value="root" />
 	</beans:bean>
 
 	<!-- Hibernate 4 SessionFactory Bean definition. All beans are defined -->
@@ -102,6 +102,14 @@
 		<beans:property name="sessionFactory"
 			ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
+	<beans:bean id="departmentDao" class="com.ripperfit.dao.DepartmentDao">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	<beans:bean id="commentDao" class="com.ripperfit.dao.CommentDao">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
 
 	<!-- Service Beans -->
 	<beans:bean id="userService" class="com.ripperfit.service.UserService">
@@ -119,7 +127,12 @@
 	<beans:bean id="resourceService" class="com.ripperfit.service.ResourceService">
 		<beans:property name="resourceDao" ref="resourceDao"></beans:property>
 	</beans:bean>
-
+<beans:bean id="commmentService" class="com.ripperfit.service.CommentsService">
+		<beans:property name="commentDao" ref="commentDao"></beans:property>
+	</beans:bean>
+	<beans:bean id="departmentService" class="com.ripperfit.service.DepartmentService">
+		<beans:property name="departmentDao" ref="departmentDao"></beans:property>
+	</beans:bean>
 	<beans:bean id="resourceApprovalService"
 		class="com.ripperfit.service.RequestApprovalService">
 		<beans:property name="resourceRequestDao" ref="resourceRequestDao"></beans:property>

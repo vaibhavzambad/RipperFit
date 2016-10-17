@@ -2,7 +2,6 @@ package com.ripperfit.dao;
 
 import java.util.List;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import com.ripperfit.model.Comments;
 import com.ripperfit.model.ResourceRequest;
-
 
 @Repository
 public class CommentDao {
@@ -41,6 +39,7 @@ public class CommentDao {
 		 * @return : list of comments
 		 */
 	
+	@SuppressWarnings("unchecked")
 	public List<Comments> getCommentByRequestId(ResourceRequest resourceRequest) {
 		// TODO Auto-generated method stub
 		Session session = this.sessionFactory.getCurrentSession();
@@ -48,6 +47,6 @@ public class CommentDao {
 				.add(Restrictions.eq("resourceRequest.requestId",resourceRequest.getRequestId())).list();
 		System.out.println("df: "+commentList);
 		return commentList;
-		
+	
 	}
 }
