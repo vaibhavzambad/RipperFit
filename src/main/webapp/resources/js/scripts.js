@@ -1,8 +1,8 @@
 
+
 jQuery(document).ready(function() {
 	
-	//background
-   /*$.backstretch("resources/img/form-bg.jpg");*/
+	
    
    //upload profile picture
    $('#i_file').change( function(event) {
@@ -45,49 +45,105 @@ jQuery(document).ready(function() {
 	if(email==(null||"")||Fname==(null||"")||Lname==(null||"")||gender==(null||"")||contact==(null||"")||designation==(null||"")||profilePhoto==(null||"")||address==(null||"")||password==(null||"")||confirmPassword==(null||"")){
  window.alert("all fields are mandatory.");
 } 
-if (email.indexOf("@", 0) < 0)
+}
+function validateEmail(){
+var email=document.getElementById("form-email").value;
+var pattern = new RegExp(/^[+a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i);
+if (pattern.test(email)==false)
 {
     
    $(".email").text('Please enter a valid e-mail address.');
+   $("#form-email").removeClass('valid');
    $("#form-email").addClass('invalid');
+}else{
+ $(".email").text('');
+  $("#form-email").removeClass('invalid');
+   $("#form-email").addClass('valid');
 }
-if (email.indexOf(".", 0) < 0)
-{
-    
-   $(".email").text('Please enter a valid e-mail address.');
-   $("#form-email").addClass('invalid');
-   
 }
+ function validateFname(){
+ var pattern = new RegExp(/^[+a-zA-Z]/i);
+ 
+ var Fname=document.getElementById("form-first-name").value;
+if(Fname.length<2||pattern.test(Fname)==false){
 
-if(Fname.length<2){
-
-$(".Fname").text('name must have atleast 2 characters');
+$(".Fname").text("name must have at least 2 characters");
+$("#form-first-name").removeClass('valid');
    $("#form-first-name").addClass('invalid');
 
+}else{
+$(".Fname").text('');
+$("#form-first-name").removeClass('invalid');
+   $("#form-first-name").addClass('valid');
 }
-if(Lname.length<2){
+}
+function validateLname(){
+var pattern = new RegExp(/^[+a-zA-Z]/i);
+var Lname=document.getElementById("form-last-name").value;
+if(Lname.length<2||pattern.test(Lname)==false){
 $(".Lname").text('name must have atleast 2 characters');
+ $("#form-last-name").removeClass('valid');
    $("#form-last-name").addClass('invalid');
-
+}else{
+$(".Lname").text('');
+ $("#form-last-name").removeClass('invalid');
+   $("#form-last-name").addClass('valid');
 }
-if ($("#form-gender").selectedIndex < 1)
+}
+function validateGender(){
+var gender=document.getElementById("form-gender").value;
+if (gender == "")
     {
         
         $(".gender").text('Please select gender');
+		 $("#form-gender").removeClass('valid');
    $("#form-gender").addClass('invalid');
 
-        
-    }	
-if(contact.length!=10)	{
+    }else{
+ $(".gender").text('');
+		 $("#form-gender").removeClass('invalid');
+   $("#form-gender").addClass('valid');
+}    
+    }
+function validateContact(){	
+var pattern = new RegExp(/^[+0-9]/i);
+var contact=document.getElementById("form-contact").value;
+if(contact.length!=10||pattern.test(contact)==false)	{
 
      $(".contact").text('Please enter valid contact number');
    $("#form-contact").addClass('invalid');   
         
 }
+}
+function validatePassword(){
+var password=document.getElementById("form-password").value;
+if(password.length<6){
+$(".password").text('password must have length atleast 6 ');
+$("#form-password").removeClass('valid');  
+   $("#form-password").addClass('invalid');  
+}
+else{
+$(".password").text('');
+$("#form-password").removeClass('invalid');  
+   $("#form-password").addClass('valid');
+}
+}
+function confirmPassword(){
+var password=document.getElementById("form-password").value;
+	var confirmPassword=document.getElementById("form-password_confirm").value;
+	
 if(password!=confirmPassword){
 $(".password,.confirmPassword").text('password does not match.please enter again.');
+$("#form-password,#form-password_confirm").removeClass('valid'); 
+
    $("#form-password,#form-password_confirm").addClass('invalid');  
+}else{
+$(".password,.confirmPassword").text('');
+$("#form-password,#form-password_confirm").removeClass('invalid'); 
+   $("#form-password,#form-password_confirm").addClass('valid');
+}
 }
     
-   } 
+  
+  
   
