@@ -18,8 +18,20 @@
 <!-- <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" /> -->
 
-<!-- <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="resources/js/typed.js"></script>
+	
+<script>
+  $(function(){
+	  $('.element').typed({
+		   strings: ['MacPro.', 'PremiumSoft.', 'WacomTab.', 'Stylus.', 'WDDrive.'],
+		   typeSpeed: 100,
+		   backDelay: 800,
+		   loop: true,
+		   showCursor: true,
+      });
+  });
+</script>
 	
 		<!-- Font Awesome Javascript -->
 	<script src="https://use.fontawesome.com/8cbee58684.js"></script>
@@ -68,6 +80,7 @@
 			<br>
 			<h1>RipperFit</h1>
 			<h2>Resource Tracking in a Flash!!!</h2>
+			<div class="text-left h1" style="color: white;"><span style="margin-left:27%; color: white;"><strong>Start Requesting For A</span> <span class="element"><strong></strong></span><span class="typed-cursor"></span></div>
 			<div class="row">
 				<br> <br> <br>
 				<div class="col-lg-6 col-lg-offset-3"></div>
