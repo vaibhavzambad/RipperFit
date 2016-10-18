@@ -32,9 +32,9 @@ CREATE TABLE `approve_request` (
   KEY `ApproveRequest_ibfk_2` (`request_id`),
   KEY `ApproveRequest_ibfk_3` (`forwardTo_id`),
   KEY `ApproveRequest_ibfk_1` (`approvee_id`),
-  CONSTRAINT `ApproveRequest_ibfk_3` FOREIGN KEY (`forwardTo_id`) REFERENCES `employee` (`employee_id`),
   CONSTRAINT `ApproveRequest_ibfk_1` FOREIGN KEY (`approvee_id`) REFERENCES `employee` (`employee_id`),
-  CONSTRAINT `ApproveRequest_ibfk_2` FOREIGN KEY (`request_id`) REFERENCES `resource_request` (`request_id`)
+  CONSTRAINT `ApproveRequest_ibfk_2` FOREIGN KEY (`request_id`) REFERENCES `resource_request` (`request_id`),
+  CONSTRAINT `ApproveRequest_ibfk_3` FOREIGN KEY (`forwardTo_id`) REFERENCES `employee` (`employee_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -122,7 +122,7 @@ CREATE TABLE `resource_request` (
   KEY `requestor_id` (`requestor_id`),
   CONSTRAINT `resource_request_ibfk_1` FOREIGN KEY (`resource_id`) REFERENCES `resource` (`resource_id`),
   CONSTRAINT `resource_request_ibfk_2` FOREIGN KEY (`requestor_id`) REFERENCES `employee` (`employee_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,7 +152,7 @@ CREATE TABLE `comments` (
   KEY `comments_ibfk_2` (`request_id`),
   CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`commentor_id`) REFERENCES `employee` (`employee_id`),
   CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`request_id`) REFERENCES `resource_request` (`request_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -219,7 +219,7 @@ CREATE TABLE `employee` (
   CONSTRAINT `employee_ibfk_3` FOREIGN KEY (`organization_id`) REFERENCES `organization` (`organization_id`),
   CONSTRAINT `employee_ibfk_4` FOREIGN KEY (`designation_id`) REFERENCES `designation` (`designation_id`),
   CONSTRAINT `employee_ibfk_6` FOREIGN KEY (`reportTo_id`) REFERENCES `employee` (`employee_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -228,7 +228,7 @@ CREATE TABLE `employee` (
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` VALUES (8,1,'vaibhav.zambad@metacube.com','123456','Vaibhav','zambad','Male','874521456',1,NULL,NULL,NULL),(9,1,'amit.kumar@metacube.com','amit','amit','kumar','Male','7845123654',5,NULL,NULL,NULL);
+INSERT INTO `employee` VALUES (10,1,'helpdesk@metacube.com','helpdesk','helpdesk',NULL,'male','7454125632',4,NULL,NULL,NULL),(17,1,'riya.nuwal@metacube.com','123456','riya','nuwal','Female','7845123654',2,NULL,NULL,NULL),(22,1,'vaibhav.zambad@metacube.com','ltbagn','Vaibhav','Pravin Zambad ','Male','8745123654',1,NULL,'https://lh4.googleusercontent.com/-eSDkmWBLaZo/AAAAAAAAAAI/AAAAAAAAAAo/Gb7tIeyh9eA/s96-c/photo.jpg',NULL);
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -267,4 +267,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-10-17 22:11:08
+-- Dump completed on 2016-10-18 20:37:01

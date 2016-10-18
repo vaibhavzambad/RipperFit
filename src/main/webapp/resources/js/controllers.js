@@ -36,8 +36,29 @@ var RipperFit = angular.module('RipperFit',[])
 				data : authResult['code']
 			}).then( function(response) {
 				$scope.user = response.data;
-				StoreService.set($scope.user);
-				$window.location.href="/RipperFit/signUpAfterSocialLogin";
+
+				$http({
+					method : 'GET',
+					url : '/RipperFit/employee/getEmployeeByEmail?email='+$scope.user.email,
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				}).then(function(response){
+					if(response.status == 200){
+						$http({
+							method : 'GET',
+							url : '/RipperFit/employee/createSession?email='+$scope.user.email,
+							headers: {
+								'Content-Type': 'application/json'
+							}
+						}).then(function(response){
+							$window.location.href = '/RipperFit/dashboard';
+						});	
+					}else{
+						StoreService.set($scope.user);
+						$window.location.href="/RipperFit/signUpAfterSocialLogin";
+					}
+				});
 			}, function () {
 				alert("Something went wrong");
 			});
@@ -77,6 +98,7 @@ var RipperFit = angular.module('RipperFit',[])
 
 	$scope.addUser=function(user) {
 		$scope.userDetails=angular.copy(user);
+		console.log($scope.userDetails.profilePicture);
 		$scope.userDetails = {
 				"employeeId": "",
 				"email": $scope.userDetails.email,
@@ -97,8 +119,20 @@ var RipperFit = angular.module('RipperFit',[])
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).then( function () {
-			$window.location.href = '/RipperFit/dashboard';
+		}).then( function (response) {
+			$scope.login = response.data;
+			$http({
+				method: 'POST',
+				url: "/RipperFit/mail/registrationMail",
+				data: $scope.login,
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).then( function () {
+				$window.location.href = '/RipperFit/dashboard';
+			}, function () {
+				alert("Registration failed!!");
+			});
 		});
 	}
 })
@@ -133,6 +167,7 @@ var RipperFit = angular.module('RipperFit',[])
 	$scope.getFormDetails=function(user) {
 
 		$scope.email="";
+		console.log(user);
 		$scope.userDetails=angular.copy(user);
 		$scope.userDetails = {
 				"employeeId": "",
@@ -146,6 +181,7 @@ var RipperFit = angular.module('RipperFit',[])
 				"designation" : $scope.userDetails.designation,
 				"profilePicture" :null
 		};
+		console.log($scope.userDetails);
 		$http({
 			method: 'POST',
 			url: "/RipperFit/employee/addEmployee",

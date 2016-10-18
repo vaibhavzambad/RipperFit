@@ -23,23 +23,6 @@
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script src="https://apis.google.com/js/client:platform.js?onload=start"
 	async defer></script>
-
-<script>
-	function start() {
-		gapi
-				.load(
-						'auth2',
-						function() {
-							auth2 = gapi.auth2
-									.init({
-										client_id : '412974983923-jg7l8j84308pughfqt5o8q0gc0pslh83.apps.googleusercontent.com',
-									// Scopes to request in addition to 'profile' and 'email'
-									//scope: 'additional_scope'
-									});
-						});
-	}
-</script>
-
 </head>
 <body ng-app="RipperFit">
 

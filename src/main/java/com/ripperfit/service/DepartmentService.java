@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ripperfit.dao.DepartmentDao;
 import com.ripperfit.model.Department;
+import com.ripperfit.model.Employee;
 
 @Transactional
 public class DepartmentService {
@@ -44,5 +45,22 @@ public class DepartmentService {
 		}
 		return result;
 	}
+	
+	/**
+	 * method to get employee by id
+	 * @param id : employee id
+	 * @return Employee object
+	 */
+	@Transactional
+	public Department getDepartmentById(int id) {
+		
+		Department department = this.departmentDao.getDepartmentById(id);
+		return department;
+	}
 
+	@Transactional
+	public void updateDepartment(Department department) {
+		
+		this.departmentDao.updateDepartment(department);
+	}
 }

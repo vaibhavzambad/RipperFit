@@ -107,4 +107,9 @@ public class HomeController {
 	public String editDepartment() {
 		return "editDepartment";
 	}
+	
+	@RequestMapping(value="approveRequests")
+	public String approveRequests() {
+		return "viewRequestToApprove";
+	}
 }

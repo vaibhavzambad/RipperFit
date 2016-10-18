@@ -7,37 +7,82 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ripperfit.dao.ApproveeRequestDao;
+import com.ripperfit.dao.DepartmentDao;
+import com.ripperfit.dao.DesignationDao;
+import com.ripperfit.dao.ResourceDao;
 import com.ripperfit.dao.ResourceRequestDao;
+import com.ripperfit.dao.UserDao;
 import com.ripperfit.model.ApproveRequest;
+import com.ripperfit.model.Department;
+import com.ripperfit.model.Designation;
 import com.ripperfit.model.Employee;
+import com.ripperfit.model.Organization;
 import com.ripperfit.model.ResourceRequest;
 
 @Service
 public class ResourceRequestService {
-	
+
+	@Autowired
+	private ResourceDao resourceDao;
+
+	@Autowired
 	private ResourceRequestDao resourceRequestDao;
-	
+
+	@Autowired
+	private UserDao userDao;
+
+	@Autowired
 	private ApproveeRequestDao approveeRequestDao;
-	
+
+	@Autowired
+	private DesignationDao designationDao;
+
+	@Autowired
+	private DepartmentDao departmentDao;
+
+
+
 	/**
-	 * method to get the ResourceDAO object
-	 * @return ResourceDAO object
+	 * @return the resourceDao
 	 */
-	public ResourceRequestDao getResourceDao() {
+	public ResourceDao getResourceDao() {
+		return resourceDao;
+	}
+
+	/**
+	 * @param resourceDao the resourceDao to set
+	 */
+	public void setResourceDao(ResourceDao resourceDao) {
+		this.resourceDao = resourceDao;
+	}
+
+	/**
+	 * @return the resourceRequestDao
+	 */
+	public ResourceRequestDao getResourceRequestDao() {
 		return resourceRequestDao;
 	}
 
 	/**
-	 * method to set the ResourceDAO object
-	 * @param resourceDao object
+	 * @param resourceRequestDao the resourceRequestDao to set
 	 */
-	@Autowired(required=true)
-	public void setResourceDao(ResourceRequestDao resourceDao) {
-		
-		this.resourceRequestDao = resourceDao;
+	public void setResourceRequestDao(ResourceRequestDao resourceRequestDao) {
+		this.resourceRequestDao = resourceRequestDao;
 	}
-	
-	
+
+	/**
+	 * @return the userDao
+	 */
+	public UserDao getUserDao() {
+		return userDao;
+	}
+
+	/**
+	 * @param userDao the userDao to set
+	 */
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
+	}
 
 	/**
 	 * @return the approveeRequestDao
@@ -49,9 +94,36 @@ public class ResourceRequestService {
 	/**
 	 * @param approveeRequestDao the approveeRequestDao to set
 	 */
-	@Autowired(required=true)
 	public void setApproveeRequestDao(ApproveeRequestDao approveeRequestDao) {
 		this.approveeRequestDao = approveeRequestDao;
+	}
+
+	/**
+	 * @return the designationDao
+	 */
+	public DesignationDao getDesignationDao() {
+		return designationDao;
+	}
+
+	/**
+	 * @param designationDao the designationDao to set
+	 */
+	public void setDesignationDao(DesignationDao designationDao) {
+		this.designationDao = designationDao;
+	}
+
+	/**
+	 * @return the departmentDao
+	 */
+	public DepartmentDao getDepartmentDao() {
+		return departmentDao;
+	}
+
+	/**
+	 * @param departmentDao the departmentDao to set
+	 */
+	public void setDepartmentDao(DepartmentDao departmentDao) {
+		this.departmentDao = departmentDao;
 	}
 
 	/**
@@ -71,25 +143,25 @@ public class ResourceRequestService {
 		this.approveeRequestDao.addApproveeRequest(approveeRequest);
 		
 	}
-	
+
 	/**
 	 * method to delete resource request
 	 * @param request : Resource Request object
 	 */
 	@Transactional
 	public boolean deleteResourceRequestById(int requestId) {
-		
+
 		ResourceRequest resourceRequest = this.resourceRequestDao.getResourceRequestById(requestId);
 		boolean result = false;
-		
+
 		if(resourceRequest != null){
 			this.resourceRequestDao.deleteRequestById(requestId);
 			result = true;
 		}
-		
+
 		return result;
 	}
-	
+
 	/**
 	 * method to view all resource requests made by an employee
 	 * @param emp : Employee who wants to view his/her resource requests
@@ -97,20 +169,20 @@ public class ResourceRequestService {
 	 */
 	@Transactional
 	public List<ResourceRequest> getResourceRequestByEmployeeId(Employee employee) {
-		
+
 		List<ResourceRequest> resourceRequestListByEmployee = this.resourceRequestDao.getRequestByEmployeeId(employee);
 		return resourceRequestListByEmployee;
 	}
-	
+
 	@Transactional
 	public ResourceRequest getResourceRequestById(int requestId){
-		
+
 		ResourceRequest resourceRequest = this.resourceRequestDao.getResourceRequestById(requestId);
 		return resourceRequest;
 	}
-	
-	
-	
+
+
+
 	/**
 	 * method to view all resource requests
 	 * only for admin and helpdesk
@@ -118,14 +190,14 @@ public class ResourceRequestService {
 	 */
 	@Transactional
 	public List<ResourceRequest> getAllResourceRequest() {
-		
+
 		List<ResourceRequest> resourceRequestList= this.resourceRequestDao.getAllRequests();
 		return resourceRequestList;
 	}
-	
+
 	@Transactional
 	public int getCurrentApprovalLevelByRequestId(int requestId){
-		
+
 		int currentApprovalLevel = this.resourceRequestDao.getCurrentApprovalLevel(requestId);
 		return currentApprovalLevel;
 	}

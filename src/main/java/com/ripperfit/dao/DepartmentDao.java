@@ -2,6 +2,8 @@ package com.ripperfit.dao;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ripperfit.model.Department;
+import com.ripperfit.model.Employee;
 import com.ripperfit.model.Organization;
 
 @Repository
@@ -80,5 +83,31 @@ public class DepartmentDao {
 		List<Department> departmentList = query.list();
 		
 		return departmentList;
+	}
+	
+	/**
+	 * method to get Department By DepartmentId
+	 * @param id : department id
+	 * @return : Department Object
+	 */
+	@Transactional
+	public Department getDepartmentById(int id) {
+
+		Session session = this.sessionFactory.getCurrentSession();
+		Department department = null;
+		try {
+			department =(Department) session.load(Department.class, id);
+		} catch(Exception e) {
+
+			e.printStackTrace();
+		}
+		return department;
+	}
+	
+	@Transactional
+	public void updateDepartment(Department department) {
+
+		Session session = this.sessionFactory.getCurrentSession();
+		session.update(department);
 	}
 }

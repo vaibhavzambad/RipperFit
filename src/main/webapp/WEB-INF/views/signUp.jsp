@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="resources/css/signUpStyle.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+	
 </head>
 
 <body ng-app="RipperFit">
@@ -54,13 +55,13 @@
 							<label class="sr-only" for="form-first-name">First name</label> <input
 								type="text" name="form-first-name" placeholder="First name..."
 								class="form-first-name form-control" id="form-first-name"
-								ng-model="user.firstName" onfocusout="validateFname()" pattern="[a-zA-Z]" required>
+								ng-model="user.firstName" onfocusout="validateFname()"  required>
 							<p class="help-block Fname"></p>
 						</div>
 						<div class="form-group col-xs-6">
 							<label class="sr-only" for="form-last-name">Last name</label> <input
 								type="text" name="form-last-name" placeholder="Last name..."
-								class="form-last-name form-control" id="form-last-name" pattern="[a-zA-Z]"
+								class="form-last-name form-control" id="form-last-name"
 								ng-model="user.lastName" onfocusout="validateLname()" required>
 							<p class="help-block Lname"></p>
 						</div>
@@ -81,7 +82,7 @@
 							<div class="row">
 								<div class="form-group col-xs-12">
 									<label class="sr-only" for="form-contact">Contact:</label> <input
-										type="text" class="form-control" id="form-contact" pattern="[0-9]"
+										type="text" class="form-control" id="form-contact" 
 										placeholder="Contact Number..." ng-model="user.contactNumber" onfocusout="validateContact()" required="required">
 									<p class="help-block contact"></p>
 								</div>
@@ -125,7 +126,7 @@
 							</div>
 						</div>
 					</div>
-					<!--<div class="row">
+					<div class="row">
 						<div class="form-group col-md-6">
 							<label class="sr-only" for="form-designation">Designation:</label>
 							<select class="form-control" id="form-designation"
@@ -145,7 +146,7 @@
 							</select>
 							<p class="help-block organization"></p>
 						</div>
-					</div>-->
+					</div>
 					<div class="col-xs-4"></div>
 					<input type="button" class="col-xs-4 btn btn-info text-center"
 							ng-click="getFormDetails(user)" value="Sign me up!" />
@@ -160,12 +161,11 @@
 		</p>
 	</footer>
 	<!-- Javascript -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<!-- <script src="resources/js/jquery.backstretch.min.js"></script> -->
-	<script src="resources/js/scripts.js"></script>
 	<script src="resources/js/controllers.js"></script>
+	<script src="resources/js/scripts.js"></script>
 </body>
 </html>

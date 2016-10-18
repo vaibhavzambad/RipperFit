@@ -1,6 +1,6 @@
 <div class="container" style="margin-top: 100px;">
-	<h2>Resource request of {{requests[0].employee.firstName}}</h2>
-	<table class="table table-bordered" ng-controller="getLocationCtrl">
+	<h2>Resource request  {{requests[0].employee.firstName}}</h2>
+	<table class="table table-bordered" ng-controller="getLocationCtrl" id="table">
 		<thead>
 			<tr>
 
@@ -28,8 +28,7 @@
 					title="Delete Request!" style="color: black"><i
 						class="fa fa-trash" aria-hidden="true"></i></a></i>&nbsp&nbsp</td>
 			</tr>
-			
-		
 		</tbody>
 	</table>
+	<div id="msg">No request found</div>
 </div>

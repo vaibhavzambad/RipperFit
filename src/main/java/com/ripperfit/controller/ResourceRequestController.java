@@ -160,7 +160,8 @@ public class ResourceRequestController {
 
 	@RequestMapping(value="/getAllRequestToApprove/{forwardToId}",method = RequestMethod.GET)
 	public ResponseEntity<List<ResourceRequest>> getAllRequestToApprove(@PathVariable("forwardToId") int forwardToId){
-
+		
+		System.out.println("employee sdsdsdsfd: "+forwardToId);
 		Employee employee = this.userService.getEmployeeById(forwardToId);
 		if(employee != null){
 			

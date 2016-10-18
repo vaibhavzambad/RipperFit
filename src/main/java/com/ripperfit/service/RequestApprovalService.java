@@ -138,9 +138,7 @@ public class RequestApprovalService {
 		ResourceRequest resourceRequest  = this.resourceRequestDao.getResourceRequestById(requestId);
 		boolean result = false;
 		if(resourceRequest != null){
-			System.out.println("resoirce: "+resourceRequest.getResource());
 			int finalApprovalLevel = resourceRequest.getResource().getFinalApprovalLevel();
-			System.out.println("resource request: "+resourceRequest);
 			Employee employee = resourceRequest.getEmployee();
 			Organization organization = employee.getOrganization();
 			Department department = this.departmentDao.getHelpdeskDepartmentByOrganization(organization);
@@ -154,10 +152,8 @@ public class RequestApprovalService {
 					approveRequest.setEmployee(forwardToEmployee);
 					approveRequest.setResourceRequest(resourceRequest);
 					approveRequest.setEmployeeToForward(forwardToEmployee.getEmployee());
-					System.out.println("approvee: "+forwardToEmployee.getFirstName());
 					this.approveeRequestDao.updateApproveeRequestByRequestId(approveRequest);
 					int updatedLevel = forwardToEmployee.getDesignation().getDesignationLevel();
-					System.out.println("updated level: "+updatedLevel);
 					boolean temp = this.resourceRequestDao.updateCurrentApprovalLevel(resourceRequest.getRequestId(), updatedLevel);
 					if(temp){
 						if(updatedLevel >= finalApprovalLevel){
@@ -179,13 +175,6 @@ public class RequestApprovalService {
 			}
 		}
 		return result;
-		/*if(currentApprovalLevel >= finalApprovalLevel){
-			// forward request to helpdesk
-			// update approvee_request table
-		}else{
-			// forward request to reportToId
-			// update approvee_request table
-		}*/
 	}
 	
 	

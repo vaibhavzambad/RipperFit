@@ -29,6 +29,7 @@ import com.ripperfit.service.UserService;
 public class UserController {
 
 	private UserService userService;
+	private static final String ALPHA_NUMERIC_STRING = "abcdefghijklmnopqrstuvwxyz0123456789";
 
 	/**
 	 * method to get UserServiceObject
@@ -126,17 +127,31 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/socialLogin", method = RequestMethod.POST)
-	public ResponseEntity<Void> addEmployeeThroughSocialLogin(@RequestBody Employee employee,HttpSession session) {
+	public ResponseEntity<Login> addEmployeeThroughSocialLogin(@RequestBody Employee employee,HttpSession session) {
 		
+		Login login  = new Login();
+		login.setEmail(employee.getEmail());
+		employee.setPassword(passwordGenerator());
+		login.setPassword(employee.getPassword());
 		int result = this.userService.registerEmployee(employee);
 		if(result == 1) {
-			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+			return new ResponseEntity<Login>(HttpStatus.CONFLICT);
 		} else if(result == 2) {
-			session.setAttribute("email", employee.getEmail());
-			return new ResponseEntity<Void>(HttpStatus.CREATED);
+			createSession(employee.getEmail(), session);
+			return new ResponseEntity<Login>(login, HttpStatus.CREATED);
 		} else {
-			return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
+			return new ResponseEntity<Login>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
+	}
+	
+	public String passwordGenerator() {
+		StringBuilder builder = new StringBuilder();
+		int count = 6;
+		while (count-- != 0) {
+			int character = (int)(Math.random()*ALPHA_NUMERIC_STRING.length());
+			builder.append(ALPHA_NUMERIC_STRING.charAt(character));
+		}
+		return builder.toString();
 	}
 	
 	/**

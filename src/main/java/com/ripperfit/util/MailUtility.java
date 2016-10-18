@@ -8,20 +8,22 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-	  
+
+import com.ripperfit.model.Login;
+
 /**
  * class to send email to the users
  */
 @RestController
 @RequestMapping(value = "/mail")
 public class MailUtility {
-	
-    private JavaMailSender mailSender;
-	
-    /**
-     * 
-     * @return
-     */
+
+	private JavaMailSender mailSender;
+
+	/**
+	 * 
+	 * @return
+	 */
 	public JavaMailSender getMailSender() {
 		return mailSender;
 	}
@@ -41,14 +43,15 @@ public class MailUtility {
 	 * @return
 	 */
 	@RequestMapping(value = "registrationMail")
-	public ResponseEntity<Void> registrationMail(@RequestBody String email) {
-		
-		String subject = "Register your email account to RipperFit";
-		String body = "Hello "+email+", You are successfully registered";
-		sendMail(subject, body, email);
+	public ResponseEntity<Void> registrationMail(@RequestBody Login login) {
+
+		String subject = "Welcome to ripperFit";
+		String body = "Hello "+login.getEmail()+", You are successfully registered\nYour email-id : "+login.getEmail()+
+				"\nYour password is : "+login.getPassword();
+		sendMail(subject, body, login.getEmail());
 		return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
 	}
-	
+
 	/**
 	 * method to send the mail
 	 * @param from : SenderVO object for sender's details
@@ -58,13 +61,13 @@ public class MailUtility {
 	 * @return : String message
 	 */
 	public void sendMail(String subject, String body, String receiver) {
-		
+
 		SimpleMailMessage email = new SimpleMailMessage();
-        email.setTo(receiver);
-        email.setSubject(subject);
-        email.setText(body);
-         
-        // sends the e-mail
-        mailSender.send(email);
+		email.setTo(receiver);
+		email.setSubject(subject);
+		email.setText(body);
+
+		// sends the e-mail
+		mailSender.send(email);
 	}
 }

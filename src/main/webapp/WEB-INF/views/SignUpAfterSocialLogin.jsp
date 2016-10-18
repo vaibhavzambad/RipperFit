@@ -118,7 +118,7 @@
 						<div class="col-xs-4"></div>
 						<input type="button" style="margin-bottom: 20px;"
 							class="col-xs-4 btnSubmit btn btn-info"
-							ng-click="addUser(user)" onclick="validate()"
+							ng-click="addUser(user)"
 							value="Add Details">
 					</div>
 				</div>
