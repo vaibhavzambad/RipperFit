@@ -54,14 +54,14 @@
 							<label class="sr-only" for="form-first-name">First name</label> <input
 								type="text" name="form-first-name" placeholder="First name..."
 								class="form-first-name form-control" id="form-first-name"
-								ng-model="user.firstName">
+								ng-model="user.firstName" onfocusout="validateFname()" pattern="[a-zA-Z]" required>
 							<p class="help-block Fname"></p>
 						</div>
 						<div class="form-group col-xs-6">
 							<label class="sr-only" for="form-last-name">Last name</label> <input
 								type="text" name="form-last-name" placeholder="Last name..."
-								class="form-last-name form-control" id="form-last-name"
-								ng-model="user.lastName">
+								class="form-last-name form-control" id="form-last-name" pattern="[a-zA-Z]"
+								ng-model="user.lastName" onfocusout="validateLname()" required>
 							<p class="help-block Lname"></p>
 						</div>
 					</div>
@@ -70,7 +70,7 @@
 							<div class="row">
 								<div class="col-xs-12">
 									<label class="sr-only" for="form-gender">Gender:</label> <select
-										class="form-control" id="form-gender" ng-model="user.gender">
+										class="form-control" id="form-gender" ng-model="user.gender" onfocusout="validateGender()" required="required">
 										<option value="" disabled selected hidden>Gender</option>
 										<option>Male</option>
 										<option>Female</option>
@@ -81,11 +81,20 @@
 							<div class="row">
 								<div class="form-group col-xs-12">
 									<label class="sr-only" for="form-contact">Contact:</label> <input
-										type="text" class="form-control" id="form-contact"
-										placeholder="Contact Number..." ng-model="user.contactNumber">
+										type="text" class="form-control" id="form-contact" pattern="[0-9]"
+										placeholder="Contact Number..." ng-model="user.contactNumber" onfocusout="validateContact()" required="required">
 									<p class="help-block contact"></p>
 								</div>
 							</div>
+							<div class="row">
+							<div class="form-group col-xs-12">
+								<label class="sr-only" for="form-email">Email</label> <input
+									type="text" name="form-email" placeholder="Email..."
+									class="form-email form-control" id="form-email"
+									ng-model="user.email" onfocusout="validateEmail()" required>
+								<p class="help-block email"></p>
+							</div>
+						</div>
 						</div>
 						<div class="form-group col-xs-4 text-center">
 							<img class="img img-circle" width="110" height="110" id="image1"
@@ -95,22 +104,14 @@
 								name="img" style="display: none;" ng-model="user.profilePicture" />
 							</label>
 						</div>
-						<div class="row">
-							<div class="form-group col-xs-12">
-								<label class="sr-only" for="form-email">Email</label> <input
-									type="text" name="form-email" placeholder="Email..."
-									class="form-email form-control" id="form-email"
-									ng-model="user.email">
-								<p class="help-block email"></p>
-							</div>
-						</div>
+						
 					</div>
 					<div class="row">
 						<div class="form-group col-xs-6">
 							<label class="sr-only" for="form-password">Password:</label> <input
 								type="password" id="form-password" name="password"
 								placeholder="Password.." class="form-control input-lg"
-								ng-model="user.password">
+								ng-model="user.password" onfocusout="validatePassword()" required>
 							<p class="help-block password"></p>
 						</div>
 						<div class="form-group col-xs-6">
@@ -119,12 +120,12 @@
 							<div class="controls">
 								<input type="password" id="form-password_confirm"
 									name="password_confirm" placeholder="Password (Confirm).."
-									class="form-control input-lg">
+									class="form-control input-lg" onfocusout="confirmPassword()" required>
 								<p class="help-block confirmPassword"></p>
 							</div>
 						</div>
 					</div>
-					<div class="row">
+					<!--<div class="row">
 						<div class="form-group col-md-6">
 							<label class="sr-only" for="form-designation">Designation:</label>
 							<select class="form-control" id="form-designation"
@@ -144,7 +145,7 @@
 							</select>
 							<p class="help-block organization"></p>
 						</div>
-					</div>
+					</div>-->
 					<div class="col-xs-4"></div>
 					<input type="button" class="col-xs-4 btn btn-info text-center"
 							ng-click="getFormDetails(user)" value="Sign me up!" />
