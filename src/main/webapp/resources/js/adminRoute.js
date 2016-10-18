@@ -279,7 +279,9 @@ var app=angular.module("RipperFit",["ngRoute"])
 	})
 	$http.get("/RipperFit/comment/getCommentByRequestId/"+$routeParams.requestId+" ")
 	.then(function(response) {
+		
 		$scope.comments = response.data;
+		
 
 	})
 })
@@ -338,7 +340,7 @@ var app=angular.module("RipperFit",["ngRoute"])
 					'Content-Type': 'application/json'
 				}
 			}).then(function(response) {
-				$window.location.href="#/viewRequests/";
+				$window.location.href="#/viewOwnRequests/"+$scope.employee.employeeId;
 			}, function(response) {
 				console.log(response.status);
 			});
@@ -420,3 +422,48 @@ var app=angular.module("RipperFit",["ngRoute"])
 		});	
 	}*/
 });
+app.controller('addCommentCtrl', function($scope, $http, $window, $filter){
+	
+	$http({
+		method: 'GET',
+		url: "/RipperFit/employee/getCurrentEmployeeObject",
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	}).then(function(response) {
+		$scope.employee = response.data;
+	})
+	var date = new Date();
+			$scope.FromDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
+	$scope.getCommentDetails=function(commentBox,requests) {
+		console.log("dfd"+$scope.employee);
+		$scope.comment = {
+				"commentId": "",
+				"employee": $scope.employee,
+				"comments": $scope.commentBox.comments,
+				
+				"resourceRequest": $scope.requests,
+				"date":$scope.FromDate,
+		};
+		console.log("dfd"+$scope.commentBox.comments);
+		$http({
+			method: 'POST',
+			url: "/RipperFit/comment/addComment",
+			data: $scope.comment,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).then(function(response) {
+			$window.location.reload("#/viewRequestDetail/"+requests.requestId);
+		}, function(response) {
+			console.log(response.status);
+		});
+	}
+	
+	
+	
+	
+});
+
+
+	

@@ -38,7 +38,7 @@ public class Comments implements Serializable {
 	
 	@ManyToOne(optional=true,fetch=FetchType.LAZY)
 	@JoinColumn(name="request_id")
-	private ResourceRequest requestId;
+	private ResourceRequest resourceRequest;
 	
 	@Column(name="comment_date")
 	private Date date;
@@ -86,18 +86,34 @@ public class Comments implements Serializable {
 	}
 
 	/**
-	 * @return the requestId
+	 * @return the resourceRequest
 	 */
-	public ResourceRequest getRequestId() {
-		return requestId;
+	public ResourceRequest getResourceRequest() {
+		return resourceRequest;
 	}
 
 	/**
-	 * @param requestId the requestId to set
+	 * @param resourceRequest the resourceRequest to set
 	 */
-	public void setRequestId(ResourceRequest requestId) {
-		this.requestId = requestId;
+	public void setResourceRequest(ResourceRequest resourceRequest) {
+		this.resourceRequest = resourceRequest;
 	}
+
+	/**
+	 * @return the date
+	 */
+	public Date getDate() {
+		return date;
+	}
+
+	/**
+	 * @param date the date to set
+	 */
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	
 	
 	/*@ManyToOne(optional=true,fetch=FetchType.LAZY,cascade=CascadeType.ALL)
 	@JoinColumn(name="organization_id")

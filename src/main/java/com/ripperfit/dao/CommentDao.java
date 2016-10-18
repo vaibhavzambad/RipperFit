@@ -1,5 +1,8 @@
 package com.ripperfit.dao;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -45,8 +48,40 @@ public class CommentDao {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<Comments> commentList = (List<Comments>)session.createCriteria(Comments.class)
 				.add(Restrictions.eq("resourceRequest.requestId",resourceRequest.getRequestId())).list();
+		for(int i=0;i<commentList.size();i++)
+		{
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			
+			
+			
+			String date=dateFormat.format(commentList.get(i).getDate());
+			try {
+				commentList.get(i).setDate(dateFormat.parse(date));
+				System.out.println(dateFormat.parse(date));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		System.out.println("df: "+commentList);
 		return commentList;
 	
 	}
+
+		public Boolean addComment(Comments comment) {
+			Session session = this.sessionFactory.getCurrentSession();
+			boolean result = false;
+			int i=0;
+			try {
+				i = (Integer) session.save(comment);
+				if(i > 0) {
+					result = true;
+				}
+			} catch(Exception e) {
+
+				e.printStackTrace();
+			}
+			return result;
+			
+		}
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,6 +59,35 @@ public class CommentController {
 	public void setResourceRequestService(ResourceRequestService resourceRequestService) {
 		this.resourceRequestService = resourceRequestService;
 	}
+	
+	
+	/**
+	 * method to add comments
+	 * @param comment : Comment object
+	 * @return : ResponseEntity blank object
+	 */
+	@RequestMapping(value = "/addComment", method = RequestMethod.POST)
+	public ResponseEntity<Void> addComment(@RequestBody Comments comment) {
+
+		System.out.println("add"+comment.getComments());
+		Boolean flag=commentsService.addComment(comment);
+		if(flag==true)
+		{
+		return new ResponseEntity<Void>(HttpStatus.OK);
+		}
+		else
+		{
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+			
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * method to view individual's resource request comments
 	
@@ -66,6 +96,7 @@ public class CommentController {
 	@RequestMapping(value = "/getCommentByRequestId/{requestId}", method = RequestMethod.GET)
 	public ResponseEntity<List<Comments>> getCommentByRequestId(@PathVariable("requestId") int requestId) {
 
+		System.out.println("comments");
 		ResourceRequest resourceRequest = this.resourceRequestService.getResourceRequestById(requestId);
 		
 		List<Comments> commentList  = this.commentsService.getCommentByRequestId(resourceRequest);
@@ -79,5 +110,6 @@ public class CommentController {
 				return new ResponseEntity<List<Comments>>(commentList, HttpStatus.OK);
 			}
 		}
+	
 			}
 

@@ -87,7 +87,7 @@ var RipperFit = angular.module('RipperFit',[])
 				"gender": $scope.userDetails.gender,
 				"contactNumber": $scope.userDetails.contactNumber,
 				"designation" : $scope.userDetails.designation,
-				"profilePicture" :null
+				"profilePicture" :$scope.userDetails.profilePicture
 		};
 
 		$http({

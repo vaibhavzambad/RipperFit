@@ -29,19 +29,22 @@
      <div class="row" >
      <div class="col-lg-2">
      <div class="commenterImage">
-               <img src= alt="image" width=80px height=80px/>
+               <img class="img img-circle" src={{comment.employee.profilePicture}} alt="image" width=80px height=80px/>
        </div>
      
      </div>
+     <div class=col-lg-10>
      <div class="col-lg-10">
-    {{comment.employee.firstName}}
+    <h3>{{comment.employee.firstName}}</h3>
+     </div>
+     
+     <div class="col-lg-10">
+ <h4>{{comment.comments}}</h4> 
      </div>
      <div class="col-lg-10">
-   {{comment.commentDate}}
+ {{comment.date}}
      </div>
     
-     <div class="col-lg-10">
-   {{comment.comments}}
      </div>
      </div>
       </li>
@@ -51,14 +54,15 @@
 
 </div>
 			</form>
-				<form>
+			
+				<form ng-controller="addCommentCtrl">
 				<div class="form-group">
 					<label for="">Write Comment</label>
-					<textarea class="form-control" >                     
+					<textarea class="form-control" ng-model="commentBox.comments" >                     
                 </textarea>
 				</div>
 
-				<input type="button" class=" btn btn-info text-center" value="Add Comments"/>
+				<input type="button" class=" btn btn-info text-center" ng-click="getCommentDetails(commentBox,requests)" value="Add Comments!" />
 				</form>
 	
 </div>
