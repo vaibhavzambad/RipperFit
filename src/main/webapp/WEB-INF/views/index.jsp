@@ -24,7 +24,7 @@
 <script>
   $(function(){
 	  $('.element').typed({
-		   strings: ['MacPro.', 'PremiumSoft.', 'WacomTab.', 'Stylus.', 'WDDrive.'],
+		   strings: ['MacPro.', 'ProSoftware.', 'WacomTab.', 'MobStylus.', 'WDDrive.'],
 		   typeSpeed: 100,
 		   backDelay: 800,
 		   loop: true,
@@ -78,8 +78,11 @@
 
 		<div class="container">
 			<br>
+			<br>
+			<div class="container">
 			<h1>RipperFit</h1>
-			<h2>Resource Tracking in a Flash!!!</h2>
+			</div>
+			<h2><strong>Resource Tracking in a Flash!!!</strong></h2>
 			<div class="text-left h1" style="color: white;"><span style="margin-left:27%; color: white;"><strong>Start Requesting For A</span> <span class="element"><strong></strong></span><span class="typed-cursor"></span></div>
 			<div class="row">
 				<br> <br> <br>
