@@ -31,10 +31,10 @@ public class RequestApprovalService {
 
 	@Autowired
 	private ApproveeRequestDao approveeRequestDao;
-	
+
 	@Autowired
 	private DesignationDao designationDao;
-	
+
 	@Autowired
 	private DepartmentDao departmentDao;
 
@@ -94,8 +94,8 @@ public class RequestApprovalService {
 	public void setApproveeRequestDao(ApproveeRequestDao approveeRequestDao) {
 		this.approveeRequestDao = approveeRequestDao;
 	}
-	
-	
+
+
 
 	/**
 	 * @return the designationDao
@@ -110,7 +110,7 @@ public class RequestApprovalService {
 	public void setDesignationDao(DesignationDao designationDao) {
 		this.designationDao = designationDao;
 	}
-	
+
 
 	/**
 	 * @return the departmentDao
@@ -145,9 +145,11 @@ public class RequestApprovalService {
 			Designation designation = this.designationDao.getDesignationByDepartment(department);
 			Employee helpDeskEmployee = this.userDao.getEmployeeByDesignation(designation);
 			ApproveRequest approveRequest = this.approveeRequestDao.getApproveeRequestByRequestId(resourceRequest);
+			resourceRequest.setStatus("running");
+			this.resourceRequestDao.updateResourceRequest(resourceRequest);
 			if(approveRequest != null){
 				Employee forwardToEmployee = approveRequest.getEmployeeToForward();
-				
+
 				if(forwardToEmployee != null){
 					approveRequest.setEmployee(forwardToEmployee);
 					approveRequest.setResourceRequest(resourceRequest);
@@ -177,6 +179,17 @@ public class RequestApprovalService {
 		return result;
 	}
 	
-	
+	@Transactional
+	public boolean rejectRequest(int requestId){
+
+		ResourceRequest resourceRequest  = this.resourceRequestDao.getResourceRequestById(requestId);
+		boolean result = false;
+		if(resourceRequest != null){
+			resourceRequest.setStatus("rejected");
+			this.resourceRequestDao.updateResourceRequest(resourceRequest);
+			result = true;
+		}
+		return result;
+	}
 
 }

@@ -136,5 +136,11 @@ public class ResourceRequestDao {
 		q.executeUpdate();
 		return true;
 	}
+	
+	public void updateResourceRequest(ResourceRequest request) {
+
+		Session session = this.sessionFactory.getCurrentSession();
+		session.update(request);
+	}
 
 }

@@ -204,4 +204,18 @@ public class UserController {
 		Employee employee = this.userService.getEmployeeByEmail((String) session.getAttribute("email"));
 		return new ResponseEntity<Employee>(employee, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/changePassword",method=RequestMethod.POST)
+	public ResponseEntity<Employee> changePassword(@RequestParam String oldPassword,@RequestParam String newPassword,HttpServletRequest request){
+		
+		HttpSession session = request.getSession();
+		Employee employee = this.userService.getEmployeeByEmail((String) session.getAttribute("email"));
+		if(oldPassword.equals(employee.getPassword())){
+			
+			employee.setPassword(newPassword);
+			this.userService.updateUser(employee);
+			return new ResponseEntity<Employee>(HttpStatus.OK);
+		}
+		return new ResponseEntity<Employee>(HttpStatus.NOT_ACCEPTABLE);
+	}
 }

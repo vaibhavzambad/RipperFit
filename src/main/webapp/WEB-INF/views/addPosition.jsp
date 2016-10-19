@@ -16,6 +16,7 @@
 							class="form-control" id="form-department"
 							ng-init="getDepartments()" ng-model="position.department"
 							ng-options="department as department.departmentName for department in departmentDetails ">
+							<option value="" disabled selected hidden>Select Department</option>
 						</select>
 					</div>
 				</div>
@@ -25,11 +26,12 @@
 							class="form-control" id="form-designation"
 							ng-init="getDesignations()" ng-model="position.parentDesignation"
 							ng-options="designation as designation.designationName for designation in designationDetails ">
+							<option value="" disabled selected hidden>Select Designation</option>
 						</select>
 					</div>
 				</div>
 				<div class="text-center">
-					<button type="submit" class="btn btn-default btn-primary" ng-click="getDesignationDetails(position)">Add</button>
+					<button type="submit" class="btn btn-default btn-primary" ng-click="getDesignationDetails(position)">Add Position</button>
 				</div>
 			</form>
 		</div>

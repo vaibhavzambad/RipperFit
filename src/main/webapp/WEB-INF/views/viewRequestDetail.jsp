@@ -7,8 +7,8 @@
 				<div class="form-group">
 					<label for="">Resource Requested is {{requests.resource.resourceName}}</label> 
 				<div class="form-group">
-					<label for="">{{requests.priority}}Priority</label>
-					
+					<label for=""><span class="label label-primary">{{requests.priority}}Priority</span></label>
+			
 				</div>
 				<div class="form-group">
 					<label for="">Request is  {{requests.status}}</label>
@@ -19,8 +19,8 @@
 					
 				</div>
 				
-			<div class = "panel panel-default">
-   <div class ="panel-heading">Comment Box</div>
+			<div class = "panel panel-default" id="comment">
+   <div class ="panel-heading">Comment</div>
    
    
    
@@ -29,19 +29,19 @@
      <div class="row" >
      <div class="col-lg-2">
      <div class="commenterImage">
-               <img class="img img-circle" src={{comment.employee.profilePicture}} alt="image" width=80px height=80px/>
+               <img class="img img-circle" src={{comment.employee.profilePicture}} alt="image" width=80px height=80px />
        </div>
      
      </div>
      <div class=col-lg-10>
-     <div class="col-lg-10">
-    <h3>{{comment.employee.firstName}}</h3>
+     <div class="row">
+    <h3>{{comment.employee.firstName}} {{comment.employee.lastName}}</h3>
      </div>
      
-     <div class="col-lg-10">
- <h4>{{comment.comments}}</h4> 
+     <div class="row">
+ <h4><p>{{comment.comments}}</p></h4> 
      </div>
-     <div class="col-lg-10">
+     <div class="row">
  {{comment.date}}
      </div>
     
@@ -62,7 +62,7 @@
                 </textarea>
 				</div>
 
-				<input type="button" class=" btn btn-info text-center" ng-click="getCommentDetails(commentBox,requests)" value="Add Comments!" />
+				<input type="button" class=" btn btn-info text-center" ng-click="getCommentDetails(commentBox,requests)" value="Add Comments" />
 				</form>
 	
 </div>

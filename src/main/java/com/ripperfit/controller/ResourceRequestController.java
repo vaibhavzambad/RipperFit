@@ -172,5 +172,13 @@ public class ResourceRequestController {
 		}
 		return new ResponseEntity<List<ResourceRequest>>(HttpStatus.NO_CONTENT);
 	}
+	
+	@RequestMapping(value = "/updateRequest", method = RequestMethod.PUT)
+	public ResponseEntity<ResourceRequest> updateResourceRequest(@RequestBody ResourceRequest resourceRequest) {
+
+		this.resourceRequestService.updateResourceRequest(resourceRequest);
+		return new ResponseEntity<ResourceRequest>(HttpStatus.OK);
+	}
+	
 
 }

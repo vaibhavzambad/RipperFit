@@ -1,0 +1,11 @@
+.anchorButton:hover, .anchorButton:visited, .anchorButton, .anchorButton:focus{
+   text-decoration: none;
+   color: white;
+}
+.inputBox
+{
+width:15% 
+}
+td {
+    cursor: pointer;
+}

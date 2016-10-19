@@ -13,7 +13,7 @@
     </div>
     
 <br>
-    <button type="submit" class="btn btn-default btn-primary" ng-click="addDepartment(Department)">Add</button>
+    <button type="submit" class="btn btn-default btn-primary" ng-click="addDepartment(Department)">Add Department</button>
   </form>
 </div>
 </div>

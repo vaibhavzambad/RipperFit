@@ -18,7 +18,7 @@
 					</div>
 				</div>
 				<div id="button" class="text-center">
-					<button type="submit" class="btn btn-default btn-primary" ng-click="getResourceDetails(resource)">Add</button>
+					<button type="submit" class="btn btn-default btn-primary" ng-click="getResourceDetails(resource)">Add Resource</button>
 				</div>
 			</form>
 		</div>

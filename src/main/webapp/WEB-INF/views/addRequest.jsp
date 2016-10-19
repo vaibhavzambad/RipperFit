@@ -6,22 +6,24 @@
 			<br>
 			<form>
 				<div class="form-group">
-					<label for="">Resource</label> <select class="form-control"
+					<label class="sr-only" for="">Resource</label> <select class="form-control"
 						id="form-designation" ng-init="getResources()"
 						ng-model="request.resource"
 						ng-options="resource as resource.resourceName for resource in resourceDetails ">
+						<option value="" disabled selected hidden>Select Resource</option>
 					</select>
-
+</br>
 					<div class="form-group">
 						<label for="">Resource priority</label>
+						
 						<div class="form-check">
 							<label class="form-radio-label"><input type="radio"
 								class="form-check-input" value="high"
-								ng-model="request.priority"> High Priority</label> <label><input
+								ng-model="request.priority"> High </label> <label><input
 								type="radio" class="form-check-input" value="medium"
-								ng-model="request.priority"> Medium Priority</label> <label><input
+								ng-model="request.priority"> Medium</label> <label><input
 								type="radio" class="form-check-input" value="low"
-								ng-model="request.priority"> Low Priority</label>
+								ng-model="request.priority"> Low </label>
 						</div>
 					</div>
 					<div class="form-group">
@@ -29,8 +31,10 @@
 						<textarea class="form-control" ng-model="request.des">                     
        </textarea>
 					</div>
-					<input type="button" class=" btn btn-info text-center"
-						ng-click="getFormDetails(request)" value="Add Request!" />
+					<div class="text-center">
+					<button type="submit" class="btn btn-default btn-primary" ng-click="getFormDetails(request)">Add Request</button>
+				</div>
+			
 				</div>
 			</form>
 		</div>

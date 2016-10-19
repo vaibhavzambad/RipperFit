@@ -3,12 +3,13 @@
 		<strong>Resource Pool</strong>
 	</h2>
 	<br>
-	<table class="table table-bordered table-responsive">
+	<table class="table table-bordered table-responsive" id="table">
 		<thead>
 			<tr>
 				<th>#</th>
 				<th>Resource</th>
 				<th>Final Approval Level</th>
+				<th>Edit</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -16,13 +17,18 @@
 				<td>{{$index+1}}</td>
 				<td>{{resource.resourceName}}</td>
 				<td>{{resource.finalApprovalLevel}}</td>
-				<td><a href="#/editResource/{{resource.resourceId}}"><span
-						class="label label-primary">edit</span></a></td>
+				
+						<td><a class="btn" href="#/editResource/{{resource.resourceId}}">
+ <i class="fa fa-pencil"></i></a></td>
 			</tr>
 		</tbody>
 	</table>
-	<br>
-	<div class=" btn btn-group btn-primary">
-        <a style="color: white;" href="#/addResources">Add Resources</a>
+
+	<div class=" btn btn-group btn-primary" id="addResources">
+        <a class="anchorButton" style="color: white;" href="#/addResources">Add Resources</a>
+      </div>
+      <div id="msg" class="hidden">
+      <hr>
+      <h4>Currently No Resource Available</h4>
       </div>
 </div>

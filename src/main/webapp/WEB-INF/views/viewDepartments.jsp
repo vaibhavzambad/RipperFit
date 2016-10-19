@@ -10,12 +10,12 @@
 		<tbody>
 			<tr ng-repeat="dep in departments">
 				<td>{{dep.departmentName}}</td>
-				<td><a href="#/editDepartment/{{dep.departmentId}}"><span
-						class="label label-primary">edit</span></a></td>
+				<td><a class="btn" href="#/editDepartment/{{dep.departmentId}}">
+ <i class="fa fa-pencil"></i></a></td>
 			</tr>
 		</tbody>
 	</table>
 	 <div class=" btn btn-group btn-primary">
-        <a style="color: white;" href="#/addDepartment">Add New </a>
+        <a class="anchorButton" style="color: white;" href="#/addDepartment">Add Department</a>
       </div>
 </div>

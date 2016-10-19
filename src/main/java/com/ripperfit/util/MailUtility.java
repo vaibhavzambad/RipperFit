@@ -51,6 +51,15 @@ public class MailUtility {
 		sendMail(subject, body, login.getEmail());
 		return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
 	}
+	
+	@RequestMapping(value = "registrationMailOnSignup")
+	public ResponseEntity<Void> registrationMailOnSignUp(@RequestBody String email) {
+
+		String subject = "Welcome to ripperFit";
+		String body = "Hello "+email+", You are successfully registered";
+		sendMail(subject, body, email);
+		return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
+	}
 
 	/**
 	 * method to send the mail

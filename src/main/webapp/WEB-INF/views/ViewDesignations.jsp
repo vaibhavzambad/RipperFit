@@ -15,6 +15,6 @@
 		</tbody>
 	</table>
 	 <div class=" btn btn-group btn-primary">
-        <a style="color: white;" href="#/addPosition">Add Designation</a>
+        <a class="anchorButton" style="color: white;" href="#/addPosition">Add Designation</a>
       </div>
 </div>

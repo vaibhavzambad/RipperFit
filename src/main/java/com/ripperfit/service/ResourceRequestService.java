@@ -201,4 +201,10 @@ public class ResourceRequestService {
 		int currentApprovalLevel = this.resourceRequestDao.getCurrentApprovalLevel(requestId);
 		return currentApprovalLevel;
 	}
+	
+	@Transactional
+	public void updateResourceRequest(ResourceRequest request){
+		
+		this.resourceRequestDao.updateResourceRequest(request);
+	}
 }

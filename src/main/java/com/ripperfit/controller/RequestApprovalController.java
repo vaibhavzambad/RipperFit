@@ -44,5 +44,14 @@ public class RequestApprovalController {
 		}
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
+	
+	@RequestMapping(value = "/rejectRequest/{requestId}", method = RequestMethod.GET)
+	public ResponseEntity<Void> rejectRequest(@PathVariable("requestId") int requestId) {
 
+		System.out.println("reject");
+		if(this.requestApprovalService.rejectRequest(requestId)){
+			return new ResponseEntity<Void>(HttpStatus.OK);
+		}
+		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+	}
 }

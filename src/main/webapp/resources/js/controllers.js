@@ -11,7 +11,37 @@ var RipperFit = angular.module('RipperFit',[])
 		get: get
 	}
 }])
+.directive("passwordVerify", function() {
+   return {
+      require: "ngModel",
+      scope: {
+        passwordVerify: '='
+      },
+      link: function(scope, element, attrs, ctrl) {
+        scope.$watch(function() {
+            var combined;
 
+            if (scope.passwordVerify || ctrl.$viewValue) {
+               combined = scope.passwordVerify + '_' + ctrl.$viewValue; 
+            }                    
+            return combined;
+        }, function(value) {
+            if (value) {
+                ctrl.$parsers.unshift(function(viewValue) {
+                    var origin = scope.passwordVerify;
+                    if (origin !== viewValue) {
+                        ctrl.$setValidity("passwordVerify", false);
+                        return undefined;
+                    } else {
+                        ctrl.$setValidity("passwordVerify", true);
+                        return viewValue;
+                    }
+                });
+            }
+        });
+     }
+   };
+})
 .controller('socialCtrl',function($scope,$http,$window,StoreService) {
 
 	$('#signinButton').click(function() {
@@ -160,8 +190,8 @@ var RipperFit = angular.module('RipperFit',[])
 			}
 		}).then( function (response) {
 			$scope.organizationDetails = response.data; 
-		}, function () {
-			alert("No Organizations found");
+		}, function (response) {
+			console.log(response.status);
 		});
 	}
 	$scope.getFormDetails=function(user) {
@@ -194,15 +224,15 @@ var RipperFit = angular.module('RipperFit',[])
 			$scope.email = $scope.userDetails.email;
 			$http({
 				method: 'POST',
-				url: "/RipperFit/mail/registrationMail",
+				url: "/RipperFit/mail/registrationMailOnSignup",
 				data: $scope.email,
 				headers: {
 					'Content-Type': 'application/json'
 				}
 			}).then( function () {
-				$window.location.href = '/RipperFit/mailController';
-			}, function () {
-				alert("Registration failed!!");
+				$window.location.href = '/RipperFit/dashboard';
+			}, function (response) {
+				console.log(response.status);
 			});
 		});
 	}

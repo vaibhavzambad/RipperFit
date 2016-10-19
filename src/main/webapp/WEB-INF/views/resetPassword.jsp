@@ -5,21 +5,24 @@
 				<h2>Reset Password</h2>
 				<hr style="margin-top: 7px;">
 				<br>
-				<form>
+				<form ng-controller="changePasswordController">
 					<div class="form-group">
 						<label for="email">Old Password</label>
-						<input type="oldPassword" class="form-control" id="oldPassword" placeholder="Enter Old Password">
+						<input type="password" class="form-control" ng-model="oldPassword" id="oldPassword" placeholder="Enter Old Password">
 					</div>
 					<div class="form-group">
 						<label for="pwd">New Password</label>
-						<input type="newPassword" class="form-control" id="newPassword" placeholder="Enter New Password">
+						<input type=password class="form-control" ng-model="newPassword" id="newPassword" placeholder="Enter New Password">
 					</div>
 					<div class="form-group">
 						<label for="pwd">Confirm Password</label>
-						<input type="confirmPassword" class="form-control" id="confirmPassword" placeholder="Enter Confirm Password">
+						<input type=password class="form-control" id="confirmPassword" placeholder="Enter Confirm Password">
 					</div>
 					<br>
-					<button type="submit" class="btn btn-default btn-primary">Reset Password</button>
+					<input type="button" class="btn btn-default btn-primary" ng-click="changePassword(oldPassword,newPassword)" value="Reset Password"/>
+					<br/>
+					<br/>
+					<div id="message">  </div> 
 				</form>
 			</div>
 		</div>

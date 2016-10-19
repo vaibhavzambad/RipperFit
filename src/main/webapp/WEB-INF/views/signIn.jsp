@@ -1,13 +1,25 @@
 <!DOCTYPE html>
-<html lang="en" itemtype="http://schema.org/Article">
+<html lang="en" itemscope itemtype="http://schema.org/Article">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RipperFit</title>
 
+<style>
+html {
+position:relative;
+height:100%;
+width:100%;
+}
+body {
+position:absolute;
+min-width:100%;
+min-height:100%;
+}
+
+</style>
 <!-- CSS -->
-<link rel="stylesheet" href="resources/css/signUpStyle.css">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet"
@@ -23,8 +35,20 @@
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script src="https://apis.google.com/js/client:platform.js?onload=start"
 	async defer></script>
-	<!-- Font Awesome Javascript -->
-	<script src="https://use.fontawesome.com/8cbee58684.js"></script>
+
+<script>
+	function start() {
+		gapi
+				.load(
+						'auth2',
+						function() {
+							auth2 = gapi.auth2
+									.init({
+										client_id : '412974983923-jg7l8j84308pughfqt5o8q0gc0pslh83.apps.googleusercontent.com'
+									});
+						});
+	}
+</script>
 </head>
 <body ng-app="RipperFit">
 
@@ -47,7 +71,6 @@
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="signUp"><i class="fa fa-user-plus"
 							aria-hidden="true"></i> SignUp</a></li>
-
 					<li>&nbsp;&nbsp;&nbsp;</li>
 				</ul>
 			</div>
@@ -56,46 +79,44 @@
 	</div>
 
 	<!-- Body -->
-	<div class="container">
-		<div class="blank">
-			<div class="row">
-				<div class="col-xs-3"></div>
-				<div class="col-xs-6">
-					<h3 class="text-center">LogIn to Ripperfit</h3>
-					<hr />
-					<div class="signInBlank" ng-controller="signUpCtrl">
-						<form role="form" action="" method="post" class="login-form">
-							<div class="form-group">
-								<label class="sr-only" for="form-email">Username</label> <input
-									type="text" name="form-email" placeholder="Email-id"
-									class="form-username form-control" id="form-email"
-									ng-model="user.email">
-							</div>
-							<div class="form-group">
-								<label class="sr-only" for="form-password">Password</label> <input
-									type="password" name="form-password" placeholder="Password"
-									class="form-password form-control" id="form-password"
-									ng-model="user.password">
-							</div>
-							<div class="col-xs-4"></div>
-							<input type="button" class="col-xs-4 btn btn-info text-center"
-								ng-click="login(user)" value="Log-in" />
-						</form>
+	<div class="container" style="margin-top: 70px;">
+		<div class="row">
+			<div class="col-xs-4"></div>
+			<div class="col-xs-4">
+				<h3 class="text-center">LogIn to Ripperfit</h3>
+				<hr />
+				<form name="userForm" ng-submit="login(user)"
+					ng-controller="signUpCtrl">
+
+					<div class="form-group"
+						ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
+						<label>Email</label> <input type="email" name="email"
+							class="form-control" ng-model="user.email">
+						<p ng-show="userForm.email.$invalid && !userForm.email.$pristine"
+							class="help-block">Enter a valid email.</p>
 					</div>
-					<div class="social-login text-center">
-						<h3>OR</h3>
-						<div class="social-login-buttons">
-							<button id="signinButton" class="btn btn-danger"
-								ng-controller="socialCtrl">
-								<i class="fa fa-google"></i> Google
-							</button>
-						</div>
+					<div class="form-group"
+						ng-class="{'has-error': userForm.password.$invalid && !userForm.password.$pristine}">
+						<label for="password">Password</label> <input type="password"
+							id="password" name="password" placeholder="Password"
+							ng-minlength="6" class="form-control" ng-model="user.password"
+							ng-required> <span class="help-block"
+							ng-show="userForm.password.$invalid && !userForm.password.$pristine">
+							Password should be 6 digits minimum </span>
 					</div>
-				</div>
+					<button type="submit" class="btn btn-primary"
+						ng-disabled="userForm.$invalid">Log In</button>
+				</form>
+				<h3>OR</h3>
+				<button id="signinButton" class="btn btn-danger"
+					ng-controller="socialCtrl" style="margin-bottom: 70px;">
+					<i class="fa fa-google"></i> Google
+				</button>
+
 			</div>
 		</div>
 	</div>
-	<footer class="footer text-center"
+	 <footer class="footer text-center"
 		style="position: absolute; bottom: 0; width: 100%; background-color: #f8f8f8; border-top: 1.5px solid #e7e7e7; padding: 17px">
 		<p style="margin: 0;">
 			&copy;2016 RipperFit. All Rights Reserved| Designed by <b>VARAAS</b>
@@ -106,7 +127,6 @@
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<!-- <script src="resources/js/jquery.backstretch.min.js"></script> -->
-	<script src="resources/js/scripts.js"></script>
 	<script src="resources/js/controllers.js"></script>
 
 </body>
