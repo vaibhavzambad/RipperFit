@@ -13,6 +13,8 @@
 <link rel="stylesheet" href="resources/css/signUpStyle.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+	<!-- Font Awesome Javascript -->
+	<script src="https://use.fontawesome.com/8cbee58684.js"></script>
 	
 </head>
 
@@ -42,7 +44,7 @@
 			<!-- /.navbar-collapse -->
 		</div>
 	</div>
-	<div class="container">
+	<div class="container" style="margin-bottom: 10% !important;">
 		<div class="blank">
 			<div class="col-xs-2"></div>
 			<div class="col-xs-8">
@@ -155,7 +157,7 @@
 		</div>
 	</div>
 	<footer class="footer text-center"
-		style="position: absolute; bottom: 0 !important; width: 100%; background-color: #f8f8f8; border-top: 1.5px solid #e7e7e7; padding: 17px">
+		style="position: absolute !important; bottom: 0 !important; width: 100%; background-color: #f8f8f8; border-top: 1.5px solid #e7e7e7; padding: 17px">
 		<p style="margin: 0;">
 			&copy;2016 RipperFit. All Rights Reserved| Designed by <b>VARAAS</b>
 		</p>

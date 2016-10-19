@@ -23,6 +23,8 @@
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script src="https://apis.google.com/js/client:platform.js?onload=start"
 	async defer></script>
+	<!-- Font Awesome Javascript -->
+	<script src="https://use.fontawesome.com/8cbee58684.js"></script>
 </head>
 <body ng-app="RipperFit">
 
