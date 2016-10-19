@@ -174,12 +174,12 @@
 				<div class="col-lg-2"></div>
 				<div class="col-lg-8">
 					<p>RipperFit lets you effortlessly track your resource request
-						from bottom to top. It comes with the goal of serving as a
+						from start to finish. It comes with the goal of serving as a
 						complete resource management engine. Get instant notifications at
 						every point, view your complete resource history as well as track
 						all durations taken for resource allotment. Well, we are a gang of
-						five members lead by a terrific leader, Aman. RipperFit is our
-						very first gig. We care about quality, craft, feedback and
+						five members and RipperFit is our
+						very first gig hence we have left no stones unturned in the way of making this venture of ours topnotch. We care about quality, craft, feedback and
 						disciplined experimentation.</p>
 					<br>
 				</div>
