@@ -29,13 +29,6 @@ public class Resource implements Serializable {
 	@Column(name="final_approval_level")
 	private int finalApprovalLevel;
 	
-/*	@ManyToOne(optional=false,fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-	@JoinColumn(name="organization_id")
-	private Organization organization;*/
-	
-	@Column(name="quantity")
-	private int quantity;
-
 	/**
 	 * @return the resourceId
 	 */
@@ -77,33 +70,4 @@ public class Resource implements Serializable {
 	public void setFinalApprovalLevel(int finalApprovalLevel) {
 		this.finalApprovalLevel = finalApprovalLevel;
 	}
-
-	/**
-	 * @return the organization
-	 */
-	/*public Organization getOrganization() {
-		return organization;
-	}*/
-
-	/**
-	 * @param organization the organization to set
-	 */
-	/*public void setOrganization(Organization organization) {
-		this.organization = organization;
-	}*/
-
-	/**
-	 * @return the quantity
-	 */
-	public int getQuantity() {
-		return quantity;
-	}
-
-	/**
-	 * @param quantity the quantity to set
-	 */
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-	
 }

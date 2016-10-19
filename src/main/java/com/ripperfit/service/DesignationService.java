@@ -85,4 +85,14 @@ public class DesignationService {
 		return designation;
 	}
 
+	@Transactional
+	public void updateDesignationLevels(int designationLevel) {
+		
+		List<Designation> designationList = this.designationDao.designationListAboveLevel(designationLevel);
+		for(Designation des : designationList) {
+
+			des.setDesignationLevel(des.getDesignationLevel()+1);
+		}
+		this.designationDao.updateLevels(designationList);
+	}
 }

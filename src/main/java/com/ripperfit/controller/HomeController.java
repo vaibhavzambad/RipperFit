@@ -112,4 +112,9 @@ public class HomeController {
 	public String approveRequests() {
 		return "viewRequestToApprove";
 	}
+	
+	@RequestMapping(value="addResources")
+	public String addResources() {
+		return "addResources";
+	}
 }

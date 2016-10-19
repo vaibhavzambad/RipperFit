@@ -108,4 +108,11 @@ public class DesignationController {
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		}
 	}
+	
+	@RequestMapping(value="/updateLevels",method=RequestMethod.PUT)
+	public ResponseEntity<Void> updateDesignationLevels(@RequestBody int designationLevel){
+
+		this.designationService.updateDesignationLevels(designationLevel);
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
 }

@@ -97,8 +97,11 @@ public class ResourceDao {
 		query.setParameter("resourceName", resourceName);
 		@SuppressWarnings("unchecked")
 		List<Resource> resourceList = query.list();
-		Resource resource = (Resource) resourceList.get(0);
-		return resource;
+		if(resourceList.size() > 0) {
+			Resource resource = (Resource) resourceList.get(0);
+			return resource;
+		}
+		return null;
 	}
 
 	public int getFinalApprovalLevel(int resourceId){

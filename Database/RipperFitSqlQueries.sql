@@ -58,7 +58,6 @@ CREATE TABLE `resource` (
   `resource_id` int(11) NOT NULL AUTO_INCREMENT,
   `resource_name` varchar(30) NOT NULL,
   `final_approval_level` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL,
   PRIMARY KEY (`resource_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;

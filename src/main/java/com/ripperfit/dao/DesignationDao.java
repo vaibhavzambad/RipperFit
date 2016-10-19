@@ -101,7 +101,6 @@ public class DesignationDao {
 		List<Designation> designationList = query.list();
 		Designation designation = (Designation) designationList.get(0);
 		return designation;
-		
 	}
 	
 	public Designation getDesignationByDepartment(Department department){
@@ -113,4 +112,21 @@ public class DesignationDao {
 		return designation;
 	}
 
+	public void updateLevels(List<Designation> designationList) {
+
+		Session session = this.sessionFactory.getCurrentSession();
+		for(Designation des : designationList) {
+			session.update(des);
+		}
+	}
+	
+	public List<Designation> designationListAboveLevel(int designationLevel) {
+		
+		Session session = this.sessionFactory.getCurrentSession();
+		Query query = session.createQuery("from Designation where designationLevel >= :designationLevel"); 
+		query.setParameter("designationLevel", designationLevel);
+		@SuppressWarnings("unchecked")
+		List<Designation> designationList = query.list();
+		return designationList;
+	}
 }

@@ -7,36 +7,29 @@
 			<form>
 				<div class="form-group">
 					<label for="position">Position</label> <input type="text"
-						class="form-control" id="newPosition"
+						class="form-control" id="newPosition" ng-model="position.designation"
 						placeholder="Enter New Position">
 				</div>
 				<div class="row">
 					<div class="form-group col-md-12">
 						<label for="form-department">Department:</label> <select
 							class="form-control" id="form-department"
-							ng-init="getDepartments()" ng-model="designation.department"
+							ng-init="getDepartments()" ng-model="position.department"
 							ng-options="department as department.departmentName for department in departmentDetails ">
 						</select>
 					</div>
 				</div>
 				<div class="row">
-					<div class="form-group col-md-6">
-						<label for="form-designation">Upper Level:</label> <select
-							class="form-control" id="form-designation"
-							ng-init="getDesignations()" ng-model="designation.parentDesignation"
-							ng-options="designation as designation.designationName for designation in designationDetails ">
-						</select>
-					</div>
-					<div class="form-group col-md-6">
+					<div class="form-group col-md-12">
 						<label for="form-designation">Lower Level:</label> <select
 							class="form-control" id="form-designation"
-							ng-init="getDesignations()" ng-model="designation.childDesignation"
+							ng-init="getDesignations()" ng-model="position.childDesignation"
 							ng-options="designation as designation.designationName for designation in designationDetails ">
 						</select>
 					</div>
 				</div>
 				<div class="text-center">
-					<button type="submit" class="btn btn-default btn-primary">Add</button>
+					<button type="submit" class="btn btn-default btn-primary" ng-click="getDesignationDetails(position)">Add</button>
 				</div>
 			</form>
 		</div>

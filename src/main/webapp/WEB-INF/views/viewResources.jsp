@@ -9,8 +9,6 @@
 				<th>#</th>
 				<th>Resource</th>
 				<th>Final Approval Level</th>
-				<th>Resource Quanity</th>
-				
 			</tr>
 		</thead>
 		<tbody>
@@ -18,11 +16,11 @@
 				<td>{{$index+1}}</td>
 				<td>{{resource.resourceName}}</td>
 				<td>{{resource.finalApprovalLevel}}</td>
-				<td>{{resource.quantity}}</td>
-				
-				
 			</tr>
 		</tbody>
 	</table>
 	<br>
+	<div class=" btn btn-group btn-primary">
+        <a style="color: white;" href="#/addResources">Add Resources</a>
+      </div>
 </div>

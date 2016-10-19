@@ -4,13 +4,13 @@
 		<thead>
 			<tr>
 				<th>Designation</th>
-				<th>Parent Designation</th>
+				<th>Department</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr ng-repeat="des in designation">
 				<td>{{des.designationName}}</td>
-				<td>{{des.designation.designationName}}</td>
+				<td>{{des.department.departmentName}}</td>
 			</tr>
 		</tbody>
 	</table>
