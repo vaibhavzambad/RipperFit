@@ -117,4 +117,9 @@ public class HomeController {
 	public String addResources() {
 		return "addResources";
 	}
+	
+	@RequestMapping(value="editResource")
+	public String EditResource() {
+		return "editResource";
+	}
 }

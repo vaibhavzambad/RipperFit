@@ -21,9 +21,9 @@
 				</div>
 				<div class="row">
 					<div class="form-group col-md-12">
-						<label for="form-designation">Lower Level:</label> <select
+						<label for="form-designation">Upper Level:</label> <select
 							class="form-control" id="form-designation"
-							ng-init="getDesignations()" ng-model="position.childDesignation"
+							ng-init="getDesignations()" ng-model="position.parentDesignation"
 							ng-options="designation as designation.designationName for designation in designationDetails ">
 						</select>
 					</div>

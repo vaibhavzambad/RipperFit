@@ -5,7 +5,9 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import com.ripperfit.dao.ResourceDao;
+import com.ripperfit.model.Department;
 import com.ripperfit.model.Resource;
 
 public class ResourceService {
@@ -82,5 +84,11 @@ public class ResourceService {
 			result = true;
 		}
 		return result;
+	}
+	
+	@Transactional
+	public void updateResource(Resource resource) {
+		
+		this.resourceDao.updateResource(resource);
 	}
 }

@@ -86,9 +86,9 @@ public class DesignationService {
 	}
 
 	@Transactional
-	public void updateDesignationLevels(int designationLevel) {
+	public void updateDesignationLevels(Designation designation) {
 		
-		List<Designation> designationList = this.designationDao.designationListAboveLevel(designationLevel);
+		List<Designation> designationList = this.designationDao.designationListAboveLevel(designation);
 		for(Designation des : designationList) {
 
 			des.setDesignationLevel(des.getDesignationLevel()+1);

@@ -16,6 +16,8 @@
 				<td>{{$index+1}}</td>
 				<td>{{resource.resourceName}}</td>
 				<td>{{resource.finalApprovalLevel}}</td>
+				<td><a href="#/editResource/{{resource.resourceId}}"><span
+						class="label label-primary">edit</span></a></td>
 			</tr>
 		</tbody>
 	</table>

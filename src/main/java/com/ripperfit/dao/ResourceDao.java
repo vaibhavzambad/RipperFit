@@ -2,12 +2,15 @@ package com.ripperfit.dao;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ripperfit.model.Department;
 import com.ripperfit.model.Resource;
 
 @Repository
@@ -114,6 +117,13 @@ public class ResourceDao {
 		int finalApprovalLevel = (int) query.uniqueResult();
 		return finalApprovalLevel;
 
+	}
+	
+	@Transactional
+	public void updateResource(Resource resource) {
+
+		Session session = this.sessionFactory.getCurrentSession();
+		session.update(resource);
 	}
 
 }

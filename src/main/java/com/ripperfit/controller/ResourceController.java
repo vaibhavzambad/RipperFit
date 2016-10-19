@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ripperfit.model.Department;
 import com.ripperfit.model.Resource;
 import com.ripperfit.service.ResourceService;
 
@@ -94,17 +95,23 @@ public class ResourceController {
 		}
 	}
 
-	@RequestMapping(value="/getResourceById",method=RequestMethod.GET)
-	public ResponseEntity<Resource> getResourceById(@RequestBody int resourceId){
-
+	@RequestMapping(value = "/getResourceById/{resourceId}", method = RequestMethod.GET)
+	public ResponseEntity<Resource> getResourceById(@PathVariable("resourceId") int resourceId) {
+		System.out.println("in deptcontrlr");
+		
 		Resource resource = this.resourceService.getResourceById(resourceId);
-		if(resource == null){
+		if (resource != null) {
+			return new ResponseEntity<Resource>(resource,HttpStatus.OK);
+		} else {
 			return new ResponseEntity<Resource>(HttpStatus.NO_CONTENT);
-		}else{
-			return new ResponseEntity<Resource>(resource , HttpStatus.OK);
 		}
 	}
 
-
+	@RequestMapping(value = "/updateResource", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody Resource resource) {
+		System.out.println("departmentctrl "+resource);
+		this.resourceService.updateResource(resource);
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
 
 }

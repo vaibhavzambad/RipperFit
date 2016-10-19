@@ -120,11 +120,12 @@ public class DesignationDao {
 		}
 	}
 	
-	public List<Designation> designationListAboveLevel(int designationLevel) {
+	public List<Designation> designationListAboveLevel(Designation designation) {
 		
 		Session session = this.sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from Designation where designationLevel >= :designationLevel"); 
-		query.setParameter("designationLevel", designationLevel);
+		Query query = session.createQuery("from Designation where designationLevel >= :designationLevel and department = :department"); 
+		query.setParameter("designationLevel", designation.getDesignationLevel()+1);
+		query.setParameter("department", designation.getDepartment());
 		@SuppressWarnings("unchecked")
 		List<Designation> designationList = query.list();
 		return designationList;

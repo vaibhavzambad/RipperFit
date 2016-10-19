@@ -48,6 +48,9 @@ var app=angular.module("RipperFit",["ngRoute"])
 	}).when("/addResources",{
 		templateUrl:"/RipperFit/addResources",
 		controller: "addResourceController"
+	}).when("/editResource/:resourceId",{
+		templateUrl:"/RipperFit/editResource/",
+		controller:"editResourceController",
 	})
 })
 .controller("headerCtrl",function($scope,$http, $filter) {
@@ -289,11 +292,35 @@ var app=angular.module("RipperFit",["ngRoute"])
 		}
 	}) ;
 })
-.controller("viewResourcesController",function($scope,$http) { 
-	$http.get("/RipperFit/resource/getAllResources")
+.controller("viewResourcesController",function($scope,$http,$filter) { 
+	$http.get("/RipperFit/employee/getCurrentEmployeeObject")
 	.then(function(response) {
-		$scope.resources = response.data;
-	})
+		$scope.employeeDetails = response.data;
+		console.log("des"+$scope.employeeDetails.designation.designationName);
+	
+		var des=$filter('uppercase')($scope.employeeDetails.designation.designationName);
+		if(des=="HELPDESK")
+			{
+			console.log("come");
+			
+			$http.get("/RipperFit/resource/getAllResources")
+			.then(function(response) {
+				$scope.resources = response.data;
+			})
+			}
+		else
+			{
+			var myEl = angular.element( document.querySelector( '#addResource'));
+			myEl.addClass('hidden');
+			$http.get("/RipperFit/resource/getAllResources")
+			.then(function(response) {
+				$scope.resources = response.data;
+			})
+			console.log("go");
+			}
+	});
+	
+	
 })
 .controller("addResourceController",function($scope,$http, $window) { 
 
@@ -465,7 +492,8 @@ var app=angular.module("RipperFit",["ngRoute"])
 			}
 		})
 	});
-}).controller("forwardRequestCtrl",function($scope,$http,$window) {
+})
+.controller("forwardRequestCtrl",function($scope,$http,$window) {
 	console.log("enter");
 
 	$scope.forwardRequest=function(request)
@@ -516,17 +544,17 @@ var app=angular.module("RipperFit",["ngRoute"])
 
 	$scope.getDesignationDetails=function(position) {
 
-		$scope.level = position.childDesignation.designationLevel;
+		$scope.level = position.parentDesignation.designationLevel;
 		$scope.designationObject = {
 				"designationId": "",
 				"designationName": position.designation,
 				"department": position.department,
-				"designationLevel": $scope.level
+				"designationLevel": $scope.level+1
 		};
 		$http({
 			method: 'PUT',
 			url: "/RipperFit/designation/updateLevels",
-			data : $scope.level,
+			data : position.parentDesignation,
 			headers: {
 				'Content-Type': 'application/json'
 			}
@@ -540,7 +568,7 @@ var app=angular.module("RipperFit",["ngRoute"])
 					'Content-Type': 'application/json'
 				}
 			}).then(function() {
-				$window.location.reload("#/viewDesignations");
+				$window.location.href = "#/viewDesignations";
 			}, function(response) {
 				console.log(response.status);
 			});	
@@ -548,8 +576,8 @@ var app=angular.module("RipperFit",["ngRoute"])
 			console.log(response.status);
 		});
 	}
-});
-app.controller('addCommentCtrl', function($scope, $http, $window, $filter){
+})
+.controller('addCommentCtrl', function($scope, $http, $window, $filter){
 
 	$http({
 		method: 'GET',
@@ -587,4 +615,33 @@ app.controller('addCommentCtrl', function($scope, $http, $window, $filter){
 		});
 	}
 
+})
+.controller("editResourceController",function($scope,$http,$routeParams, $window) { 
+	$http.get("/RipperFit/resource/getResourceById/"+$routeParams.resourceId+" ")
+	.then(function(response) {
+		$scope.resource = response.data;
+		console.log($scope.resource);
+
+		$scope.UpdateData=function(resource){
+			console.log($scope.resource);
+			$scope.resrce = {
+					"resourceId": $scope.resource.resourceId,
+					"resourceName": $scope.resource.resourceName,
+					"finalApprovalLevel": $scope.finalApprovalLevel
+			};
+			console.log($scope.resrce);
+			$http({
+				method: 'PUT',
+				url: "/RipperFit/resource/updateResource",
+				data: $scope.resource,
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).then( function (response) {
+				$window.location.href="#/viewResources/";
+			}, function(response) {
+				console.log(response.status);
+			});
+		}
+	}) ;
 });
