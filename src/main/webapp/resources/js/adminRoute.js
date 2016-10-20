@@ -1,110 +1,80 @@
 var app=angular.module("RipperFit",["ngRoute"])
+
 .config(function($routeProvider) {
 	$routeProvider.when("/viewRequests",{
-		templateUrl:"/RipperFit/viewRequests",
-		controller:"viewRequestsController"
-	}).when("/viewResources",{
-		templateUrl:"/RipperFit/viewResources",
-		controller:"viewResourcesController"
-	}).when("/viewDesignations",{
-		templateUrl:"/RipperFit/viewDesignations",
-		controller:"viewDesignationsController"
-	}).when("/viewDepartments",{
-		templateUrl:"/RipperFit/viewDepartments",
-		controller:"viewDepartmentsController"
-	}).when("/viewEmployees",{
-		templateUrl:"/RipperFit/viewEmployees",
-		controller:"viewEmployeesController"
-	}).when("/viewOwnRequests/:employeeId",{
-		templateUrl:"/RipperFit/viewOwnRequests/",
-		controller:"viewEmployeeRequestsController",
-	}).when("/viewRequests/:employeeId",{
-		templateUrl:"/RipperFit/viewEmployeeRequests/",
-		controller:"viewEmployeeRequestsController",
-	}).when("/addPosition",{
-		templateUrl:"/RipperFit/addPosition",
+		templateUrl:"viewRequests.html",
+		controller:"viewRequestsCtrl"
+	})
+	.when("/viewResources",{
+		templateUrl:"viewResources.html",
+		controller:"viewResourcesCtrl"
+	})
+	.when("/viewDesignations",{
+		templateUrl:"viewDesignations.html",
+		controller:"viewDesignationsCtrl"
+	})
+	.when("/viewDepartments",{
+		templateUrl:"viewDepartments.html",
+		controller:"viewDepartmentsCtrl"
+	})
+	.when("/viewEmployees",{
+		templateUrl:"viewEmployees.html",
+		controller:"viewEmployeesCtrl"
+	})
+	.when("/viewOwnRequests/:employeeId",{
+		templateUrl:"viewOwnRequests.html",
+		controller:"viewEmployeeRequestsCtrl",
+	})
+	.when("/viewRequests/:employeeId",{
+		templateUrl:"viewEmployeeRequests.html",
+		controller:"viewEmployeeRequestsCtrl",
+	})
+	.when("/addPosition",{
+		templateUrl:"addPosition.html",
 		controller:"addDesignationCtrl"
-	}).when("/addRequest",{
-		templateUrl:"/RipperFit/addRequest", 
+	})
+	.when("/addRequest",{
+		templateUrl:"addRequest.html", 
 		controller:"addRequestCtrl"
-	}).when("/viewRequestDetail/:requestId",{
-		templateUrl:"/RipperFit/viewRequestDetail", 
-		controller:"viewRequestDetailController"
-	}).when("/editDepartment/:departmentId",{
-		templateUrl:"/RipperFit/editDepartment/",
-		controller:"editDepartmentController",
-	}).when("/addDepartment",{
-		templateUrl:"/RipperFit/addDepartment", 
-		controller:"addDepartmentController"
-	}).when("/myProfile",{
-		templateUrl:"/RipperFit/myProfile", 
-		controller:"myProfileController"
-	}).when("/changePassword",{
-		templateUrl:"/RipperFit/changePassword",
-		controller: "changePasswordController"
-	}).when("/viewRequestsToApprove",{
-		templateUrl:"/RipperFit/approveRequests",
-		controller: "approveRequestController"
-	}).when("/addResources",{
-		templateUrl:"/RipperFit/addResources",
-		controller: "addResourceController"
-	}).when("/editResource/:resourceId",{
-		templateUrl:"/RipperFit/editResource/",
-		controller:"editResourceController",
-	}).when("/editRequest/:requestId",{
-		templateUrl:"/RipperFit/editRequest/",
-		controller:"editRequestController",
+	})
+	.when("/viewRequestDetail/:requestId",{
+		templateUrl:"viewRequestDetail.html", 
+		controller:"viewRequestDetailCtrl"
+	})
+	.when("/editDepartment/:departmentId",{
+		templateUrl:"editDepartment.html",
+		controller:"editDepartmentCtrl",
+	})
+	.when("/addDepartment",{
+		templateUrl:"addDepartment.html", 
+		controller:"addDepartmentCtrl"
+	})
+	.when("/myProfile",{
+		templateUrl:"myProfile.html", 
+		controller:"myProfileCtrl"
+	})
+	.when("/changePassword",{
+		templateUrl:"changePassword.html",
+		controller: "changePasswordCtrl"
+	})
+	.when("/viewRequestsToApprove",{
+		templateUrl:"viewRequestToApprove.html",
+		controller: "approveRequestCtrl"
+	})
+	.when("/addResources",{
+		templateUrl:"addResources.html",
+		controller: "addResourceCtrl"
+	})
+	.when("/editResource/:resourceId",{
+		templateUrl:"editResource.html",
+		controller:"editResourceCtrl",
+	})
+	.when("/editRequest/:requestId",{
+		templateUrl:"editRequest.html",
+		controller:"editRequestCtrl",
 	})
 })
-.controller("editRequestController",function($scope,$http,$routeParams, $window,$filter) { 
-	$http.get("/RipperFit/request/getRequest/"+$routeParams.requestId+" ")
-	.then(function(response) {
-		$scope.request = response.data;
 
-		
-			
-			
-			
-			$scope.request.requestDate = $filter('date')(new Date($scope.request.requestDate),'yyyy-MM-dd');	
-			console.log("dfd"+$scope.request.requestDate );
-		
-		$scope.UpdateData=function(request){
-		
-			$scope.req = {
-					"requestId": $scope.request.resourceId,
-					"resource": $scope.request.resource,
-					"employee": $scope.request.employee,
-					"currentApprovalLevel": $scope.request.currentApprovalLevel,
-					"priority": $scope.request.priority,
-					"status": $scope.request.status,
-					"message": $scope.request.message,
-					"requestDate": $scope.request.requestDate
-			};
-			
-			var length=$scope.req.length;
-			for(var i=0;i<length;i++) {
-				
-				
-				
-				$scope.req[i].requestDate = $filter('date')(new Date($scope.req[i].requestDate),'yyyy-MM-dd');	
-				console.log("dfd"+$scope.req[i].requestDate );
-			}
-			
-			$http({
-				method: 'PUT',
-				url: "/RipperFit/request/updateRequest",
-				data: $scope.request,
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			}).then( function (response) {
-				$window.location.href="#/viewOwnRequests/"+$scope.request.employee.employeeId;
-			}, function(response) {
-				console.log(response.status);
-			});
-		}
-	}) ;
-})
 .controller("headerCtrl",function($scope,$http, $filter) {
 	$http({
 		method: 'GET',
@@ -117,7 +87,6 @@ var app=angular.module("RipperFit",["ngRoute"])
 		$scope.loggedEmployee=$scope.employee.firstName +" "+$scope.employee.lastName;
 		if($scope.employee.designation != null){
 			var str = $filter('uppercase')($scope.employee.designation.designationName);
-			// var myEl = angular.element(document.querySelector('#button'));
 			if(str == "ADMIN") {
 				$scope.loggedUser = [{
 					href: '#/viewRequests',
@@ -142,7 +111,6 @@ var app=angular.module("RipperFit",["ngRoute"])
 					href: '#/viewOwnRequests/'+$scope.employee.employeeId,
 					text: 'My requests'
 				}];
-				// myE1.addClass("hidden");
 			} else if(str == "HELPDESK") {
 				$scope.loggedUser = [{
 					href: '#/viewRequests',
@@ -157,7 +125,7 @@ var app=angular.module("RipperFit",["ngRoute"])
 				}];
 			} else {
 				$scope.loggedUser = [{
-					
+
 					href: '#/viewRequestsToApprove',
 					text: 'Action on  Requests'
 				}];
@@ -175,63 +143,101 @@ var app=angular.module("RipperFit",["ngRoute"])
 	});
 })
 
-.controller("viewRequestsController",function($scope,$http,$filter) {
+.controller("editRequestCtrl", function($scope, $http, $routeParams, $window, $filter) { 
+	$http.get("/RipperFit/request/getRequest/"+$routeParams.requestId+" ")
+	.then(function(response) {
+		$scope.request = response.data;
+		$scope.request.requestDate = $filter('date')(new Date($scope.request.requestDate),'yyyy-MM-dd');	
+		$scope.UpdateData=function(request) {		
+			$scope.req = {
+					"requestId": $scope.request.resourceId,
+					"resource": $scope.request.resource,
+					"employee": $scope.request.employee,
+					"currentApprovalLevel": $scope.request.currentApprovalLevel,
+					"priority": $scope.request.priority,
+					"status": $scope.request.status,
+					"message": $scope.request.message,
+					"requestDate": $scope.request.requestDate
+			};
+			var length=$scope.req.length;
+			for(var i=0;i<length;i++) {
+				$scope.req[i].requestDate = $filter('date')(new Date($scope.req[i].requestDate),'yyyy-MM-dd');	
+			}
+			$http({
+				method: 'PUT',
+				url: "/RipperFit/request/updateRequest",
+				data: $scope.request,
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).then(function() {
+				$window.location.href="#/viewOwnRequests/"+$scope.request.employee.employeeId;
+			}, function(response) {
+				console.log(response.status);
+			});
+		}
+	}), function(response) {
+		console.log(response.status);
+	};
+})
+
+.controller("viewRequestsCtrl", function($scope, $http, $filter) {
 	$http.get("/RipperFit/request/getAllRequests")
 	.then(function(response) {
 		$scope.requests = response.data;
-		
 		var length=$scope.requests.length;
 		var myEl = angular.element( document.querySelector( '#table' ) );
 		var myE2 = angular.element( document.querySelector( '#msg' ) );
-		
-		if(length==0)
-		{
+
+		if(length==0) {
 			myEl.addClass('hidden');
 			myE2.removeClass('hidden');
-
-		}else
-		{
-
+		} else {
 			myE2.addClass('hidden');
+			for(var i=0;i<length;i++) {
 
-		for(var i=0;i<length;i++) {
-			
-			
-			
-			$scope.requests[i].requestDate = $filter('date')(new Date($scope.requests[i].requestDate),'yyyy-MM-dd');
-			console.log("date"+$scope.requests[i].requestDate);
-			if($scope.requests[i].status=="completed" ||$scope.requests[i].status=="success") {
-				$scope.requests[i].color="success";
-			}
-			if($scope.requests[i].status=="running") {
-				$scope.requests[i].color="primary";
-			}
-			if($scope.requests[i].status=="pending") {
-				$scope.requests[i].color="primary";
-			}
-			if($scope.requests[i].status=="rejected") {
-				$scope.requests[i].color="danger";
-			}
-			if($scope.requests[i].status=="approved") {
-				$scope.requests[i].color="warning";
+				$scope.requests[i].requestDate = $filter('date')(new Date($scope.requests[i].requestDate),'yyyy-MM-dd');
+				if($scope.requests[i].status=="completed" ||$scope.requests[i].status=="success") {
+					$scope.requests[i].color="success";
+				}
+				if($scope.requests[i].status=="running") {
+					$scope.requests[i].color="primary";
+				}
+				if($scope.requests[i].status=="pending") {
+					$scope.requests[i].color="primary";
+				}
+				if($scope.requests[i].status=="rejected") {
+					$scope.requests[i].color="danger";
+				}
+				if($scope.requests[i].status=="approved") {
+					$scope.requests[i].color="warning";
+				}
 			}
 		}
-		}
-	});
+	}), function(response) {
+		console.log(response.status);
+	};
 })
-.controller("viewDesignationsController",function($scope,$http) {
+
+.controller("viewDesignationsCtrl", function($scope, $http) {
 	$http.get("/RipperFit/designation/getDesignations")
 	.then(function(response) {
 		$scope.designation = response.data;
-	});
+	}), function(response) {
+		console.log(response.status);
+	};
 })
-.controller("viewEmployeesController",function($scope,$http) {
+
+.controller("viewEmployeesCtrl", function($scope, $http) {
 	$http.get("/RipperFit/employee/getEmployee")
 	.then(function(response) {
 		$scope.employee = response.data;
-	});
+	}), function(response) {
+		console.log(response.status);
+	};
 })
-.controller("deleteRequestController",function($scope,$http,$routeParams) {
+
+.controller("deleteRequestCtrl", function($scope, $http, $routeParams) {
 	$http.get("/RipperFit/request/getAllRequests")
 	.then(function(response) {
 		$scope.requests = response.data;
@@ -253,19 +259,22 @@ var app=angular.module("RipperFit",["ngRoute"])
 				$scope.requests[i].color="warning";
 			}
 		}
-	});
+	}), function(response) {
+		console.log(response.status);
+	};
 
-	$http.delete("/RipperFit/comment/deleteComment/"+$routeParams.requestId)
+	/*$http.delete("/RipperFit/comment/deleteComment/"+$routeParams.requestId)
 	.then(function(response) {
 		console.log(response);
 	});
 	$http.delete("/RipperFit/request/deleteRequest/"+$routeParams.requestId)
 	.then(function(response) {
 		console.log(response);
-	});
+	});*/
 })
-.controller("addDepartmentController",function($scope,$http, $window, $filter) {
-	$scope.addDepartment=function(Department) {
+
+.controller("addDepartmentCtrl", function($scope, $http, $window, $filter) {
+	$scope.addDepartment = function(Department) {
 		$scope.departmentDetails = {
 				"departmentId": "",
 				"departmentName": $scope.Department.departmentName
@@ -277,40 +286,37 @@ var app=angular.module("RipperFit",["ngRoute"])
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).then( function (response) {
+		}).then(function() {
 			$window.location.href="#/viewDepartments/";
 		}, function(response) {
 			console.log(response.status);
 		});
 	}
 })
-.controller("viewDepartmentsController",function($scope,$http) {
+
+.controller("viewDepartmentsCtrl", function($scope, $http) {
 	$http.get("/RipperFit/departments/getDepartments")
 	.then(function(response) {
 		$scope.departments = response.data;
-	});
+	}), function(response) {
+		console.log(response.status);
+	};
 })
-.controller("viewEmployeeRequestsController",function($scope,$http,$routeParams,$window) {
 
+.controller("viewEmployeeRequestsCtrl", function($scope, $http, $routeParams, $window) {
 	$http.get("/RipperFit/request/getRequestByEmployee/"+$routeParams.employeeId+" ")
 	.then(function(response) {
-
 		$scope.requests = response.data;
-
 		var myEl = angular.element( document.querySelector( '#table' ) );
 		var myE2 = angular.element( document.querySelector( '#msg' ) );
 		var myE3 = angular.element( document.querySelector( '#input' ) );
-		
+
 		var length=$scope.requests.length;
-		if(length==0)
-		{
+		if(length==0) {
 			myEl.addClass('hidden');
 			myE2.removeClass('hidden');
 			myE3.addClass('hidden');
-
-		}else
-		{
-
+		} else {
 			myE2.addClass('hidden');
 
 			for(var i=0;i<length;i++) {
@@ -332,24 +338,21 @@ var app=angular.module("RipperFit",["ngRoute"])
 				}
 			}
 		}
-	}), function(error){
-		console.log("Error");
+	}), function(response) {
+		console.log(response.status);
 	};
 })
-.controller("editDepartmentController",function($scope,$http,$routeParams, $window) { 
+
+.controller("editDepartmentCtrl", function($scope, $http, $routeParams, $window) { 
 	$http.get("/RipperFit/departments/getDepartmentById/"+$routeParams.departmentId+" ")
 	.then(function(response) {
 		$scope.department = response.data;
-		console.log($scope.department);
-
 		$scope.UpdateData=function(department){
-			console.log($scope.department);
 			$scope.dept = {
 					"departmentId": $scope.department.departmentId,
 					"departmentName": $scope.department.departmentName,
 					"organization": $scope.department.organization
 			};
-			console.log($scope.dept);
 			$http({
 				method: 'PUT',
 				url: "/RipperFit/departments/updateDepartment",
@@ -357,7 +360,7 @@ var app=angular.module("RipperFit",["ngRoute"])
 				headers: {
 					'Content-Type': 'application/json'
 				}
-			}).then( function (response) {
+			}).then(function() {
 				$window.location.href="#/viewDepartments/";
 			}, function(response) {
 				console.log(response.status);
@@ -365,54 +368,40 @@ var app=angular.module("RipperFit",["ngRoute"])
 		}
 	}) ;
 })
-.controller("viewResourcesController",function($scope,$http,$filter) { 
+
+.controller("viewResourcesCtrl", function($scope, $http, $filter) { 
 	$http.get("/RipperFit/employee/getCurrentEmployeeObject")
 	.then(function(response) {
 		$scope.employeeDetails = response.data;
-		console.log("des"+$scope.employeeDetails.designation.designationName);
-		
 		var des=$filter('uppercase')($scope.employeeDetails.designation.designationName);
-		if(des=="HELPDESK")
-			{
-			console.log("come");
-			
-			
-			}
-		else
-			{
-			var myEl = angular.element( document.querySelector( '#addResources'));
+
+		var myEl = angular.element( document.querySelector( '#addResources'));
+		if(des=="HELPDESK")	{
+			myEl.removeClass('hidden');
+		} else {
 			myEl.addClass('hidden');
-			
-			console.log("go");
-			}
+		}
 		$http.get("/RipperFit/resource/getAllResources")
 		.then(function(response) {
 			$scope.resources = response.data;
-			
+
 			var myEl = angular.element( document.querySelector( '#table'));
 			var myE2 = angular.element( document.querySelector( '#msg' ) );
 			var length=$scope.resources.length;
-			console.log("length"+length);
-			if(length==0)
-			{
+
+			if(length==0) {
 				myEl.addClass('hidden');
 				myE2.removeClass('hidden');
-
-			}else
-			{
-			
-			
+			} else {
 				myE2.addClass('hidden');
 			}
-			
-			
-		})
+		}), function(response) {
+			console.log(response.status);
+		}
 	});
-	
-	
 })
-.controller("addResourceController",function($scope,$http, $window) { 
 
+.controller("addResourceCtrl", function($scope, $http, $window) { 
 	$scope.getResourceDetails=function(resource) {
 		$scope.resourceObject = {
 				"resourceId": "",
@@ -433,14 +422,12 @@ var app=angular.module("RipperFit",["ngRoute"])
 		});	
 	}
 })
-.controller("myProfileController",function($scope,$http) { 
+
+.controller("myProfileCtrl", function($scope, $http, $window) { 
 	$http.get("/RipperFit/employee/getCurrentEmployeeObject")
 	.then(function(response) {
 		$scope.employeeDetails = response.data;
-		console.log($scope.employeeDetails);
-
-		$scope.UpdateData=function(employeeDetails){
-			console.log($scope.employeeDetails);
+		$scope.UpdateData = function(employeeDetails) {
 			$scope.employee = {
 					"employeeId": $scope.employeeDetails.employeeId,
 					"organization": $scope.employeeDetails.organization,
@@ -452,7 +439,6 @@ var app=angular.module("RipperFit",["ngRoute"])
 					"designation" : $scope.employeeDetails.designation,
 					"profilePicture" :$scope.employeeDetails.profilePicture
 			};
-			console.log($scope.employee);
 			$http({
 				method: 'PUT',
 				url: "/RipperFit/employee/updateEmployee",
@@ -460,7 +446,7 @@ var app=angular.module("RipperFit",["ngRoute"])
 				headers: {
 					'Content-Type': 'application/json'
 				}
-			}).then( function (response) {
+			}).then(function() {
 				$window.location.reload("#/myProfile");
 			}, function(response) {
 				console.log(response.status);
@@ -468,61 +454,51 @@ var app=angular.module("RipperFit",["ngRoute"])
 		}
 	}) ;
 })
-.controller("viewRequestDetailController",function($scope,$http,$routeParams,$filter) {
+
+.controller("viewRequestDetailCtrl", function($scope, $http, $routeParams, $filter) {
 	$http.get("/RipperFit/request/getRequest/"+$routeParams.requestId+" ")
 	.then(function(response) {
 		$scope.requests = response.data;
-		console.log($scope.requests);
-		
-	$http.get("/RipperFit/comment/getCommentByRequestId/"+$routeParams.requestId+" ")
-	.then(function(response) {
+		$http.get("/RipperFit/comment/getCommentByRequestId/"+$routeParams.requestId+" ")
+		.then(function(response) {
+			$scope.comments = response.data;	
+			var length=$scope.comments.length;
 
-		$scope.comments = response.data;	
-		
-		var length=$scope.comments.length;
-		var myEl = angular.element( document.querySelector( '#comment'));
-		if(length==0)
-		{
-			myEl.addClass('hidden');
-			
-
-		}
-           for(var i=0;i<length;i++) {
-			
-			
-			
-			$scope.comments[i].date = $filter('date')(new Date($scope.comments[i].date),'yyyy-MM-dd');
-			console.log("date"+$scope.comments[i].date);
-			
-		}
-		
-	})
-		
-	})
+			var myEl = angular.element( document.querySelector( '#comment'));
+			if(length==0) {
+				myEl.addClass('hidden');
+			}
+			for(var i=0;i<length;i++) {
+				$scope.comments[i].date = $filter('date')(new Date($scope.comments[i].date),'yyyy-MM-dd');
+			}
+		})
+	}), function(response) {
+		console.log(response.status);
+	}
 })
-.controller('getLocationCtrl', function($scope, $http, $window, $filter){
 
-	$scope.clickable=function(requestId) {
+.controller('getLocationCtrl', function($scope, $http, $window, $filter){
+	$scope.clickable = function(requestId) {
 		console.log(requestId);
 		location.href = '#/viewRequestDetail/'+requestId;
 	}
 })
-.controller('addRequestCtrl', function($scope, $http, $window, $filter){
 
-	$scope.getResources=function() {
+.controller('addRequestCtrl', function($scope, $http, $window, $filter){
+	$scope.getResources = function() {
 		$http({
 			method: 'GET',
 			url: "/RipperFit/resource/getAllResources",
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).then( function (response){
+		}).then(function(response){
 			$scope.resourceDetails = response.data; 
-		}, function (){ 
-			alert("No resource found");
+		}, function(response){ 
+			console.log(response.status);
 		});
 	}
-	$scope.getFormDetails=function(request) {
+	$scope.getFormDetails = function(request) {
 		$scope.employee="";
 		$scope.level="";
 		$http({
@@ -559,11 +535,11 @@ var app=angular.module("RipperFit",["ngRoute"])
 			}, function(response) {
 				console.log(response.status);
 			});
-			// console.log("requestor"+ $scope.employee);
 		});	
 	}
 })
-.controller("approveRequestController",function($scope,$http,$filter) {
+
+.controller("approveRequestCtrl", function($scope, $http, $filter) {
 	$http({
 		method: 'GET',
 		url: "/RipperFit/employee/getCurrentEmployeeObject",
@@ -583,46 +559,38 @@ var app=angular.module("RipperFit",["ngRoute"])
 			var length=$scope.requestsToApprove.length;
 			var myEl = angular.element( document.querySelector( '#table'));
 			var myE2 = angular.element( document.querySelector( '#msg' ) );
-			if(length==0)
-			{
+			if(length==0) {
 				myEl.addClass('hidden');
 				myE2.removeClass('hidden');
-				
-
-			}else
-			{
-
+			} else {
 				myE2.addClass('hidden');
-			for(var i=0;i<length;i++) {
-				
-				$scope.requestsToApprove[i].resourceRequest.requestDate = $filter('date')(new Date($scope.requestsToApprove[i].resourceRequest.requestDate),'yyyy-MM-dd');
-				
-				if($scope.requestsToApprove[i].resourceRequest.status=="completed" ||$scope.requestsToApprove[i].resourceRequest.status=="success") {
-					$scope.requestsToApprove[i].color="success";
+				for(var i=0;i<length;i++) {
+					$scope.requestsToApprove[i].resourceRequest.requestDate = $filter('date')(new Date($scope.requestsToApprove[i].resourceRequest.requestDate),'yyyy-MM-dd');
+					if($scope.requestsToApprove[i].resourceRequest.status=="completed" ||$scope.requestsToApprove[i].resourceRequest.status=="success") {
+						$scope.requestsToApprove[i].color="success";
+					}
+					if($scope.requestsToApprove[i].resourceRequest.status=="running") {
+						$scope.requestsToApprove[i].color="primary";
+					}
+					if($scope.requestsToApprove[i].resourceRequest.status=="pending") {
+						$scope.requestsToApprove[i].color="primary";
+					}
+					if($scope.requestsToApprove[i].resourceRequest.status=="rejected") {
+						$scope.requestsToApprove[i].color="danger";
+					}
+					if($scope.requestsToApprove[i].resourceRequest.status=="approved") {
+						$scope.requestsToApprove[i].color="warning";
+					}
 				}
-				if($scope.requestsToApprove[i].resourceRequest.status=="running") {
-					$scope.requestsToApprove[i].color="primary";
-				}
-				if($scope.requestsToApprove[i].resourceRequest.status=="pending") {
-					$scope.requestsToApprove[i].color="primary";
-				}
-				if($scope.requestsToApprove[i].resourceRequest.status=="rejected") {
-					$scope.requestsToApprove[i].color="danger";
-				}
-				if($scope.requestsToApprove[i].resourceRequest.status=="approved") {
-					$scope.requestsToApprove[i].color="warning";
-				}
-			}
 			}
 		})
-	});
+	}), function(response) {
+		console.log(response.status);
+	};
 })
-.controller("forwardRequestCtrl",function($scope,$http,$window) {
-	console.log("enter");
 
-	$scope.forwardRequest=function(request)
-	{
-		console.log("t"+request.resourceRequest.requestId);
+.controller("forwardRequestCtrl", function($scope, $http, $window) {
+	$scope.forwardRequest = function(request) {
 		$http({
 			method: 'GET',
 			url: "/RipperFit/approve/forwardRequest/"+request.resourceRequest.requestId,
@@ -631,43 +599,42 @@ var app=angular.module("RipperFit",["ngRoute"])
 			}
 		}).then(function(response) {
 			$window.location.reload("#/viewRequestsToApprove");
-		});
+		}), function(response) {
+			console.log(response.status);
+		};
 	}
-
-
 })
-.controller('addDesignationCtrl', function($scope, $http, $window, $filter){
 
-	$scope.getDepartments=function() {
+.controller('addDesignationCtrl', function($scope, $http, $window, $filter){
+	$scope.getDepartments = function() {
 		$http({
 			method: 'GET',
 			url: "/RipperFit/departments/getDepartments",
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).then( function (response){
+		}).then(function(response){
 			$scope.departmentDetails = response.data; 
-		}, function (){ 
-			alert("No departments found");
+		}, function(response){ 
+			console.log(response.status);
 		});
 	}
 
-	$scope.getDesignations=function() {
+	$scope.getDesignations = function() {
 		$http({
 			method: 'GET',
 			url: "/RipperFit/designation/getDesignations",
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).then( function (response){
+		}).then( function(response){
 			$scope.designationDetails = response.data; 
-		}, function (){ 
-			alert("No departments found");
+		}, function(response){ 
+			console.log(response.status);
 		});
 	}
 
-	$scope.getDesignationDetails=function(position) {
-
+	$scope.getDesignationDetails = function(position) {
 		$scope.level = position.parentDesignation.designationLevel;
 		$scope.designationObject = {
 				"designationId": "",
@@ -683,7 +650,6 @@ var app=angular.module("RipperFit",["ngRoute"])
 				'Content-Type': 'application/json'
 			}
 		}).then(function() {
-
 			$http({
 				method: 'POST',
 				url: "/RipperFit/designation/addDesignation",
@@ -701,8 +667,8 @@ var app=angular.module("RipperFit",["ngRoute"])
 		});
 	}
 })
-.controller('addCommentCtrl', function($scope, $http, $window, $filter){
 
+.controller('addCommentCtrl', function($scope, $http, $window, $filter){
 	$http({
 		method: 'GET',
 		url: "/RipperFit/employee/getCurrentEmployeeObject",
@@ -711,20 +677,19 @@ var app=angular.module("RipperFit",["ngRoute"])
 		}
 	}).then(function(response) {
 		$scope.employee = response.data;
-	})
+	}), function(response) {
+		console.log(response.status);
+	}
 	var date = new Date();
 	$scope.FromDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
 	$scope.getCommentDetails=function(commentBox,requests) {
-		console.log("dfd"+$scope.employee);
 		$scope.comment = {
 				"commentId": "",
 				"employee": $scope.employee,
 				"comments": $scope.commentBox.comments,
-
 				"resourceRequest": $scope.requests,
 				"date":$scope.FromDate,
 		};
-		console.log("dfd"+$scope.commentBox.comments);
 		$http({
 			method: 'POST',
 			url: "/RipperFit/comment/addComment",
@@ -732,88 +697,84 @@ var app=angular.module("RipperFit",["ngRoute"])
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).then(function(response) {
+		}).then(function() {
 			$window.location.reload("#/viewRequestDetail/"+requests.requestId);
 		}, function(response) {
 			console.log(response.status);
 		});
 	}
-
 })
-.controller("editResourceController",function($scope,$http,$routeParams, $window) { 
+
+.controller("editResourceCtrl", function($scope, $http, $routeParams, $window) { 
 	$http.get("/RipperFit/resource/getResourceById/"+$routeParams.resourceId+" ")
 	.then(function(response) {
 		$scope.resource = response.data;
-		console.log($scope.resource);
-
-		$scope.UpdateData=function(resource){
-			console.log($scope.resource);
-			$scope.resrce = {
+		$scope.UpdateData = function(resource) {
+			$scope.resourceDetails = {
 					"resourceId": $scope.resource.resourceId,
 					"resourceName": $scope.resource.resourceName,
 					"finalApprovalLevel": $scope.finalApprovalLevel
 			};
-			console.log($scope.resrce);
 			$http({
 				method: 'PUT',
 				url: "/RipperFit/resource/updateResource",
-				data: $scope.resource,
+				data: $scope.resourceDetails,
 				headers: {
 					'Content-Type': 'application/json'
 				}
-			}).then( function (response) {
+			}).then(function() {
 				$window.location.href="#/viewResources/";
 			}, function(response) {
 				console.log(response.status);
 			});
 		}
 	}) ;
-}).controller("changePasswordController",function($scope,$http,$window) {
-	console.log("ff");
-	$scope.changePassword=function(oldPassword,newPassword){
-		console.log("new : "+newPassword);
+})
+
+.controller("changePasswordCtrl", function($scope, $http, $window) {
+	$scope.changePassword = function(oldPassword, newPassword){
 		$http({
 			method: 'POST',
 			url: "/RipperFit/employee/changePassword?oldPassword="+oldPassword+"&newPassword="+newPassword,
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).then(function(response) {
+		}).then(function() {
 			var message = angular.element( document.querySelector( '#message' ) );
 			message.text("Password Changed");
 		}, function(response) {
 			var message = angular.element( document.querySelector( '#message' ) );
-			console.log(message);
 			message.text("Wrong Password");
+			console.log(response.status);
 		});
 	}
-}).controller("updateRequestCtrl",function($scope,$http,$window) {
-	$scope.forwardRequest=function(request)
-	{
-		console.log("t"+request.resourceRequest.requestId);
+})
+.controller("updateRequestCtrl", function($scope, $http, $window) {
+	$scope.forwardRequest = function(request) {
 		$http({
 			method: 'GET',
 			url: "/RipperFit/approve/forwardRequest/"+request.resourceRequest.requestId,
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).then(function(response) {
+		}).then(function() {
 			$window.location.reload("#/viewRequestsToApprove");
-		});
+		}), function(response) {
+			console.log(response.status);
+		};
 	}
-	
-	$scope.rejectRequest=function(request)
-	{
-		console.log("t"+request.resourceRequest.requestId);
+
+	$scope.rejectRequest = function(request) {
 		$http({
 			method: 'GET',
 			url: "/RipperFit/approve/rejectRequest/"+request.resourceRequest.requestId,
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).then(function(response) {
+		}).then(function() {
 			$window.location.reload("#/viewRequestsToApprove");
-		});
+		}), function(response) {
+			console.log(response.status);
+		};
 	}
-
 })

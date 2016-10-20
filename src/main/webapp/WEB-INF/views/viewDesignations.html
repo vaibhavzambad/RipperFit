@@ -5,12 +5,14 @@
 			<tr>
 				<th>Designation</th>
 				<th>Department</th>
+				<th>Level</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr ng-repeat="des in designation">
 				<td>{{des.designationName}}</td>
 				<td>{{des.department.departmentName}}</td>
+				<td>{{des.designationLevel}}</td>
 			</tr>
 		</tbody>
 	</table>
