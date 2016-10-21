@@ -7,10 +7,11 @@ import javax.transaction.Transactional;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.ripperfit.model.Department;
+import com.ripperfit.model.Organization;
 import com.ripperfit.model.Resource;
 
 @Repository
@@ -126,4 +127,15 @@ public class ResourceDao {
 		session.update(resource);
 	}
 
+	/**
+	 * done
+	 * @return
+	 */
+	public List<Resource> getAllResourcesInAnOrganization(Organization organization) {
+
+		Session session = this.sessionFactory.getCurrentSession();
+		@SuppressWarnings("unchecked")
+		List<Resource> resource = session.createCriteria(Resource.class).add( Restrictions.eq("organization",organization)).list();
+		return resource;
+	}
 }

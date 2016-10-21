@@ -5,11 +5,13 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ripperfit.model.Department;
 import com.ripperfit.model.Designation;
+import com.ripperfit.model.Organization;
 
 @Repository
 public class DesignationDao {
@@ -33,11 +35,27 @@ public class DesignationDao {
 		this.sessionFactory = sessionFactory;
 	}
 
-	public List<Designation> viewAllRoles() {
+	/**
+	 * done
+	 * @return
+	 */
+	public List<Designation> getAllDesignationsInAnOrganization(Organization organization) {
 
 		Session session = this.sessionFactory.getCurrentSession();
 		@SuppressWarnings("unchecked")
-		List<Designation> des = session.createCriteria(Designation.class).list();
+		List<Designation> des = session.createCriteria(Designation.class).add( Restrictions.eq("organization",organization)).list();
+		return des;
+	}
+	
+	/**
+	 * done
+	 * @return
+	 */
+	public List<Designation> getDesignationsInDepartment(Department department) {
+
+		Session session = this.sessionFactory.getCurrentSession();
+		@SuppressWarnings("unchecked")
+		List<Designation> des = session.createCriteria(Designation.class).add( Restrictions.eq("department",department)).list();
 		return des;
 	}
 
@@ -129,5 +147,22 @@ public class DesignationDao {
 		@SuppressWarnings("unchecked")
 		List<Designation> designationList = query.list();
 		return designationList;
+	}
+	
+public Designation getDesignationBynameInOrganization(String designationName , Organization organization){
+		
+		Session session = this.sessionFactory.getCurrentSession();
+		Query query = session.createQuery("from Designation where designationName= :designationName and organization= :organization"); 
+		query.setParameter("designationName", designationName);
+		query.setParameter("organization", organization);
+		Designation designation = null;
+		@SuppressWarnings("unchecked")
+		List<Designation> designationList = query.list();
+		if(! designationList.isEmpty()){
+			
+			designation = designationList.get(0);
+		}
+		
+		return designation;
 	}
 }

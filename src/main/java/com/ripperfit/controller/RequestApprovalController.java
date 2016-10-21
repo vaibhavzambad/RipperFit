@@ -54,4 +54,13 @@ public class RequestApprovalController {
 		}
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
+	
+	@RequestMapping(value="/completeRequest/{requestId}",method = RequestMethod.GET)
+	public ResponseEntity<Void> completeRequest(@PathVariable("requestId") int requestId){
+		
+		if(this.requestApprovalService.completeRequest(requestId)){
+			return new ResponseEntity<Void>(HttpStatus.OK);
+		}
+		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+	}
 }

@@ -15,7 +15,8 @@
 						<label for="form-department">Department:</label> <select
 							class="form-control" id="form-department"
 							ng-init="getDepartments()" ng-model="position.department"
-							ng-options="department as department.departmentName for department in departmentDetails ">
+							ng-options="department as department.departmentName for department in departmentDetails"
+							ng-change="getDesignations(position.department)" >
 							<option value="" disabled selected hidden>Select Department</option>
 						</select>
 					</div>
@@ -24,7 +25,7 @@
 					<div class="form-group col-md-12">
 						<label for="form-designation">Upper Level:</label> <select
 							class="form-control" id="form-designation"
-							ng-init="getDesignations()" ng-model="position.parentDesignation"
+							ng-model="position.parentDesignation"
 							ng-options="designation as designation.designationName for designation in designationDetails ">
 							<option value="" disabled selected hidden>Select Designation</option>
 						</select>

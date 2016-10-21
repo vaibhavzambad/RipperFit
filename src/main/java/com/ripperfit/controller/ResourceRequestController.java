@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ripperfit.model.Employee;
+import com.ripperfit.model.Organization;
 import com.ripperfit.model.ResourceRequest;
 import com.ripperfit.service.ApproveeRequestService;
+import com.ripperfit.service.OrganizationService;
 import com.ripperfit.service.ResourceRequestService;
 import com.ripperfit.service.UserService;
 
@@ -26,6 +28,8 @@ public class ResourceRequestController {
 
 	private ResourceRequestService resourceRequestService;
 
+	private OrganizationService organizationService;
+	
 	private UserService userService;
 
 	private ApproveeRequestService approveRequestService;
@@ -79,6 +83,23 @@ public class ResourceRequestController {
 		this.approveRequestService = approveRequestService;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public OrganizationService getOrganizationService() {
+		return organizationService;
+	}
+
+	/**
+	 * 
+	 * @param organizationService
+	 */
+	@Autowired(required=true)
+	public void setOrganizationService(OrganizationService organizationService) {
+		this.organizationService = organizationService;
+	}
+	
 	/**
 	 * method to add resource request
 	 * @param request : ResourceRequest object
@@ -180,5 +201,33 @@ public class ResourceRequestController {
 		return new ResponseEntity<ResourceRequest>(HttpStatus.OK);
 	}
 	
+	/**
+	 * done
+	 * @param organization
+	 * @return
+	 */
+	@RequestMapping(value = "/getRequestsByOrganization/{organizationId}", method = RequestMethod.GET)
+	public ResponseEntity<List<ResourceRequest>> getDesignations(@PathVariable("organizationId") int organizationId) {
 
+		Organization organization = this.organizationService.getOrganizationById(organizationId);
+		List<ResourceRequest> list = this.resourceRequestService.getAllRequestsInAnOrganization(organization);
+		if(list.isEmpty()) {
+			return new ResponseEntity<List<ResourceRequest>>(HttpStatus.NO_CONTENT);
+		} else {
+			return new ResponseEntity<List<ResourceRequest>>(list, HttpStatus.OK);
+		}
+	}
+	
+	@RequestMapping(value = "/getRequestByStatus/{status}", method = RequestMethod.GET)
+	public  ResponseEntity<List<ResourceRequest>> viewResourceRequestByStatus(@PathVariable("status") String status) {
+
+		System.out.println("in controller"+ status);
+		List<ResourceRequest> list = this.resourceRequestService.getResourceRequestByStatus(status);
+		if(list.isEmpty()) {
+
+			return new ResponseEntity<List<ResourceRequest>>(HttpStatus.NO_CONTENT);
+		} else {
+			return new ResponseEntity<List<ResourceRequest>>(list, HttpStatus.OK);
+		}
+	}
 }

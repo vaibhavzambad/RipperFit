@@ -7,11 +7,11 @@ import javax.transaction.Transactional;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ripperfit.model.Department;
-import com.ripperfit.model.Employee;
 import com.ripperfit.model.Organization;
 
 @Repository
@@ -74,15 +74,44 @@ public class DepartmentDao {
 		return departments;
 	}
 	
-	public List<Department> getDepartmentByName(String deptartmentName){
+	public List<Department> getDepartmentByName(String departmentName){
 
 		Session session = this.sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from Department where departmentName= :deptartmentName"); 
-		query.setParameter("deptartmentName", deptartmentName);
+		Query query = session.createQuery("from Department where departmentName= :departmentName"); 
+		query.setParameter("departmentName", departmentName);
 		@SuppressWarnings("unchecked")
 		List<Department> departmentList = query.list();
 		
 		return departmentList;
+	}
+	
+	public List<Department> getDepartmentListByNameInOrganization(String departmentName,Organization organization){
+		
+		System.out.println("in dao");
+		Session session = this.sessionFactory.getCurrentSession();
+		Query query = session.createQuery("from Department where departmentName= :departmentName and organization= :organization"); 
+		query.setParameter("departmentName", departmentName);
+		query.setParameter("organization", organization);
+		@SuppressWarnings("unchecked")
+		List<Department> departmentList = query.list();
+		return departmentList;
+	}
+	
+	public Department getDepartmentBynameInOrganization(String departmentName , Organization organization){
+		
+		Session session = this.sessionFactory.getCurrentSession();
+		Query query = session.createQuery("from Department where departmentName= :departmentName and organization= :organization"); 
+		query.setParameter("departmentName", departmentName);
+		query.setParameter("organization", organization);
+		Department department = null;
+		@SuppressWarnings("unchecked")
+		List<Department> departmentList = query.list();
+		if(! departmentList.isEmpty()){
+			
+			department = departmentList.get(0);
+		}
+		
+		return department;
 	}
 	
 	/**
@@ -110,4 +139,17 @@ public class DepartmentDao {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.update(department);
 	}
+	
+	/**
+	 * done
+	 * @return
+	 */
+	public List<Department> getAllDepartmentsInAnOrganization(Organization organization) {
+
+		Session session = this.sessionFactory.getCurrentSession();
+		@SuppressWarnings("unchecked")
+		List<Department> department = session.createCriteria(Department.class).add( Restrictions.eq("organization",organization)).list();
+		return department;
+	}
+	
 }

@@ -9,3 +9,8 @@ width:15%
 td {
     cursor: pointer;
 }
+
+	
+	li{
+	list-style:none;
+	}

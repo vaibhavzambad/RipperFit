@@ -191,5 +191,18 @@ public class RequestApprovalService {
 		}
 		return result;
 	}
+	
+	@Transactional
+	public boolean completeRequest(int requestId){
+		
+		ResourceRequest resourceRequest = this.resourceRequestDao.getResourceRequestById(requestId);
+		boolean result = false;
+		if(resourceRequest != null){
+			resourceRequest.setStatus("completed");
+			this.resourceRequestDao.updateResourceRequest(resourceRequest);
+			result = true;
+		}
+		return result;
+	}
 
 }

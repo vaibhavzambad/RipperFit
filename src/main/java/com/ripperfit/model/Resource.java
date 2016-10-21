@@ -4,9 +4,12 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -28,6 +31,10 @@ public class Resource implements Serializable {
 	
 	@Column(name="final_approval_level")
 	private int finalApprovalLevel;
+	
+	@ManyToOne(optional=true,fetch=FetchType.LAZY)
+	@JoinColumn(name="organization_id")
+	private Organization organization;
 	
 	/**
 	 * @return the resourceId
@@ -69,5 +76,19 @@ public class Resource implements Serializable {
 	 */
 	public void setFinalApprovalLevel(int finalApprovalLevel) {
 		this.finalApprovalLevel = finalApprovalLevel;
+	}
+	
+	/**
+	 * @return the organization
+	 */
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	/**
+	 * @param organization the organization to set
+	 */
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
 	}
 }

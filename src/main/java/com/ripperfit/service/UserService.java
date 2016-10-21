@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ripperfit.dao.UserDao;
 import com.ripperfit.model.Employee;
+import com.ripperfit.model.Organization;
 
 @Transactional
 public class UserService {
@@ -78,7 +79,6 @@ public class UserService {
 	 */
 	@Transactional
 	public void updateUser(Employee employee) {
-		
 		this.userDao.updateEmployee(employee);
 	}
 
@@ -109,4 +109,21 @@ public class UserService {
 		return result;
 		
 	}
+
+	public List<Employee> getEmployeeApprove(Employee employee) {
+		List<Employee> emp=this.userDao.getEmployeeApprove(employee);
+		return emp;
+	}
+	
+	/**
+	 * done
+	 * @return
+	 */
+	@Transactional
+	public List<Employee> getAllEmployeesInAnOrganization(Organization organization)
+	{
+		List<Employee> employee = this.userDao.getAllEmployeesInAnOrganization(organization);
+		return employee;
+	}
+
 }

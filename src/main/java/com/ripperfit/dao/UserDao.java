@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ripperfit.model.Designation;
 import com.ripperfit.model.Employee;
+import com.ripperfit.model.Organization;
 
 @Repository
 @Transactional
@@ -150,6 +151,27 @@ public class UserDao {
 		Query query = session.createQuery("from Employee where designation= :designation"); 
 		query.setParameter("designation", designation);
 		Employee employee = (Employee) query.uniqueResult();
+		return employee;
+	}
+	public List<Employee> getEmployeeApprove(Employee employee) {
+		System.out.println("fsd");
+		
+		Session session = this.sessionFactory.getCurrentSession();
+		@SuppressWarnings("unchecked")
+		List<Employee> emp = session.createCriteria(Employee.class).add( Restrictions.eq("approvalStatus","false")).add( Restrictions.eq("employee",employee) ).list();
+		System.out.println(emp);
+		return emp;
+	}
+	
+	/**
+	 * done
+	 * @return
+	 */
+	public List<Employee> getAllEmployeesInAnOrganization(Organization organization) {
+
+		Session session = this.sessionFactory.getCurrentSession();
+		@SuppressWarnings("unchecked")
+		List<Employee> employee = session.createCriteria(Employee.class).add( Restrictions.eq("organization",organization)).list();
 		return employee;
 	}
 }

@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ripperfit.model.Department;
+import com.ripperfit.model.Organization;
 import com.ripperfit.model.Resource;
+import com.ripperfit.service.OrganizationService;
 import com.ripperfit.service.ResourceService;
 
 @RequestMapping(value = "/resource")
@@ -20,6 +21,7 @@ import com.ripperfit.service.ResourceService;
 public class ResourceController {
 
 	private ResourceService resourceService;
+	private OrganizationService organizationService;
 
 	/**
 	 * @return the resourceService
@@ -36,6 +38,23 @@ public class ResourceController {
 		this.resourceService = resourceService;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public OrganizationService getOrganizationService() {
+		return organizationService;
+	}
+
+	/**
+	 * 
+	 * @param organizationService
+	 */
+	@Autowired(required=true)
+	public void setOrganizationService(OrganizationService organizationService) {
+		this.organizationService = organizationService;
+	}
+	
 	@RequestMapping(value="/addResource",method = RequestMethod.POST)
 	public ResponseEntity<Void> addResource(@RequestBody Resource resource){
 
@@ -59,6 +78,23 @@ public class ResourceController {
 			return new ResponseEntity<List<Resource>>(HttpStatus.NO_CONTENT);
 		} else {
 			return new ResponseEntity<List<Resource>>(resourceList, HttpStatus.OK);
+		}
+	}
+	
+	/**
+	 * done
+	 * @param organization
+	 * @return
+	 */
+	@RequestMapping(value = "/getResourcesByOrganizationId/{organizationId}", method = RequestMethod.GET)
+	public ResponseEntity<List<Resource>> getResourcesByOrganizationId(@PathVariable("organizationId") int organizationId) {
+
+		Organization organization = this.organizationService.getOrganizationById(organizationId);
+		List<Resource> list = this.resourceService.getAllResourcesInAnOrganization(organization);
+		if(list.isEmpty()) {
+			return new ResponseEntity<List<Resource>>(HttpStatus.NO_CONTENT);
+		} else {
+			return new ResponseEntity<List<Resource>>(list, HttpStatus.OK);
 		}
 	}
 

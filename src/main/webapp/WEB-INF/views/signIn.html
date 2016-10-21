@@ -2,29 +2,31 @@
 <html lang="en" itemscope itemtype="http://schema.org/Article">
 <head>
 <meta charset="utf-8">
+<!-- Logo in Title Bar -->
+  <link rel="icon" href="resources/img/rippericon.png" type="image/png" sizes="16x16">
+
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RipperFit</title>
 
 <style>
 html {
-position:relative;
-height:100%;
-width:100%;
-}
-body {
-position:absolute;
-min-width:100%;
-min-height:100%;
+	position: relative;
+	height: 100%;
+	width: 100%;
 }
 
+body {
+	position: absolute;
+	min-width: 100%;
+	min-height: 100%;
+}
 </style>
 <!-- CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-<link rel="stylesheet" href="resources/css/form-elements.css">
 <link rel="stylesheet"
 	href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 
@@ -86,14 +88,15 @@ min-height:100%;
 				<h3 class="text-center">LogIn to Ripperfit</h3>
 				<hr />
 				<form name="userForm" ng-submit="login(user)"
-					ng-controller="signUpCtrl">
+					ng-controller="signInCtrl">
 
 					<div class="form-group"
 						ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
-						<label>Email</label> <input type="email" name="email"
+						<label>Email</label> <input type="email" name="email" placeholder="Email"
 							class="form-control" ng-model="user.email">
 						<p ng-show="userForm.email.$invalid && !userForm.email.$pristine"
 							class="help-block">Enter a valid email.</p>
+
 					</div>
 					<div class="form-group"
 						ng-class="{'has-error': userForm.password.$invalid && !userForm.password.$pristine}">
@@ -104,8 +107,12 @@ min-height:100%;
 							ng-show="userForm.password.$invalid && !userForm.password.$pristine">
 							Password should be 6 digits minimum </span>
 					</div>
-					<button type="submit" class="btn btn-primary"
-						ng-disabled="userForm.$invalid">Log In</button>
+					<div>
+						<button type="submit" class="btn btn-primary"
+							ng-disabled="userForm.$invalid">Log In</button>
+						&nbsp;&nbsp;&nbsp;&nbsp;<a href="forgetPassword.html">Forget
+							Password?</a>
+					</div>
 				</form>
 				<h3>OR</h3>
 				<button id="signinButton" class="btn btn-danger"
@@ -116,7 +123,7 @@ min-height:100%;
 			</div>
 		</div>
 	</div>
-	 <footer class="footer text-center"
+	<footer class="footer text-center"
 		style="position: absolute; bottom: 0; width: 100%; background-color: #f8f8f8; border-top: 1.5px solid #e7e7e7; padding: 17px">
 		<p style="margin: 0;">
 			&copy;2016 RipperFit. All Rights Reserved| Designed by <b>VARAAS</b>

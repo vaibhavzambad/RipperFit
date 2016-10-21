@@ -37,7 +37,7 @@ public class Employee implements Serializable {
 	private String password;
 	
 	@Column(name="first_name")
-	private String firstName;
+	public String firstName;
 	
 	@Column(name="last_name")
 	private String lastName;
@@ -58,7 +58,7 @@ public class Employee implements Serializable {
 	
 	@ManyToOne(optional=true,fetch=FetchType.LAZY)
 	@JoinColumn(name="reportTo_id")
-	private Employee employee;
+	public Employee employee;
 	
 	@Column(name="profile_picture")
 	private String profilePicture;
@@ -238,6 +238,9 @@ public class Employee implements Serializable {
 	 * @return the approvalStatus
 	 */
 	public String getApprovalStatus() {
+		if(this.approvalStatus == null){
+			return "false";
+		}
 		return approvalStatus;
 	}
 

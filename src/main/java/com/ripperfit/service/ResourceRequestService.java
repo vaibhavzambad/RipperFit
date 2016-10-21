@@ -13,8 +13,6 @@ import com.ripperfit.dao.ResourceDao;
 import com.ripperfit.dao.ResourceRequestDao;
 import com.ripperfit.dao.UserDao;
 import com.ripperfit.model.ApproveRequest;
-import com.ripperfit.model.Department;
-import com.ripperfit.model.Designation;
 import com.ripperfit.model.Employee;
 import com.ripperfit.model.Organization;
 import com.ripperfit.model.ResourceRequest;
@@ -207,4 +205,23 @@ public class ResourceRequestService {
 		
 		this.resourceRequestDao.updateResourceRequest(request);
 	}
+	
+	/**
+	 * done
+	 * @return
+	 */
+	@Transactional
+	public List<ResourceRequest> getAllRequestsInAnOrganization(Organization organization)
+	{
+		List<ResourceRequest> request = this.resourceRequestDao.getAllRequestsInAnOrganization(organization);
+		return request;
+	}
+	
+	@Transactional
+	public List<ResourceRequest> getResourceRequestByStatus(String status){
+ System.out.println("in service"+ status);
+		List<ResourceRequest> resourceRequests = this.resourceRequestDao.getResourceRequestByStatus(status);
+		return resourceRequests;
+	}
+
 }

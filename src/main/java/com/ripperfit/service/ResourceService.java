@@ -7,7 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ripperfit.dao.ResourceDao;
-import com.ripperfit.model.Department;
+import com.ripperfit.model.Organization;
 import com.ripperfit.model.Resource;
 
 public class ResourceService {
@@ -90,5 +90,16 @@ public class ResourceService {
 	public void updateResource(Resource resource) {
 		
 		this.resourceDao.updateResource(resource);
+	}
+	
+	/**
+	 * done
+	 * @return
+	 */
+	@Transactional
+	public List<Resource> getAllResourcesInAnOrganization(Organization organization)
+	{
+		List<Resource> designation=this.resourceDao.getAllResourcesInAnOrganization(organization);
+		return designation;
 	}
 }

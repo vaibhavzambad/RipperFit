@@ -3,9 +3,9 @@
 		<strong>Request Pool</strong>
 	</h2>
 	<br>
-	</br>
+	<br />
 	<input class="inputBox" type="text" name="name" value="" placeholder="Serach Request By Status" ng-model="search" />
-	</br>
+	<hr />
 	<table class="table table-bordered table-responsive" ng-controller="getLocationCtrl" id="table">
 		<thead>
 			<tr>
@@ -26,15 +26,13 @@
 				<td>{{request.requestDate}}</td>
 				<td><span class="label label-{{request.color}}">{{request.status}}</span></td>
 				<td><a class="btn" href="#/editRequest/{{request.requestId}}">
- <i class="fa fa-pencil"></i></a>&nbsp&nbsp<a href=""
-					data-toggle="tooltip" data-placement="bottom"
-					title="Delete Request!" style="color: black"><i
-						class="fa fa-trash" aria-hidden="true"></i></a></i>&nbsp&nbsp</td>
+ <i class="fa fa-pencil"></i></a>&nbsp&nbsp<a class="btn" ng-click="completeRequest(request)">
+ <i class="fa fa-thumbs-o-up"></i></a>&nbsp<a class="btn" ng-click="rejectRequest(request)">
+ <i class="fa fa-thumbs-o-down"></i></a></td>
 			</tr>
 		</tbody>
 	</table>
 	<div id="msg">
-	<hr>
 	<h4>No Request Found </h4>
 	</div>
 	<br>

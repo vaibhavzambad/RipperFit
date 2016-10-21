@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,7 +51,10 @@ public class OrganizationController {
 	@RequestMapping(value = "/addOrganization", method = RequestMethod.POST)
 	public ResponseEntity<Void> addOrganization(@RequestBody Organization organization) {
 
+		
+		System.out.println("new Organization"+organization.getOrganizationName());
 		int result = this.organizationService.addOrganization(organization);
+		System.out.println(result);
 		if(result == 1) {
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		} else if(result == 2) {
@@ -60,8 +64,8 @@ public class OrganizationController {
 		}
 	}
 	
-	@RequestMapping(value = "/getOrganizationByName", method = RequestMethod.GET)
-	public ResponseEntity<Organization> getOrganizationByName(@RequestBody String organizationName) {
+	@RequestMapping(value = "/getOrganizationByName/{organizationName}", method = RequestMethod.GET)
+	public ResponseEntity<Organization> getOrganizationByName( @PathVariable("organizationName") String organizationName) {
 		
 		Organization organization = this.organizationService.getOrganizationByName(organizationName);
 		if(organization == null) {

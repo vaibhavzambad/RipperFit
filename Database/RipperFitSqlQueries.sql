@@ -44,7 +44,6 @@ CREATE TABLE `approve_request` (
 
 LOCK TABLES `approve_request` WRITE;
 /*!40000 ALTER TABLE `approve_request` DISABLE KEYS */;
-INSERT INTO `approve_request` VALUES (26,21,NULL),(22,22,25),(25,23,NULL),(25,24,NULL),(17,25,10),(28,26,NULL),(28,27,10),(17,28,25);
 /*!40000 ALTER TABLE `approve_request` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -69,7 +68,6 @@ CREATE TABLE `resource` (
 
 LOCK TABLES `resource` WRITE;
 /*!40000 ALTER TABLE `resource` DISABLE KEYS */;
-INSERT INTO `resource` VALUES (4,'Mouse',1),(5,'KeyBoard',2);
 /*!40000 ALTER TABLE `resource` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -97,39 +95,7 @@ CREATE TABLE `designation` (
 
 LOCK TABLES `designation` WRITE;
 /*!40000 ALTER TABLE `designation` DISABLE KEYS */;
-INSERT INTO `designation` VALUES (1,'Employee',1,1),(2,'TechLead',2,1),(3,'Manager',4,1),(4,'Helpdesk',0,2),(5,'Admin',0,3),(6,'Software Engineer',5,1),(7,'Senior Software Engineer',3,1);
 /*!40000 ALTER TABLE `designation` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `employee_team_approval`
---
-
-DROP TABLE IF EXISTS `employee_team_approval`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `employee_team_approval` (
-  `employee_id` int(11) NOT NULL AUTO_INCREMENT,
-  `approvee_id` int(11) DEFAULT NULL,
-  `organization_id` int(11) NOT NULL,
-  `status` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`employee_id`),
-  KEY `employee_team_approval_ibfk_2` (`approvee_id`),
-  KEY `employee_team_approval_ibfk_3` (`organization_id`),
-  CONSTRAINT `employee_team_approval_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`),
-  CONSTRAINT `employee_team_approval_ibfk_2` FOREIGN KEY (`approvee_id`) REFERENCES `employee` (`employee_id`),
-  CONSTRAINT `employee_team_approval_ibfk_3` FOREIGN KEY (`organization_id`) REFERENCES `organization` (`organization_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `employee_team_approval`
---
-
-LOCK TABLES `employee_team_approval` WRITE;
-/*!40000 ALTER TABLE `employee_team_approval` DISABLE KEYS */;
-INSERT INTO `employee_team_approval` VALUES (1,2,1,'ok');
-/*!40000 ALTER TABLE `employee_team_approval` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -162,7 +128,6 @@ CREATE TABLE `resource_request` (
 
 LOCK TABLES `resource_request` WRITE;
 /*!40000 ALTER TABLE `resource_request` DISABLE KEYS */;
-INSERT INTO `resource_request` VALUES (21,4,26,0,'low','pending','not needed','2016-10-19'),(22,5,22,1,'medium','rejected','need','2016-10-19'),(23,4,25,1,'low','pending','get','2016-10-19'),(24,4,25,1,'high','rejected','bnb','2016-10-19'),(25,5,22,2,'medium','running','jldi do','2016-10-19'),(26,4,28,1,'high','pending','nghg','2016-10-19'),(27,4,27,1,'high','running','vvbvbvbvb','2016-10-19'),(28,4,17,2,'high','pending','hghghghghghghghghgh','2016-10-19');
 /*!40000 ALTER TABLE `resource_request` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -193,7 +158,6 @@ CREATE TABLE `comments` (
 
 LOCK TABLES `comments` WRITE;
 /*!40000 ALTER TABLE `comments` DISABLE KEYS */;
-INSERT INTO `comments` VALUES (7,26,'okk',21,'2016-10-19'),(8,22,'Give me',22,'2016-10-19'),(9,17,'hjh',28,'2016-10-19');
 /*!40000 ALTER TABLE `comments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -220,7 +184,6 @@ CREATE TABLE `department` (
 
 LOCK TABLES `department` WRITE;
 /*!40000 ALTER TABLE `department` DISABLE KEYS */;
-INSERT INTO `department` VALUES (1,'Technical',1),(2,'Helpdesk',1),(3,'Admin',1);
 /*!40000 ALTER TABLE `department` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -261,7 +224,6 @@ CREATE TABLE `employee` (
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` VALUES (10,1,'helpdesk@metacube.com','helpdesk','help','desk','male','7454125632',4,NULL,NULL,NULL),(17,1,'riya.nuwal@metacube.com','123456','riya','nuwal','Female','7845123654',2,25,NULL,NULL),(22,1,'vaibhav.zambad@metacube.com','ltbagn','Vaibhav','Pravin Zambad ','Male','8745123654',1,17,'https://lh4.googleusercontent.com/-eSDkmWBLaZo/AAAAAAAAAAI/AAAAAAAAAAo/Gb7tIeyh9eA/s96-c/photo.jpg',NULL),(25,1,'amita.sharma@metacube.com','amita1','Amita','sharma',NULL,'8787878787',3,NULL,NULL,NULL),(26,1,'amit.kumar@metacube.com','123','amit','kumar','Male','9898989898',5,NULL,NULL,NULL),(27,1,'shobit@gmail.com','123456','Shobit','sharma','Male',NULL,1,28,NULL,NULL),(28,1,'shobit123@gmail.com','123456','shobit','jain','Male',NULL,1,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -287,7 +249,6 @@ CREATE TABLE `organization` (
 
 LOCK TABLES `organization` WRITE;
 /*!40000 ALTER TABLE `organization` DISABLE KEYS */;
-INSERT INTO `organization` VALUES (1,'Metacube','metacube.com');
 /*!40000 ALTER TABLE `organization` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

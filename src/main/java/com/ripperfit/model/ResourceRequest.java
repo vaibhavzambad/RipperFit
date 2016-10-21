@@ -27,9 +27,9 @@ public class ResourceRequest implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int requestId;
 	
-	/*@ManyToOne(optional=false,fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@ManyToOne(optional=true,fetch=FetchType.LAZY)
 	@JoinColumn(name="organization_id")
-	private Organization organization;*/
+	private Organization organization;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="resource_id")
@@ -165,6 +165,18 @@ public class ResourceRequest implements Serializable {
 	public void setRequestDate(Date requestDate) {
 		this.requestDate = requestDate;
 	}
-	
-	
+
+	/**
+	 * @return the organization
+	 */
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	/**
+	 * @param organization the organization to set
+	 */
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
+	}
 }

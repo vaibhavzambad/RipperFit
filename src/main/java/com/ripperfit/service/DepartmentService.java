@@ -4,11 +4,13 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ripperfit.dao.DepartmentDao;
 import com.ripperfit.model.Department;
-import com.ripperfit.model.Employee;
+import com.ripperfit.model.Organization;
 
 @Transactional
 public class DepartmentService {
@@ -46,6 +48,25 @@ public class DepartmentService {
 		return result;
 	}
 	
+	@Transactional
+	public int addDepartmentByOrganization(Department department,Organization organization) {
+		
+		System.out.println("in add department by organization"+organization.getOrganizationName());
+		System.out.println(department.getDepartmentName());
+		int result = 0;
+		if(this.departmentDao.getDepartmentListByNameInOrganization(department.getDepartmentName(),organization).size() != 0) {
+			System.out.println("jhjh");
+			System.out.println("conflisct is present");
+			result = 1;
+		} else if(this.departmentDao.addDepartment(department)) {
+			System.out.println("no conflict");
+			result = 2;
+		}
+		return result;
+	}
+	
+	
+	
 	/**
 	 * method to get employee by id
 	 * @param id : employee id
@@ -63,4 +84,26 @@ public class DepartmentService {
 		
 		this.departmentDao.updateDepartment(department);
 	}
+	
+	/**
+	 * done
+	 * @return
+	 */
+	@Transactional
+	public List<Department> getAllDepartmentsInAnOrganization(Organization organization)
+	{
+		List<Department> department=this.departmentDao.getAllDepartmentsInAnOrganization(organization);
+		return department;
+	}
+	
+	@Transactional
+	public Department getDepartmentInAnOrganization(String departmentName,Organization organization)
+	{
+		
+		Department department = this.departmentDao.getDepartmentBynameInOrganization(departmentName, organization);
+		return department;
+	}
+	
 }
+	
+

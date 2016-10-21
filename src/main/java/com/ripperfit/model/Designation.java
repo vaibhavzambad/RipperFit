@@ -29,9 +29,9 @@ public class Designation implements Serializable {
 	@Column(name="designation_name")
 	private String designationName;
 	
-	/*@ManyToOne(optional=false,fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@ManyToOne(optional=true,fetch=FetchType.LAZY)
 	@JoinColumn(name="organization_id")
-	private Organization organization;*/
+	private Organization organization;
 	
 	@Column(name="designation_level")
 	private int designationLevel;
@@ -71,16 +71,16 @@ public class Designation implements Serializable {
 	/**
 	 * @return the organization
 	 */
-	/*public Organization getOrganization() {
+	public Organization getOrganization() {
 		return organization;
-	}*/
+	}
 
 	/**
 	 * @param organization the organization to set
 	 */
-	/*public void setOrganization(Organization organization) {
+	public void setOrganization(Organization organization) {
 		this.organization = organization;
-	}*/
+	}
 
 	/**
 	 * @return the designationLevel
@@ -108,6 +108,5 @@ public class Designation implements Serializable {
 	 */
 	public void setDepartment(Department department) {
 		this.department = department;
-	}
-	
+	}	
 }

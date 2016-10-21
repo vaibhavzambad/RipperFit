@@ -7,7 +7,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ripperfit.dao.DesignationDao;
+import com.ripperfit.model.Department;
 import com.ripperfit.model.Designation;
+import com.ripperfit.model.Organization;
 
 
 @Transactional
@@ -25,10 +27,25 @@ public class DesignationService {
 		this.designationDao = designationDao;
 	}
 
+	/**
+	 * done
+	 * @return
+	 */
 	@Transactional
-	public List<Designation> getAllDesignation()
+	public List<Designation> getAllDesignationsInAnOrganization(Organization organization)
 	{
-		List<Designation> designation=this.designationDao.viewAllRoles();
+		List<Designation> designation=this.designationDao.getAllDesignationsInAnOrganization(organization);
+		return designation;
+	}
+	
+	/**
+	 * done
+	 * @return
+	 */
+	@Transactional
+	public List<Designation> getDesignationsInDepartment(Department department)
+	{
+		List<Designation> designation=this.designationDao.getDesignationsInDepartment(department);
 		return designation;
 	}
 
@@ -94,5 +111,12 @@ public class DesignationService {
 			des.setDesignationLevel(des.getDesignationLevel()+1);
 		}
 		this.designationDao.updateLevels(designationList);
+	}
+	@Transactional
+	public Designation getDesignationInAnOrganization(String designationName,Organization organization)
+	{
+		
+		Designation designation= this.designationDao.getDesignationBynameInOrganization(designationName, organization);
+		return designation;
 	}
 }

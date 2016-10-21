@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ripperfit.model.Employee;
+import com.ripperfit.model.Organization;
 import com.ripperfit.model.ResourceRequest;
 
 @Repository
@@ -143,4 +144,27 @@ public class ResourceRequestDao {
 		session.update(request);
 	}
 
+	/**
+	 * done
+	 * @return
+	 */
+	public List<ResourceRequest> getAllRequestsInAnOrganization(Organization organization) {
+
+		Session session = this.sessionFactory.getCurrentSession();
+		@SuppressWarnings("unchecked")
+		List<ResourceRequest> request = session.createCriteria(ResourceRequest.class).add( Restrictions.eq("organization",organization)).list();
+		return request;
+	}
+	
+	public List<ResourceRequest> getResourceRequestByStatus(String status){
+        System.out.println("indao  "+ status);
+		Session session = this.sessionFactory.getCurrentSession();
+		Query query = session.createQuery("from ResourceRequest where status= :status"); 
+		query.setParameter("status", status);
+
+		@SuppressWarnings("unchecked")
+		List<ResourceRequest> requestList = query.list();
+		System.out.println("result in dao  "+ requestList.size());
+		return requestList;
+	}
 }

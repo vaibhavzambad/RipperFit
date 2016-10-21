@@ -47,7 +47,7 @@ public class LoginInterceptor extends GenericFilterBean {
 			String email = (String)session.getAttribute("email");
 			if (session == null || email == null) {
 
-				httpResponse.sendRedirect("login");
+				httpResponse.sendRedirect("signIn.html");
 			}/*else{
 
 				System.out.println("uswsjd: "+userService);
@@ -66,7 +66,7 @@ public class LoginInterceptor extends GenericFilterBean {
 			}*/
 			filterChain.doFilter(request, response);
 		} catch(NullPointerException npe) {
-			httpResponse.sendRedirect("login");
+			httpResponse.sendRedirect("signIn.html");
 		}
 	}
 }

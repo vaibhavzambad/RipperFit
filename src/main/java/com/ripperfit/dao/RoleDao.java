@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ripperfit.model.Designation;
 
+
 @Repository
 @Transactional
 public class RoleDao {

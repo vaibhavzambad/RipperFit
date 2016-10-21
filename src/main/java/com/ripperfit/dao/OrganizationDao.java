@@ -45,7 +45,8 @@ public class OrganizationDao {
 
 	@Transactional
 	public Boolean addOrganization(Organization organization) {
-		
+
+		System.out.println(organization.getOrganizationName());
 		Session session = this.sessionFactory.getCurrentSession();
 		boolean result = false;
 		int i=0;
@@ -58,6 +59,7 @@ public class OrganizationDao {
 
 			e.printStackTrace();
 		}
+		System.out.println("dao result"+result);
 		return result;
 	}
 
@@ -67,10 +69,12 @@ public class OrganizationDao {
 		Session session = this.sessionFactory.getCurrentSession();
 		Query query = session.createQuery("from Organization where organizationName= :organizationName"); 
 		query.setParameter("organizationName", organizationName);
-
+		Organization organization = null;
 		@SuppressWarnings("unchecked")
 		List<Organization> organizationList = query.list();
-		Organization organization = (Organization) organizationList.get(0);
+		if(! organizationList.isEmpty()){
+			organization = (Organization) organizationList.get(0);
+		}
 		return organization;
 	}
 
@@ -80,11 +84,12 @@ public class OrganizationDao {
 		Session session = this.sessionFactory.getCurrentSession();
 		Query query = session.createQuery("from Organization where organizationId= :organizationId"); 
 		query.setParameter("organizationId", organizationId);
-
+		Organization organization = null;
 		@SuppressWarnings("unchecked")
 		List<Organization> organizationList = query.list();
-		Organization organization = (Organization) organizationList.get(0);
+		if(! organizationList.isEmpty()){
+			organization = (Organization) organizationList.get(0);
+		}
 		return organization;
-		
-	}
+	}	
 }
