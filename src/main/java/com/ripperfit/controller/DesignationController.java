@@ -80,7 +80,7 @@ public class DesignationController {
 	@RequestMapping(value="/addDesignation",method=RequestMethod.POST)
 	public ResponseEntity<Void> addDesignation(@RequestBody Designation designation){
 
-		int result = this.designationService.addDesignation(designation);
+		int result = this.designationService.addDesignation(designation, designation.getOrganization());
 		if(result == 1) {
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		} else if(result == 2) {
@@ -102,9 +102,10 @@ public class DesignationController {
 		}
 	}
 
-	@RequestMapping(value="/getDesignationById",method=RequestMethod.GET)
-	public ResponseEntity<Designation> getDesignationById(@RequestBody int designationId){
-
+	@RequestMapping(value="/getDesignationById/{designationId}",method=RequestMethod.GET)
+	public ResponseEntity<Designation> getDesignationById(@PathVariable("designationId") int designationId)
+	{
+		System.out.println("des");
 		Designation designation = this.designationService.getDesignationById(designationId);
 		if(designation != null){
 			return new ResponseEntity<Designation>(designation,HttpStatus.OK);
@@ -174,5 +175,11 @@ public class DesignationController {
 		} else {
 			return new ResponseEntity<List<Designation>>(list, HttpStatus.OK);
 		}
+	}
+	@RequestMapping(value = "/updateDesignation", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody Designation designation) {
+		
+		this.designationService.updateDesignation(designation);
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 }

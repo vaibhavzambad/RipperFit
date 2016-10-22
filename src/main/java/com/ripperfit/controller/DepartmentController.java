@@ -64,7 +64,7 @@ public class DepartmentController {
 	@RequestMapping(value="/addDepartment",method = RequestMethod.POST)
 	public ResponseEntity<Void> addDepartment(@RequestBody Department department){
        System.out.println("in add department controller");
-		int result = this.departmentService.addDepartment(department);
+		int result = this.departmentService.addDepartmentByOrganization(department, department.getOrganization());
 		if(result == 1) {
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		} else if(result == 2) {

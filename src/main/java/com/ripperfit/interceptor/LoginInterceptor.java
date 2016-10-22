@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.filter.GenericFilterBean;
 
-@WebFilter({"/dashboard"})
+@WebFilter({"/dashboard.html"})
 public class LoginInterceptor extends GenericFilterBean {
 
 
@@ -46,7 +46,6 @@ public class LoginInterceptor extends GenericFilterBean {
 			
 			String email = (String)session.getAttribute("email");
 			if (session == null || email == null) {
-
 				httpResponse.sendRedirect("signIn.html");
 			}/*else{
 

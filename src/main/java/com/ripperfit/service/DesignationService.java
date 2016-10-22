@@ -50,16 +50,15 @@ public class DesignationService {
 	}
 
 	@Transactional
-	public int addDesignation(Designation designation) {
+	public int addDesignation(Designation designation , Organization organization) {
 
-		int result = 2;
+		int result = 0;
 		
-		this.designationDao.addDesignation(designation);
-		/*if(this.designationDao.getDesignationByName(designation.getDesignationName()) != null) {
+		if(this.designationDao.getDesignationBynameInOrganization(designation.getDesignationName(), organization) != null) {
 			result = 1;
 		} else if(this.designationDao.addDesignation(designation)) {
 			result = 2;
-		}*/
+		}
 
 		return result;
 	}
@@ -118,5 +117,11 @@ public class DesignationService {
 		
 		Designation designation= this.designationDao.getDesignationBynameInOrganization(designationName, organization);
 		return designation;
+	}
+
+	@Transactional
+	public void updateDesignation(Designation designation) {
+		
+		this.designationDao.updateDesignation(designation);
 	}
 }

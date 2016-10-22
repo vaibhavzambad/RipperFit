@@ -2,6 +2,8 @@ package com.ripperfit.dao;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -91,7 +93,7 @@ public class DesignationDao {
 		
 		Session session = this.sessionFactory.getCurrentSession();
 		Query query = session.createQuery("from Designation where designationId= :designationId"); 
-		query.setParameter(" designationId", designationId);
+		query.setParameter("designationId", designationId);
 		@SuppressWarnings("unchecked")
 		List<Designation> designationList = query.list();
 		Designation designation = (Designation) designationList.get(0);
@@ -165,4 +167,11 @@ public Designation getDesignationBynameInOrganization(String designationName , O
 		
 		return designation;
 	}
+@Transactional
+public void updateDesignation(Designation designation) {
+
+	Session session = this.sessionFactory.getCurrentSession();
+	session.update(designation);
+}
+
 }

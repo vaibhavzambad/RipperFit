@@ -62,7 +62,7 @@
 						aria-expanded="false"><span class="glyphicon glyphicon-tasks"
 							style="top: 3px; right: -7px;">&nbsp</span> My Actions<span
 							class="sr-only">(current)</span> <span class="caret"></span></a>
-						<ul class="dropdown-menu">
+						<ul class="dropdown-menu" ng-if="status">
 							<li ng-repeat="user in loggedUser"><a href="{{user.href}}">{{user.text}}</a></li>
 						</ul></li>
 					<li class="dropdown"><a href="" class="dropdown-toggle"

@@ -158,7 +158,7 @@ public class RequestApprovalService {
 					int updatedLevel = forwardToEmployee.getDesignation().getDesignationLevel();
 					boolean temp = this.resourceRequestDao.updateCurrentApprovalLevel(resourceRequest.getRequestId(), updatedLevel);
 					if(temp){
-						if(updatedLevel >= finalApprovalLevel){
+						if(updatedLevel <= finalApprovalLevel){
 							approveRequest.setEmployee(forwardToEmployee);
 							approveRequest.setResourceRequest(resourceRequest);
 							approveRequest.setEmployeeToForward(helpDeskEmployee);

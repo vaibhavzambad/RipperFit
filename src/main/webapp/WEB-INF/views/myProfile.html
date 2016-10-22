@@ -7,11 +7,6 @@
 		<div class="col-md-9 personal-info">
 			<h1>My Profile</h1>
 			<hr>
-			<div class="alert alert-info alert-dismissable">
-				<a class="panel-close close" data-dismiss="alert">×</a> <i
-					class="fa fa-flag" aria-hidden="true"></i>
-
-			</div>
 			<h3>Personal info</h3>
 
 			<form class="form-horizontal" role="form">
@@ -19,7 +14,7 @@
 				<div class="form-group">
 					<label class="col-lg-3 control-label">profile Picture:</label>
 					<div class="col-lg-8">
-						<img alt="picture" ng-src={{employeeDetails.profilePicture}}>
+						<img alt="picture" class="img img-circle" ng-src={{employeeDetails.profilePicture}}>
 					</div>
 				</div>
 
@@ -76,26 +71,17 @@
 				<div class="form-group">
 					<label class="col-md-3 control-label">Report To:</label>
 					<div class="col-md-8">
-						
 						<div class="row">
-						
-						
-						 <input class="form-control" 
-								placeholder="search employee by name"  list='listid' ng-model="emp" ng-change="reportId(emp)" />
-								
-                       <datalist id='listid' >
-                       <option ng-repeat="employee in employeeList" ng-model="employeeDetails.employee" value="{{employee.firstName + ' ' + employee.lastName+' '+','+employee.email}}"  ></option>
-                   
-      
-      
-                        </datalist>
-						
-						
-							
+							<input class="form-control" placeholder="search employee by name"
+								list='listid' ng-model="emp" ng-change="reportId(emp)" />
+							<datalist id='listid'>
+								<option ng-repeat="employee in employeeList"
+									ng-model="employeeDetails.employee"
+									value="{{employee.email +'('+employee.firstName + ' ' + employee.lastName+')'}}"></option>
+							</datalist>
 						</div>
 					</div>
 				</div>
-
 				<div class="form-group">
 					<label class="col-md-3 control-label"></label>
 					<div class="col-md-8">

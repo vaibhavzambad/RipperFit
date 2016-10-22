@@ -139,6 +139,9 @@ public class UserController {
 	public ResponseEntity<Void> addEmployee(@RequestBody Employee employee, HttpServletRequest request) {
 
 		HttpSession session = request.getSession();
+		if(employee.getLastName() == null){
+			employee.setLastName("");
+		}
 		int result = this.userService.registerEmployee(employee);
 		if(result == 1) {
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
@@ -252,9 +255,10 @@ public class UserController {
 		System.out.println("df");
 		List<Employee> list = this.userService.getEmployeeApprove(employee);
 		if(list.isEmpty()) {
-
+			System.out.println("empty");
 			return new ResponseEntity<List<Employee>>(HttpStatus.NO_CONTENT);
 		} else {
+			System.out.println(list);
 			return new ResponseEntity<List<Employee>>(list, HttpStatus.OK);
 		}
 	}

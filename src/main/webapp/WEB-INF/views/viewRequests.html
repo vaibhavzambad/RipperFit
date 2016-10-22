@@ -5,8 +5,8 @@
 	<br>
 	<br />
 	<input class="inputBox" type="text" name="name" value="" placeholder="Serach Request By Status" ng-model="search" />
-	<hr />
-	<table class="table table-bordered table-responsive" ng-controller="getLocationCtrl" id="table">
+	
+	<table class="table table-striped table-hover table-responsive " ng-controller="getLocationCtrl" id="table">
 		<thead>
 			<tr>
 				<th>#</th>
@@ -14,7 +14,7 @@
 				<th>Resource</th>
 				<th>Request Date</th>
 				<th>Status</th>
-				<th>Actions</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -25,9 +25,10 @@
 				<td>{{request.resource.resourceName}}</td>
 				<td>{{request.requestDate}}</td>
 				<td><span class="label label-{{request.color}}">{{request.status}}</span></td>
-				<td><a class="btn" href="#/editRequest/{{request.requestId}}">
- <i class="fa fa-pencil"></i></a>&nbsp&nbsp<a class="btn" ng-click="completeRequest(request)">
- <i class="fa fa-thumbs-o-up"></i></a>&nbsp<a class="btn" ng-click="rejectRequest(request)">
+				<td><a ng-if="edit" class="btn" href="#/editRequest/{{request.requestId}}">
+ <i class="fa fa-pencil"></i></a>&nbsp&nbsp
+ <a ng-if="degStatus && request.status != 'completed' && request.status!='rejected'" class="btn" ng-click="completeRequest(request)">
+ <i class="fa fa-thumbs-o-up"></i></a>&nbsp<a  ng-if="degStatus && request.status != 'completed' && request.status!='rejected'" class="btn" ng-click="rejectRequest(request)">
  <i class="fa fa-thumbs-o-down"></i></a></td>
 			</tr>
 		</tbody>

@@ -33,12 +33,13 @@ public class DepartmentService {
 		return departments;
 	}
 
-	@Transactional
-	public int addDepartment(Department department) {
+	/*@Transactional
+	public int addDepartment(Department department , Organization organization) {
 		System.out.println(department.getDepartmentName());
+		String departmentName = department.getDepartmentName();
 		int result = 0;
 
-		if(this.departmentDao.getDepartmentByName(department.getDepartmentName()).size() != 0) {
+		if(this.departmentDao.getDepartmentBynameInOrganization(departmentName, organization) != 0) {
 			System.out.println("jhjh");
 			result = 1;
 		} else if(this.departmentDao.addDepartment(department)) {
@@ -46,7 +47,7 @@ public class DepartmentService {
 			result = 2;
 		}
 		return result;
-	}
+	}*/
 	
 	@Transactional
 	public int addDepartmentByOrganization(Department department,Organization organization) {
@@ -54,18 +55,17 @@ public class DepartmentService {
 		System.out.println("in add department by organization"+organization.getOrganizationName());
 		System.out.println(department.getDepartmentName());
 		int result = 0;
-		if(this.departmentDao.getDepartmentListByNameInOrganization(department.getDepartmentName(),organization).size() != 0) {
-			System.out.println("jhjh");
-			System.out.println("conflisct is present");
-			result = 1;
-		} else if(this.departmentDao.addDepartment(department)) {
+		Department departmentInOrganization = this.departmentDao.getDepartmentBynameInOrganization(department.getDepartmentName(), organization);
+		 if(departmentInOrganization != null){
+			 System.out.println("conflict");
+			 result = 1;
+		 }
+		 else if(this.departmentDao.addDepartment(department)) {
 			System.out.println("no conflict");
 			result = 2;
 		}
 		return result;
 	}
-	
-	
 	
 	/**
 	 * method to get employee by id
