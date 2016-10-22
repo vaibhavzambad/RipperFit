@@ -28,30 +28,31 @@ public class MailUtility {
 	private UserService userService;
 
 	/**
-	 * 
-	 * @return
+	 * method to get MailSender Object
+	 * @return : MailSender Object
 	 */
 	public JavaMailSender getMailSender() {
 		return mailSender;
 	}
 
 	/**
-	 * 
+	 * method to set the MailSender Object
 	 * @param mailSender
 	 */
 	@Autowired(required=true)
 	public void setMailSender(JavaMailSender mailSender) {
 		this.mailSender = mailSender;
 	}
-
 	/**
-	 * @return the userService
+	 * method to get the UserService object
+	 * @return : UserService Object
 	 */
 	public UserService getUserService() {
 		return userService;
 	}
 
 	/**
+	 * method to set the UserService Object
 	 * @param userService the userService to set
 	 */
 	@Autowired(required=true)
@@ -60,9 +61,9 @@ public class MailUtility {
 	}
 
 	/**
-	 * 
-	 * @param email
-	 * @return
+	 * method to send the mail on social signUp
+	 * @param login : an object containing email and password
+	 * @return : ResponseEntity Object
 	 */
 	@RequestMapping(value = "registrationMail", method = RequestMethod.POST)
 	public ResponseEntity<Void> registrationMail(@RequestBody Login login) {
@@ -72,7 +73,12 @@ public class MailUtility {
 		sendMail(subject, body, login.getEmail());
 		return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
 	}
-
+	
+	/**
+	 * method to send the mail on custom signUp
+	 * @param email : email address
+	 * @return : ResponseEntity Object
+	 */
 	@RequestMapping(value = "registrationMailOnSignUp", method = RequestMethod.POST)
 	public ResponseEntity<Void> registrationMailOnSignUp(@RequestBody String email) {
 
@@ -84,11 +90,9 @@ public class MailUtility {
 
 	/**
 	 * method to send the mail
-	 * @param from : SenderVO object for sender's details
-	 * @param to : Internet address of recipients who will be in TO block
-	 * @param cc : Internet address of recipients who will be in CC block
-	 * @param bcc : Internet address of recipients who will be in BCC block
-	 * @return : String message
+	 * @param subject : subject of the mail
+	 * @param body : body of the mail
+	 * @param receiver : email address of the receiver
 	 */
 	public void sendMail(String subject, String body, String receiver) {
 
@@ -106,6 +110,11 @@ public class MailUtility {
 		mailSender.send(message);
 	}
 
+	/**
+	 * method to create an email template
+	 * @param email : email address
+	 * @return : mail body
+	 */
 	public String emailTemplate(String email) {
 
 		Employee employee = userService.getEmployeeByEmail(email);

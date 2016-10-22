@@ -82,12 +82,6 @@ public class CommentController {
 		}
 	}
 	
-	
-	
-	
-	
-	
-	
 	/**
 	 * method to view individual's resource request comments
 	
