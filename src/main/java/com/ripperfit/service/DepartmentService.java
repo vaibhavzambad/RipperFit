@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.hibernate.Query;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ripperfit.dao.DepartmentDao;
@@ -32,36 +30,16 @@ public class DepartmentService {
 		List<Department> departments=this.departmentDao.viewAllDepartments();
 		return departments;
 	}
-
-	/*@Transactional
-	public int addDepartment(Department department , Organization organization) {
-		System.out.println(department.getDepartmentName());
-		String departmentName = department.getDepartmentName();
-		int result = 0;
-
-		if(this.departmentDao.getDepartmentBynameInOrganization(departmentName, organization) != 0) {
-			System.out.println("jhjh");
-			result = 1;
-		} else if(this.departmentDao.addDepartment(department)) {
-			System.out.println("hgjhg");
-			result = 2;
-		}
-		return result;
-	}*/
 	
 	@Transactional
 	public int addDepartmentByOrganization(Department department,Organization organization) {
 		
-		System.out.println("in add department by organization"+organization.getOrganizationName());
-		System.out.println(department.getDepartmentName());
 		int result = 0;
 		Department departmentInOrganization = this.departmentDao.getDepartmentBynameInOrganization(department.getDepartmentName(), organization);
 		 if(departmentInOrganization != null){
-			 System.out.println("conflict");
 			 result = 1;
 		 }
 		 else if(this.departmentDao.addDepartment(department)) {
-			System.out.println("no conflict");
 			result = 2;
 		}
 		return result;
@@ -85,10 +63,6 @@ public class DepartmentService {
 		this.departmentDao.updateDepartment(department);
 	}
 	
-	/**
-	 * done
-	 * @return
-	 */
 	@Transactional
 	public List<Department> getAllDepartmentsInAnOrganization(Organization organization)
 	{

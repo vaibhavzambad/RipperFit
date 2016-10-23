@@ -16,14 +16,13 @@ import com.ripperfit.model.ResourceRequest;
 import com.ripperfit.service.CommentsService;
 import com.ripperfit.service.ResourceRequestService;
 
-
 /**
- * controller class to manipulate CommentsService
+ * controller class to deal with all views related to comments
  */
 @RequestMapping(value = "/comment")
 @RestController
 public class CommentController {
-	
+
 	private ResourceRequestService resourceRequestService;
 	private CommentsService commentsService;
 
@@ -59,8 +58,8 @@ public class CommentController {
 	public void setResourceRequestService(ResourceRequestService resourceRequestService) {
 		this.resourceRequestService = resourceRequestService;
 	}
-	
-	
+
+
 	/**
 	 * method to add comments
 	 * @param comment : Comment object
@@ -69,41 +68,33 @@ public class CommentController {
 	@RequestMapping(value = "/addComment", method = RequestMethod.POST)
 	public ResponseEntity<Void> addComment(@RequestBody Comments comment) {
 
-		System.out.println("add"+comment.getComments());
 		Boolean flag=commentsService.addComment(comment);
 		if(flag==true)
 		{
-		return new ResponseEntity<Void>(HttpStatus.OK);
+			return new ResponseEntity<Void>(HttpStatus.OK);
 		}
 		else
 		{
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-			
 		}
 	}
-	
+
 	/**
 	 * method to view individual's resource request comments
-	
 	 * @return : ResponseEntity object with list of commentsobjects
 	 */
 	@RequestMapping(value = "/getCommentByRequestId/{requestId}", method = RequestMethod.GET)
 	public ResponseEntity<List<Comments>> getCommentByRequestId(@PathVariable("requestId") int requestId) {
 
-		System.out.println("comments");
 		ResourceRequest resourceRequest = this.resourceRequestService.getResourceRequestById(requestId);
-		
+
 		List<Comments> commentList  = this.commentsService.getCommentByRequestId(resourceRequest);
-		
+		if(commentList.isEmpty()) {
+			return new ResponseEntity<List<Comments>>(HttpStatus.NO_CONTENT);
+		} else {
 
-			
-			if(commentList.isEmpty()) {
-				return new ResponseEntity<List<Comments>>(HttpStatus.NO_CONTENT);
-			} else {
-
-				return new ResponseEntity<List<Comments>>(commentList, HttpStatus.OK);
-			}
+			return new ResponseEntity<List<Comments>>(commentList, HttpStatus.OK);
 		}
-	
-			}
+	}
 
+}

@@ -2,8 +2,6 @@ package com.ripperfit.dao;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -38,104 +36,107 @@ public class ResourceDao {
 
 	public boolean addResource(Resource resource) {
 
-		Session session = this.sessionFactory.getCurrentSession();
 		boolean result = false;
 		int i=0;
 		try {
+			Session session = this.sessionFactory.getCurrentSession();
 			i = (Integer) session.save(resource);
 			if(i > 0) {
 				result = true;
 			}
+			return result;
 		} catch(Exception e) {
-
 			e.printStackTrace();
+			throw e;
 		}
-		return result;
 	}
-
 
 	public List<Resource> getAllResources() {
 
-		Session session = this.sessionFactory.getCurrentSession();
-		@SuppressWarnings("unchecked")
-		List<Resource> resourceList = session.createCriteria(Resource.class).list();
-		return resourceList;
-	}
-
-	public boolean deleteResourceById(int resourceId){
-
-		Session session = this.sessionFactory.getCurrentSession();
-		String hql = "delete from Resource where resourceId= :resourceId";
-		Query query = session.createQuery(hql);
-		query.setParameter("resourceId", resourceId);
-		query.executeUpdate();
-		return true;
-	}
-
-	public boolean deleteResourceByName(String resourceName){
-
-		Session session = this.sessionFactory.getCurrentSession();
-		String hql = "delete from Resource where resourceName= :resourceName";
-		Query query = session.createQuery(hql);
-		query.setParameter("resourceName", resourceName);
-		query.executeUpdate();
-		return true;
+		try{
+			Session session = this.sessionFactory.getCurrentSession();
+			@SuppressWarnings("unchecked")
+			List<Resource> resourceList = session.createCriteria(Resource.class).list();
+			return resourceList;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			throw ex;
+		}
 	}
 
 	public Resource getResourceById(int resourceId){
 
-		Session session = this.sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from Resource where resourceId= :resourceId"); 
-		query.setParameter("resourceId", resourceId);
-		@SuppressWarnings("unchecked")
-		List<Resource> resourceList = query.list();
-		Resource resource = (Resource) resourceList.get(0);
-		return resource;
-
+		try{
+			Session session = this.sessionFactory.getCurrentSession();
+			Query query = session.createQuery("from Resource where resourceId= :resourceId"); 
+			query.setParameter("resourceId", resourceId);
+			@SuppressWarnings("unchecked")
+			List<Resource> resourceList = query.list();
+			Resource resource = (Resource) resourceList.get(0);
+			return resource;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			throw ex;
+		}
 	}
 
 	public Resource getResourceByName(String resourceName){
 
-		Session session = this.sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from Resource where resourceName= :resourceName"); 
-		query.setParameter("resourceName", resourceName);
-		@SuppressWarnings("unchecked")
-		List<Resource> resourceList = query.list();
-		if(resourceList.size() > 0) {
-			Resource resource = (Resource) resourceList.get(0);
-			return resource;
+		try{
+			Session session = this.sessionFactory.getCurrentSession();
+			Query query = session.createQuery("from Resource where resourceName= :resourceName"); 
+			query.setParameter("resourceName", resourceName);
+			@SuppressWarnings("unchecked")
+			List<Resource> resourceList = query.list();
+			if(resourceList.size() > 0) {
+				Resource resource = (Resource) resourceList.get(0);
+				return resource;
+			}
+			return null;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			throw ex;
 		}
-		return null;
 	}
 
 	public int getFinalApprovalLevel(int resourceId){
 
-		Session session = this.sessionFactory.getCurrentSession();
-		Query query = session.createQuery("select resource.finalApprovalLevel from Resource"
-				+ "resource where resourceId= :resourceId");
+		try{
+			Session session = this.sessionFactory.getCurrentSession();
+			Query query = session.createQuery("select resource.finalApprovalLevel from Resource"
+					+ "resource where resourceId= :resourceId");
 
-		query.setParameter("resourceId", resourceId);
-		int finalApprovalLevel = (int) query.uniqueResult();
-		return finalApprovalLevel;
+			query.setParameter("resourceId", resourceId);
+			int finalApprovalLevel = (int) query.uniqueResult();
+			return finalApprovalLevel;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			throw ex;
+		}
 
 	}
-	
-	@Transactional
+
 	public void updateResource(Resource resource) {
 
-		Session session = this.sessionFactory.getCurrentSession();
-		session.update(resource);
+		try{
+			Session session = this.sessionFactory.getCurrentSession();
+			session.update(resource);
+		}catch(Exception ex){
+			ex.printStackTrace();
+			throw ex;
+		}
 	}
 
-	/**
-	 * done
-	 * @return
-	 */
 	public List<Resource> getAllResourcesInAnOrganization(Organization organization) {
 
-		Session session = this.sessionFactory.getCurrentSession();
-		@SuppressWarnings("unchecked")
-		List<Resource> resource = session.createCriteria(Resource.class).add( Restrictions.eq("organization",organization)).list();
-		return resource;
+		try{
+			Session session = this.sessionFactory.getCurrentSession();
+			@SuppressWarnings("unchecked")
+			List<Resource> resource = session.createCriteria(Resource.class).add( Restrictions.eq("organization",organization)).list();
+			return resource;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			throw ex;
+		}
 	}
 }

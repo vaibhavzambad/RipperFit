@@ -97,28 +97,15 @@ public class UserService {
 	
 	@Transactional
 	public List<Employee> viewAllEmployee() {
-		// TODO Auto-generated method stub
 		List<Employee> emp=this.userDao.viewAllEmployee();
 		return emp;
 	}
 	
-	@Transactional
-	public boolean deleteEmployeeById(int employeeId){
-		
-		boolean result = this.userDao.deleteEmployeeById(employeeId);
-		return result;
-		
-	}
-
 	public List<Employee> getEmployeeApprove(Employee employee) {
 		List<Employee> emp=this.userDao.getEmployeeApprove(employee);
 		return emp;
 	}
 	
-	/**
-	 * done
-	 * @return
-	 */
 	@Transactional
 	public List<Employee> getAllEmployeesInAnOrganization(Organization organization)
 	{

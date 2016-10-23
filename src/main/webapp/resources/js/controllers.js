@@ -45,7 +45,6 @@ var RipperFit = angular.module('RipperFit',[])
 
 .controller('socialCtrl', function($scope, $http, $window, StoreService) {
 	$('#signinButton').click(function() {
-		// signInCallback defined in step 6.
 		auth2.grantOfflineAccess({
 			'redirect_uri' : 'postmessage'
 		}).then(signInCallback);
@@ -53,7 +52,6 @@ var RipperFit = angular.module('RipperFit',[])
 
 	function signInCallback(authResult) {
 		if (authResult['code']) {
-			// Send the code to the server
 			$http({
 				method : 'POST',
 				url : '/RipperFit/social/getDetails',
@@ -80,18 +78,12 @@ var RipperFit = angular.module('RipperFit',[])
 							}
 						}).then(function() {
 							$window.location.href = 'dashboard.html';
-						}), function(response) {
-							console.log(response.status);
-						};	
+						});	
 					} else {
 						StoreService.set($scope.user);
 						$window.location.href = 'socialSignUp.html';
 					}
-				}), function(response) {
-					console.log(response.status);
-				};
-			}, function(response) {
-				console.log(response.status);
+				});
 			});
 		}
 	}
@@ -109,8 +101,6 @@ var RipperFit = angular.module('RipperFit',[])
 			}
 		}).then(function(response) {
 			$scope.organizationDetails = response.data; 
-		}, function(response) {
-			console.log(response.status);
 		});
 	}
 
@@ -123,8 +113,6 @@ var RipperFit = angular.module('RipperFit',[])
 			}
 		}).then(function(response) {
 			$scope.designationDetails = response.data; 
-		}, function(response) {
-			console.log(response.status);
 		});
 	}
 
@@ -159,8 +147,6 @@ var RipperFit = angular.module('RipperFit',[])
 				}
 			}).then(function() {
 				$window.location.href = 'dashboard.html';
-			}, function(response) {
-				console.log(response.status);
 			});
 		});
 
@@ -178,7 +164,6 @@ var RipperFit = angular.module('RipperFit',[])
 					"organizationId": "",
 					"organizationName": $scope.user.organization
 			}
-			console.log("new org "+$scope.newOrganization );
 			$http({
 				method: 'POST',
 				url: "/RipperFit/organization/addOrganization",
@@ -202,7 +187,7 @@ var RipperFit = angular.module('RipperFit',[])
 					};
 					$http({
 						method: 'POST',
-						url: "/RipperFit/departments/addDepartmentByOrganization",
+						url: "/RipperFit/departments/addDepartment",
 						data: $scope.departmentDetails,
 						headers: {
 							'Content-Type': 'application/json'
@@ -247,7 +232,6 @@ var RipperFit = angular.module('RipperFit',[])
 									{
 										$scope.user.organization=$scope.organization;
 										$scope.user.designation=$scope.designation;
-										console.log("sds"+	$scope.user.designation);
 									}
 									$scope.userDetails = {
 											"employeeId": "",
@@ -259,10 +243,9 @@ var RipperFit = angular.module('RipperFit',[])
 											"gender": $scope.user.gender,
 											"contactNumber": $scope.user.phoneNumber,
 											"designation" : $scope.user.designation,
-											"profilePicture" :null
+											"profilePicture" : $scope.user.profilePicture
 									};
 
-									console.log($scope.userDetails);
 									$http({
 										method: 'POST',
 										url: "/RipperFit/employee/socialLogin",
@@ -282,29 +265,21 @@ var RipperFit = angular.module('RipperFit',[])
 											}
 										}).then(function() {
 											$window.location.href = 'dashboard.html';
-										}, function(response) {
-											console.log(response.status);
 										});
-									}), function(response) {
-										console.log(response.status);
-										//msg.removeClass('hidden');
-									};
+									});
 								})
 							})	
 						})
 					})
-				}, function(response) {
-					console.log(response.status);
 				});	
 			})
-			$scope.email="";
-			//var msg = angular.element( document.querySelector('#msg'));
 		}
 	}
 
 })
 
 .controller('signUpCtrl', function($scope, $http, $window, $filter){
+	var message = angular.element(document.querySelector('#message'));
 	$scope.getOrganizations = function() {
 		$http({
 			method: 'GET',
@@ -314,8 +289,6 @@ var RipperFit = angular.module('RipperFit',[])
 			}
 		}).then(function(response) {
 			$scope.organizationDetails = response.data; 
-		}, function(response) {
-			console.log(response.status);
 		});
 	}
 
@@ -328,8 +301,6 @@ var RipperFit = angular.module('RipperFit',[])
 			}
 		}).then(function(response) {
 			$scope.designationDetails = response.data; 
-		}, function(response) {
-			console.log(response.status);
 		});
 	}
 
@@ -347,6 +318,7 @@ var RipperFit = angular.module('RipperFit',[])
 				"designation" : $scope.user.designation,
 				"profilePicture" : "https://lh6.googleusercontent.com/-pkto2iAvl1A/AAAAAAAAAAI/AAAAAAAAAB8/XHv93lNF7CI/s96-c/photo.jpg"
 		};
+		
 		$http({
 			method: 'POST',
 			url: "/RipperFit/employee/addEmployee",
@@ -354,7 +326,7 @@ var RipperFit = angular.module('RipperFit',[])
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).then(function() {
+		}).then(function(response) {
 			$scope.email = $scope.userDetails.email;
 			$http({
 				method: 'POST',
@@ -363,14 +335,14 @@ var RipperFit = angular.module('RipperFit',[])
 				headers: {
 					'Content-Type': 'application/json'
 				}
-			}).then(function() {
+			}).then(function(response) {
 				$window.location.href = 'dashboard.html';
-			}, function(response) {
-				console.log(response.status);
 			});
-		}), function(response) {
-			console.log(response.status);
-		};
+		}, function(response) {	
+			if(response.status === 409){
+				message.text("User Already Present");
+			}
+		});
 	}
 
 	$scope.createOrganization = function() {
@@ -408,7 +380,7 @@ var RipperFit = angular.module('RipperFit',[])
 					};
 					$http({
 						method: 'POST',
-						url: "/RipperFit/departments/addDepartmentByOrganization",
+						url: "/RipperFit/departments/addDepartment",
 						data: $scope.departmentDetails,
 						headers: {
 							'Content-Type': 'application/json'
@@ -451,7 +423,6 @@ var RipperFit = angular.module('RipperFit',[])
 									if(flag==true) {
 										$scope.user.organization=$scope.organization;
 										$scope.user.designation=$scope.designation;
-										console.log("sds"+	$scope.user.designation);
 									}
 									$scope.userDetails = {
 											"employeeId": "",
@@ -466,7 +437,6 @@ var RipperFit = angular.module('RipperFit',[])
 											"profilePicture" :null
 									};
 
-									console.log($scope.userDetails);
 									$http({
 										method: 'POST',
 										url: "/RipperFit/employee/addEmployee",
@@ -486,21 +456,22 @@ var RipperFit = angular.module('RipperFit',[])
 											}
 										}).then(function() {
 											$window.location.href = 'dashboard.html';
-										}, function(response) {
-											console.log(response.status);
 										});
-									}), function(response) {
-										console.log(response.status);
-									};
+									}, function(response) {
+										if(response.status === 409){
+											message.text("User Already Present");
+										}
+									});
 								})
 							})	
 						})
 					})
-				}, function(response) {
-					console.log(response.status);
 				});	
-			})
-			$scope.email="";
+			},function(response){
+				if(response.status === 409){
+					message.text("Organization Already Present");
+				}
+			});
 		}
 	}
 })
@@ -519,7 +490,6 @@ var RipperFit = angular.module('RipperFit',[])
 		}).then(function(response) {
 			$window.location.href = 'dashboard.html';
 		}, function(response) {
-			console.log(response.status);
 			if(response.status === 401 || response.status === 400){
 				message.text("Invalid Username or Password");
 			}
@@ -549,8 +519,6 @@ var RipperFit = angular.module('RipperFit',[])
 				}
 			}).then(function(response) {
 				$window.location.href = 'signIn.html';
-			}, function(response) {
-				console.log(response.status);
 			});
 		});
 	}

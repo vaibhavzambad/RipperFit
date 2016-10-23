@@ -44,6 +44,7 @@ CREATE TABLE `approve_request` (
 
 LOCK TABLES `approve_request` WRITE;
 /*!40000 ALTER TABLE `approve_request` DISABLE KEYS */;
+INSERT INTO `approve_request` VALUES (5,14,3),(4,15,1),(4,16,1),(4,17,1),(4,18,1),(4,19,1),(4,20,1),(1,21,3),(4,22,1);
 /*!40000 ALTER TABLE `approve_request` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -62,7 +63,7 @@ CREATE TABLE `resource` (
   PRIMARY KEY (`resource_id`),
   KEY `resource_ibfk_1` (`organization_id`),
   CONSTRAINT `resource_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `organization` (`organization_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,6 +72,7 @@ CREATE TABLE `resource` (
 
 LOCK TABLES `resource` WRITE;
 /*!40000 ALTER TABLE `resource` DISABLE KEYS */;
+INSERT INTO `resource` VALUES (1,'Mouse',4,1),(2,'Monitor',3,1),(3,'PC',2,1),(4,'Mac',1,1);
 /*!40000 ALTER TABLE `resource` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -92,7 +94,7 @@ CREATE TABLE `designation` (
   KEY `designation_ibfk_2` (`organization_id`),
   CONSTRAINT `designation_ibfk_1` FOREIGN KEY (`department_id`) REFERENCES `department` (`department_id`),
   CONSTRAINT `designation_ibfk_2` FOREIGN KEY (`organization_id`) REFERENCES `organization` (`organization_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,7 +103,7 @@ CREATE TABLE `designation` (
 
 LOCK TABLES `designation` WRITE;
 /*!40000 ALTER TABLE `designation` DISABLE KEYS */;
-INSERT INTO `designation` VALUES (8,'Admin',0,4,2);
+INSERT INTO `designation` VALUES (1,'Admin',0,1,1),(2,'CEO',1,3,1),(3,'Helpdesk',0,2,1),(4,'Manager',2,3,1),(5,'Employee',4,3,1),(6,'Techlead',3,3,1),(7,'Admin',0,5,3),(8,'Manager',1,6,3),(9,'Employee',2,6,3),(10,'Helpdesk',0,8,3);
 /*!40000 ALTER TABLE `designation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -129,7 +131,7 @@ CREATE TABLE `resource_request` (
   CONSTRAINT `resource_request_ibfk_1` FOREIGN KEY (`resource_id`) REFERENCES `resource` (`resource_id`),
   CONSTRAINT `resource_request_ibfk_2` FOREIGN KEY (`requestor_id`) REFERENCES `employee` (`employee_id`),
   CONSTRAINT `resource_request_ibfk_3` FOREIGN KEY (`organization_id`) REFERENCES `organization` (`organization_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -138,6 +140,7 @@ CREATE TABLE `resource_request` (
 
 LOCK TABLES `resource_request` WRITE;
 /*!40000 ALTER TABLE `resource_request` DISABLE KEYS */;
+INSERT INTO `resource_request` VALUES (14,1,5,4,'medium','completed','need','2016-10-23',1),(15,4,5,2,'high','completed','need','2016-10-23',1),(16,4,5,2,'medium','completed','sdsa','2016-10-23',1),(17,4,5,2,'medium','completed','sada','2016-10-23',1),(18,4,5,2,'medium','completed','need mac','2016-10-23',1),(19,4,5,2,'medium','completed','dsadasd','2016-10-23',1),(20,4,4,2,'medium','completed','need mac','2016-10-23',1),(21,3,1,0,'medium','completed','need pc','2016-10-23',1),(22,4,5,2,'medium','completed','need mac','2016-10-24',1);
 /*!40000 ALTER TABLE `resource_request` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -159,7 +162,7 @@ CREATE TABLE `comments` (
   KEY `comments_ibfk_2` (`request_id`),
   CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`commentor_id`) REFERENCES `employee` (`employee_id`),
   CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`request_id`) REFERENCES `resource_request` (`request_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -185,7 +188,7 @@ CREATE TABLE `department` (
   PRIMARY KEY (`department_id`),
   KEY `department_ibfk_1` (`organization_id`),
   CONSTRAINT `department_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `organization` (`organization_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -194,7 +197,7 @@ CREATE TABLE `department` (
 
 LOCK TABLES `department` WRITE;
 /*!40000 ALTER TABLE `department` DISABLE KEYS */;
-INSERT INTO `department` VALUES (4,'Admin',2),(5,'Technical',2);
+INSERT INTO `department` VALUES (1,'Admin',1),(2,'Helpdesk',1),(3,'Technical',1),(4,'HR',1),(5,'Admin',3),(6,'Technical',3),(7,'HR',3),(8,'Helpdesk',3);
 /*!40000 ALTER TABLE `department` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -226,7 +229,7 @@ CREATE TABLE `employee` (
   CONSTRAINT `employee_ibfk_3` FOREIGN KEY (`organization_id`) REFERENCES `organization` (`organization_id`),
   CONSTRAINT `employee_ibfk_4` FOREIGN KEY (`designation_id`) REFERENCES `designation` (`designation_id`),
   CONSTRAINT `employee_ibfk_6` FOREIGN KEY (`reportTo_id`) REFERENCES `employee` (`employee_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -235,6 +238,7 @@ CREATE TABLE `employee` (
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
+INSERT INTO `employee` VALUES (1,1,'vaibhav.zambad@metacube.com','123456','Vaibhav','Pravin Zambad ','Male','7845263652',1,NULL,'https://lh4.googleusercontent.com/-eSDkmWBLaZo/AAAAAAAAAAI/AAAAAAAAAAo/Gb7tIeyh9eA/s96-c/photo.jpg',NULL),(3,1,'amit.kumar@metacube.com','123456','amit','kumar','Male','8957451252',3,NULL,'https://lh6.googleusercontent.com/-pkto2iAvl1A/AAAAAAAAAAI/AAAAAAAAAB8/XHv93lNF7CI/s96-c/photo.jpg',NULL),(4,1,'riya.nuwal@metacube.com','123456','riya','nuwal','Male','2565874552',4,1,'https://lh6.googleusercontent.com/-pkto2iAvl1A/AAAAAAAAAAI/AAAAAAAAAB8/XHv93lNF7CI/s96-c/photo.jpg','true'),(5,1,'amita.sharma@metacube.com','123456','amita','sharma','Female','8452142631',5,4,'https://lh6.googleusercontent.com/-pkto2iAvl1A/AAAAAAAAAAI/AAAAAAAAAB8/XHv93lNF7CI/s96-c/photo.jpg','true'),(6,3,'ajinkya.pande@meatcube.com','123456','ajinkya','pande','Male','5684521455',7,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -250,7 +254,7 @@ CREATE TABLE `organization` (
   `organization_name` varchar(100) NOT NULL,
   PRIMARY KEY (`organization_id`),
   UNIQUE KEY `organization_name_UNIQUE` (`organization_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -259,7 +263,7 @@ CREATE TABLE `organization` (
 
 LOCK TABLES `organization` WRITE;
 /*!40000 ALTER TABLE `organization` DISABLE KEYS */;
-INSERT INTO `organization` VALUES (2,'Metacube');
+INSERT INTO `organization` VALUES (3,'Appririo'),(1,'Metacube');
 /*!40000 ALTER TABLE `organization` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -272,4 +276,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-10-23 10:18:41
+-- Dump completed on 2016-10-24  1:53:39

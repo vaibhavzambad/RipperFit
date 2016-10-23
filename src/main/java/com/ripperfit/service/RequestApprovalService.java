@@ -132,6 +132,14 @@ public class RequestApprovalService {
 		return finalApprovalLevel;
 	}
 
+	/**
+	 * this method forwards the request to the head of employee 
+	 * if there is no head then the request is directly forwarded to Helpdesk
+	 * helpdesk employee is obtained by the department of an organization
+	 * the level and status of the request is updated accordingly 
+	 * @param requestId
+	 * @return true if request is forwarded
+	 */
 	@Transactional
 	public boolean forwardRequest(int requestId){
 
@@ -179,6 +187,11 @@ public class RequestApprovalService {
 		return result;
 	}
 	
+	/**
+	 * 
+	 * @param requestId
+	 * @return true if the request is rejected successfully
+	 */
 	@Transactional
 	public boolean rejectRequest(int requestId){
 
@@ -191,7 +204,12 @@ public class RequestApprovalService {
 		}
 		return result;
 	}
-	
+		
+	/**
+	 * 
+	 * @param requestId
+	 * @return true if the request is completed succssfully
+	 */
 	@Transactional
 	public boolean completeRequest(int requestId){
 		

@@ -27,7 +27,7 @@ import com.ripperfit.service.OrganizationService;
 import com.ripperfit.service.UserService;
 
 /**
- * controller class to handle user data
+ * controller class to handle all user related views
  */
 @RequestMapping(value = "/employee")
 @RestController
@@ -54,16 +54,16 @@ public class UserController {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Method to get OrganizationService object
+	 * @return OrganizationService object
 	 */
 	public OrganizationService getOrganizationService() {
 		return organizationService;
 	}
 
 	/**
-	 * 
-	 * @param organizationService
+	 * Method to set OrganizationService object
+	 * @param organizationService : OrganizationService object
 	 */
 	@Autowired(required=true)
 	public void setOrganizationService(OrganizationService organizationService) {
@@ -71,9 +71,9 @@ public class UserController {
 	}
 
 	/**
-	 * method to get employee with his/her email address
-	 * @param email : employee's email address
-	 * @return : ResponseEntity with no object
+	 * Method to get an employee by his/her email address
+	 * @param email : email address of employee
+	 * @return ResponseEntity with Employee object
 	 */
 	@RequestMapping(value = "/getEmployeeByEmail", method = RequestMethod.GET)
 	public ResponseEntity<Employee> getEmployeeByEmail(@RequestParam String email) {
@@ -121,7 +121,13 @@ public class UserController {
 			return new ResponseEntity<Employee>(HttpStatus.UNAUTHORIZED);
 		}
 	}
-
+	
+	/**
+	 * Method to create session of logged in user
+	 * @param email : email address of logged in user
+	 * @param session : HttpSession object
+	 * @return ResponseEntity with no object
+	 */
 	@RequestMapping(value = "/createSession", method = RequestMethod.GET)
 	public ResponseEntity<Void> createSession(@RequestParam String email,HttpSession session) {	
 
@@ -152,7 +158,13 @@ public class UserController {
 			return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
-
+	
+	/**
+	 * Method for register user through social login
+	 * @param employee : Employee object to be logged
+	 * @param session : HttpSession object
+	 * @return : ResponseEntity with Login object
+	 */
 	@RequestMapping(value = "/socialLogin", method = RequestMethod.POST)
 	public ResponseEntity<Login> addEmployeeThroughSocialLogin(@RequestBody Employee employee,HttpSession session) {
 
@@ -170,7 +182,11 @@ public class UserController {
 			return new ResponseEntity<Login>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
-
+	
+	/**
+	 * Method to generate random password of 6 digits for social login and forget password services
+	 * @return : String
+	 */
 	public String passwordGenerator() {
 		final String ALPHA_NUMERIC_STRING = "abcdefghijklmnopqrstuvwxyz0123456789";
 		StringBuilder builder = new StringBuilder();
@@ -183,8 +199,8 @@ public class UserController {
 	}
 
 	/**
-	 * method to Update Employee
-	 * @param employee : employee object
+	 * Method to update an employee
+	 * @param employee : Employee object to be updated
 	 * @return : ResponseEntity with no object
 	 */
 	@RequestMapping(value = "/updateEmployee", method = RequestMethod.PUT)
@@ -194,8 +210,10 @@ public class UserController {
 	}
 
 	/**
-	 * @throws IOException 
-	 * 
+	 * Method for logout
+	 * @param session : HttpSession object
+	 * @param response : ServletResponse object
+	 * @throws IOException
 	 */
 	@RequestMapping(value="/logout", method= RequestMethod.GET)
 	public void logout(HttpSession session, final ServletResponse response) throws IOException{
@@ -204,7 +222,12 @@ public class UserController {
 		session.invalidate();
 		httpResponse.sendRedirect("/RipperFit/");
 	}
-
+	
+	/**
+	 * Method to get all employees of an organization by organization id
+	 * @param organizationId : Id of organization
+	 * @return : ResponseEntity with list of Employee objects
+	 */
 	@RequestMapping(value = "/getEmployeesByOrganizationId/{organizationId}", method = RequestMethod.GET)
 	public ResponseEntity<List<Employee>> getEmployeesByOrganizationId(@PathVariable("organizationId") int organizationId) {
 
@@ -216,14 +239,12 @@ public class UserController {
 			return new ResponseEntity<List<Employee>>(list, HttpStatus.OK);
 		}
 	}
-
-	@RequestMapping(value="/deleteEmployeebyId",method = RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteEmployeeById(@RequestBody int employeeId){
-
-		this.userService.deleteEmployeeById(employeeId);
-		return new ResponseEntity<Void>(HttpStatus.OK);
-	}
-
+	
+	/**
+	 * Method to get current logged in employee
+	 * @param request : HttpServletRequest object
+	 * @return : ResponseEntity with employee object
+	 */
 	@RequestMapping(value="/getCurrentEmployeeObject",method = RequestMethod.GET)
 	public ResponseEntity<Employee> getCurrentEmployeeObject(HttpServletRequest request){
 
@@ -231,7 +252,14 @@ public class UserController {
 		Employee employee = this.userService.getEmployeeByEmail((String) session.getAttribute("email"));
 		return new ResponseEntity<Employee>(employee, HttpStatus.OK);
 	}
-
+	
+	/**
+	 * Method to change password
+	 * @param oldPassword : previous password
+	 * @param newPassword : updated password
+	 * @param request : HttpServletRequest object
+	 * @return ResponseEntity with Employee object
+	 */	
 	@RequestMapping(value="/changePassword",method=RequestMethod.POST)
 	public ResponseEntity<Employee> changePassword(@RequestParam String oldPassword,@RequestParam String newPassword,HttpServletRequest request){
 
@@ -245,37 +273,44 @@ public class UserController {
 		}
 		return new ResponseEntity<Employee>(HttpStatus.NOT_ACCEPTABLE);
 	}
-
+	
+	/**
+	 * Method to get employees have to be approved
+	 * @param request : HttpServletRequest object
+	 * @return ResponseEntity with list of employee objects
+	 */
 	@RequestMapping(value="/getEmployeeApprove",method=RequestMethod.GET)
 	public ResponseEntity<List<Employee>> viewAllRequestsForApprove(HttpServletRequest request) {	
 
 		HttpSession session = request.getSession();
 		String email = (String) session.getAttribute("email");
 		Employee employee = this.userService.getEmployeeByEmail(email);
-		System.out.println("df");
 		List<Employee> list = this.userService.getEmployeeApprove(employee);
 		if(list.isEmpty()) {
-			System.out.println("empty");
 			return new ResponseEntity<List<Employee>>(HttpStatus.NO_CONTENT);
 		} else {
-			System.out.println(list);
 			return new ResponseEntity<List<Employee>>(list, HttpStatus.OK);
 		}
 	}
 	
+	/**
+	 * Method to get new password if user forgot
+	 * @param email : email address of user
+	 * @return ResponseEntity with new password map
+	 */
 	@RequestMapping(value="/forgetPassword",method=RequestMethod.PUT)
-	public ResponseEntity<Map> forgetPassword(@RequestBody String email){
+	public ResponseEntity<Map<String, String>> forgetPassword(@RequestBody String email){
 
 		String pass= passwordGenerator();
 		Employee employee = userService.getEmployeeByEmail(email);
 		if(employee == null) {
-			return new ResponseEntity<Map>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Map<String, String>>(HttpStatus.BAD_REQUEST);
 		}
 		employee.setPassword(pass);
 		this.userService.updateUser(employee);
-		
-		Map<String, String> response = new HashMap(); 
+
+		Map<String, String> response = new HashMap<String, String>(); 
 		response.put("pass", pass);
-		return new ResponseEntity<Map>(response, HttpStatus.OK);
+		return new ResponseEntity<Map<String, String>>(response, HttpStatus.OK);
 	}
 }

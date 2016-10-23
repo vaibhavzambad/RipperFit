@@ -41,22 +41,20 @@ public class ResourceRequestDao {
 	 */
 	public boolean addRequest(ResourceRequest resourceRequest) {
 
-		Session session = this.sessionFactory.getCurrentSession();
 		boolean result = false;
 		int i=0;
 		try {
+			Session session = this.sessionFactory.getCurrentSession();
 			i = (Integer) session.save(resourceRequest);
 			if(i > 0) {
 				result = true;
-							}
+			}
+			return result;
 		} catch(Exception e) {
-
 			e.printStackTrace();
+			throw e;
 		}
-		return result;
 	}
-
-
 
 	/**
 	 * method to delete resource request
@@ -64,12 +62,17 @@ public class ResourceRequestDao {
 	 */
 	public boolean deleteRequestById(int requestId) {
 
-		Session session = this.sessionFactory.getCurrentSession();
-		String hql = "DELETE FROM ResourceRequest WHERE requestId = :requestId";
-		Query query = session.createQuery(hql);
-		query.setParameter("requestId", requestId);
-		query.executeUpdate();
-		return true;
+		try{
+			Session session = this.sessionFactory.getCurrentSession();
+			String hql = "DELETE FROM ResourceRequest WHERE requestId = :requestId";
+			Query query = session.createQuery(hql);
+			query.setParameter("requestId", requestId);
+			query.executeUpdate();
+			return true;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			throw ex;
+		}
 	}
 
 	/**
@@ -80,11 +83,15 @@ public class ResourceRequestDao {
 	@SuppressWarnings("unchecked")
 	public List<ResourceRequest> getRequestByEmployeeId(Employee employee) {
 
-		Session session = this.sessionFactory.getCurrentSession();
-		List<ResourceRequest> requestList = (List<ResourceRequest>)session.createCriteria(ResourceRequest.class)
-				.add(Restrictions.eq("employee.employeeId",employee.getEmployeeId())).list();
-		System.out.println("df: "+requestList);
-		return requestList;
+		try{
+			Session session = this.sessionFactory.getCurrentSession();
+			List<ResourceRequest> requestList = (List<ResourceRequest>)session.createCriteria(ResourceRequest.class)
+					.add(Restrictions.eq("employee.employeeId",employee.getEmployeeId())).list();
+			return requestList;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			throw ex;
+		}
 	}
 
 	/**
@@ -95,76 +102,106 @@ public class ResourceRequestDao {
 	@SuppressWarnings("unchecked")
 	public List<ResourceRequest> getAllRequests() {
 
-		Session session = this.sessionFactory.getCurrentSession();
-		List<ResourceRequest> requestList = session.createQuery("FROM ResourceRequest").list();
-		return requestList;
+		try{
+			Session session = this.sessionFactory.getCurrentSession();
+			List<ResourceRequest> requestList = session.createQuery("FROM ResourceRequest").list();
+			return requestList;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			throw ex;
+		}
 	}
 
 	public ResourceRequest getResourceRequestById(int requestId){
 
-		Session session = this.sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from ResourceRequest where requestId= :requestId"); 
-		query.setParameter("requestId", requestId);
-
-		@SuppressWarnings("unchecked")
-		List<ResourceRequest> requestList = query.list();
-		ResourceRequest resourceRequest = null;
-		if(!requestList.isEmpty()){
-			resourceRequest = (ResourceRequest) requestList.get(0);
+		try{
+			Session session = this.sessionFactory.getCurrentSession();
+			Query query = session.createQuery("from ResourceRequest where requestId= :requestId"); 
+			query.setParameter("requestId", requestId);
+			@SuppressWarnings("unchecked")
+			List<ResourceRequest> requestList = query.list();
+			ResourceRequest resourceRequest = null;
+			if(!requestList.isEmpty()){
+				resourceRequest = (ResourceRequest) requestList.get(0);
+			}
+			return resourceRequest;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			throw ex;
 		}
-		return resourceRequest;
 	}
 
 
 	public int getCurrentApprovalLevel(int requestId){
 
-		Session session = this.sessionFactory.getCurrentSession();
-		Query query = session.createQuery("select resourceRequest.currentApprovalLevel from ResourceRequest"
-				+ "resourceRequest where requestId= :requestId");
+		try{
+			Session session = this.sessionFactory.getCurrentSession();
+			Query query = session.createQuery("select resourceRequest.currentApprovalLevel from ResourceRequest"
+					+ "resourceRequest where requestId= :requestId");
 
-		query.setParameter("requestId", requestId);
-		int currentApprovalLevel = (int) query.uniqueResult();
-		return currentApprovalLevel;
+			query.setParameter("requestId", requestId);
+			int currentApprovalLevel = (int) query.uniqueResult();
+			return currentApprovalLevel;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			throw ex;
+		}
 	}
 
 	public boolean updateCurrentApprovalLevel(int requestId,int updatedLevel){
-		
-		Session session = this.sessionFactory.getCurrentSession();
-		Query q = session.createQuery("update ResourceRequest set currentApprovalLevel= :updatedCurrentApprovalLevel"
-				+ " where requestId= :requestId");
-		q.setParameter("updatedCurrentApprovalLevel", updatedLevel);
-		q.setParameter("requestId", requestId);
-		q.executeUpdate();
-		return true;
+
+		try{
+			Session session = this.sessionFactory.getCurrentSession();
+			Query q = session.createQuery("update ResourceRequest set currentApprovalLevel= :updatedCurrentApprovalLevel"
+					+ " where requestId= :requestId");
+			q.setParameter("updatedCurrentApprovalLevel", updatedLevel);
+			q.setParameter("requestId", requestId);
+			q.executeUpdate();
+			return true;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			throw ex;
+		}
 	}
-	
+
 	public void updateResourceRequest(ResourceRequest request) {
 
-		Session session = this.sessionFactory.getCurrentSession();
-		session.update(request);
+		try{
+			Session session = this.sessionFactory.getCurrentSession();
+			session.update(request);
+		}catch(Exception ex){
+			ex.printStackTrace();
+			throw ex;
+		}
 	}
 
-	/**
-	 * done
-	 * @return
-	 */
 	public List<ResourceRequest> getAllRequestsInAnOrganization(Organization organization) {
 
-		Session session = this.sessionFactory.getCurrentSession();
-		@SuppressWarnings("unchecked")
-		List<ResourceRequest> request = session.createCriteria(ResourceRequest.class).add( Restrictions.eq("organization",organization)).list();
-		return request;
+		try{
+			Session session = this.sessionFactory.getCurrentSession();
+			@SuppressWarnings("unchecked")
+			List<ResourceRequest> request = session.createCriteria(ResourceRequest.class).add(Restrictions.eq("organization",organization)).list();
+			return request;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			throw ex;
+		}
 	}
-	
-	public List<ResourceRequest> getResourceRequestByStatus(String status){
-        System.out.println("indao  "+ status);
-		Session session = this.sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from ResourceRequest where status= :status"); 
-		query.setParameter("status", status);
 
-		@SuppressWarnings("unchecked")
-		List<ResourceRequest> requestList = query.list();
-		System.out.println("result in dao  "+ requestList.size());
-		return requestList;
+	public List<ResourceRequest> getResourceRequestByStatus(String status , Organization organization){
+
+		try{
+			
+			Session session = this.sessionFactory.getCurrentSession();
+			Query query = session.createQuery("from ResourceRequest where status= :status and organization= :organization"); 
+			query.setParameter("status", status);
+			query.setParameter("organization", organization);
+			@SuppressWarnings("unchecked")
+			List<ResourceRequest> requestList = query.list();
+			return requestList;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			throw ex;
+		}
 	}
 }

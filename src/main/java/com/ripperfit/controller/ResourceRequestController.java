@@ -20,7 +20,7 @@ import com.ripperfit.service.ResourceRequestService;
 import com.ripperfit.service.UserService;
 
 /**
- * controller class to manipulate Resource Requests
+ * controller class to handle resource requests
  */
 @RequestMapping(value = "/request")
 @RestController
@@ -29,7 +29,7 @@ public class ResourceRequestController {
 	private ResourceRequestService resourceRequestService;
 
 	private OrganizationService organizationService;
-	
+
 	private UserService userService;
 
 	private ApproveeRequestService approveRequestService;
@@ -52,30 +52,33 @@ public class ResourceRequestController {
 	}
 
 	/**
-	 * @return the userService
+	 * Method to get UserService object
+	 * @return userService : UserService object
 	 */
 	public UserService getUserService() {
 		return userService;
 	}
-
+	
 	/**
-	 * @param userService the userService to set
+	 * Method to set UserService object
+	 * @param userService : UserService object to set
 	 */
 	@Autowired(required=true)
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
 
-
 	/**
-	 * @return the approveRequestService
+	 * Method to get ApproveeRequestService object
+	 * @return ApproveeRequestService object
 	 */
 	public ApproveeRequestService getApproveRequestService() {
 		return approveRequestService;
 	}
 
 	/**
-	 * @param approveRequestService the approveRequestService to set
+	 * Method to set ApproveeRequestService
+	 * @param approveRequestService : ApproveRequestService object to set
 	 */
 	@Autowired(required=true)
 	public void setApproveRequestService(
@@ -84,24 +87,24 @@ public class ResourceRequestController {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Method to get OrganizationService object
+	 * @return OrganizationService object
 	 */
 	public OrganizationService getOrganizationService() {
 		return organizationService;
 	}
 
 	/**
-	 * 
-	 * @param organizationService
+	 * Method to set OrganizationService object
+	 * @param organizationService : OrganizationService object to set
 	 */
 	@Autowired(required=true)
 	public void setOrganizationService(OrganizationService organizationService) {
 		this.organizationService = organizationService;
 	}
-	
+
 	/**
-	 * method to add resource request
+	 * method to add a new resource request
 	 * @param request : ResourceRequest object
 	 * @param ucBuilder : UriComponentsBuilder object
 	 * @return : ResponseEntity blank object
@@ -111,23 +114,6 @@ public class ResourceRequestController {
 
 		resourceRequestService.addResourceRequest(request);
 		return new ResponseEntity<Void>(HttpStatus.OK);
-	}
-
-	/**
-	 * method to delete resource request
-	 * @param request : ResourceRequest object
-	 * @return : ResponseEntity blank object
-	 */
-	@RequestMapping(value = "/deleteRequest/{requestId}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteResourceRequestById(@PathVariable("requestId") int requestId) {
-
-		boolean result = this.resourceRequestService.deleteResourceRequestById(requestId);
-		if(result){
-			return new ResponseEntity<Void>(HttpStatus.OK);
-		}else{
-			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-		}
-
 	}
 
 	/**
@@ -168,7 +154,13 @@ public class ResourceRequestController {
 			return new ResponseEntity<List<ResourceRequest>>(list, HttpStatus.OK);
 		}
 	}
+	
 
+	/**
+	 * Method to get a particular request by requestId
+	 * @param requestId : Id of request
+	 * @return ResponseEntity with ResourceRequest object
+	 */
 	@RequestMapping(value = "/getRequest/{requestId}", method = RequestMethod.GET)
 	public ResponseEntity<ResourceRequest> viewResourceRequestById(@PathVariable("requestId") int requestId) {
 
@@ -178,14 +170,18 @@ public class ResourceRequestController {
 		}
 		return new ResponseEntity<ResourceRequest>(HttpStatus.NO_CONTENT);
 	}
-
+	
+	/**
+	 * Method to view all requests of an employee which he/she have to approve
+	 * @param forwardToId : Id of employee who have to approve the requests
+	 * @return ResponseEntity with list of ResourceRequest objects
+	 */
 	@RequestMapping(value="/getAllRequestToApprove/{forwardToId}",method = RequestMethod.GET)
 	public ResponseEntity<List<ResourceRequest>> getAllRequestToApprove(@PathVariable("forwardToId") int forwardToId){
-		
-		System.out.println("employee sdsdsdsfd: "+forwardToId);
+
 		Employee employee = this.userService.getEmployeeById(forwardToId);
 		if(employee != null){
-			
+
 			List<ResourceRequest> resourceRequestList = this.approveRequestService.getResourceRequestListByForwardToId(employee);
 			if(!resourceRequestList.isEmpty()){
 				return new ResponseEntity<List<ResourceRequest>>(resourceRequestList, HttpStatus.OK);
@@ -194,6 +190,11 @@ public class ResourceRequestController {
 		return new ResponseEntity<List<ResourceRequest>>(HttpStatus.NO_CONTENT);
 	}
 	
+	/**
+	 * Method to update a request
+	 * @param resourceRequest : request to be updated
+	 * @return ResponseEntity with ResourceRequest object
+	 */
 	@RequestMapping(value = "/updateRequest", method = RequestMethod.PUT)
 	public ResponseEntity<ResourceRequest> updateResourceRequest(@RequestBody ResourceRequest resourceRequest) {
 
@@ -202,15 +203,16 @@ public class ResourceRequestController {
 	}
 	
 	/**
-	 * done
-	 * @param organization
-	 * @return
+	 * Method to view all requests of a particular organization's employees
+	 * @param organizationId : ID of organization
+	 * @return ResponseEntity with list of ResourceRequest objects
 	 */
 	@RequestMapping(value = "/getRequestsByOrganization/{organizationId}", method = RequestMethod.GET)
-	public ResponseEntity<List<ResourceRequest>> getDesignations(@PathVariable("organizationId") int organizationId) {
+	public ResponseEntity<List<ResourceRequest>> getRequestsByOrganization(@PathVariable("organizationId") int organizationId) {
 
 		Organization organization = this.organizationService.getOrganizationById(organizationId);
-		List<ResourceRequest> list = this.resourceRequestService.getAllRequestsInAnOrganization(organization);
+		List<ResourceRequest> list = this.resourceRequestService.getAllRequestsInAnOrganizationForHelpdesk(organization);
+
 		if(list.isEmpty()) {
 			return new ResponseEntity<List<ResourceRequest>>(HttpStatus.NO_CONTENT);
 		} else {
@@ -218,11 +220,16 @@ public class ResourceRequestController {
 		}
 	}
 	
-	@RequestMapping(value = "/getRequestByStatus/{status}", method = RequestMethod.GET)
-	public  ResponseEntity<List<ResourceRequest>> viewResourceRequestByStatus(@PathVariable("status") String status) {
-
-		System.out.println("in controller"+ status);
-		List<ResourceRequest> list = this.resourceRequestService.getResourceRequestByStatus(status);
+	/**
+	 * Method to get requests by status
+	 * @param status : status of the requests
+	 * @return ResponseEntity with list of ResourceRequest objects
+	 */
+	@RequestMapping(value = "/getRequestByStatus/{status}/{organizationName}", method = RequestMethod.GET)
+	public ResponseEntity<List<ResourceRequest>> viewResourceRequestByStatus(@PathVariable String status , @PathVariable String organizationName) {
+		
+		
+		List<ResourceRequest> list = this.resourceRequestService.getResourceRequestByStatus(status,organizationName);
 		if(list.isEmpty()) {
 
 			return new ResponseEntity<List<ResourceRequest>>(HttpStatus.NO_CONTENT);

@@ -16,6 +16,9 @@ import com.ripperfit.model.Resource;
 import com.ripperfit.service.OrganizationService;
 import com.ripperfit.service.ResourceService;
 
+/**
+ * Controller class for resource related tasks
+ */
 @RequestMapping(value = "/resource")
 @RestController
 public class ResourceController {
@@ -24,14 +27,16 @@ public class ResourceController {
 	private OrganizationService organizationService;
 
 	/**
-	 * @return the resourceService
+	 * Method to get resourceService object
+	 * @return resourceService object
 	 */
 	public ResourceService getResourceService() {
 		return resourceService;
 	}
 
 	/**
-	 * @param resourceService the resourceService to set
+	 * Method to set resourceService object
+	 * @param resourceService object
 	 */
 	@Autowired(required=true)
 	public void setResourceService(ResourceService resourceService) {
@@ -39,22 +44,27 @@ public class ResourceController {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Method to get OrganizationService object
+	 * @return OrganizationService object
 	 */
 	public OrganizationService getOrganizationService() {
 		return organizationService;
 	}
 
 	/**
-	 * 
-	 * @param organizationService
+	 * Method to set OrganizationService object
+	 * @param OrganizationService object
 	 */
 	@Autowired(required=true)
 	public void setOrganizationService(OrganizationService organizationService) {
 		this.organizationService = organizationService;
 	}
 	
+	/**
+	 * Method to add a new resource
+	 * @param resource : Resource object to be added
+	 * @return ResponseEntity with no object
+	 */
 	@RequestMapping(value="/addResource",method = RequestMethod.POST)
 	public ResponseEntity<Void> addResource(@RequestBody Resource resource){
 
@@ -68,23 +78,10 @@ public class ResourceController {
 		}
 	}
 
-	@RequestMapping(value="/getAllResources",method = RequestMethod.GET)
-	public ResponseEntity<List<Resource>> getAllResources(){
-
-		List<Resource> resourceList = this.resourceService.getAllResources();
-
-		if(resourceList.isEmpty()) {
-
-			return new ResponseEntity<List<Resource>>(HttpStatus.NO_CONTENT);
-		} else {
-			return new ResponseEntity<List<Resource>>(resourceList, HttpStatus.OK);
-		}
-	}
-	
 	/**
-	 * done
-	 * @param organization
-	 * @return
+	 * Method to get all resources available in an organization by organization ID
+	 * @param organizationId : ID of organization
+	 * @return ResponseEntity with list of Resource objects
 	 */
 	@RequestMapping(value = "/getResourcesByOrganizationId/{organizationId}", method = RequestMethod.GET)
 	public ResponseEntity<List<Resource>> getResourcesByOrganizationId(@PathVariable("organizationId") int organizationId) {
@@ -97,44 +94,15 @@ public class ResourceController {
 			return new ResponseEntity<List<Resource>>(list, HttpStatus.OK);
 		}
 	}
-
-	@RequestMapping(value="/deleteResourceByName",method=RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteResourceByName(@RequestBody String resourceName){
-
-		boolean result = this.resourceService.deleteResourceByName(resourceName);
-		if(result){
-			return new ResponseEntity<Void>(HttpStatus.OK);
-		}else{
-			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-		}
-	}
-
-	/*@RequestMapping(value="/deleteResourceById",method=RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteResourceById(@RequestParam int resourceId){
-
-		boolean result = this.resourceService.deleteResourceById(resourceId);
-		if(result){
-			return new ResponseEntity<Void>(HttpStatus.OK);
-		}else{
-			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-		}
-	}*/
-
-	@RequestMapping(value="/deleteResourceById/{resource_id}",method=RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteResourceById(@PathVariable("resource_id") int resource_id){
-		System.out.println("dd"+resource_id);
-		boolean result = this.resourceService.deleteResourceById(resource_id);
-		if(result){
-			return new ResponseEntity<Void>(HttpStatus.OK);
-		}else{
-			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-		}
-	}
-
+	
+	/**
+	 * Method to get resource by its ID
+	 * @param resourceId : ID of resource
+	 * @return ResponseEntity with Resource object
+	 */
 	@RequestMapping(value = "/getResourceById/{resourceId}", method = RequestMethod.GET)
 	public ResponseEntity<Resource> getResourceById(@PathVariable("resourceId") int resourceId) {
-		System.out.println("in deptcontrlr");
-		
+
 		Resource resource = this.resourceService.getResourceById(resourceId);
 		if (resource != null) {
 			return new ResponseEntity<Resource>(resource,HttpStatus.OK);
@@ -142,12 +110,17 @@ public class ResourceController {
 			return new ResponseEntity<Resource>(HttpStatus.NO_CONTENT);
 		}
 	}
+	
 
+	/**
+	 * Method to update a resource
+	 * @param resource : Resource object to be updated
+	 * @return ResponseEntity with no object
+	 */
 	@RequestMapping(value = "/updateResource", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@RequestBody Resource resource) {
-		System.out.println("departmentctrl "+resource);
+
 		this.resourceService.updateResource(resource);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
-
 }

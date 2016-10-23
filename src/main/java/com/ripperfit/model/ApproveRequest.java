@@ -19,11 +19,11 @@ public class ApproveRequest implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@ManyToOne(optional=true,fetch=FetchType.LAZY)
+	@ManyToOne(optional=false,fetch=FetchType.LAZY)
 	@JoinColumn(name="request_id")
 	private ResourceRequest resourceRequest;
 	
-	@ManyToOne(optional=true,fetch=FetchType.LAZY)
+	@ManyToOne(optional=false,fetch=FetchType.LAZY)
 	@JoinColumn(name="approvee_id")
 	private Employee employee;
 	

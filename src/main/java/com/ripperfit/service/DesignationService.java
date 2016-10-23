@@ -26,11 +26,7 @@ public class DesignationService {
 	public void setDesignationDao(DesignationDao designationDao) {
 		this.designationDao = designationDao;
 	}
-
-	/**
-	 * done
-	 * @return
-	 */
+	
 	@Transactional
 	public List<Designation> getAllDesignationsInAnOrganization(Organization organization)
 	{
@@ -38,10 +34,6 @@ public class DesignationService {
 		return designation;
 	}
 	
-	/**
-	 * done
-	 * @return
-	 */
 	@Transactional
 	public List<Designation> getDesignationsInDepartment(Department department)
 	{
@@ -60,30 +52,6 @@ public class DesignationService {
 			result = 2;
 		}
 
-		return result;
-	}
-
-	@Transactional
-	public boolean deleteDesignationByName(String designationName){
-
-		Designation designation = this.getDesignationByName(designationName);
-		boolean result = false;
-		if(designation != null){
-			this.designationDao.deleteDesignationByName(designationName);
-			result = true;
-		}
-		return result;
-	}
-
-	@Transactional
-	public boolean deleteDesignationById(int designationId){
-		
-		Designation designation = this.getDesignationById(designationId);
-		boolean result = false;
-		if(designation != null){
-			this.designationDao.deleteDesignationById(designationId);
-			result = true;
-		}
 		return result;
 	}
 

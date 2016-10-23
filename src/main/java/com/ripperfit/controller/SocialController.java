@@ -4,9 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-import javax.servlet.http.HttpSession;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,13 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
-import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.ripperfit.model.Employee;
-import com.ripperfit.service.UserService;
 
 
 @RequestMapping(value="/social")
@@ -51,23 +46,15 @@ public class SocialController {
 		// Specify the same redirect URI that you use with your web
 		// app. If you don't have a web version of your app, you can
 		// specify an empty string.
-
-
-		String accessToken = tokenResponse.getAccessToken();
-
-		// Use access token to call API
-		GoogleCredential credential = new GoogleCredential().setAccessToken(accessToken);
-
 		// Get profile info from ID token
 		GoogleIdToken idToken = tokenResponse.parseIdToken();
 		GoogleIdToken.Payload payload = idToken.getPayload();
 		String userId = payload.getSubject();  // Use this value as a key to identify a user.
 		String email = payload.getEmail();
-		boolean emailVerified = Boolean.valueOf(payload.getEmailVerified());
 		String name = (String) payload.get("name");
 		String pictureUrl = (String) payload.get("picture");
 		if(userId != null){
-			
+
 			Employee employee = new Employee();
 			if(email != null){
 				employee.setEmail(email);

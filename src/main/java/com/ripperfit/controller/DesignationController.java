@@ -18,6 +18,9 @@ import com.ripperfit.service.DepartmentService;
 import com.ripperfit.service.DesignationService;
 import com.ripperfit.service.OrganizationService;
 
+/**
+ * Controller class for designation
+ */
 @RequestMapping(value = "/designation")
 @RestController
 public class DesignationController {
@@ -27,56 +30,60 @@ public class DesignationController {
 	private DepartmentService departmentService;
 
 	/**
-	 * 
-	 * @return
+	 * Getter method to get DesignationService object
+	 * @return DesignationService object
 	 */
 	public DesignationService getDesignationService() {
 		return designationService;
 	}
 
 	/**
-	 * 
-	 * @param designationService
+	 * Setter method to set DesignationService object
+	 * @param designationService object
 	 */
 	@Autowired(required=true)
 	public void setDesignationService(DesignationService designationService) {
 		this.designationService = designationService;
 	}
-
 	/**
-	 * 
-	 * @return
+	 * Getter method to get organizationService object
+	 * @return organizationService object
 	 */
 	public OrganizationService getOrganizationService() {
 		return organizationService;
 	}
 
 	/**
-	 * 
-	 * @param organizationService
+	 * Setter method to set organizationService object
+	 * @param organizationService object
 	 */
 	@Autowired(required=true)
 	public void setOrganizationService(OrganizationService organizationService) {
 		this.organizationService = organizationService;
 	}
 
-	
-	
 	/**
-	 * @return the departmentService
+	 * Getter method to get DepartmentService object
+	 * @return DepartmentService object
 	 */
 	public DepartmentService getDepartmentService() {
 		return departmentService;
 	}
 
 	/**
-	 * @param departmentService the departmentService to set
+	 * Setter method to set DepartmentService
+	 * @param departmentService : departmentService to set
 	 */
 	@Autowired(required=true)
 	public void setDepartmentService(DepartmentService departmentService) {
 		this.departmentService = departmentService;
 	}
-
+	
+	/**
+	 * Method to add a new designation in organization
+	 * @param designation : Designation object to be added
+	 * @return ResponseEntity with no object
+	 */
 	@RequestMapping(value="/addDesignation",method=RequestMethod.POST)
 	public ResponseEntity<Void> addDesignation(@RequestBody Designation designation){
 
@@ -89,11 +96,17 @@ public class DesignationController {
 			return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
-
+	
+	/**
+	 * Method to get a designation of a particular organization by name of designation
+	 * @param designationName : name of designation
+	 * @param organizationId : ID of that organization
+	 * @return ResponseEntity with designation object
+	 */
 	@RequestMapping(value="/getDesignationByName/{designationName}/{organizationId}",method=RequestMethod.GET)
 	public ResponseEntity<Designation> getDesignationByName(@PathVariable("designationName") String designationName , @PathVariable("organizationId") String organizationId){
 		Organization organization = this.organizationService.getOrganizationById(Integer.parseInt(organizationId));
-		
+
 		Designation designation = this.designationService.getDesignationInAnOrganization(designationName,organization);
 		if(designation != null){
 			return new ResponseEntity<Designation>(designation,HttpStatus.OK);
@@ -101,11 +114,16 @@ public class DesignationController {
 			return new ResponseEntity<Designation>(HttpStatus.NO_CONTENT);
 		}
 	}
-
+	
+	/**
+	 * Method to get a designation by its Id
+	 * @param designationId : id of designation to be found
+	 * @return ResponseEntity with designation object
+	 */
 	@RequestMapping(value="/getDesignationById/{designationId}",method=RequestMethod.GET)
 	public ResponseEntity<Designation> getDesignationById(@PathVariable("designationId") int designationId)
 	{
-		System.out.println("des");
+		
 		Designation designation = this.designationService.getDesignationById(designationId);
 		if(designation != null){
 			return new ResponseEntity<Designation>(designation,HttpStatus.OK);
@@ -113,40 +131,23 @@ public class DesignationController {
 			return new ResponseEntity<Designation>(HttpStatus.NO_CONTENT);
 		}
 	}
-
-	@RequestMapping(value="/deleteDesignationByName",method=RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteDesignationByName(@RequestBody String designationName){
-
-		boolean result = this.designationService.deleteDesignationByName(designationName);
-		if(result){
-			return new ResponseEntity<Void>(HttpStatus.OK);
-		}else{
-			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-		}
-	}
-
-	@RequestMapping(value="/deleteDesignationById",method=RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteDesignationById(@RequestBody int designationId){
-
-		boolean result = this.designationService.deleteDesignationById(designationId);
-		if(result){
-			return new ResponseEntity<Void>(HttpStatus.OK);
-		}else{
-			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-		}
-	}
 	
+	/**
+	 * Method to update level of existing designations after adding a new designation
+	 * @param designation : Designation which is added
+	 * @return ResponseEntity with no object
+	 */
 	@RequestMapping(value="/updateLevels",method=RequestMethod.PUT)
 	public ResponseEntity<Void> updateDesignationLevels(@RequestBody Designation designation){
 
 		this.designationService.updateDesignationLevels(designation);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
-	
+
 	/**
-	 * done
-	 * @param organization
-	 * @return
+	 * Method to get all designations in an organization by organization ID
+	 * @param organizationId : ID of organization
+	 * @return ResponseEntity with list of Designation objects
 	 */
 	@RequestMapping(value = "/getDesignations/{organizationId}", method = RequestMethod.GET)
 	public ResponseEntity<List<Designation>> getDesignations(@PathVariable("organizationId") int organizationId) {
@@ -159,11 +160,11 @@ public class DesignationController {
 			return new ResponseEntity<List<Designation>>(list, HttpStatus.OK);
 		}
 	}
-	
+
 	/**
-	 * done
-	 * @param organization
-	 * @return
+	 * Method to get all designations associated with a particular department
+	 * @param departmentId : ID of department
+	 * @return ResponseEntity with list of Designation objects
 	 */
 	@RequestMapping(value = "/getDesignationsByDepartment/{departmentId}", method = RequestMethod.GET)
 	public ResponseEntity<List<Designation>> getDesignationsByDepartment(@PathVariable("departmentId") int departmentId) {
@@ -176,9 +177,15 @@ public class DesignationController {
 			return new ResponseEntity<List<Designation>>(list, HttpStatus.OK);
 		}
 	}
+	
+	/**
+	 * Method to update a designation of organization
+	 * @param designation : designation object to be updated
+	 * @return : ResponseEntity with no object
+	 */
 	@RequestMapping(value = "/updateDesignation", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@RequestBody Designation designation) {
-		
+
 		this.designationService.updateDesignation(designation);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}

@@ -2,8 +2,6 @@ package com.ripperfit.dao;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -16,10 +14,10 @@ import com.ripperfit.model.Employee;
 import com.ripperfit.model.Organization;
 
 @Repository
-@Transactional
 public class UserDao {
 
 	private SessionFactory sessionFactory;
+	
 	/**
 	 * method to get SessionFactory object
 	 * @return : SessionFactory object
@@ -41,22 +39,21 @@ public class UserDao {
 	 * @param employee : employee object
 	 * @return : boolean
 	 */
-	@Transactional
 	public Boolean registerEmployee(Employee employee) {
 
-		Session session = this.sessionFactory.getCurrentSession();
 		boolean result = false;
 		int i=0;
 		try {
+			Session session = this.sessionFactory.getCurrentSession();
 			i = (Integer) session.save(employee);
 			if(i > 0) {
 				result = true;
 			}
+			return result;
 		} catch(Exception e) {
-
 			e.printStackTrace();
+			throw e;
 		}
-		return result;
 	}
 
 	/**
@@ -64,18 +61,17 @@ public class UserDao {
 	 * @param id : employee id
 	 * @return : Employee Object
 	 */
-	@Transactional
 	public Employee getEmployeeById(int id) {
 
-		Session session = this.sessionFactory.getCurrentSession();
-		Employee emp = null;
-		try {
+		try{
+			Session session = this.sessionFactory.getCurrentSession();
+			Employee emp = null;
 			emp = (Employee) session.load(Employee.class, id);
+			return emp;
 		} catch(Exception e) {
-
 			e.printStackTrace();
+			throw e;
 		}
-		return emp;
 	}
 
 	/**
@@ -83,29 +79,32 @@ public class UserDao {
 	 * @param email : employee's email address
 	 * @return : Employee Object
 	 */
-	@Transactional
 	public Employee getEmployeeByEmail(String email) {
 
-		Session session = this.sessionFactory.getCurrentSession();
-		Employee emp = null;
-		try {
+		try{
+			Session session = this.sessionFactory.getCurrentSession();
+			Employee emp = null;
 			emp = (Employee) session.createCriteria(Employee.class).add( Restrictions.eq("email",email) ).uniqueResult();
+			return emp;
 		} catch(Exception e) {
-
 			e.printStackTrace();
+			throw e;
 		}
-		return emp;
 	}
 
 	/**
 	 * Method to update employee
 	 * @param employee : employee object
 	 */
-	@Transactional
 	public void updateEmployee(Employee employee) {
 
-		Session session = this.sessionFactory.getCurrentSession();
-		session.update(employee);
+		try{
+			Session session = this.sessionFactory.getCurrentSession();
+			session.update(employee);
+		}catch(Exception ex){
+			ex.printStackTrace();
+			throw ex;
+		}
 	}
 
 	/**
@@ -116,62 +115,67 @@ public class UserDao {
 	 */
 	public Employee login(String email, String password) {
 
-		Session session = this.sessionFactory.getCurrentSession();
-		Employee emp = null;
-		try {
+		try{
+			Session session = this.sessionFactory.getCurrentSession();
+			Employee emp = null;
 			emp = (Employee) session.createCriteria( Employee.class).add( Restrictions.eq("email",email) ).add( Restrictions.eq("password",password) ).uniqueResult();
+			return emp;
 		} catch(Exception e) {
-
 			e.printStackTrace();
+			throw e;
 		}
-		return emp;
 	}
 
 	public List<Employee> viewAllEmployee() {
-		Session session = this.sessionFactory.getCurrentSession();
-		@SuppressWarnings("unchecked")
-		List<Employee> emp = session.createCriteria(Employee.class).list();
-		return emp;
-	}
 
-	public boolean deleteEmployeeById(int employeeId){
-
-		Session session = this.sessionFactory.getCurrentSession();
-		String hql = "delete from Employee where employeeId= :employeeId";
-		Query query = session.createQuery(hql);
-		query.setParameter("employeeId", employeeId);
-		query.executeUpdate();
-		return true;
-
+		try{
+			Session session = this.sessionFactory.getCurrentSession();
+			@SuppressWarnings("unchecked")
+			List<Employee> emp = session.createCriteria(Employee.class).list();
+			return emp;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			throw ex;
+		}
 	}
 
 	public Employee getEmployeeByDesignation(Designation designation) {
 
-		Session session = this.sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from Employee where designation= :designation"); 
-		query.setParameter("designation", designation);
-		Employee employee = (Employee) query.uniqueResult();
-		return employee;
-	}
-	public List<Employee> getEmployeeApprove(Employee employee) {
-		System.out.println("fsd");
-		
-		Session session = this.sessionFactory.getCurrentSession();
-		@SuppressWarnings("unchecked")
-		List<Employee> emp = session.createCriteria(Employee.class).add( Restrictions.eq("approvalStatus","false")).add( Restrictions.eq("employee",employee) ).list();
-		System.out.println(emp);
-		return emp;
+		try{
+			Session session = this.sessionFactory.getCurrentSession();
+			Query query = session.createQuery("from Employee where designation= :designation"); 
+			query.setParameter("designation", designation);
+			Employee employee = (Employee) query.uniqueResult();
+			return employee;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			throw ex;
+		}
 	}
 	
-	/**
-	 * done
-	 * @return
-	 */
+	public List<Employee> getEmployeeApprove(Employee employee) {
+
+		try{
+			Session session = this.sessionFactory.getCurrentSession();
+			@SuppressWarnings("unchecked")
+			List<Employee> emp = session.createCriteria(Employee.class).add( Restrictions.eq("approvalStatus","false")).add( Restrictions.eq("employee",employee) ).list();
+			return emp;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			throw ex;
+		}
+	}
+	
 	public List<Employee> getAllEmployeesInAnOrganization(Organization organization) {
 
-		Session session = this.sessionFactory.getCurrentSession();
-		@SuppressWarnings("unchecked")
-		List<Employee> employee = session.createCriteria(Employee.class).add( Restrictions.eq("organization",organization)).list();
-		return employee;
+		try{
+			Session session = this.sessionFactory.getCurrentSession();
+			@SuppressWarnings("unchecked")
+			List<Employee> employee = session.createCriteria(Employee.class).add( Restrictions.eq("organization",organization)).list();
+			return employee;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			throw ex;
+		}
 	}
 }

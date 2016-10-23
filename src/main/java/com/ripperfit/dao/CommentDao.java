@@ -1,8 +1,5 @@
 package com.ripperfit.dao;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -16,58 +13,61 @@ import com.ripperfit.model.ResourceRequest;
 
 @Repository
 public class CommentDao {
-	
-	
-		private SessionFactory sessionFactory;
 
-		/**
-		 * method to get SessionFactory object
-		 * @return : SessionFactory object
-		 */
-		public SessionFactory getSessionFactory() {
-			return sessionFactory;
-		}
 
-		/**
-		 * method to set SessionFactory object
-		 * @param sessionFactory
-		 */
-		@Autowired(required=true)
-		public void setSessionFactory(SessionFactory sessionFactory) {
-			this.sessionFactory = sessionFactory;
-		}
-		/**
-		 * method to view comments by an resource request
-		 
-		 * @return : list of comments
-		 */
-	
-	@SuppressWarnings("unchecked")
-	public List<Comments> getCommentByRequestId(ResourceRequest resourceRequest) {
-		// TODO Auto-generated method stub
-		Session session = this.sessionFactory.getCurrentSession();
-		List<Comments> commentList = (List<Comments>)session.createCriteria(Comments.class)
-				.add(Restrictions.eq("resourceRequest.requestId",resourceRequest.getRequestId())).list();
-		
-		System.out.println("df: "+commentList);
-		return commentList;
-	
+	private SessionFactory sessionFactory;
+
+	/**
+	 * method to get SessionFactory object
+	 * @return : SessionFactory object
+	 */
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
 	}
 
-		public Boolean addComment(Comments comment) {
-			Session session = this.sessionFactory.getCurrentSession();
-			boolean result = false;
-			int i=0;
-			try {
-				i = (Integer) session.save(comment);
-				if(i > 0) {
-					result = true;
-				}
-			} catch(Exception e) {
+	/**
+	 * method to set SessionFactory object
+	 * @param sessionFactory
+	 */
+	@Autowired(required=true)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+	/**
+	 * method to view comments by an resource request
 
-				e.printStackTrace();
+	 * @return : list of comments
+	 */
+
+	@SuppressWarnings("unchecked")
+	public List<Comments> getCommentByRequestId(ResourceRequest resourceRequest) {
+
+		try{
+			Session session = this.sessionFactory.getCurrentSession();
+			List<Comments> commentList = (List<Comments>)session.createCriteria(Comments.class)
+					.add(Restrictions.eq("resourceRequest.requestId",resourceRequest.getRequestId())).list();
+			return commentList;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			throw ex;
+		}
+
+	}
+
+	public Boolean addComment(Comments comment) {
+
+		boolean result = false;
+		int i=0;
+		try {
+			Session session = this.sessionFactory.getCurrentSession();
+			i = (Integer) session.save(comment);
+			if(i > 0) {
+				result = true;
 			}
 			return result;
-			
+		} catch(Exception e) {
+			e.printStackTrace();
+			throw e;
 		}
+	}
 }

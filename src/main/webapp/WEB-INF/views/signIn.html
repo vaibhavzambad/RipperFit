@@ -9,19 +9,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RipperFit</title>
 
-<style>
-html {
-	position: relative;
-	height: 100%;
-	width: 100%;
-}
+<!-- CustomMade CSS -->
+ <link rel="stylesheet" href="resources/css/loginstyle.css">
 
-body {
-	position: absolute;
-	min-width: 100%;
-	min-height: 100%;
-}
-</style>
 <!-- CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -85,7 +75,7 @@ body {
 		<div class="row">
 			<div class="col-xs-4"></div>
 			<div class="col-xs-4">
-				<h3 class="text-center">LogIn to Ripperfit</h3>
+				<h3 class="text-center">Login</h3>
 				<hr />
 				<form name="userForm" ng-submit="login(user)"
 					ng-controller="signInCtrl">
@@ -108,7 +98,7 @@ body {
 							Password should be 6 digits minimum </span>
 					</div>
 					<div>
-						<button type="submit" class="btn btn-primary"
+						<button id="loginbutton" type="submit" class="btn btn-primary"
 							ng-disabled="userForm.$invalid">Log In</button>
 						&nbsp;&nbsp;&nbsp;&nbsp;<a href="forgetPassword.html">Forgot
 							Password?</a> &nbsp;&nbsp;&nbsp;&nbsp; <div style="color:red;" id="message"></div>
@@ -119,7 +109,6 @@ body {
 					ng-controller="socialCtrl" style="margin-bottom: 70px;">
 					<i class="fa fa-google"></i> Google
 				</button>
-			
 			</div>
 		</div>
 	</div>

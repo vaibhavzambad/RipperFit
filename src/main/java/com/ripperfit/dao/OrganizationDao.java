@@ -2,8 +2,6 @@ package com.ripperfit.dao;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -36,60 +34,70 @@ public class OrganizationDao {
 	}
 
 	public List<Organization> getAllOrganizations() {
-		Session session = this.sessionFactory.getCurrentSession();
-		@SuppressWarnings("unchecked")
-		List<Organization> organizationList = session.createCriteria(Organization.class).list();
-		System.out.println("organi: "+organizationList.size());
-		return organizationList;
+
+		try{
+			Session session = this.sessionFactory.getCurrentSession();
+			@SuppressWarnings("unchecked")
+			List<Organization> organizationList = session.createCriteria(Organization.class).list();
+			return organizationList;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			throw ex;
+		}
 	}
 
-	@Transactional
 	public Boolean addOrganization(Organization organization) {
 
-		System.out.println(organization.getOrganizationName());
-		Session session = this.sessionFactory.getCurrentSession();
 		boolean result = false;
 		int i=0;
 		try {
+			Session session = this.sessionFactory.getCurrentSession();
 			i = (Integer) session.save(organization);
 			if(i > 0) {
 				result = true;
 			}
+			return result;
 		} catch(Exception e) {
-
 			e.printStackTrace();
+			throw e;
 		}
-		System.out.println("dao result"+result);
-		return result;
 	}
 
-	@Transactional
 	public Organization getOrganizationByName(String organizationName){
 
-		Session session = this.sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from Organization where organizationName= :organizationName"); 
-		query.setParameter("organizationName", organizationName);
-		Organization organization = null;
-		@SuppressWarnings("unchecked")
-		List<Organization> organizationList = query.list();
-		if(! organizationList.isEmpty()){
-			organization = (Organization) organizationList.get(0);
+		try{
+			Session session = this.sessionFactory.getCurrentSession();
+			Query query = session.createQuery("from Organization where organizationName= :organizationName"); 
+			query.setParameter("organizationName", organizationName);
+			Organization organization = null;
+			@SuppressWarnings("unchecked")
+			List<Organization> organizationList = query.list();
+			if(! organizationList.isEmpty()){
+				organization = (Organization) organizationList.get(0);
+			}
+			return organization;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			throw ex;
 		}
-		return organization;
 	}
 
-	@Transactional
 	public Organization getOrganizationById(int organizationId){
 
-		Session session = this.sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from Organization where organizationId= :organizationId"); 
-		query.setParameter("organizationId", organizationId);
-		Organization organization = null;
-		@SuppressWarnings("unchecked")
-		List<Organization> organizationList = query.list();
-		if(! organizationList.isEmpty()){
-			organization = (Organization) organizationList.get(0);
+		try{
+			Session session = this.sessionFactory.getCurrentSession();
+			Query query = session.createQuery("from Organization where organizationId= :organizationId"); 
+			query.setParameter("organizationId", organizationId);
+			Organization organization = null;
+			@SuppressWarnings("unchecked")
+			List<Organization> organizationList = query.list();
+			if(! organizationList.isEmpty()){
+				organization = (Organization) organizationList.get(0);
+			}
+			return organization;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			throw ex;
 		}
-		return organization;
 	}	
 }

@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ripperfit.dao.CommentDao;
-import com.ripperfit.model.ApproveRequest;
 import com.ripperfit.model.Comments;
-import com.ripperfit.model.Employee;
 import com.ripperfit.model.ResourceRequest;
 
 public class CommentsService {
@@ -38,18 +36,16 @@ public class CommentsService {
 
 	@Transactional
 	public List<Comments> getCommentByRequestId(ResourceRequest resourceRequest) {
-		System.out.println("comment service");
+		
 		List<Comments> commentList = this.commentDao
 				.getCommentByRequestId(resourceRequest);
-		System.out.println(commentList);
 		return commentList;
 	}
 
 	/**
 	 * method to add the comment
 	 * 
-	 * @param request
-	 *            : Commentobject
+	 * @param request: Commentobject
 	 * **/
 	@Transactional
 	public Boolean addComment(Comments comment) {

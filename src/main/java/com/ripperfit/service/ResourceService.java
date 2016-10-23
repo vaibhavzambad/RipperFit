@@ -63,39 +63,11 @@ public class ResourceService {
 	}
 
 	@Transactional
-	public boolean deleteResourceByName(String resourceName){
-
-		Resource resource = this.resourceDao.getResourceByName(resourceName);
-		boolean result = false;
-		if(resource != null){
-			this.resourceDao.deleteResourceByName(resourceName);
-			result = true;
-		}
-		return result;
-	}
-
-	@Transactional
-	public boolean deleteResourceById(int resourceId){
-
-		Resource resource = this.resourceDao.getResourceById(resourceId);
-		boolean result = false;
-		if(resource != null){
-			this.resourceDao.deleteResourceById(resourceId);
-			result = true;
-		}
-		return result;
-	}
-	
-	@Transactional
 	public void updateResource(Resource resource) {
 		
 		this.resourceDao.updateResource(resource);
 	}
 	
-	/**
-	 * done
-	 * @return
-	 */
 	@Transactional
 	public List<Resource> getAllResourcesInAnOrganization(Organization organization)
 	{

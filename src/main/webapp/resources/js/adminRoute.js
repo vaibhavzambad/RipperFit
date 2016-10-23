@@ -1,5 +1,4 @@
-var app = angular
-.module("RipperFit", ["ngRoute"])
+var app = angular.module("RipperFit", ["ngRoute"])
 
 .config(function($routeProvider) {
 	$routeProvider.when("/viewRequests", {
@@ -13,7 +12,8 @@ var app = angular
 	.when("/viewDesignations", {
 		templateUrl: "viewDesignations.html",
 		controller: "viewDesignationsCtrl"
-	}).when("/viewDesignations", {
+			
+	}).when("/viewDesignationsByHelpdesk", {
 		templateUrl: "viewDesignationsByHelpdesk.html",
 		controller: "viewDesignationsCtrl"
 	})
@@ -156,7 +156,7 @@ var app = angular
 							text: 'Departments'
 						}, {
 							href: '#/viewDesignations',
-							text: 'Positions'
+							text: 'Designations'
 						}];
 						$scope.loggedUserList = [{
 							href: '#/myProfile',
@@ -170,8 +170,8 @@ var app = angular
 							href: '#/viewResources',
 							text: 'Resources'
 						}, {
-							href: '#/viewDesignations',
-							text: 'Positions'
+							href: '#/viewDesignationsByHelpdesk',
+							text: 'Designations'
 						}];
 						$scope.loggedUserList = [{
 							href: '#/myProfile',
@@ -194,9 +194,6 @@ var app = angular
 						}];
 					}
 				}
-			},
-			function(response) {
-				console.log(response.status);
 			});
 })
 
@@ -235,14 +232,9 @@ var app = angular
 							.then(
 									function() {
 										$window.location.href = "#/viewOwnRequests/" + $scope.request.employee.employeeId;
-									}, function(response) {
-										console.log(response.status);
 									});
 						}
-					}),
-					function(response) {
-		console.log(response.status);
-	};
+					});
 })
 
 .controller("viewRequestsCtrl", function($scope, $http, $filter, StoreCurrentLoggedInUserInformationService) {
@@ -289,21 +281,16 @@ var app = angular
 				}
 			}
 		}
-	}),
-	function(response) {
-		console.log(response.status);
-	};
+	});
 })
+
 
 .controller("viewDesignationsCtrl", function($scope, $http, StoreCurrentLoggedInUserInformationService) {
 	$scope.employee = StoreCurrentLoggedInUserInformationService.get();
 	$http.get("/RipperFit/designation/getDesignations/" + $scope.employee.organization.organizationId)
 	.then(function(response) {
 		$scope.designation = response.data;
-	}),
-	function(response) {
-		console.log(response.status);
-	};
+	});
 })
 
 .controller("viewEmployeesCtrl", function($scope, $http, StoreCurrentLoggedInUserInformationService) {
@@ -311,42 +298,12 @@ var app = angular
 	$http.get("/RipperFit/employee/getEmployeesByOrganizationId/" + $scope.employeeDetail.organization.organizationId)
 	.then(function(response) {
 		$scope.employee = response.data;
-	}),
-	function(response) {
-		console.log(response.status);
-	};
-})
-
-.controller("deleteRequestCtrl", function($scope, $http, $routeParams) {
-	$http.get("/RipperFit/request/getAllRequests")
-	.then(function(response) {
-		$scope.requests = response.data;
-		var length = $scope.requests.length;
-		for (var i = 0; i < length; i++) {
-			if ($scope.requests[i].status == "completed" || $scope.requests[i].status == "success") {
-				$scope.requests[i].color = "success";
-			}
-			if ($scope.requests[i].status == "running") {
-				$scope.requests[i].color = "success";
-			}
-			if ($scope.requests[i].status == "pending") {
-				$scope.requests[i].color = "primary";
-			}
-			if ($scope.requests[i].status == "rejected") {
-				$scope.requests[i].color = "danger";
-			}
-			if ($scope.requests[i].status == "approved") {
-				$scope.requests[i].color = "warning";
-			}
-		}
-	}),
-	function(response) {
-		console.log(response.status);
-	};
+	});
 })
 
 .controller("addDepartmentCtrl", function($scope, $http, $window, $filter, StoreCurrentLoggedInUserInformationService) {
 	$scope.addDepartment = function(Department) {
+		var message = angular.element(document.querySelector('#message'));
 		$scope.employee = StoreCurrentLoggedInUserInformationService.get();
 		$scope.departmentDetails = {
 				"departmentId": "",
@@ -363,7 +320,9 @@ var app = angular
 		}).then(function() {
 			$window.location.href = "#/viewDepartments/";
 		}, function(response) {
-			console.log(response.status);
+			if(response.status === 409){
+				message.text("Department Already Present");
+			}
 		});
 	}
 })
@@ -373,10 +332,7 @@ var app = angular
 	$http.get("/RipperFit/departments/getAllDepartmentsInAnOrganization/" + $scope.employee.organization.organizationId)
 	.then(function(response) {
 		$scope.departments = response.data;
-	}),
-	function(response) {
-		console.log(response.status);
-	};
+	});
 })
 
 .controller("approveEmpCtrl", function($scope, $http, $window) {
@@ -385,7 +341,6 @@ var app = angular
 	$http.get("/RipperFit/employee/getEmployeeApprove")
 	.then(function(response) {
 		$scope.employeeList = response.data;
-		console.log("emp list: "+$scope.employeeList);
 		var length = $scope.employeeList.length;
 		var myEl = angular.element(document.querySelector('#table'));
 		var myE2 = angular.element(document.querySelector('#msg'));
@@ -398,7 +353,6 @@ var app = angular
 
 		$scope.forwardEmployee = function(
 				$index, employee) {
-			console.log(employee.password);
 			$scope.status = "true";
 			$scope.employee = {
 					"employeeId": employee.employeeId,
@@ -476,10 +430,7 @@ var app = angular
 				}
 			}
 		}
-	}),
-	function(response) {
-		console.log(response.status);
-	};
+	});
 })
 
 .controller("editDepartmentCtrl", function($scope, $http, $routeParams, $window) {
@@ -502,8 +453,6 @@ var app = angular
 			})
 			.then(function() {
 				$window.location.href = "#/viewDepartments/";
-			}, function(response) {
-				console.log(response.status);
 			});
 		}
 	});
@@ -522,7 +471,6 @@ var app = angular
 					"department": $scope.designation.department,
 					"organization": $scope.designation.organization
 			};
-			console.log(designation);
 
 			$http({
 				method: 'PUT',
@@ -533,8 +481,6 @@ var app = angular
 				}
 			}).then(function() {
 				$window.location.href = "#/viewDesignations/";
-			}, function(response) {
-				console.log(response.status);
 			});
 		}
 	});
@@ -568,11 +514,14 @@ var app = angular
 		}
 	}),
 	function(response) {
-		console.log(response.status);
+		if(response.status === 409){
+			message.text("Resource Already Present");
+		}
 	}
 })
 
 .controller("addResourceCtrl", function($scope, $http, $window, StoreCurrentLoggedInUserInformationService) {
+	var message = angular.element(document.querySelector('#message'));
 	$scope.getResourceDetails = function(resource) {
 		$scope.resourceObject = {
 				"resourceId": "",
@@ -590,7 +539,9 @@ var app = angular
 		}).then(function() {
 			$window.location.href = "#/viewResources";
 		}, function(response) {
-			console.log(response.status);
+			if(response.status === 409){
+				message.text("Resource Already Present");
+			}
 		});
 	}
 })
@@ -615,7 +566,9 @@ var app = angular
 		})
 	}),
 	function(response) {
-		console.log(response.status);
+		if(response.status === 409){
+			message.text("Resource Already Present");
+		}
 	}
 })
 
@@ -635,10 +588,7 @@ var app = angular
 			}
 		}).then(function() {
 			$window.location.href = "#/viewRequests";
-		}),
-		function(response) {
-			console.log(response.status);
-		};
+		});
 	}
 
 	$scope.rejectRequest = function(request) {
@@ -651,10 +601,7 @@ var app = angular
 			}
 		}).then(function() {
 			$window.location.href = "#/viewRequests";
-		}),
-		function(response) {
-			console.log(response.status);
-		};
+		});
 	}
 })
 
@@ -725,9 +672,6 @@ var app = angular
 		}).then(function() {
 			StoreCurrentLoggedInUserInformationService.set($scope.employee);
 			$window.location.reload("#/myProfile");
-		},
-		function(response) {
-			console.log(response.status);
 		});
 	}
 })
@@ -744,8 +688,6 @@ var app = angular
 			}
 		}).then(function(response) {
 			$scope.resourceDetails = response.data;
-		}, function(response) {
-			console.log(response.status);
 		});
 	}
 
@@ -776,9 +718,6 @@ var app = angular
 		.then(
 				function() {
 					$window.location.href = "#/viewOwnRequests/" + $scope.requestDetails.employee.employeeId;
-				},
-				function(response) {
-					console.log(response.status);
 				});
 	}
 })
@@ -803,29 +742,27 @@ var app = angular
 		} else {
 			myE2.addClass('hidden');
 			for (var i = 0; i < length; i++) {
-				$scope.requestsToApprove[i].resourceRequest.requestDate = $filter('date')(new Date($scope.requestsToApprove[i].resourceRequest.requestDate),'yyyy-MM-dd');
-				if ($scope.requestsToApprove[i].resourceRequest.status == "completed" || $scope.requestsToApprove[i].resourceRequest.status == "success") {
+				$scope.requestsToApprove[i].requestDate = $filter('date')(new Date($scope.requestsToApprove[i].requestDate),'yyyy-MM-dd');
+				if ($scope.requestsToApprove[i].status == "completed" || $scope.requestsToApprove[i].status == "success") {
 					$scope.requestsToApprove[i].color = "success";
 				}
-				if ($scope.requestsToApprove[i].resourceRequest.status == "running") {
+				if ($scope.requestsToApprove[i].status == "running") {
 					$scope.requestsToApprove[i].color = "primary";
 				}
-				if ($scope.requestsToApprove[i].resourceRequest.status == "pending") {
+				if ($scope.requestsToApprove[i].status == "pending") {
 					$scope.requestsToApprove[i].color = "primary";
 				}
-				if ($scope.requestsToApprove[i].resourceRequest.status == "rejected") {
+				if ($scope.requestsToApprove[i].status == "rejected") {
 					$scope.requestsToApprove[i].color = "danger";
 				}
-				if ($scope.requestsToApprove[i].resourceRequest.status == "approved") {
+				if ($scope.requestsToApprove[i].status == "approved") {
 					$scope.requestsToApprove[i].color = "warning";
 				}
 			}
 		}
-	}),
-	function(response) {
-		console.log(response.status);
-	};
+	});
 })
+
 
 .controller("forwardRequestCtrl", function($scope, $http, $window) {
 	$scope.forwardRequest = function(request) {
@@ -838,15 +775,14 @@ var app = angular
 		})
 		.then(function(response) {
 			$window.location.href = "#/viewRequestsToApprove";
-		}),
-		function(response) {
-			console.log(response.status);
-		};
+		});
 	}
 })
 
 .controller('addDesignationCtrl', function($scope, $http, $window, $filter, StoreCurrentLoggedInUserInformationService) {
-
+	
+	var message = angular.element(document.querySelector('#message'));
+	var text = "Designation Already Present";
 	$scope.employee = StoreCurrentLoggedInUserInformationService.get();
 	$scope.getDepartments = function() {
 		$http({
@@ -857,8 +793,6 @@ var app = angular
 			}
 		}).then(function(response) {
 			$scope.departmentDetails = response.data;
-		}, function(response) {
-			console.log(response.status);
 		});
 	}
 
@@ -871,8 +805,6 @@ var app = angular
 			}
 		}).then(function(response) {
 			$scope.designationDetails = response.data;
-		}, function(response) {
-			console.log(response.status);
 		});
 	}
 
@@ -880,7 +812,6 @@ var app = angular
 
 		$http.get("/RipperFit/employee/getCurrentEmployeeObject")
 		.then(function(response) {
-			console.log(response);
 			if (position.parentDesignation === undefined) {
 
 				$scope.level = 1;
@@ -907,7 +838,9 @@ var app = angular
 				.then(function() {
 					$window.location.href = "#/viewDesignations";
 				}, function(response) {
-					console.log("a" + response.status);
+					if(response.status === 409){
+						message.text(text);
+					}
 				});
 			} else {
 				$scope.level = position.parentDesignation.designationLevel;
@@ -930,7 +863,6 @@ var app = angular
 					}
 				})
 				.then(function() {
-					console.log($scope.designationObject);
 					$http({
 						method: 'POST',
 						url: "/RipperFit/designation/addDesignation",
@@ -942,10 +874,10 @@ var app = angular
 					.then(function() {
 						$window.location.href = "#/viewDesignations";
 					}, function(response) {
-						console.log("a" + response.status);
+						if(response.status === 409){
+							message.text(text);
+						}
 					});
-				}, function(response) {
-					console.log("b" + response.status);
 				});
 			}
 		});
@@ -973,8 +905,6 @@ var app = angular
 			}
 		}).then(function() {
 			$window.location.reload("#/viewRequestDetail/" + requests.requestId);
-		}, function(response) {
-			console.log(response.status);
 		});
 	}
 })
@@ -1000,8 +930,6 @@ var app = angular
 			})
 			.then(function() {
 				$window.location.href = "#/viewResources/";
-			}, function(response) {
-				console.log(response.status);
 			});
 		}
 	});
@@ -1022,11 +950,9 @@ var app = angular
 				$scope.employee = StoreCurrentLoggedInUserInformationService.get();
 				$scope.employee.password = user.new_password;
 				StoreCurrentLoggedInUserInformationService.set($scope.employee);
-
 				message.text("Password Changed");
 			}, function(response) {
 				message.text("Wrong Password");
-				console.log(response.status);
 			});
 		} else {
 			message.text("Password and confirm password do not match");
@@ -1036,35 +962,30 @@ var app = angular
 
 .controller("updateRequestCtrl", function($scope, $http, $window) {
 	 $scope.clickable = function(requestId) {
-		 console.log(requestId);
 		   location.href = '#/viewRequestDetail/' + requestId;
 		  }
 	$scope.forwardRequest = function(request) {
 		$http({
 			method: 'GET',
-			url: "/RipperFit/approve/forwardRequest/" + request.resourceRequest.requestId,
+			url: "/RipperFit/approve/forwardRequest/" + request.requestId,
 			headers: {
 				'Content-Type': 'application/json'
 			}
 		})
 		.then(function() {
 			$window.location.reload("#/viewRequestsToApprove");
-		}, function(response) {
-			console.log(response.status);
 		});
 	}
 
 	$scope.rejectRequest = function(request) {
 		$http({
 			method: 'GET',
-			url: "/RipperFit/approve/rejectRequest/" + request.resourceRequest.requestId,
+			url: "/RipperFit/approve/rejectRequest/" + request.requestId,
 			headers: {
 				'Content-Type': 'application/json'
 			}
 		}).then(function() {
 			$window.location.reload("#/viewRequestsToApprove");
-		}, function(response) {
-			console.log(response.status);
 		});
 	}
 })
@@ -1080,7 +1001,6 @@ var app = angular
 	}).then(function(response) {
 		$scope.employee = response.data;
 		var deg = $filter('uppercase')($scope.employee.designation.designationName);
-		console.log(deg);
 		if (deg == "ADMIN") {
 
 		} else if (deg == "HELPDESK") {
@@ -1090,14 +1010,12 @@ var app = angular
 			var reject = angular.element(document.querySelector('#reject'));
 			var complete = angular.element(document.querySelector('#complete'));
 			var running = angular.element(document.querySelector('#running'));
-			//  var request = angular.element(document.querySelector('#request'));
 			var position = angular.element(document.querySelector('#position'));
 			pending.addClass("hidden");
 			member.addClass("hidden");
 			reject.addClass("hidden");
 			complete.addClass("hidden");
 			running.addClass("hidden");
-			// request.addClass("hidden");
 			position.addClass("hidden");
 
 		} else {
@@ -1142,19 +1060,20 @@ var app = angular
 		$scope.completed = "completed";
 		$scope.rejected = "rejected";
 
-		$http.get("/RipperFit/request/getRequestByStatus/" + $scope.pending)
+		$http.get("/RipperFit/request/getRequestByStatus/status=" + $scope.pending+"/organizationName="+$scope.employee.organization.organizationName)
 		.then(function(response) {
 			$scope.totalPendingRequests = response.data.length;
 		});
-		$http.get("/RipperFit/request/getRequestByStatus/" + $scope.running)
+		$http.get("/RipperFit/request/getRequestByStatus/status=" + $scope.running+"/organizationName="+$scope.employee.organization.organizationName)
 		.then(function(response) {
 			$scope.totalRunningRequests = response.data.length;
 		});
-		$http.get("/RipperFit/request/getRequestByStatus/" + $scope.completed)
+		$http.get("/RipperFit/request/getRequestByStatus/status=" + $scope.completed+"/organization="+$scope.employee.organization.organizationName)
 		.then(function(response) {
 			$scope.totalCompletedRequests = response.data.length;
 		});
-		$http.get("/RipperFit/request/getRequestByStatus/" + $scope.rejected).then(function(response) {
+		$http.get("/RipperFit/request/getRequestByStatus/status=" + $scope.rejected+"/organization="+$scope.employee.organization.organizationName)
+		.then(function(response) {
 			$scope.totalRejectedRequests = response.data.length;
 		});
 	});

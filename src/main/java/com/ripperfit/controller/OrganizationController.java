@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ripperfit.model.Organization;
 import com.ripperfit.service.OrganizationService;
 
+/**
+ * Controller class for Organization
+ */
 @RequestMapping(value = "/organization")
 @RestController
 public class OrganizationController {
@@ -34,7 +37,11 @@ public class OrganizationController {
 	public void setOrganizationService(OrganizationService organizationService) {
 		this.organizationService = organizationService;
 	}
-
+	
+	/**
+	 * Method to get all organizations
+	 * @return ResponseEntity with list of Organization objects
+	 */
 	@RequestMapping(value = "/getAllOrganizations", method = RequestMethod.GET)
 	public ResponseEntity<List<Organization>> getAllOrganizations() {
 
@@ -46,15 +53,17 @@ public class OrganizationController {
 		} else {
 			return new ResponseEntity<List<Organization>>(organizationList, HttpStatus.OK);
 		}
-	}
-
+	}	
+	
+	/**
+	 * Method to add a new organization
+	 * @param organization : Organization object to be added
+	 * @return ResponseEntity with no object
+	 */
 	@RequestMapping(value = "/addOrganization", method = RequestMethod.POST)
 	public ResponseEntity<Void> addOrganization(@RequestBody Organization organization) {
 
-		
-		System.out.println("new Organization"+organization.getOrganizationName());
 		int result = this.organizationService.addOrganization(organization);
-		System.out.println(result);
 		if(result == 1) {
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		} else if(result == 2) {
@@ -64,9 +73,14 @@ public class OrganizationController {
 		}
 	}
 	
+	/**
+	 * Method to get a particular organization by its name
+	 * @param organizationName : name of organization
+	 * @return ResponseEntity with Organization object
+	 */
 	@RequestMapping(value = "/getOrganizationByName/{organizationName}", method = RequestMethod.GET)
 	public ResponseEntity<Organization> getOrganizationByName( @PathVariable("organizationName") String organizationName) {
-		
+
 		Organization organization = this.organizationService.getOrganizationByName(organizationName);
 		if(organization == null) {
 
@@ -75,18 +89,4 @@ public class OrganizationController {
 			return new ResponseEntity<Organization>(organization, HttpStatus.OK);
 		}
 	}
-	
-	@RequestMapping(value = "/getOrganizationById", method = RequestMethod.GET)
-	public ResponseEntity<Organization> getOrganizationById(@RequestBody int organizationId) {
-		
-		Organization organization = this.organizationService.getOrganizationById(organizationId);
-		if(organization == null) {
-
-			return new ResponseEntity<Organization>(HttpStatus.NO_CONTENT);
-		} else {
-			return new ResponseEntity<Organization>(organization, HttpStatus.OK);
-		}
-	}
-	
-	
 }

@@ -148,6 +148,16 @@
 		<beans:property name="commentDao" ref="commentDao"></beans:property>
 	</beans:bean>
 	
+	<beans:bean id="resourceRequestService" class="com.ripperfit.service.ResourceRequestService">
+		<beans:property name="resourceDao" ref="resourceDao"></beans:property>
+		<beans:property name="resourceRequestDao" ref="resourceRequestDao"></beans:property>
+		<beans:property name="userDao" ref="userDao"></beans:property>
+		<beans:property name="approveeRequestDao" ref="approveeRequestDao"></beans:property>
+		<beans:property name="designationDao" ref="designationDao"></beans:property>
+		<beans:property name="departmentDao" ref="departmentDao"></beans:property>
+		<beans:property name="organizationDao" ref="organizationDao"></beans:property>
+	</beans:bean>
+	
 	<beans:bean id="departmentService" class="com.ripperfit.service.DepartmentService">
 		<beans:property name="departmentDao" ref="departmentDao"></beans:property>
 	</beans:bean>
