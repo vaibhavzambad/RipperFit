@@ -507,6 +507,7 @@ var RipperFit = angular.module('RipperFit',[])
 
 .controller('signInCtrl', function($scope, $http, $window, $filter) {
 	$scope.login = function(user) {
+		var message = angular.element(document.querySelector('#message'));
 		$scope.loginDetails=angular.copy(user);
 		$http({
 			method: 'POST',
@@ -519,6 +520,9 @@ var RipperFit = angular.module('RipperFit',[])
 			$window.location.href = 'dashboard.html';
 		}, function(response) {
 			console.log(response.status);
+			if(response.status === 401 || response.status === 400){
+				message.text("Invalid Username or Password");
+			}
 		});
 	}
 

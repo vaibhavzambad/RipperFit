@@ -58,7 +58,10 @@ CREATE TABLE `resource` (
   `resource_id` int(11) NOT NULL AUTO_INCREMENT,
   `resource_name` varchar(30) NOT NULL,
   `final_approval_level` int(11) NOT NULL,
-  PRIMARY KEY (`resource_id`)
+  `organization_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`resource_id`),
+  KEY `resource_ibfk_1` (`organization_id`),
+  CONSTRAINT `resource_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `organization` (`organization_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -83,10 +86,13 @@ CREATE TABLE `designation` (
   `designation_name` varchar(30) NOT NULL,
   `designation_level` int(11) DEFAULT NULL,
   `department_id` int(11) DEFAULT NULL,
+  `organization_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`designation_id`),
   KEY `department_ibfk_2` (`department_id`),
-  CONSTRAINT `department_ibfk_2` FOREIGN KEY (`department_id`) REFERENCES `department` (`department_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+  KEY `designation_ibfk_2` (`organization_id`),
+  CONSTRAINT `designation_ibfk_1` FOREIGN KEY (`department_id`) REFERENCES `department` (`department_id`),
+  CONSTRAINT `designation_ibfk_2` FOREIGN KEY (`organization_id`) REFERENCES `organization` (`organization_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,6 +101,7 @@ CREATE TABLE `designation` (
 
 LOCK TABLES `designation` WRITE;
 /*!40000 ALTER TABLE `designation` DISABLE KEYS */;
+INSERT INTO `designation` VALUES (8,'Admin',0,4,2);
 /*!40000 ALTER TABLE `designation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -114,11 +121,14 @@ CREATE TABLE `resource_request` (
   `status` varchar(30) NOT NULL,
   `message` varchar(1000) DEFAULT NULL,
   `request_date` date DEFAULT NULL,
+  `organization_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`request_id`),
   KEY `resource_id` (`resource_id`),
   KEY `requestor_id` (`requestor_id`),
+  KEY `resource_request_ibfk_3` (`organization_id`),
   CONSTRAINT `resource_request_ibfk_1` FOREIGN KEY (`resource_id`) REFERENCES `resource` (`resource_id`),
-  CONSTRAINT `resource_request_ibfk_2` FOREIGN KEY (`requestor_id`) REFERENCES `employee` (`employee_id`)
+  CONSTRAINT `resource_request_ibfk_2` FOREIGN KEY (`requestor_id`) REFERENCES `employee` (`employee_id`),
+  CONSTRAINT `resource_request_ibfk_3` FOREIGN KEY (`organization_id`) REFERENCES `organization` (`organization_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -175,7 +185,7 @@ CREATE TABLE `department` (
   PRIMARY KEY (`department_id`),
   KEY `department_ibfk_1` (`organization_id`),
   CONSTRAINT `department_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `organization` (`organization_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -184,6 +194,7 @@ CREATE TABLE `department` (
 
 LOCK TABLES `department` WRITE;
 /*!40000 ALTER TABLE `department` DISABLE KEYS */;
+INSERT INTO `department` VALUES (4,'Admin',2),(5,'Technical',2);
 /*!40000 ALTER TABLE `department` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -215,7 +226,7 @@ CREATE TABLE `employee` (
   CONSTRAINT `employee_ibfk_3` FOREIGN KEY (`organization_id`) REFERENCES `organization` (`organization_id`),
   CONSTRAINT `employee_ibfk_4` FOREIGN KEY (`designation_id`) REFERENCES `designation` (`designation_id`),
   CONSTRAINT `employee_ibfk_6` FOREIGN KEY (`reportTo_id`) REFERENCES `employee` (`employee_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -237,10 +248,9 @@ DROP TABLE IF EXISTS `organization`;
 CREATE TABLE `organization` (
   `organization_id` int(11) NOT NULL AUTO_INCREMENT,
   `organization_name` varchar(100) NOT NULL,
-  `domain_name` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`organization_id`),
   UNIQUE KEY `organization_name_UNIQUE` (`organization_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -249,6 +259,7 @@ CREATE TABLE `organization` (
 
 LOCK TABLES `organization` WRITE;
 /*!40000 ALTER TABLE `organization` DISABLE KEYS */;
+INSERT INTO `organization` VALUES (2,'Metacube');
 /*!40000 ALTER TABLE `organization` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -261,4 +272,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-10-19 19:09:48
+-- Dump completed on 2016-10-23 10:18:41
