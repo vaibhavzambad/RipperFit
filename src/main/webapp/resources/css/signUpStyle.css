@@ -1,0 +1,55 @@
+html {
+position:relative;
+height:100%;
+width:100%;
+}
+body {
+position:absolute;
+min-width:100%;
+min-height:100%;
+}
+
+.transparent {
+zoom: 1;
+filter: alpha(opacity=50);
+opacity: 0.5;
+}
+input.invalid, textarea.invalid{
+	border: 2px solid red;
+}
+
+input.valid, textarea.valid{
+	border: 2px solid green;
+}
+hr{
+weight:5px;
+}
+
+
+.signUp-form{
+margin:0px 10px;
+padding:10px;
+}
+.login-form{
+padding:10%;
+}
+input[type="text"],input[type="password"]{
+
+
+}
+textarea[name="Address"]{
+
+}
+#form-organization,#form-designation,#form-gender{
+
+
+}
+.blank{
+ border-radius: 5px;
+	
+margin:10% 10%;
+
+}
+p,.help-block,h3,placeholder{
+
+}

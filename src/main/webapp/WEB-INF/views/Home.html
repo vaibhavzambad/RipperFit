@@ -1,0 +1,311 @@
+<div class="container" style="margin-top: 4%;">
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">Dashboard</h1>
+		</div>
+	</div>
+	<!-- /.row -->
+	<div class="row text-center">
+	<a href="#/viewOwnRequests/{{employee.employeeId}}">
+			<div class="col-lg-3 col-md-6" id="request">
+				<div id="requestsPanel" class="panel panel-primary">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-xs-3">
+								<i class="fa fa-modx fa-5x" aria-hidden="true"></i>
+							</div>
+							<div class="col-xs-9 text-right">
+								<div class="huge">{{request}}</div>
+								<div>Requests Tally</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</a>
+		 <a href="#/viewEmployees">
+			<div class="col-lg-3 col-md-6" id="member">
+				<div id="membersPanel" class="panel">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-xs-3">
+								<i class="fa fa-users fa-5x" aria-hidden="true"></i>
+							</div>
+							<div class="col-xs-9 text-right">
+								<div class="huge">{{Totalemployees}}</div>
+								<div>Members Tally</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</a>
+		 <a href="#/viewResources">
+			<div class="col-lg-3 col-md-6" id="resource">
+				<div id="resourcesPanel" class="panel">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-xs-3">
+								<i class="fa fa-cubes fa-5x" aria-hidden="true"></i>
+							</div>
+							<div class="col-xs-9 text-right">
+								<div class="huge">{{totalResources}}</div>
+								<div>Resources Tally</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</a> <a href="#/viewDesignations">
+			<div class="col-lg-3 col-md-6" id="position">
+				<div id="positionsPanel" class="panel">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-xs-3">
+								<i class="fa fa-bars fa-5x" aria-hidden="true"></i>
+							</div>
+							<div class="col-xs-9 text-right">
+								<div class="huge">{{totalDesignations}}</div>
+								<div>Positions Tally</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</a>
+  <a href="">
+        <div class="col-lg-3 col-md-6" id="complete">
+          <div id="deliveredPanel" class="panel">
+            <div class="panel-heading">
+              <div class="row">
+                <div class="col-xs-3">
+                  <i class="fa fa-check-circle fa-5x" aria-hidden="true"></i>
+                </div>
+                <div class="col-xs-9 text-right">
+                  <div class="huge">{{totalCompletedRequests}}</div>
+                  <div>Delivered Requests</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+      <a href="">
+        <div class="col-lg-3 col-md-6" id="running">
+          <div id="approvedPanel" class="panel">
+            <div class="panel-heading">
+              <div class="row">
+                <div class="col-xs-3">
+                  <i class="fa fa-thumbs-up fa-5x" aria-hidden="true"></i>
+                </div>
+                <div class="col-xs-9 text-right">
+                  <div class="huge">{{totalRunningRequests}}</div>
+                  <div>Running Requests</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+      <a href="">
+        <div class="col-lg-3 col-md-6" id="pending">
+          <div id="pendingPanel" class="panel">
+            <div class="panel-heading">
+              <div class="row">
+                <div class="col-xs-3">
+                  <i class="fa fa-hourglass-half fa-5x" aria-hidden="true"></i>
+                </div>
+                <div class="col-xs-9 text-right">
+                  <div class="huge">{{totalPendingRequests}}</div>
+                  <div>Pending Requests</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+      <a href="">
+        <div class="col-lg-3 col-md-6" id="reject">
+          <div id="declinedPanel" class="panel panel-red">
+            <div class="panel-heading">
+              <div class="row">
+                <div class="col-xs-3">
+                  <i class="fa fa-thumbs-down fa-5x" aria-hidden="true"></i>
+                </div>
+                <div class="col-xs-9 text-right">
+                  <div class="huge">{{totalRejectedRequests}}</div>
+                  <div>Rejected Requests</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+</div>
+<!-- /.container -->
+<br>
+<!-- Responsive Quote Carousel
+  Credits:- http://codepen.io/vegancore/pen/rHzmh -->
+<div class="container">
+	<div class="row">
+		<div class='col-md-offset-2 col-md-8 text-center'
+			style="margin-top: -10px;">
+			<h2>Quotes Soup!!</h2>
+		</div>
+	</div>
+	<!-- /.row -->
+	<div class='row'>
+		<div class='col-md-offset-2 col-md-8' style="margin-top: -20px;">
+			<div class="carousel slide" data-ride="carousel" id="quote-carousel" name="quote-carousel">
+				<!-- Bottom Carousel Indicators -->
+				<ol class="carousel-indicators">
+					<li data-target="#quote-carousel" data-slide-to="0" class="active"></li>
+					<li data-target="#quote-carousel" data-slide-to="1"></li>
+					<li data-target="#quote-carousel" data-slide-to="2"></li>
+					<li data-target="#quote-carousel" data-slide-to="3"></li>
+					<li data-target="#quote-carousel" data-slide-to="4"></li>
+					<li data-target="#quote-carousel" data-slide-to="5"></li>
+					<li data-target="#quote-carousel" data-slide-to="6"></li>
+				</ol>
+
+				<!-- Carousel Slides / Quotes -->
+				<div class="carousel-inner">
+
+					<!-- Quote 1 -->
+					<div class="item active">
+						<blockquote>
+							<div class="row">
+								<div class="col-sm-3 text-center">
+									<img class="img-circle" src="resources/img/Steve-Jobs.jpg"
+										style="width: 100px; height: 100px;">
+								</div>
+								<div class="col-sm-9">
+									<p>Being the richest man in the cemetery doesn't matter to
+										me. Going to bed at night saying we've done something
+										wonderful, that's what matters to me.</p>
+									<small>Steve Jobs</small>
+								</div>
+							</div>
+							<!-- /.row -->
+						</blockquote>
+					</div>
+					<!-- Quote 2 -->
+					<div class="item">
+						<blockquote>
+							<div class="row">
+								<div class="col-sm-3 text-center">
+									<img class="img-circle" src="resources/img/Robin-Sharma.jpg"
+										style="width: 100px; height: 100px;">
+								</div>
+								<div class="col-sm-9">
+									<p>Small daily improvements over time lead to stunning
+										results.</p>
+									<small>Robin Sharma</small>
+								</div>
+							</div>
+							<!-- /.row -->
+						</blockquote>
+					</div>
+					<!-- Quote 3 -->
+					<div class="item">
+						<blockquote>
+							<div class="row">
+								<div class="col-sm-3 text-center">
+									<img class="img-circle" src="resources/img/Warren-Buffet.jpg"
+										style="width: 100px; height: 100px;">
+								</div>
+								<div class="col-sm-9">
+									<p>Someone is sitting in the shade today because someone
+										planted a tree a long time ago.</p>
+									<small>Warren Buffett</small>
+								</div>
+							</div>
+							<!-- /.row -->
+						</blockquote>
+					</div>
+					<!-- Quote 4 -->
+					<div class="item">
+						<blockquote>
+							<div class="row">
+								<div class="col-sm-3 text-center">
+									<img class="img-circle" src="resources/img/Peter-Drucker.jpg"
+										style="width: 100px; height: 100px;">
+								</div>
+								<div class="col-sm-9">
+									<p>The best way to predict the future is to create it.</p>
+									<small>Peter Drucker</small>
+								</div>
+							</div>
+							<!-- /.row -->
+						</blockquote>
+					</div>
+					<!-- Quote 5 -->
+					<div class="item">
+						<blockquote>
+							<div class="row">
+								<div class="col-sm-3 text-center">
+									<img class="img-circle"
+										src="resources/img/Sandeep-Maheshwari.jpeg"
+										style="width: 100px; height: 100px;">
+								</div>
+								<div class="col-sm-9">
+									<p>Success comes from experience, and experience comes from
+										bad experiences.</p>
+									<small>Sandeep Maheshwari</small>
+								</div>
+							</div>
+							<!-- /.row -->
+						</blockquote>
+					</div>
+					<!-- Quote 6 -->
+					<div class="item">
+						<blockquote>
+							<div class="row">
+								<div class="col-sm-3 text-center">
+									<img class="img-circle" src="resources/img/Coco-Chanel.jpg"
+										style="width: 100px; height: 100px;">
+								</div>
+								<div class="col-sm-9">
+									<p>Success is most often achieved by those who don't know
+										that failure is inevitable.</p>
+									<small>Coco Chanel</small>
+								</div>
+							</div>
+							<!-- /.row -->
+						</blockquote>
+					</div>
+					<!-- Quote 6 -->
+					<div class="item">
+						<blockquote>
+							<div class="row">
+								<div class="col-sm-3 text-center">
+									<img class="img-circle" src="resources/img/Brian-Tracy.jpg"
+										style="width: 100px; height: 100px;">
+								</div>
+								<div class="col-sm-9">
+									<p>It Doesn&rsquo;t Matter Where You Came From. All That Matters
+										Is Where You Are Going.</p>
+									<small>Brian Tracy</small>
+								</div>
+							</div>
+							<!-- /.row -->
+						</blockquote>
+					</div>
+				</div>
+
+				<!-- Carousel Buttons Next/Prev -->
+				<a data-slide="prev" data-target="#quote-carousel"
+					class="left carousel-control"><i class="fa fa-chevron-left"></i></a>
+				<a data-slide="next" data-target="#quote-carousel"
+					class="right carousel-control"><i class="fa fa-chevron-right"></i></a>
+			</div>
+		</div>
+	</div>
+	<!-- /.row -->
+</div>
+<!-- /.container -->
+
+
+
+

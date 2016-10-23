@@ -1,6 +1,7 @@
 package com.ripperfit.model;
 
-import javax.persistence.CascadeType;
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,28 +9,33 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="resource")
-public class Resource {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Resource implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name="resource_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int resourceId;
 	
-	@Column(name="resource_name",unique=true)
+	@Column(name="resource_name")
 	private String resourceName;
 	
-	@ManyToMany(cascade={CascadeType.ALL},fetch=FetchType.LAZY)
-	@JoinColumn(name="final_approval_designation_id")
-	private Designation designation;
+	@Column(name="final_approval_level")
+	private int finalApprovalLevel;
 	
-	@Column(name="quantity")
-	private int quantity;
-
+	@ManyToOne(optional=true,fetch=FetchType.LAZY)
+	@JoinColumn(name="organization_id")
+	private Organization organization;
+	
 	/**
 	 * @return the resourceId
 	 */
@@ -59,31 +65,30 @@ public class Resource {
 	}
 
 	/**
-	 * @return the designation
+	 * @return the finalApprovalLevel
 	 */
-	public Designation getDesignation() {
-		return designation;
+	public int getFinalApprovalLevel() {
+		return finalApprovalLevel;
 	}
 
 	/**
-	 * @param designation the designation to set
+	 * @param finalApprovalLevel the finalApprovalLevel to set
 	 */
-	public void setDesignation(Designation designation) {
-		this.designation = designation;
+	public void setFinalApprovalLevel(int finalApprovalLevel) {
+		this.finalApprovalLevel = finalApprovalLevel;
+	}
+	
+	/**
+	 * @return the organization
+	 */
+	public Organization getOrganization() {
+		return organization;
 	}
 
 	/**
-	 * @return the quantity
+	 * @param organization the organization to set
 	 */
-	public int getQuantity() {
-		return quantity;
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
 	}
-
-	/**
-	 * @param quantity the quantity to set
-	 */
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-
 }

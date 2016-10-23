@@ -1,32 +1,46 @@
 package com.ripperfit.model;
 
-import javax.persistence.CascadeType;
+import java.io.Serializable;
+import java.util.Date;
+
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-public class ResourceRequest {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@Entity
+@Table(name="resource_request")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class ResourceRequest implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name="request_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int request_id;
+	private int requestId;
 	
-	@ManyToMany(cascade={CascadeType.ALL},fetch=FetchType.LAZY)
+	@ManyToOne(optional=true,fetch=FetchType.LAZY)
+	@JoinColumn(name="organization_id")
+	private Organization organization;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="resource_id")
 	private Resource resource;
 	
-	@ManyToMany(cascade={CascadeType.ALL},fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="requestor_id")
 	private Employee employee;
 	
-	@ManyToMany(cascade={CascadeType.ALL},fetch=FetchType.LAZY)
-	@JoinColumn(name="current_approval_designation_id")
-	private Designation designation;
+	@Column(name="current_approval_level")
+	private int currentApprovalLevel;
 	
 	@Column(name="priority")
 	private String priority;
@@ -34,21 +48,24 @@ public class ResourceRequest {
 	@Column(name="status")
 	private String status;
 	
-	@Column(name="comments")
-	private String comments;
+	@Column(name="message")
+	private String message;
+	
+	@Column(name="request_date")
+	private Date requestDate;
 
 	/**
-	 * @return the request_id
+	 * @return the requestId
 	 */
-	public int getRequest_id() {
-		return request_id;
+	public int getRequestId() {
+		return requestId;
 	}
 
 	/**
-	 * @param request_id the request_id to set
+	 * @param requestId the requestId to set
 	 */
-	public void setRequest_id(int request_id) {
-		this.request_id = request_id;
+	public void setRequestId(int requestId) {
+		this.requestId = requestId;
 	}
 
 	/**
@@ -80,17 +97,17 @@ public class ResourceRequest {
 	}
 
 	/**
-	 * @return the designation
+	 * @return the currentApprovalLevel
 	 */
-	public Designation getDesignation() {
-		return designation;
+	public int getCurrentApprovalLevel() {
+		return currentApprovalLevel;
 	}
 
 	/**
-	 * @param designation the designation to set
+	 * @param currentApprovalLevel the currentApprovalLevel to set
 	 */
-	public void setDesignation(Designation designation) {
-		this.designation = designation;
+	public void setCurrentApprovalLevel(int currentApprovalLevel) {
+		this.currentApprovalLevel = currentApprovalLevel;
 	}
 
 	/**
@@ -122,17 +139,44 @@ public class ResourceRequest {
 	}
 
 	/**
-	 * @return the comments
+	 * @return the message
 	 */
-	public String getComments() {
-		return comments;
+	public String getMessage() {
+		return message;
 	}
 
 	/**
-	 * @param comments the comments to set
+	 * @param message the message to set
 	 */
-	public void setComments(String comments) {
-		this.comments = comments;
+	public void setMessage(String message) {
+		this.message = message;
 	}
-	
+
+	/**
+	 * @return the requestDate
+	 */
+	public Date getRequestDate() {
+		return requestDate;
+	}
+
+	/**
+	 * @param requestDate the requestDate to set
+	 */
+	public void setRequestDate(Date requestDate) {
+		this.requestDate = requestDate;
+	}
+
+	/**
+	 * @return the organization
+	 */
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	/**
+	 * @param organization the organization to set
+	 */
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
+	}
 }

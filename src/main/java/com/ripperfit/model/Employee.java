@@ -1,8 +1,7 @@
 package com.ripperfit.model;
 
-import java.util.Date;
+import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,14 +12,26 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicInsert;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
+@DynamicInsert
 @Table(name="employee")
-public class Employee {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Employee implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name="employee_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int employeeId;
+	
+	@ManyToOne(optional=true,fetch=FetchType.LAZY)
+	@JoinColumn(name="organization_id")
+	private Organization organization;
 	
 	@Column(name="email",unique = true)
 	private String email;
@@ -29,29 +40,34 @@ public class Employee {
 	private String password;
 	
 	@Column(name="first_name")
-	private String firstName;
+	public String firstName;
 	
 	@Column(name="last_name")
 	private String lastName;
-	
-	@Column(name="dob")
-	private Date dateOfBirth;
-	
+
 	@Column(name="gender")
 	private String gender;
 	
 	@Column(name="contact_number")
 	private String contactNumber;
 	
-	@Column(name="address")
-	private String address;
-	
-	@ManyToOne(cascade={CascadeType.ALL},optional=false,fetch=FetchType.LAZY)
+	@ManyToOne(optional=true,fetch=FetchType.LAZY)
 	@JoinColumn(name="designation_id")
 	private Designation designation;
 	
+	/*@ManyToOne(optional=true,fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@JoinColumn(name="department_id")
+	private Department department;*/
+	
+	@ManyToOne(optional=true,fetch=FetchType.LAZY)
+	@JoinColumn(name="reportTo_id")
+	public Employee employee;
+	
 	@Column(name="profile_picture")
-	private byte[] profilePicture;
+	private String profilePicture;
+	
+	@Column(name="approval_status",columnDefinition = "String default false")
+	private String approvalStatus;
 
 	/**
 	 * @return the employeeId
@@ -65,6 +81,20 @@ public class Employee {
 	 */
 	public void setEmployeeId(int employeeId) {
 		this.employeeId = employeeId;
+	}
+
+	/**
+	 * @return the organization
+	 */
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	/**
+	 * @param organization the organization to set
+	 */
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
 	}
 
 	/**
@@ -124,20 +154,6 @@ public class Employee {
 	}
 
 	/**
-	 * @return the dateOfBirth
-	 */
-	public Date getDateOfBirth() {
-		return dateOfBirth;
-	}
-
-	/**
-	 * @param dateOfBirth the dateOfBirth to set
-	 */
-	public void setDateOfBirth(Date dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
-
-	/**
 	 * @return the gender
 	 */
 	public String getGender() {
@@ -166,20 +182,6 @@ public class Employee {
 	}
 
 	/**
-	 * @return the address
-	 */
-	public String getAddress() {
-		return address;
-	}
-
-	/**
-	 * @param address the address to set
-	 */
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	/**
 	 * @return the designation
 	 */
 	public Designation getDesignation() {
@@ -194,16 +196,62 @@ public class Employee {
 	}
 
 	/**
+	 * @return the department
+	 */
+	/*public Department getDepartment() {
+		return department;
+	}*/
+
+	/**
+	 * @param department the department to set
+	 */
+	/*public void setDepartment(Department department) {
+		this.department = department;
+	}*/
+
+	/**
+	 * @return the employee
+	 */
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	/**
+	 * @param employee the employee to set
+	 */
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+
+	/**
 	 * @return the profilePicture
 	 */
-	public byte[] getProfilePicture() {
+	public String getProfilePicture() {
 		return profilePicture;
 	}
 
 	/**
 	 * @param profilePicture the profilePicture to set
 	 */
-	public void setProfilePicture(byte[] profilePicture) {
+	public void setProfilePicture(String profilePicture) {
 		this.profilePicture = profilePicture;
 	}
+
+	/**
+	 * @return the approvalStatus
+	 */
+	public String getApprovalStatus() {
+		if(this.approvalStatus == null){
+			return "false";
+		}
+		return approvalStatus;
+	}
+
+	/**
+	 * @param approvalStatus the approvalStatus to set
+	 */
+	public void setApprovalStatus(String approvalStatus) {
+		this.approvalStatus = approvalStatus;
+	}
+	
 }

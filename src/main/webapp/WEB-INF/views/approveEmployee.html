@@ -1,0 +1,39 @@
+<div class="container" style="margin-top: 100px;">
+	<h2>
+		<strong>Approve Employee</strong>
+	</h2>
+	<br>
+	<table class="table table-bordered table-responsive"
+		ng-controller="approveEmpCtrl" id="table">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>EmployeeName</th>
+				<th>Email</th>
+				<th>Designation</th>
+
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="emp in employeeList">
+				<td>{{$index+1}}</td>
+				<td>{{emp.firstName +" "+emp.lastName}}</td>
+				<td>{{emp.email}}</td>
+				<td>{{emp.designation.designationName}}</td>
+
+				<td><a class="btn" ng-click="forwardEmployee($index,emp)">
+						<i class="fa fa-thumbs-o-up"></i>
+				</a>
+				<!-- <td><input type=button ng-click="forwardRequest(request)" value="Approve"/> </td> -->
+				<!-- <td><input type=button ng-click="rejectRequest(request)" value="Reject"/> </td> -->
+			</tr>
+		</tbody>
+	</table>
+	<br>
+	<div id="msg">
+		<hr>
+		<h4>No Request For Approval Found</h4>
+	</div>
+	<br>
+</div>

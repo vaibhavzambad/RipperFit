@@ -1,0 +1,211 @@
+/*Landing Page CSS*/
+
+/*Header-Navbar*/
+.navbar-brand .fa{
+  color: white;
+}
+.nav li a:hover{
+  color: #f85c37 !important;
+  background: rgba(255,255,255,0.2) !important
+}
+.fa:hover{
+  color: #f85c37 !important;
+}
+.navbar-brand{
+  margin-top: -7px !important;
+}
+.navbar{
+  padding: 2px;
+}
+.nav li{
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: bold;
+}
+.nav li a{
+  color: white !important;
+}
+
+.nav li a{
+  -webkit-transition: background .4s ease-in-out;
+  -moz-transition: background .4s ease-in-out;
+  transition: background .4s ease-in-out;
+}
+
+/*Common CSS*/
+body {
+  background-color: #f2f2f2;
+  font-family: "Lato";
+  font-weight: 300;
+  font-size: 16px;
+  color: #555;
+}
+
+/* Titles */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Raleway";
+  font-weight: 300;
+  color: #333;
+}
+
+/* Paragraph & Typographic */
+p {
+  line-height: 28px;
+  margin-bottom: 25px;
+}
+
+/* Links */
+a {
+  color: #f85c37;
+  word-wrap: break-word;
+}
+
+a:hover,
+a:focus {
+  color: #7b7b7b !important;
+  text-decoration: none;
+  outline: 0;
+}
+
+/*Animated Blinking Cursor - AutoType*/
+.typed-cursor{
+    opacity: 1;
+    -webkit-animation: blink 0.7s infinite;
+    -moz-animation: blink 0.7s infinite;
+    animation: blink 0.7s infinite;
+}
+@keyframes blink{
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
+@-webkit-keyframes blink{
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
+@-moz-keyframes blink{
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
+
+/* ==========================================================================
+Wrap Sections
+========================================================================== */
+
+/*Header Wrap*/
+#headerwrap {
+  background: url(../img/header-bg.jpg) no-repeat center top;
+  margin-top: -10px;
+  padding-top:20px;
+  text-align:center;
+  background-attachment: relative;
+  background-position: center center;
+  min-height: 700px;
+  width: 100%;
+
+  -webkit-background-size: 100%;
+  -moz-background-size: 100%;
+  -o-background-size: 100%;
+  background-size: 100%;
+
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+#headerwrap h1 {
+  margin-top: 130px;
+  color: white;
+  font-size: 11vw;
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+
+#headerwrap h2 {
+  color: white;
+  font-size: 4vw;
+  font-family: Helvetica, Arial;
+}
+
+/* White Wrap */
+#white-wrap {
+  background: #ffffff;
+  padding-top: 35px;
+  padding-bottom: 35px;
+  text-align: center;
+}
+
+#white-wrap h3 {
+  font-weight: 700;
+  color: #7b7b7b;
+}
+
+#white-wrap bold {
+  color: #2f2f2f;
+}
+
+/* Grey Wrap */
+#grey-wrap {
+  background: #f2f2f2;
+  padding-top: 35px;
+  padding-bottom: 35px;
+  text-align: center;
+}
+
+/* Footer Wrap */
+#footer-wrap{
+  background: #2f2f2f;
+  padding-top: 70px;
+  padding-bottom: 70px;
+  text-align: center
+}
+
+#footer-wrap h3 {
+  color: white;
+}
+
+#footer-wrap i {
+  font-size: 26px;
+  color: white;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/* Copyright Wrap */
+#copyright-wrap {
+  background: #222222;
+  padding-top: 15px;
+  text-align: right;
+}
+#copyright-wrap p {
+  color: white
+}
+
+/*Meet The Team Section*/
+.team {
+  padding-top: 20px;
+}
+
+.team:hover {
+  background: white;
+}
+
+.team a {
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.team img {
+  filter: gray; /* IE6-9 */
+  filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */
+  -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
+}
+
+/* Disable grayscale on hover */
+.team  img:hover {
+  filter: none;
+  -webkit-filter: grayscale(0);
+}

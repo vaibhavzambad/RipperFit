@@ -1,0 +1,25 @@
+html {
+  position: relative;
+  height: 100%;
+}
+  width: 100%;
+body {
+  position: absolute;
+  min-width: 100%;
+  min-height: 100%;
+}
+#loginbutton{
+  border: none;
+  outline: none;
+  -moz-box-shadow: 2px 4px 9px 2px rgba(0, 0, 0, 0.21);
+  -webkit-box-shadow: 2px 4px 9px 2px rgba(0, 0, 0, 0.21);
+  box-shadow: 2px 4px 9px 2px rgba(0, 0, 0, 0.21);
+  padding: 7px 47px;
+}
+#signinButton{
+  padding: 6px 36px;
+  outline: none;
+  -moz-box-shadow: 2px 4px 9px 2px rgba(0, 0, 0, 0.21);
+  -webkit-box-shadow: 2px 4px 9px 2px rgba(0, 0, 0, 0.21);
+  box-shadow: 2px 4px 9px 2px rgba(0, 0, 0, 0.21);
+}

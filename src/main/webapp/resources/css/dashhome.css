@@ -1,0 +1,75 @@
+
+.huge {
+  font-size: 40px;
+}
+.panel-green {
+  border-color: #5cb85c;
+}
+.panel-green > .panel-heading {
+  border-color: #5cb85c;
+  color: white;
+  background-color: #5cb85c;
+}
+
+
+.panel-red {
+  border-color: #d9534f;
+}
+.panel-red > .panel-heading {
+  border-color: #d9534f;
+  color: white;
+  background-color: #d9534f;
+}
+.panel-red > a {
+  color: #d9534f;
+}
+.panel-red > a:hover {
+  color: #b52b27;
+}
+.panel-yellow {
+  border-color: #f0ad4e;
+}
+.panel-yellow > .panel-heading {
+  border-color: #f0ad4e;
+  color: white;
+  background-color: #f0ad4e;
+}
+.panel-yellow > a {
+  color: #f0ad4e;
+}
+.panel-yellow > a:hover {
+  color: #df8a13;
+}
+
+#membersPanel{
+  background-color: #16a085;
+  color : white;
+}
+#resourcesPanel{
+  background-color: #d35400;
+  color : white;
+}
+#positionsPanel{
+  background-color: #8e44ad;
+  color : white;
+}
+#deliveredPanel{
+  background-color: #00C851;
+  color : white;
+}
+#approvedPanel{
+  background-color: #1C85F5;
+  color : white;
+}
+#pendingPanel{
+  background-color: #f1c40f;
+  color : white;
+}
+#ripperTicketPanel{
+  background-color: #FF5722;
+  color : white;
+}
+.purple{
+  background-color: #009688;
+  color : white;
+}
