@@ -11,13 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ripperfit.CustomExceptions.DepartmentAlreadyPresentException;
-import com.ripperfit.CustomExceptions.DepartmentDoesNotExistsException;
-import com.ripperfit.CustomExceptions.OrganizationDoesNotExistsException;
 import com.ripperfit.model.Department;
 import com.ripperfit.model.Organization;
 import com.ripperfit.service.DepartmentService;
 import com.ripperfit.service.OrganizationService;
+import com.ripperfit.util.AppException;
 
 /**
  * controller class to deal with all views related to departments
@@ -73,7 +71,7 @@ public class DepartmentController {
 		try{
 			List<Department> list = this.departmentService.getAllDepartment();
 			return new ResponseEntity<List<Department>>(list, HttpStatus.OK);
-		}catch(DepartmentDoesNotExistsException departmentDoesNotExistsException){
+		}catch(AppException departmentDoesNotExistsException){
 			return new ResponseEntity<List<Department>>(HttpStatus.NO_CONTENT);
 		}catch(Exception ex){
 			return new ResponseEntity<List<Department>>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -91,7 +89,7 @@ public class DepartmentController {
 		try{
 			this.departmentService.addDepartmentByOrganization(department, department.getOrganization());
 			return new ResponseEntity<Void>(HttpStatus.CREATED);
-		}catch(DepartmentAlreadyPresentException departmentAlreadyPresentException){
+		}catch(AppException departmentAlreadyPresentException){
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		}catch(Exception ex){
 			return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -109,7 +107,7 @@ public class DepartmentController {
 		try{
 			Department department = this.departmentService.getDepartmentById(departmentId);
 			return new ResponseEntity<Department>(department,HttpStatus.OK);
-		}catch(DepartmentDoesNotExistsException departmentDoesNotExistsException){
+		}catch(AppException departmentDoesNotExistsException){
 			return new ResponseEntity<Department>(HttpStatus.NO_CONTENT);
 		}catch(Exception ex){
 			return new ResponseEntity<Department>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -127,7 +125,7 @@ public class DepartmentController {
 		try{
 			this.departmentService.updateDepartment(department);
 			return new ResponseEntity<Void>(HttpStatus.OK);
-		}catch(DepartmentDoesNotExistsException departmentDoesNotExistsException){
+		}catch(AppException departmentDoesNotExistsException){
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		}catch(Exception ex){
 			return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -146,7 +144,7 @@ public class DepartmentController {
 		Organization organization = this.organizationService.getOrganizationById(organizationId);
 		List<Department> departmentList = this.departmentService.getAllDepartmentsInAnOrganization(organization);
 		return new ResponseEntity<List<Department>>(departmentList, HttpStatus.OK);
-		}catch(OrganizationDoesNotExistsException | DepartmentDoesNotExistsException notExistsException){
+		}catch(AppException notExistsException){
 			return new ResponseEntity<List<Department>>(HttpStatus.NO_CONTENT);
 		}catch(Exception ex){
 			return new ResponseEntity<List<Department>>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -166,7 +164,7 @@ public class DepartmentController {
 		Organization organization = this.organizationService.getOrganizationById(Integer.parseInt(organizationId));
 		Department department = this.departmentService.getDepartmentInAnOrganization(departmentName, organization);
 		return new ResponseEntity<Department>(department, HttpStatus.OK);
-		}catch(OrganizationDoesNotExistsException | DepartmentDoesNotExistsException notExistsException){
+		}catch(AppException notExistsException){
 			return new ResponseEntity<Department>(HttpStatus.NO_CONTENT);
 		}catch(Exception ex){
 			return new ResponseEntity<Department>(HttpStatus.SERVICE_UNAVAILABLE);

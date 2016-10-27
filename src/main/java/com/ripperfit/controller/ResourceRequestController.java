@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ripperfit.CustomExceptions.OrganizationDoesNotExistsException;
-import com.ripperfit.CustomExceptions.ResourceRequestNotExistsException;
-import com.ripperfit.CustomExceptions.UserNotExistsException;
 import com.ripperfit.model.Employee;
 import com.ripperfit.model.Organization;
 import com.ripperfit.model.ResourceRequest;
@@ -21,6 +18,7 @@ import com.ripperfit.service.ApproveeRequestService;
 import com.ripperfit.service.OrganizationService;
 import com.ripperfit.service.ResourceRequestService;
 import com.ripperfit.service.UserService;
+import com.ripperfit.util.AppException;
 
 /**
  * controller class to handle resource requests
@@ -131,7 +129,7 @@ public class ResourceRequestController {
 			Employee employee = this.userService.getEmployeeById(employeeId);
 			List<ResourceRequest> resourceRequestList = this.resourceRequestService.getResourceRequestByEmployeeId(employee);
 			return new ResponseEntity<List<ResourceRequest>>(resourceRequestList, HttpStatus.OK);
-		}catch(UserNotExistsException | ResourceRequestNotExistsException notExistsException){
+		}catch(AppException notExistsException){
 			return new ResponseEntity<List<ResourceRequest>>(HttpStatus.NO_CONTENT);
 		}catch(Exception ex){
 			return new ResponseEntity<List<ResourceRequest>>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -148,7 +146,7 @@ public class ResourceRequestController {
 		try{
 			List<ResourceRequest> list = this.resourceRequestService.getAllResourceRequest();
 			return new ResponseEntity<List<ResourceRequest>>(list, HttpStatus.OK);
-		}catch(ResourceRequestNotExistsException resourceRequestNotExistsException){
+		}catch(AppException resourceRequestNotExistsException){
 			return new ResponseEntity<List<ResourceRequest>>(HttpStatus.NO_CONTENT);
 		}catch(Exception ex){
 			return new ResponseEntity<List<ResourceRequest>>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -166,7 +164,7 @@ public class ResourceRequestController {
 		try{
 			ResourceRequest resourceRequest = this.resourceRequestService.getResourceRequestById(requestId);
 			return new ResponseEntity<ResourceRequest>(resourceRequest, HttpStatus.OK);
-		}catch(ResourceRequestNotExistsException resourceRequestNotExistsException){
+		}catch(AppException resourceRequestNotExistsException){
 			return new ResponseEntity<ResourceRequest>(HttpStatus.NO_CONTENT);
 		}catch(Exception ex){
 			return new ResponseEntity<ResourceRequest>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -185,7 +183,7 @@ public class ResourceRequestController {
 			Employee employee = this.userService.getEmployeeById(forwardToId);
 			List<ResourceRequest> resourceRequestList = this.approveRequestService.getResourceRequestListByForwardToId(employee);
 			return new ResponseEntity<List<ResourceRequest>>(resourceRequestList, HttpStatus.OK);
-		}catch(UserNotExistsException | ResourceRequestNotExistsException notExistsException){
+		}catch(AppException notExistsException){
 			return new ResponseEntity<List<ResourceRequest>>(HttpStatus.NO_CONTENT);
 		}catch(Exception ex){
 			return new ResponseEntity<List<ResourceRequest>>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -220,7 +218,7 @@ public class ResourceRequestController {
 			Organization organization = this.organizationService.getOrganizationById(organizationId);
 			List<ResourceRequest> resourceRequestList = this.resourceRequestService.getAllRequestsInAnOrganizationForHelpdesk(organization);
 			return new ResponseEntity<List<ResourceRequest>>(resourceRequestList, HttpStatus.OK);
-		}catch(OrganizationDoesNotExistsException | ResourceRequestNotExistsException notExistsException){
+		}catch(AppException notExistsException){
 			return new ResponseEntity<List<ResourceRequest>>(HttpStatus.NO_CONTENT);
 		}catch(Exception ex){
 			return new ResponseEntity<List<ResourceRequest>>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -238,7 +236,7 @@ public class ResourceRequestController {
 		try{
 			List<ResourceRequest> resourceRequestList = this.resourceRequestService.getResourceRequestByStatus(status,organizationName);
 			return new ResponseEntity<List<ResourceRequest>>(resourceRequestList, HttpStatus.OK);
-		}catch(ResourceRequestNotExistsException resourceRequestNotExistsException){
+		}catch(AppException resourceRequestNotExistsException){
 			return new ResponseEntity<List<ResourceRequest>>(HttpStatus.NO_CONTENT);
 		}catch(Exception ex){
 			return new ResponseEntity<List<ResourceRequest>>(HttpStatus.SERVICE_UNAVAILABLE);

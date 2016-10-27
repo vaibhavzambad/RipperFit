@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ripperfit.CustomExceptions.UserNotExistsException;
 import com.ripperfit.model.Employee;
 import com.ripperfit.model.Login;
 import com.ripperfit.service.UserService;
@@ -76,7 +75,7 @@ public class MailUtility {
 			body = emailTemplate(login.getEmail());
 			sendMail(subject, body, login.getEmail());
 			return new ResponseEntity<Void>(HttpStatus.OK);
-		} catch (UserNotExistsException userNotExistsException) {
+		} catch (AppException userNotExistsException) {
 			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 		}catch(Exception exception){
 			return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -96,7 +95,7 @@ public class MailUtility {
 			String body = emailTemplate(email);
 			sendMail(subject, body, email);
 			return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
-		}catch (UserNotExistsException userNotExistsException) {
+		}catch (AppException userNotExistsException) {
 			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 		}catch(Exception exception){
 			return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -147,7 +146,7 @@ public class MailUtility {
 					+ "Metacube Software Pvt. Ltd., <br />Jaipur, Rajasthan-302022</p><p><b>Powered By <span>VARAAS<span><b></p></div>";
 
 			return body;
-		} catch (UserNotExistsException e) {
+		} catch (AppException e) {
 			throw e;
 		}
 	}

@@ -27,6 +27,8 @@ var app = angular.module('RipperFit',[])
 		}, function(response) {
 			if(response.status === 401 || response.status === 400){
 				message.text("Invalid Username or Password");
+			}else if(response.status ===  503 ){
+				$window.location.href = 'SiteMaintenancePage.html';
 			}
 		});
 	}

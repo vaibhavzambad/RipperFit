@@ -6,12 +6,12 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.ripperfit.CustomExceptions.DesignationAlreadyPresentException;
-import com.ripperfit.CustomExceptions.DesignationsDoesNotExistsException;
 import com.ripperfit.dao.DesignationDao;
 import com.ripperfit.model.Department;
 import com.ripperfit.model.Designation;
 import com.ripperfit.model.Organization;
+import com.ripperfit.util.AppException;
+import com.ripperfit.util.ExceptionConstants;
 
 
 @Transactional
@@ -35,7 +35,7 @@ public class DesignationService {
 		try{
 			List<Designation> designationsList = this.designationDao.getAllDesignationsInAnOrganization(organization);
 			if(designationsList.isEmpty()){
-				throw new DesignationsDoesNotExistsException("Designations does not exists");
+				throw new AppException(ExceptionConstants.DESIGNATION_NOT_EXIST);
 			}
 			return designationsList;
 		}catch(Exception ex){
@@ -49,7 +49,7 @@ public class DesignationService {
 		try{
 			List<Designation> designationsList = this.designationDao.getDesignationsInDepartment(department);
 			if(designationsList.isEmpty()){
-				throw new DesignationsDoesNotExistsException("Designations does not exists");
+				throw new AppException(ExceptionConstants.DESIGNATION_NOT_EXIST);
 			}
 			return designationsList;
 		}catch(Exception ex){
@@ -62,7 +62,7 @@ public class DesignationService {
 
 		try{
 			if(this.designationDao.getDesignationBynameInOrganization(designation.getDesignationName(), organization) != null) {
-				throw new DesignationAlreadyPresentException("Designation Already Present");
+				throw new AppException(ExceptionConstants.DESIGNATION_ALREADY_PRESENT);
 			} 
 			this.designationDao.addDesignation(designation);
 		}catch(Exception ex){
@@ -77,7 +77,7 @@ public class DesignationService {
 		try{
 			Designation designation = this.designationDao.getDesignationByName(designationName);
 			if(designation == null){
-				throw new DesignationsDoesNotExistsException("Designations does not exists");
+				throw new AppException(ExceptionConstants.DESIGNATION_NOT_EXIST);
 			}
 			return designation;
 		}catch(Exception ex){
@@ -91,7 +91,7 @@ public class DesignationService {
 		try{
 			Designation designation = this.designationDao.getDesignationById(designationId);
 			if(designation == null){
-				throw new DesignationsDoesNotExistsException("Designations does not exists");
+				throw new AppException(ExceptionConstants.DESIGNATION_NOT_EXIST);
 			}
 			return designation;
 		}catch(Exception ex){
@@ -105,7 +105,7 @@ public class DesignationService {
 		try{
 			List<Designation> designationList = this.designationDao.designationListAboveLevel(designation);
 			if(designationList.isEmpty()){
-				throw new DesignationsDoesNotExistsException("Designations does not exists");
+				throw new AppException(ExceptionConstants.DESIGNATION_NOT_EXIST);
 			}
 			for(Designation des : designationList) {
 
@@ -123,7 +123,7 @@ public class DesignationService {
 		try{
 			Designation designation = this.designationDao.getDesignationBynameInOrganization(designationName, organization);
 			if(designation == null){
-				throw new DesignationsDoesNotExistsException("Designations does not exists");
+				throw new AppException(ExceptionConstants.DESIGNATION_NOT_EXIST);
 			}
 			return designation;
 		}catch(Exception ex){
@@ -136,7 +136,7 @@ public class DesignationService {
 
 		try{
 			if(this.designationDao.getDesignationById(designation.getDesignationId()) == null){
-				throw new DesignationsDoesNotExistsException("Designations does not exists");
+				throw new AppException(ExceptionConstants.DESIGNATION_NOT_EXIST);
 			}
 			return this.designationDao.updateDesignation(designation);
 		}catch(Exception ex){

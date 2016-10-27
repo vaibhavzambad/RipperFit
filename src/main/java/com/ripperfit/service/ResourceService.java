@@ -6,11 +6,11 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.ripperfit.CustomExceptions.ResourceAlreadyExistsException;
-import com.ripperfit.CustomExceptions.ResourceNotExistsException;
 import com.ripperfit.dao.ResourceDao;
 import com.ripperfit.model.Organization;
 import com.ripperfit.model.Resource;
+import com.ripperfit.util.AppException;
+import com.ripperfit.util.ExceptionConstants;
 
 public class ResourceService {
 
@@ -36,7 +36,7 @@ public class ResourceService {
 
 		try{
 			if(this.resourceDao.getResourceByName(resource.getResourceName()) != null) {
-				throw new ResourceAlreadyExistsException("Resource Already Exist");
+				throw new AppException(ExceptionConstants.RESOURCE_ALREADY_PRESENT);
 			} 
 			return this.resourceDao.addResource(resource);
 		}catch(Exception ex){
@@ -50,7 +50,7 @@ public class ResourceService {
 		try{
 			List<Resource> resourceList = this.resourceDao.getAllResources();
 			if(resourceList.isEmpty()){
-				throw new ResourceNotExistsException("Resource does not exists");
+				throw new AppException(ExceptionConstants.RESOURCE_NOT_EXIST);
 			}
 			return resourceList;
 		}catch(Exception ex){
@@ -64,7 +64,7 @@ public class ResourceService {
 		try{
 			Resource resource = this.resourceDao.getResourceByName(resourceName);
 			if(resource == null){
-				throw new ResourceNotExistsException("Resource does not exists");
+				throw new AppException(ExceptionConstants.RESOURCE_NOT_EXIST);
 			}
 			return resource;
 		}catch(Exception ex){
@@ -78,7 +78,7 @@ public class ResourceService {
 		try{
 			Resource resource = this.resourceDao.getResourceById(resourceId);
 			if(resource == null){
-				throw new ResourceNotExistsException("Resource does not exists");
+				throw new AppException(ExceptionConstants.RESOURCE_NOT_EXIST);
 			}
 			return resource;
 		}catch(Exception ex){
@@ -91,7 +91,7 @@ public class ResourceService {
 
 		try{
 			if(this.resourceDao.getResourceById(resource.getResourceId()) == null){
-				throw new ResourceNotExistsException("Resource does not exists");
+				throw new AppException(ExceptionConstants.RESOURCE_NOT_EXIST);
 			}
 			return this.resourceDao.updateResource(resource);
 		}catch(Exception ex){
@@ -103,10 +103,9 @@ public class ResourceService {
 	public List<Resource> getAllResourcesInAnOrganization(Organization organization) throws Exception{
 
 		try{
-			
 			List<Resource> resourceList = this.resourceDao.getAllResourcesInAnOrganization(organization);
 			if(resourceList.isEmpty()){
-				throw new ResourceNotExistsException("Resource does not exists");
+				throw new AppException(ExceptionConstants.RESOURCE_NOT_EXIST);
 			}
 			return resourceList;
 		}catch(Exception ex){

@@ -11,16 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ripperfit.CustomExceptions.DepartmentDoesNotExistsException;
-import com.ripperfit.CustomExceptions.DesignationAlreadyPresentException;
-import com.ripperfit.CustomExceptions.DesignationsDoesNotExistsException;
-import com.ripperfit.CustomExceptions.OrganizationDoesNotExistsException;
 import com.ripperfit.model.Department;
 import com.ripperfit.model.Designation;
 import com.ripperfit.model.Organization;
 import com.ripperfit.service.DepartmentService;
 import com.ripperfit.service.DesignationService;
 import com.ripperfit.service.OrganizationService;
+import com.ripperfit.util.AppException;
 
 /**
  * Controller class for designation
@@ -94,7 +91,7 @@ public class DesignationController {
 		try{
 			this.designationService.addDesignation(designation, designation.getOrganization());
 			return new ResponseEntity<Void>(HttpStatus.CREATED);
-		}catch(DesignationAlreadyPresentException designationAlreadyPresentException){
+		}catch(AppException designationAlreadyPresentException){
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		}catch(Exception ex){
 			return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -114,7 +111,7 @@ public class DesignationController {
 			Organization organization = this.organizationService.getOrganizationById(Integer.parseInt(organizationId));
 			Designation designation = this.designationService.getDesignationInAnOrganization(designationName,organization);
 			return new ResponseEntity<Designation>(designation,HttpStatus.OK);
-		}catch(OrganizationDoesNotExistsException | DesignationsDoesNotExistsException notExistsException){
+		}catch(AppException notExistsException){
 			return new ResponseEntity<Designation>(HttpStatus.NO_CONTENT);
 		}catch(Exception ex){
 			return new ResponseEntity<Designation>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -133,7 +130,7 @@ public class DesignationController {
 		try{
 			Designation designation = this.designationService.getDesignationById(designationId);
 			return new ResponseEntity<Designation>(designation,HttpStatus.OK);
-		}catch(DesignationsDoesNotExistsException designationsDoesNotExistsException){
+		}catch(AppException designationsDoesNotExistsException){
 			return new ResponseEntity<Designation>(HttpStatus.NO_CONTENT);
 		}catch(Exception ex){
 			return new ResponseEntity<Designation>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -152,7 +149,7 @@ public class DesignationController {
 		try{
 			this.designationService.updateDesignationLevels(designation);
 			return new ResponseEntity<Void>(HttpStatus.OK);
-		}catch(DesignationsDoesNotExistsException designationsDoesNotExistsException){
+		}catch(AppException designationsDoesNotExistsException){
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		}catch(Exception ex){
 			return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -171,7 +168,7 @@ public class DesignationController {
 			Organization organization = this.organizationService.getOrganizationById(organizationId);
 			List<Designation> designationList = this.designationService.getAllDesignationsInAnOrganization(organization);
 			return new ResponseEntity<List<Designation>>(designationList, HttpStatus.OK);
-		}catch(OrganizationDoesNotExistsException | DesignationsDoesNotExistsException notExistsException){
+		}catch(AppException notExistsException){
 			return new ResponseEntity<List<Designation>>(HttpStatus.NO_CONTENT);
 		}catch(Exception ex){
 			return new ResponseEntity<List<Designation>>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -190,7 +187,7 @@ public class DesignationController {
 			Department department = this.departmentService.getDepartmentById(departmentId);
 			List<Designation> list = this.designationService.getDesignationsInDepartment(department);
 			return new ResponseEntity<List<Designation>>(list, HttpStatus.OK);
-		}catch(DepartmentDoesNotExistsException | DesignationsDoesNotExistsException notExistsException){
+		}catch(AppException notExistsException){
 			return new ResponseEntity<List<Designation>>(HttpStatus.NO_CONTENT);
 		}catch(Exception ex){
 			return new ResponseEntity<List<Designation>>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -208,7 +205,7 @@ public class DesignationController {
 		try{
 			this.designationService.updateDesignation(designation);
 			return new ResponseEntity<Void>(HttpStatus.OK);
-		}catch(DesignationsDoesNotExistsException designationsDoesNotExistsException){
+		}catch(AppException designationsDoesNotExistsException){
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		}catch(Exception ex){
 			return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);

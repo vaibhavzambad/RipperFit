@@ -5,10 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ripperfit.CustomExceptions.CommentDoesNotExistsException;
 import com.ripperfit.dao.CommentDao;
 import com.ripperfit.model.Comments;
 import com.ripperfit.model.ResourceRequest;
+import com.ripperfit.util.AppException;
+import com.ripperfit.util.ExceptionConstants;
 
 public class CommentsService {
 
@@ -37,7 +38,7 @@ public class CommentsService {
 		try{
 			List<Comments> commentList = this.commentDao.getCommentByRequestId(resourceRequest);
 			if(commentList.isEmpty()){
-				throw new CommentDoesNotExistsException("Comment Does Not Exists");
+				throw new AppException(ExceptionConstants.COMMENT_NOT_EXIST);
 			}
 			return commentList;
 		}catch(Exception ex){

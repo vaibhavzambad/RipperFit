@@ -9,6 +9,10 @@ app.controller('signUpCtrl', function($scope, $http, $window, $filter){
 			}
 		}).then(function(response) {
 			$scope.organizationDetails = response.data; 
+		},function(response) {
+			if(response.status ===  503 ){
+				$window.location.href = 'SiteMaintenancePage.html';
+			}
 		});
 	}
 
@@ -21,6 +25,10 @@ app.controller('signUpCtrl', function($scope, $http, $window, $filter){
 			}
 		}).then(function(response) {
 			$scope.designationDetails = response.data; 
+		},function(response) {
+			if(response.status ===  503 ){
+				$window.location.href = 'SiteMaintenancePage.html';
+			}
 		});
 	}
 
@@ -61,6 +69,9 @@ app.controller('signUpCtrl', function($scope, $http, $window, $filter){
 		}, function(response) {	
 			if(response.status === 409){
 				message.text("User Already Present");
+			}
+			if(response.status ===  503 ){
+				$window.location.href = 'SiteMaintenancePage.html';
 			}
 		});
 	}
@@ -190,6 +201,9 @@ app.controller('signUpCtrl', function($scope, $http, $window, $filter){
 			},function(response){
 				if(response.status === 409){
 					message.text("Organization Already Present");
+				}
+				if(response.status ===  503 ){
+					$window.location.href = 'SiteMaintenancePage.html';
 				}
 			});
 		}

@@ -11,10 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ripperfit.CustomExceptions.OrganizationAlreadyPresentException;
-import com.ripperfit.CustomExceptions.OrganizationDoesNotExistsException;
 import com.ripperfit.model.Organization;
 import com.ripperfit.service.OrganizationService;
+import com.ripperfit.util.AppException;
 
 /**
  * Controller class for Organization
@@ -50,7 +49,7 @@ public class OrganizationController {
 		try{
 			List<Organization> organizationList = this.organizationService.getAllOrganizations();
 			return new ResponseEntity<List<Organization>>(organizationList, HttpStatus.OK);
-		}catch(OrganizationDoesNotExistsException organizationDoesNotExistsException){
+		}catch(AppException organizationDoesNotExistsException){
 			return new ResponseEntity<List<Organization>>(HttpStatus.NO_CONTENT);
 		}catch(Exception ex){
 			return new ResponseEntity<List<Organization>>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -68,7 +67,7 @@ public class OrganizationController {
 		try{
 			this.organizationService.addOrganization(organization);
 			return new ResponseEntity<Void>(HttpStatus.CREATED);
-		}catch(OrganizationAlreadyPresentException organizationAlreadyPresentException){
+		}catch(AppException organizationAlreadyPresentException){
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		}catch(Exception ex){
 			return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -86,7 +85,7 @@ public class OrganizationController {
 		try{
 		Organization organization = this.organizationService.getOrganizationByName(organizationName);
 		return new ResponseEntity<Organization>(organization, HttpStatus.OK);
-		}catch(OrganizationDoesNotExistsException organizationDoesNotExistsException){
+		}catch(AppException organizationDoesNotExistsException){
 			return new ResponseEntity<Organization>(HttpStatus.NO_CONTENT);
 		}catch(Exception ex){
 			return new ResponseEntity<Organization>(HttpStatus.SERVICE_UNAVAILABLE);

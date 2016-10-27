@@ -20,14 +20,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ripperfit.CustomExceptions.OrganizationDoesNotExistsException;
-import com.ripperfit.CustomExceptions.UserAlreadyPresentException;
-import com.ripperfit.CustomExceptions.UserNotExistsException;
 import com.ripperfit.model.Employee;
 import com.ripperfit.model.Login;
 import com.ripperfit.model.Organization;
 import com.ripperfit.service.OrganizationService;
 import com.ripperfit.service.UserService;
+import com.ripperfit.util.AppException;
 
 /**
  * controller class to handle all user related views
@@ -84,7 +82,7 @@ public class UserController {
 		try{
 			Employee employee = this.userService.getEmployeeByEmail(email);
 			return new ResponseEntity<Employee>(employee,HttpStatus.OK);
-		}catch(UserNotExistsException userNotExistsException){
+		}catch(AppException userNotExistsException){
 			return new ResponseEntity<Employee>(HttpStatus.NO_CONTENT);
 		}catch(Exception ex){
 			return new ResponseEntity<Employee>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -102,7 +100,7 @@ public class UserController {
 		try{
 			Employee employee = this.userService.getEmployeeById(Integer.parseInt(Id));
 			return new ResponseEntity<Employee>(employee,HttpStatus.OK);
-		}catch(UserNotExistsException userNotExistsException){
+		}catch(AppException userNotExistsException){
 			return new ResponseEntity<Employee>(HttpStatus.NO_CONTENT);
 		}catch(Exception ex){
 			return new ResponseEntity<Employee>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -122,7 +120,7 @@ public class UserController {
 			Employee employee = this.userService.login(login.getEmail(), login.getPassword());
 			createSession(employee.getEmail(), session);
 			return new ResponseEntity<Employee>(employee, HttpStatus.ACCEPTED);
-		}catch(UserNotExistsException userNotExistsException){
+		}catch(AppException userNotExistsException){
 			return new ResponseEntity<Employee>(HttpStatus.UNAUTHORIZED);
 		}catch(Exception ex){
 			return new ResponseEntity<Employee>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -144,7 +142,6 @@ public class UserController {
 		}catch(Exception ex){
 			return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
-
 	}
 
 	/**
@@ -163,7 +160,7 @@ public class UserController {
 			this.userService.registerEmployee(employee);
 			createSession(employee.getEmail(), session);
 			return new ResponseEntity<Void>(HttpStatus.CREATED);
-		}catch(UserAlreadyPresentException userAlreadyPresentException){
+		}catch(AppException userAlreadyPresentException){
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		}catch(Exception ex){
 			return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -187,7 +184,7 @@ public class UserController {
 			this.userService.registerEmployee(employee);
 			createSession(login.getEmail(), session);
 			return new ResponseEntity<Login>(login,HttpStatus.CREATED);
-		}catch(UserAlreadyPresentException userAlreadyPresentException){
+		}catch(AppException userAlreadyPresentException){
 			return new ResponseEntity<Login>(HttpStatus.CONFLICT);
 		}catch(Exception ex){
 			return new ResponseEntity<Login>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -221,7 +218,7 @@ public class UserController {
 		try{
 			this.userService.updateUser(employee);
 			return new ResponseEntity<Void>(HttpStatus.OK);
-		}catch(UserNotExistsException userNotExistsException){
+		}catch(AppException userNotExistsException){
 			return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
 		}catch(Exception ex){
 			return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -254,7 +251,7 @@ public class UserController {
 			Organization organization = this.organizationService.getOrganizationById(organizationId);
 			List<Employee> employeeList = this.userService.getAllEmployeesInAnOrganization(organization);
 			return new ResponseEntity<List<Employee>>(employeeList, HttpStatus.OK);
-		}catch(OrganizationDoesNotExistsException | UserNotExistsException notExistsException){
+		}catch(AppException notExistsException){
 			return new ResponseEntity<List<Employee>>(HttpStatus.NO_CONTENT);
 		}catch(Exception ex){
 			return new ResponseEntity<List<Employee>>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -273,7 +270,7 @@ public class UserController {
 			HttpSession session = request.getSession();
 			Employee employee = this.userService.getEmployeeByEmail((String) session.getAttribute("email"));
 			return new ResponseEntity<Employee>(employee, HttpStatus.OK);
-		}catch(UserNotExistsException userNotExistsException){
+		}catch(AppException userNotExistsException){
 			return new ResponseEntity<Employee>(HttpStatus.NO_CONTENT);
 		}catch(Exception ex){
 			return new ResponseEntity<Employee>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -300,7 +297,7 @@ public class UserController {
 				return new ResponseEntity<Employee>(HttpStatus.OK);
 			}
 			return new ResponseEntity<Employee>(HttpStatus.NOT_ACCEPTABLE);
-		}catch(UserNotExistsException userNotExistsException){
+		}catch(AppException userNotExistsException){
 			return new ResponseEntity<Employee>(HttpStatus.NO_CONTENT);
 		}catch(Exception ex){
 			return new ResponseEntity<Employee>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -321,7 +318,7 @@ public class UserController {
 			Employee employee = this.userService.getEmployeeByEmail(email);
 			List<Employee> employeeList = this.userService.getEmployeeApprove(employee);
 			return new ResponseEntity<List<Employee>>(employeeList, HttpStatus.OK);
-		}catch(UserNotExistsException userNotExistsException){
+		}catch(AppException userNotExistsException){
 			return new ResponseEntity<List<Employee>>(HttpStatus.NO_CONTENT);
 		}catch(Exception ex){
 			return new ResponseEntity<List<Employee>>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -344,7 +341,7 @@ public class UserController {
 			Map<String, String> response = new HashMap<String, String>(); 
 			response.put("pass", pass);
 			return new ResponseEntity<Map<String, String>>(response, HttpStatus.OK);
-		}catch(UserNotExistsException userNotExistsException){
+		}catch(AppException userNotExistsException){
 			return new ResponseEntity<Map<String, String>>(HttpStatus.NO_CONTENT);
 		}catch(Exception ex){
 			return new ResponseEntity<Map<String, String>>(HttpStatus.SERVICE_UNAVAILABLE);

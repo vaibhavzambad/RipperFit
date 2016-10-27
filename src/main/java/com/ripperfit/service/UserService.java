@@ -6,11 +6,11 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.ripperfit.CustomExceptions.UserAlreadyPresentException;
-import com.ripperfit.CustomExceptions.UserNotExistsException;
 import com.ripperfit.dao.UserDao;
 import com.ripperfit.model.Employee;
 import com.ripperfit.model.Organization;
+import com.ripperfit.util.AppException;
+import com.ripperfit.util.ExceptionConstants;
 
 @Transactional
 public class UserService {
@@ -47,7 +47,7 @@ public class UserService {
 
 		try{
 			if(this.userDao.getEmployeeByEmail(employee.getEmail()) != null) {
-				throw new UserAlreadyPresentException("User Already Present");	
+				throw new AppException(ExceptionConstants.USER_ALREADY_PRESENT);	
 			}
 			return this.userDao.registerEmployee(employee);
 		}catch(Exception ex){
@@ -67,7 +67,7 @@ public class UserService {
 		try{
 			Employee employee = this.userDao.getEmployeeById(id);
 			if(employee == null){
-				throw new UserNotExistsException("User not exists");
+				throw new AppException(ExceptionConstants.USER_NOT_EXIST);
 			}
 			return employee;
 		}catch(Exception ex){
@@ -87,7 +87,7 @@ public class UserService {
 		try{
 			Employee employee = this.userDao.getEmployeeByEmail(email);
 			if(employee == null){
-				throw new UserNotExistsException("User not exists");
+				throw new AppException(ExceptionConstants.USER_NOT_EXIST);
 			}
 			return employee;
 		}catch(Exception ex){
@@ -104,7 +104,7 @@ public class UserService {
 	public boolean updateUser(Employee employee) throws Exception {
 		try{
 			if(this.userDao.getEmployeeById(employee.getEmployeeId()) == null){
-				throw new UserNotExistsException("User not exists");
+				throw new AppException(ExceptionConstants.USER_NOT_EXIST);
 			}
 			return this.userDao.updateEmployee(employee);
 		}catch(Exception ex){
@@ -125,10 +125,11 @@ public class UserService {
 		try{
 			Employee employee = this.userDao.login(email,password);
 			if(employee == null){
-				throw new UserNotExistsException("User not exists");
+				throw new AppException(ExceptionConstants.USER_NOT_EXIST);
 			}
 			return employee;
 		}catch(Exception ex){
+			System.out.println(ExceptionConstants.USER_NOT_AUTHORIZED);
 			throw ex;
 		}
 	}
@@ -139,7 +140,7 @@ public class UserService {
 		try{
 			List<Employee> employeeList = this.userDao.viewAllEmployee();
 			if(employeeList.isEmpty()){
-				throw new UserNotExistsException("User not exists");
+				throw new AppException(ExceptionConstants.USER_NOT_EXIST);
 			}
 			return employeeList;
 		}catch(Exception ex){
@@ -152,7 +153,7 @@ public class UserService {
 		try{
 			List<Employee> employeeList = this.userDao.getEmployeeApprove(employee);
 			if(employeeList.isEmpty()){
-				throw new UserNotExistsException("User not exists");
+				throw new AppException(ExceptionConstants.USER_NOT_EXIST);
 			}
 			return employeeList;
 		}catch(Exception ex){
@@ -166,7 +167,7 @@ public class UserService {
 		try{
 			List<Employee> employeeList = this.userDao.getAllEmployeesInAnOrganization(organization);
 			if(employeeList.isEmpty()){
-				throw new UserNotExistsException("User not exists");
+				throw new AppException(ExceptionConstants.USER_NOT_EXIST);
 			}
 			return employeeList;
 		}catch(Exception ex){

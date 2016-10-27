@@ -6,11 +6,11 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.ripperfit.CustomExceptions.DepartmentAlreadyPresentException;
-import com.ripperfit.CustomExceptions.DepartmentDoesNotExistsException;
 import com.ripperfit.dao.DepartmentDao;
 import com.ripperfit.model.Department;
 import com.ripperfit.model.Organization;
+import com.ripperfit.util.AppException;
+import com.ripperfit.util.ExceptionConstants;
 
 @Transactional
 public class DepartmentService {
@@ -32,7 +32,7 @@ public class DepartmentService {
 		try{
 			List<Department> departmentList = this.departmentDao.viewAllDepartments();
 			if(departmentList.isEmpty()){
-				throw new DepartmentDoesNotExistsException("Department does not exists");
+				throw new AppException(ExceptionConstants.DEPARTMENT_NOT_EXIST);
 			}
 			return departmentList;
 		}catch(Exception ex){
@@ -46,7 +46,7 @@ public class DepartmentService {
 		try{
 			Department departmentInOrganization = this.departmentDao.getDepartmentBynameInOrganization(department.getDepartmentName(), organization);
 			if(departmentInOrganization != null){
-				throw new DepartmentAlreadyPresentException("Department Already Present");
+				throw new AppException(ExceptionConstants.DEPARTMENT_ALREADY_PRESENT);
 			}
 			this.departmentDao.addDepartment(department);
 		}catch(Exception ex){
@@ -67,7 +67,7 @@ public class DepartmentService {
 		try{
 			Department department = this.departmentDao.getDepartmentById(id);
 			if(department == null){
-				throw new DepartmentDoesNotExistsException("Department does not exists");
+				throw new AppException(ExceptionConstants.DEPARTMENT_NOT_EXIST);
 			}
 			return department;
 		}catch(Exception ex){
@@ -80,7 +80,7 @@ public class DepartmentService {
 
 		try{
 			if(getDepartmentById(department.getDepartmentId()) == null){
-				throw new DepartmentDoesNotExistsException("Department does not exists");
+				throw new AppException(ExceptionConstants.DEPARTMENT_NOT_EXIST);
 			}
 			return this.departmentDao.updateDepartment(department);
 		}catch(Exception ex){
@@ -94,7 +94,7 @@ public class DepartmentService {
 		try{
 			List<Department> departmentsList = this.departmentDao.getAllDepartmentsInAnOrganization(organization);
 			if(departmentsList.isEmpty()){
-				throw new DepartmentDoesNotExistsException("Department does not exists");
+				throw new AppException(ExceptionConstants.DEPARTMENT_NOT_EXIST);
 			}
 			return departmentsList;
 		}catch(Exception ex){
@@ -108,7 +108,7 @@ public class DepartmentService {
 		try{
 			Department department = this.departmentDao.getDepartmentBynameInOrganization(departmentName, organization);
 			if(department == null){
-				throw new DepartmentDoesNotExistsException("Department does not exists");
+				throw new AppException(ExceptionConstants.DEPARTMENT_NOT_EXIST);
 			}
 			return department;
 		}catch(Exception ex){

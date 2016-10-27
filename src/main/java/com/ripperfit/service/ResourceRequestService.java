@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ripperfit.CustomExceptions.OrganizationDoesNotExistsException;
-import com.ripperfit.CustomExceptions.ResourceRequestNotExistsException;
 import com.ripperfit.dao.ApproveeRequestDao;
 import com.ripperfit.dao.DepartmentDao;
 import com.ripperfit.dao.DesignationDao;
@@ -22,6 +20,8 @@ import com.ripperfit.model.Employee;
 import com.ripperfit.model.Organization;
 import com.ripperfit.model.Resource;
 import com.ripperfit.model.ResourceRequest;
+import com.ripperfit.util.AppException;
+import com.ripperfit.util.ExceptionConstants;
 
 @Service
 public class ResourceRequestService {
@@ -191,7 +191,7 @@ public class ResourceRequestService {
 
 		try{
 			if(this.resourceRequestDao.getResourceRequestById(requestId) == null){
-				throw new ResourceRequestNotExistsException("Resource Request Not Exists");
+				throw new AppException(ExceptionConstants.REQUEST_NOT_EXIST);
 			}
 			return this.resourceRequestDao.deleteRequestById(requestId);
 		}catch(Exception ex){
@@ -211,7 +211,7 @@ public class ResourceRequestService {
 		try{
 			List<ResourceRequest> resourceRequestListByEmployee = this.resourceRequestDao.getRequestByEmployeeId(employee);
 			if(resourceRequestListByEmployee.isEmpty()){
-				throw new ResourceRequestNotExistsException("Resource Request Not Exists");
+				throw new AppException(ExceptionConstants.REQUEST_NOT_EXIST);
 			}
 			return resourceRequestListByEmployee;
 		}catch(Exception ex){
@@ -225,7 +225,7 @@ public class ResourceRequestService {
 		try{
 			ResourceRequest resourceRequest = this.resourceRequestDao.getResourceRequestById(requestId);
 			if(resourceRequest == null){
-				throw new ResourceRequestNotExistsException("Resource Request Not Exists");
+				throw new AppException(ExceptionConstants.REQUEST_NOT_EXIST);
 			}
 			return resourceRequest;
 		}catch(Exception ex){
@@ -245,7 +245,7 @@ public class ResourceRequestService {
 		try{
 			List<ResourceRequest> resourceRequestList= this.resourceRequestDao.getAllRequests();
 			if(resourceRequestList.isEmpty()){
-				throw new ResourceRequestNotExistsException("Resource Request Not Exists");
+				throw new AppException(ExceptionConstants.REQUEST_NOT_EXIST);
 			}
 			return resourceRequestList;
 		}catch(Exception ex){
@@ -259,7 +259,7 @@ public class ResourceRequestService {
 		try{
 			ResourceRequest resourceRequest = this.resourceRequestDao.getResourceRequestById(requestId);
 			if(resourceRequest == null){
-				throw new ResourceRequestNotExistsException("Resource Request Not Exists");
+				throw new AppException(ExceptionConstants.REQUEST_NOT_EXIST);
 			}
 			return this.resourceRequestDao.getCurrentApprovalLevel(requestId);
 		}catch(Exception ex){
@@ -307,11 +307,11 @@ public class ResourceRequestService {
 		try{
 			Organization organization = organizationDao.getOrganizationByName(organizationName);
 			if(organization == null){
-				throw new OrganizationDoesNotExistsException("Organization does not exists");
+				throw new AppException(ExceptionConstants.ORGANIZATION_NOT_EXIST);
 			}
 			List<ResourceRequest> resourceRequestList = this.resourceRequestDao.getResourceRequestByStatus(status,organization);
 			if(resourceRequestList.isEmpty()){
-				throw new ResourceRequestNotExistsException("Resource request not exists");
+				throw new AppException(ExceptionConstants.REQUEST_NOT_EXIST);
 			}
 			return resourceRequestList;
 		}catch(Exception ex){

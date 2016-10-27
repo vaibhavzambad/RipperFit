@@ -6,10 +6,10 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.ripperfit.CustomExceptions.OrganizationAlreadyPresentException;
-import com.ripperfit.CustomExceptions.OrganizationDoesNotExistsException;
 import com.ripperfit.dao.OrganizationDao;
 import com.ripperfit.model.Organization;
+import com.ripperfit.util.AppException;
+import com.ripperfit.util.ExceptionConstants;
 
 @Transactional
 public class OrganizationService {
@@ -37,7 +37,7 @@ public class OrganizationService {
 		try{
 			List<Organization> organizationsList = this.organizationDao.getAllOrganizations();
 			if(organizationsList.isEmpty()){
-				throw new OrganizationDoesNotExistsException("Organization does not exists");
+				throw new AppException(ExceptionConstants.ORGANIZATION_NOT_EXIST);
 			}
 			return organizationsList;
 		}catch(Exception ex){
@@ -51,7 +51,7 @@ public class OrganizationService {
 		try{
 			Organization organization = this.organizationDao.getOrganizationByName(organizationName);
 			if(organization == null){
-				throw new OrganizationDoesNotExistsException("Organization does not exists");
+				throw new AppException(ExceptionConstants.ORGANIZATION_NOT_EXIST);
 			}
 			return organization;
 		}catch(Exception ex){
@@ -65,7 +65,7 @@ public class OrganizationService {
 		try{
 			Organization organization = this.organizationDao.getOrganizationById(organizationId);
 			if(organization == null){
-				throw new OrganizationDoesNotExistsException("Organization does not exists");
+				throw new AppException(ExceptionConstants.ORGANIZATION_NOT_EXIST);
 			}
 			return organization;
 		}catch(Exception ex){
@@ -78,7 +78,7 @@ public class OrganizationService {
 
 		try{
 			if(this.organizationDao.getOrganizationByName(organization.getOrganizationName()) != null) {
-				throw new OrganizationAlreadyPresentException("Organization Already Present");
+				throw new AppException(ExceptionConstants.ORGANIZATION_ALREADY_PRESENT);
 			}
 			return this.organizationDao.addOrganization(organization);
 		}catch(Exception ex){

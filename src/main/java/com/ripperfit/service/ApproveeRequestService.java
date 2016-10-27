@@ -6,11 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ripperfit.CustomExceptions.ResourceRequestNotExistsException;
 import com.ripperfit.dao.ApproveeRequestDao;
 import com.ripperfit.model.ApproveRequest;
 import com.ripperfit.model.Employee;
 import com.ripperfit.model.ResourceRequest;
+import com.ripperfit.util.AppException;
+import com.ripperfit.util.ExceptionConstants;
 
 @Service
 public class ApproveeRequestService {
@@ -37,7 +38,7 @@ public class ApproveeRequestService {
 		try{
 			List<ResourceRequest> resourceRequestList = this.approveeRequestDao.getResourceRequestListByForwardToId(employeeToForward);
 			if(resourceRequestList.isEmpty()){
-				throw new ResourceRequestNotExistsException("Resource Request Does Not Exists");
+				throw new AppException(ExceptionConstants.REQUEST_NOT_EXIST);
 			}
 			return resourceRequestList;
 		}catch(Exception ex){

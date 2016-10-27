@@ -11,13 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ripperfit.CustomExceptions.OrganizationDoesNotExistsException;
-import com.ripperfit.CustomExceptions.ResourceAlreadyExistsException;
-import com.ripperfit.CustomExceptions.ResourceNotExistsException;
 import com.ripperfit.model.Organization;
 import com.ripperfit.model.Resource;
 import com.ripperfit.service.OrganizationService;
 import com.ripperfit.service.ResourceService;
+import com.ripperfit.util.AppException;
 
 /**
  * Controller class for resource related tasks
@@ -74,7 +72,7 @@ public class ResourceController {
 		try{
 			this.resourceService.addResource(resource);
 			return new ResponseEntity<Void>(HttpStatus.CREATED);
-		}catch(ResourceAlreadyExistsException resourceAlreadyExistsException){
+		}catch(AppException resourceAlreadyExistsException){
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		}catch(Exception ex){
 			return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -93,7 +91,7 @@ public class ResourceController {
 			Organization organization = this.organizationService.getOrganizationById(organizationId);
 			List<Resource> resourceList = this.resourceService.getAllResourcesInAnOrganization(organization);
 			return new ResponseEntity<List<Resource>>(resourceList, HttpStatus.OK);
-		}catch(OrganizationDoesNotExistsException | ResourceNotExistsException notExistsException){
+		}catch(AppException notExistsException){
 			return new ResponseEntity<List<Resource>>(HttpStatus.NO_CONTENT);
 		}catch(Exception ex){
 			return new ResponseEntity<List<Resource>>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -111,7 +109,7 @@ public class ResourceController {
 		try{
 			Resource resource = this.resourceService.getResourceById(resourceId);
 			return new ResponseEntity<Resource>(resource,HttpStatus.OK);
-		}catch(ResourceNotExistsException resourceNotExistsException){
+		}catch(AppException resourceNotExistsException){
 			return new ResponseEntity<Resource>(HttpStatus.NO_CONTENT);
 		}catch(Exception ex){
 			return new ResponseEntity<Resource>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -130,7 +128,7 @@ public class ResourceController {
 		try{
 			this.resourceService.updateResource(resource);
 			return new ResponseEntity<Void>(HttpStatus.OK);
-		}catch(ResourceNotExistsException resourceNotExistsException){
+		}catch(AppException resourceNotExistsException){
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		}catch(Exception ex){
 			return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);

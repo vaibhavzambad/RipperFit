@@ -11,12 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ripperfit.CustomExceptions.CommentDoesNotExistsException;
-import com.ripperfit.CustomExceptions.ResourceRequestNotExistsException;
 import com.ripperfit.model.Comments;
 import com.ripperfit.model.ResourceRequest;
 import com.ripperfit.service.CommentsService;
 import com.ripperfit.service.ResourceRequestService;
+import com.ripperfit.util.AppException;
 
 /**
  * controller class to deal with all views related to comments
@@ -97,7 +96,7 @@ public class CommentController {
 
 				return new ResponseEntity<List<Comments>>(commentList, HttpStatus.OK);
 			}
-		}catch(ResourceRequestNotExistsException | CommentDoesNotExistsException notExistsException){
+		}catch(AppException notExistsException){
 			return new ResponseEntity<List<Comments>>(HttpStatus.NO_CONTENT);
 		}catch(Exception ex){
 			return new ResponseEntity<List<Comments>>(HttpStatus.SERVICE_UNAVAILABLE);
