@@ -1,12 +1,11 @@
-<div class="container" style="margin-top: 100px;">
-	<h2>
+<div class="container" style="margin-top: 50px;">
+	<h2 class="text-center">
 		<strong>Request Pool</strong>
 	</h2>
-	<br>
-	<br />
-	<input class="inputBox" type="text" name="name" value="" placeholder="Serach Request By Status" ng-model="search" />
-	
-	<table class="table table-striped table-hover table-responsive " ng-controller="getLocationCtrl" id="table">
+	<br /> <br /> <input class="inputBox" type="text" name="name"
+		value="" placeholder="Search Request By Status" ng-model="search" />
+	<table class="table table-striped table-hover table-responsive "
+		ng-controller="getLocationCtrl" id="table">
 		<thead>
 			<tr>
 				<th>#</th>
@@ -18,23 +17,28 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-click="clickable(request.requestId)"  ng-repeat="request in requests | filter:search">
-				<td>{{$index+1}}</td>
-				<td>{{request.employee.firstName +"
-					"+request.employee.lastName}}</td>
-				<td>{{request.resource.resourceName}}</td>
-				<td>{{request.requestDate}}</td>
-				<td><span class="label label-{{request.color}}">{{request.status}}</span></td>
-				<td><a ng-if="edit" class="btn" href="#/editRequest/{{request.requestId}}">
- <i class="fa fa-pencil"></i></a>&nbsp&nbsp
- <a ng-if="degStatus && request.status != 'completed' && request.status!='rejected'" class="btn" ng-click="completeRequest(request)">
- <i class="fa fa-thumbs-o-up"></i></a>&nbsp<a  ng-if="degStatus && request.status != 'completed' && request.status!='rejected'" class="btn" ng-click="rejectRequest(request)">
- <i class="fa fa-thumbs-o-down"></i></a></td>
+			<tr ng-repeat="request in requests | filter:search">
+				<td ng-click="clickable(request.requestId)">{{$index+1}}</td>
+				<td ng-click="clickable(request.requestId)">{{request.employee.firstName
+					+" "+request.employee.lastName}}</td>
+				<td ng-click="clickable(request.requestId)">{{request.resource.resourceName}}</td>
+				<td ng-click="clickable(request.requestId)">{{request.requestDate}}</td>
+				<td ng-click="clickable(request.requestId)"><span
+					class="label label-{{request.color}}">{{request.status}}</span></td>
+				<td><a ng-if="edit" class="btn"
+					href="#/editRequest/{{request.requestId}}"> <i
+						class="fa fa-pencil"></i></a>&nbsp&nbsp <a
+					ng-if="degStatus && request.status != 'completed' && request.status!='rejected'"
+					class="btn" ng-click="completeRequest(request)"> <i
+						class="fa fa-thumbs-o-up"></i></a>&nbsp<a
+					ng-if="degStatus && request.status != 'completed' && request.status!='rejected'"
+					class="btn" ng-click="rejectRequest(request)"> <i
+						class="fa fa-thumbs-o-down"></i></a></td>
 			</tr>
 		</tbody>
 	</table>
 	<div id="msg">
-	<h4>No Request Found </h4>
+		<h4>No Request Found</h4>
 	</div>
 	<br>
 </div>

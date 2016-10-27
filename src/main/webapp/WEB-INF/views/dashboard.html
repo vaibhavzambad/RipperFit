@@ -2,8 +2,10 @@
 <html ng-app="RipperFit">
 <head>
 <meta charset="utf-8">
+
 <!-- Logo in Title Bar -->
-  <link rel="icon" href="resources/img/rippericon.png" type="image/png" sizes="16x16">
+<link rel="icon" href="resources/img/rippericon.png" type="image/png"
+	sizes="16x16">
 
 <title>MyActions</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,86 +13,60 @@
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="resources/css/style1.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
-<script src="resources/js/adminRoute.js"></script>
-<!-- Font Awesome Javascript -->
-<script src="https://use.fontawesome.com/8cbee58684.js"></script>
 
 <!-- Custom CSS -->
 <link href="resources/css/dashhome.css" rel="stylesheet">
+<link rel="stylesheet" href="resources/css/style1.css">
 
 <!-- Custom CSS For Quote Carousel -->
 <link href="resources/css/quoteCarousel.css" rel="stylesheet">
 
-<!-- Quote Carousel Script -->
-<script src="resources/js/quoteCarousel.js"></script>
-
-
 </head>
 <body>
-	<div class="navbar navbar-default navbar-fixed-top"
-		ng-controller="headerCtrl">
-		<div class="container-fluid ">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-					aria-expanded="false">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="#/Home"><i
-					class="fa fa-futbol-o top-icon" id="logo-icon" aria-hidden="true">
-				</i><b> RipperFit</b></a>
-			</div>
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse"
-				id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#/Home"><i class="fa fa-tachometer"
-							aria-hidden="true">&nbsp</i> DashBoard</a></li>
-					<li class="dropdown"><a href="" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false"><span class="glyphicon glyphicon-tasks"
-							style="top: 3px; right: -7px;">&nbsp</span> My Actions<span
-							class="sr-only">(current)</span> <span class="caret"></span></a>
-						<ul class="dropdown-menu" ng-if="status">
-							<li ng-repeat="user in loggedUser"><a href="{{user.href}}">{{user.text}}</a></li>
-						</ul></li>
-					<li class="dropdown"><a href="" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false"><i class="fa fa-user" aria-hidden="true">&nbsp</i>
-							{{loggedEmployee}} <span class="caret"></span></i></a>
-						<ul class="dropdown-menu">
-							<li ng-repeat="userList in loggedUserList"><a
-								href="{{userList.href}}">{{userList.text}}</a></li>
-							<li><a href="#/changePassword"><i class="fa fa-cog"
-									aria-hidden="true"> </i> Change Password</a>
-							<li role="separator" class="divider"></li>
-							<li><a href="/RipperFit/employee/logout"><span
-									style="font-size: smaller;" class="glyphicon glyphicon-off"></span>
-									Logout</a></li>
-						</ul></li>
-					<li>&nbsp;&nbsp;&nbsp;</li>
-				</ul>
-			</div>
-			<!-- /.navbar-collapse -->
-		</div>
-	</div>
+
+	<div ng-include="'header.html'"></div>
 	<div ng-view=""></div>
-	<!--  <footer class="footer text-center"
-		style="position: absolute; bottom: 0; width: 100%; background-color: #f8f8f8; border-top: 1.5px solid #e7e7e7; padding: 17px">
-		<p style="margin: 0;">
-			&copy;2016 RipperFit. All Rights Reserved| Designed by <b>VARAAS</b>
-		</p>
-	</footer>-->
+	<div ng-include="'footer.html'"></div>
+
+
+	<!-- scripts -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+	<script src="resources/js/route.js"></script>
+	<script src="https://use.fontawesome.com/8cbee58684.js"></script>
+	<script src="resources/js/quoteCarousel.js"></script>
+	
+	<!-- custom controllers js -->
+	<script src="resources/js/controllers/headerCtrl.js"></script>
+	<script src="resources/js/controllers/addDepartmentCtrl.js"></script>
+	<script src="resources/js/controllers/addDesignationCtrl.js"></script>
+	<script src="resources/js/controllers/addRequestCtrl.js"></script>
+	<script src="resources/js/controllers/addResourceCtrl.js"></script>
+	<script src="resources/js/controllers/approveEmpCtrl.js"></script>
+	<script src="resources/js/controllers/changePasswordCtrl.js"></script>
+	<script src="resources/js/controllers/editDepartmentCtrl.js"></script>
+	<script src="resources/js/controllers/editDesignationCtrl.js"></script>
+	<script src="resources/js/controllers/editRequestCtrl.js"></script>
+	<script src="resources/js/controllers/editResourceCtrl.js"></script>
+	<script src="resources/js/controllers/dashBoardHomeCtrl.js"></script>
+	<script src="resources/js/controllers/myProfileCtrl.js"></script>
+	<script src="resources/js/controllers/viewDepartmentsCtrl.js"></script>
+	<script src="resources/js/controllers/viewDesignationsCtrl.js"></script>
+	<script src="resources/js/controllers/viewEmployeeRequestsCtrl.js"></script>
+	<script src="resources/js/controllers/viewEmployeesCtrl.js"></script>
+	<script src="resources/js/controllers/viewRequestDetailCtrl.js"></script>
+	<script src="resources/js/controllers/viewRequestsCtrl.js"></script>
+	<script src="resources/js/controllers/approveRequestCtrl.js"></script>
+	<script src="resources/js/controllers/forwardRequestCtrl.js"></script>
+	<script src="resources/js/controllers/viewResourcesCtrl.js"></script>
+	<script src="resources/js/controllers/addCommentCtrl.js"></script>
+	<script src="resources/js/controllers/getLocationCtrl.js"></script>
+	<script src="resources/js/controllers/updateRequestCtrl.js"></script>
 </body>
 </html>

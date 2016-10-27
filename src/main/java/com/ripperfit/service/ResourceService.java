@@ -6,6 +6,8 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ripperfit.CustomExceptions.ResourceAlreadyExistsException;
+import com.ripperfit.CustomExceptions.ResourceNotExistsException;
 import com.ripperfit.dao.ResourceDao;
 import com.ripperfit.model.Organization;
 import com.ripperfit.model.Resource;
@@ -30,48 +32,85 @@ public class ResourceService {
 	}
 
 	@Transactional
-	public int addResource(Resource resource) {
-		int result = 0;
+	public boolean addResource(Resource resource) throws Exception {
 
-		if(this.resourceDao.getResourceByName(resource.getResourceName()) != null) {
-			result = 1;
-		} else if(this.resourceDao.addResource(resource)) {
-			result = 2;
+		try{
+			if(this.resourceDao.getResourceByName(resource.getResourceName()) != null) {
+				throw new ResourceAlreadyExistsException("Resource Already Exist");
+			} 
+			return this.resourceDao.addResource(resource);
+		}catch(Exception ex){
+			throw ex;
 		}
-		return result;
 	}
 
 	@Transactional
-	public List<Resource> getAllResources(){
+	public List<Resource> getAllResources() throws Exception{
 
-		List<Resource> resourceList = this.resourceDao.getAllResources();
-		return resourceList;
+		try{
+			List<Resource> resourceList = this.resourceDao.getAllResources();
+			if(resourceList.isEmpty()){
+				throw new ResourceNotExistsException("Resource does not exists");
+			}
+			return resourceList;
+		}catch(Exception ex){
+			throw ex;
+		}
 	}
 
 	@Transactional
-	public Resource getResourceByName(String resourceName){
+	public Resource getResourceByName(String resourceName) throws Exception{
 
-		Resource resource = this.resourceDao.getResourceByName(resourceName);
-		return resource;
+		try{
+			Resource resource = this.resourceDao.getResourceByName(resourceName);
+			if(resource == null){
+				throw new ResourceNotExistsException("Resource does not exists");
+			}
+			return resource;
+		}catch(Exception ex){
+			throw ex;
+		}
 	}
 
 	@Transactional
-	public Resource getResourceById(int resourceId){
+	public Resource getResourceById(int resourceId) throws Exception{
 
-		Resource resource = this.resourceDao.getResourceById(resourceId);
-		return resource;
+		try{
+			Resource resource = this.resourceDao.getResourceById(resourceId);
+			if(resource == null){
+				throw new ResourceNotExistsException("Resource does not exists");
+			}
+			return resource;
+		}catch(Exception ex){
+			throw ex;
+		}
 	}
 
 	@Transactional
-	public void updateResource(Resource resource) {
-		
-		this.resourceDao.updateResource(resource);
+	public boolean updateResource(Resource resource) throws Exception {
+
+		try{
+			if(this.resourceDao.getResourceById(resource.getResourceId()) == null){
+				throw new ResourceNotExistsException("Resource does not exists");
+			}
+			return this.resourceDao.updateResource(resource);
+		}catch(Exception ex){
+			throw ex;
+		}
 	}
-	
+
 	@Transactional
-	public List<Resource> getAllResourcesInAnOrganization(Organization organization)
-	{
-		List<Resource> designation=this.resourceDao.getAllResourcesInAnOrganization(organization);
-		return designation;
+	public List<Resource> getAllResourcesInAnOrganization(Organization organization) throws Exception{
+
+		try{
+			
+			List<Resource> resourceList = this.resourceDao.getAllResourcesInAnOrganization(organization);
+			if(resourceList.isEmpty()){
+				throw new ResourceNotExistsException("Resource does not exists");
+			}
+			return resourceList;
+		}catch(Exception ex){
+			throw ex;
+		}
 	}
 }

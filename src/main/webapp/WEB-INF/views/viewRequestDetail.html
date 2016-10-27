@@ -1,77 +1,61 @@
-<div class="container" style="margin-top: 100px;">
+<div class="container" style="margin-top: 50px;">
 	<div class="row">
-
-		<h2>Resource Request Detail</h2>
+		<h2 class="text-center">Resource Request Details</h2>
 		<br>
-
-		<table class="table table-hover" id="issueDetails" >
+		<table class="table table-hover" id="issueDetails">
 			<tbody>
-				<t>
+				<tr>
 					<td>Resource Requested</td>
 					<td>{{requests.resource.resourceName}}</td>
 				</tr>
-
 				<tr>
 					<td>Priority</td>
 					<td>{{requests.priority}}</td>
 				</tr>
-
 				<tr>
 					<td>Request</td>
 					<td>{{requests.status}}</td>
 				</tr>
-
-                   <tr>
-					<td>Request Description </td>
+				<tr>
+					<td>Request Description</td>
 					<td>{{requests.message}}</td>
-				  </tr>
-
-				
+				</tr>
 			</tbody>
 		</table>
 		<ul class="list-group">
 			<li class="list-group-item" ng-repeat="comment in comments">
 				<div class="row">
 					<div class="col-lg-2">
-						<div class="commenterImage"
-							>
+						<div class="commenterImage">
 							<img class="img img-circle"
 								src={{comment.employee.profilePicture}} alt="image" width=80px
 								height=80px />
 						</div>
-
 					</div>
 					<div class=col-lg-10>
 						<div class="row">
 							<h3>{{comment.employee.firstName}}
 								{{comment.employee.lastName}}</h3>
 						</div>
-
 						<div class="row">
 							<h4>
 								<p>{{comment.comments}}</p>
 							</h4>
 						</div>
 						<div class="row">{{comment.date}}</div>
-
 					</div>
 				</div>
 			</li>
-
-
 		</ul>
-
-
 		<form ng-controller="addCommentCtrl">
 			<div class="form-group">
-				<label for="">Write Comment</label>
+				<label for="comments">Write Comments</label>
 				<textarea class="form-control" ng-model="commentBox.comments">                     
                 </textarea>
 			</div>
-
 			<input type="button" class=" btn btn-info text-center"
 				ng-click="getCommentDetails(commentBox,requests)"
 				value="Add Comments" />
 		</form>
-
 	</div>
+</div>

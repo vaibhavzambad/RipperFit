@@ -1,4 +1,4 @@
-<div class="container" style="margin-top: 4%;">
+<div class="container" style="margin-top: 50px;">
 	<div class="row">
 		<div class="col-lg-12">
 			<h1 class="page-header">Dashboard</h1>
@@ -6,7 +6,7 @@
 	</div>
 	<!-- /.row -->
 	<div class="row text-center">
-	<a href="#/viewOwnRequests/{{employee.employeeId}}">
+		<a href="#/viewOwnRequests/{{employee.employeeId}}">
 			<div class="col-lg-3 col-md-6" id="request">
 				<div id="requestsPanel" class="panel panel-primary">
 					<div class="panel-heading">
@@ -22,8 +22,7 @@
 					</div>
 				</div>
 			</div>
-		</a>
-		 <a href="#/viewEmployees">
+		</a> <a href="#/viewEmployees">
 			<div class="col-lg-3 col-md-6" id="member">
 				<div id="membersPanel" class="panel">
 					<div class="panel-heading">
@@ -39,8 +38,7 @@
 					</div>
 				</div>
 			</div>
-		</a>
-		 <a href="#/viewResources">
+		</a> <a href="#/viewResources">
 			<div class="col-lg-3 col-md-6" id="resource">
 				<div id="resourcesPanel" class="panel">
 					<div class="panel-heading">
@@ -72,81 +70,76 @@
 					</div>
 				</div>
 			</div>
+		</a> <a href="">
+			<div class="col-lg-3 col-md-6" id="complete">
+				<div id="deliveredPanel" class="panel">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-xs-3">
+								<i class="fa fa-check-circle fa-5x" aria-hidden="true"></i>
+							</div>
+							<div class="col-xs-9 text-right">
+								<div class="huge">{{totalCompletedRequests}}</div>
+								<div>Delivered Requests</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</a> <a href="">
+			<div class="col-lg-3 col-md-6" id="running">
+				<div id="approvedPanel" class="panel">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-xs-3">
+								<i class="fa fa-thumbs-up fa-5x" aria-hidden="true"></i>
+							</div>
+							<div class="col-xs-9 text-right">
+								<div class="huge">{{totalRunningRequests}}</div>
+								<div>Running Requests</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</a> <a href="">
+			<div class="col-lg-3 col-md-6" id="pending">
+				<div id="pendingPanel" class="panel">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-xs-3">
+								<i class="fa fa-hourglass-half fa-5x" aria-hidden="true"></i>
+							</div>
+							<div class="col-xs-9 text-right">
+								<div class="huge">{{totalPendingRequests}}</div>
+								<div>Pending Requests</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</a> <a href="">
+			<div class="col-lg-3 col-md-6" id="reject">
+				<div id="declinedPanel" class="panel panel-red">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-xs-3">
+								<i class="fa fa-thumbs-down fa-5x" aria-hidden="true"></i>
+							</div>
+							<div class="col-xs-9 text-right">
+								<div class="huge">{{totalRejectedRequests}}</div>
+								<div>Rejected Requests</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</a>
-  <a href="">
-        <div class="col-lg-3 col-md-6" id="complete">
-          <div id="deliveredPanel" class="panel">
-            <div class="panel-heading">
-              <div class="row">
-                <div class="col-xs-3">
-                  <i class="fa fa-check-circle fa-5x" aria-hidden="true"></i>
-                </div>
-                <div class="col-xs-9 text-right">
-                  <div class="huge">{{totalCompletedRequests}}</div>
-                  <div>Delivered Requests</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </a>
-      <a href="">
-        <div class="col-lg-3 col-md-6" id="running">
-          <div id="approvedPanel" class="panel">
-            <div class="panel-heading">
-              <div class="row">
-                <div class="col-xs-3">
-                  <i class="fa fa-thumbs-up fa-5x" aria-hidden="true"></i>
-                </div>
-                <div class="col-xs-9 text-right">
-                  <div class="huge">{{totalRunningRequests}}</div>
-                  <div>Running Requests</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </a>
-      <a href="">
-        <div class="col-lg-3 col-md-6" id="pending">
-          <div id="pendingPanel" class="panel">
-            <div class="panel-heading">
-              <div class="row">
-                <div class="col-xs-3">
-                  <i class="fa fa-hourglass-half fa-5x" aria-hidden="true"></i>
-                </div>
-                <div class="col-xs-9 text-right">
-                  <div class="huge">{{totalPendingRequests}}</div>
-                  <div>Pending Requests</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </a>
-      <a href="">
-        <div class="col-lg-3 col-md-6" id="reject">
-          <div id="declinedPanel" class="panel panel-red">
-            <div class="panel-heading">
-              <div class="row">
-                <div class="col-xs-3">
-                  <i class="fa fa-thumbs-down fa-5x" aria-hidden="true"></i>
-                </div>
-                <div class="col-xs-9 text-right">
-                  <div class="huge">{{totalRejectedRequests}}</div>
-                  <div>Rejected Requests</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </a>
-    </div>
+	</div>
 </div>
 <!-- /.container -->
 <br>
-<!-- Responsive Quote Carousel
-  Credits:- http://codepen.io/vegancore/pen/rHzmh -->
+<!-- Responsive Quote Carousel -->
 <div class="container">
 	<div class="row">
 		<div class='col-md-offset-2 col-md-8 text-center'
@@ -157,7 +150,8 @@
 	<!-- /.row -->
 	<div class='row'>
 		<div class='col-md-offset-2 col-md-8' style="margin-top: -20px;">
-			<div class="carousel slide" data-ride="carousel" id="quote-carousel" name="quote-carousel">
+			<div class="carousel slide" data-ride="carousel" id="quote-carousel"
+				name="quote-carousel">
 				<!-- Bottom Carousel Indicators -->
 				<ol class="carousel-indicators">
 					<li data-target="#quote-carousel" data-slide-to="0" class="active"></li>
@@ -284,8 +278,8 @@
 										style="width: 100px; height: 100px;">
 								</div>
 								<div class="col-sm-9">
-									<p>It Doesn&rsquo;t Matter Where You Came From. All That Matters
-										Is Where You Are Going.</p>
+									<p>It Doesn&rsquo;t Matter Where You Came From. All That
+										Matters Is Where You Are Going.</p>
 									<small>Brian Tracy</small>
 								</div>
 							</div>
@@ -293,7 +287,6 @@
 						</blockquote>
 					</div>
 				</div>
-
 				<!-- Carousel Buttons Next/Prev -->
 				<a data-slide="prev" data-target="#quote-carousel"
 					class="left carousel-control"><i class="fa fa-chevron-left"></i></a>
@@ -305,7 +298,3 @@
 	<!-- /.row -->
 </div>
 <!-- /.container -->
-
-
-
-

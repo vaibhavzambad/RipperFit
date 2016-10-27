@@ -1,1 +1,1 @@
-var signUp = angular.module('signUp',[]);
+var app = angular.module('RipperFit',[]);

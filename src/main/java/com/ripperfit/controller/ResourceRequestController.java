@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ripperfit.CustomExceptions.OrganizationDoesNotExistsException;
+import com.ripperfit.CustomExceptions.ResourceRequestNotExistsException;
+import com.ripperfit.CustomExceptions.UserNotExistsException;
 import com.ripperfit.model.Employee;
 import com.ripperfit.model.Organization;
 import com.ripperfit.model.ResourceRequest;
@@ -58,7 +61,7 @@ public class ResourceRequestController {
 	public UserService getUserService() {
 		return userService;
 	}
-	
+
 	/**
 	 * Method to set UserService object
 	 * @param userService : UserService object to set
@@ -124,19 +127,15 @@ public class ResourceRequestController {
 	@RequestMapping(value = "/getRequestByEmployee/{employeeId}", method = RequestMethod.GET)
 	public ResponseEntity<List<ResourceRequest>> viewResourceRequestByEmployeeId(@PathVariable("employeeId") int employeeId) {
 
-		Employee employee = this.userService.getEmployeeById(employeeId);
-
-		if(employee != null){
-
-			List<ResourceRequest> list = this.resourceRequestService.getResourceRequestByEmployeeId(employee);
-			if(list.isEmpty()) {
-				return new ResponseEntity<List<ResourceRequest>>(HttpStatus.NO_CONTENT);
-			} else {
-
-				return new ResponseEntity<List<ResourceRequest>>(list, HttpStatus.OK);
-			}
+		try{
+			Employee employee = this.userService.getEmployeeById(employeeId);
+			List<ResourceRequest> resourceRequestList = this.resourceRequestService.getResourceRequestByEmployeeId(employee);
+			return new ResponseEntity<List<ResourceRequest>>(resourceRequestList, HttpStatus.OK);
+		}catch(UserNotExistsException | ResourceRequestNotExistsException notExistsException){
+			return new ResponseEntity<List<ResourceRequest>>(HttpStatus.NO_CONTENT);
+		}catch(Exception ex){
+			return new ResponseEntity<List<ResourceRequest>>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
-		return new ResponseEntity<List<ResourceRequest>>(HttpStatus.NO_CONTENT);
 	}
 
 	/**
@@ -146,15 +145,16 @@ public class ResourceRequestController {
 	@RequestMapping(value = "/getAllRequests", method = RequestMethod.GET)
 	public ResponseEntity<List<ResourceRequest>> viewAllResourceRequest() {
 
-		List<ResourceRequest> list = this.resourceRequestService.getAllResourceRequest();
-		if(list.isEmpty()) {
-
-			return new ResponseEntity<List<ResourceRequest>>(HttpStatus.NO_CONTENT);
-		} else {
+		try{
+			List<ResourceRequest> list = this.resourceRequestService.getAllResourceRequest();
 			return new ResponseEntity<List<ResourceRequest>>(list, HttpStatus.OK);
+		}catch(ResourceRequestNotExistsException resourceRequestNotExistsException){
+			return new ResponseEntity<List<ResourceRequest>>(HttpStatus.NO_CONTENT);
+		}catch(Exception ex){
+			return new ResponseEntity<List<ResourceRequest>>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
-	
+
 
 	/**
 	 * Method to get a particular request by requestId
@@ -163,14 +163,16 @@ public class ResourceRequestController {
 	 */
 	@RequestMapping(value = "/getRequest/{requestId}", method = RequestMethod.GET)
 	public ResponseEntity<ResourceRequest> viewResourceRequestById(@PathVariable("requestId") int requestId) {
-
-		ResourceRequest resourceRequest = this.resourceRequestService.getResourceRequestById(requestId);
-		if(resourceRequest != null){
+		try{
+			ResourceRequest resourceRequest = this.resourceRequestService.getResourceRequestById(requestId);
 			return new ResponseEntity<ResourceRequest>(resourceRequest, HttpStatus.OK);
+		}catch(ResourceRequestNotExistsException resourceRequestNotExistsException){
+			return new ResponseEntity<ResourceRequest>(HttpStatus.NO_CONTENT);
+		}catch(Exception ex){
+			return new ResponseEntity<ResourceRequest>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
-		return new ResponseEntity<ResourceRequest>(HttpStatus.NO_CONTENT);
 	}
-	
+
 	/**
 	 * Method to view all requests of an employee which he/she have to approve
 	 * @param forwardToId : Id of employee who have to approve the requests
@@ -179,17 +181,17 @@ public class ResourceRequestController {
 	@RequestMapping(value="/getAllRequestToApprove/{forwardToId}",method = RequestMethod.GET)
 	public ResponseEntity<List<ResourceRequest>> getAllRequestToApprove(@PathVariable("forwardToId") int forwardToId){
 
-		Employee employee = this.userService.getEmployeeById(forwardToId);
-		if(employee != null){
-
+		try{
+			Employee employee = this.userService.getEmployeeById(forwardToId);
 			List<ResourceRequest> resourceRequestList = this.approveRequestService.getResourceRequestListByForwardToId(employee);
-			if(!resourceRequestList.isEmpty()){
-				return new ResponseEntity<List<ResourceRequest>>(resourceRequestList, HttpStatus.OK);
-			}
+			return new ResponseEntity<List<ResourceRequest>>(resourceRequestList, HttpStatus.OK);
+		}catch(UserNotExistsException | ResourceRequestNotExistsException notExistsException){
+			return new ResponseEntity<List<ResourceRequest>>(HttpStatus.NO_CONTENT);
+		}catch(Exception ex){
+			return new ResponseEntity<List<ResourceRequest>>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
-		return new ResponseEntity<List<ResourceRequest>>(HttpStatus.NO_CONTENT);
 	}
-	
+
 	/**
 	 * Method to update a request
 	 * @param resourceRequest : request to be updated
@@ -198,10 +200,14 @@ public class ResourceRequestController {
 	@RequestMapping(value = "/updateRequest", method = RequestMethod.PUT)
 	public ResponseEntity<ResourceRequest> updateResourceRequest(@RequestBody ResourceRequest resourceRequest) {
 
-		this.resourceRequestService.updateResourceRequest(resourceRequest);
-		return new ResponseEntity<ResourceRequest>(HttpStatus.OK);
+		try{
+			this.resourceRequestService.updateResourceRequest(resourceRequest);
+			return new ResponseEntity<ResourceRequest>(HttpStatus.OK);
+		}catch(Exception ex){
+			return new ResponseEntity<ResourceRequest>(HttpStatus.SERVICE_UNAVAILABLE);
+		}
 	}
-	
+
 	/**
 	 * Method to view all requests of a particular organization's employees
 	 * @param organizationId : ID of organization
@@ -210,16 +216,17 @@ public class ResourceRequestController {
 	@RequestMapping(value = "/getRequestsByOrganization/{organizationId}", method = RequestMethod.GET)
 	public ResponseEntity<List<ResourceRequest>> getRequestsByOrganization(@PathVariable("organizationId") int organizationId) {
 
-		Organization organization = this.organizationService.getOrganizationById(organizationId);
-		List<ResourceRequest> list = this.resourceRequestService.getAllRequestsInAnOrganizationForHelpdesk(organization);
-
-		if(list.isEmpty()) {
+		try{
+			Organization organization = this.organizationService.getOrganizationById(organizationId);
+			List<ResourceRequest> resourceRequestList = this.resourceRequestService.getAllRequestsInAnOrganizationForHelpdesk(organization);
+			return new ResponseEntity<List<ResourceRequest>>(resourceRequestList, HttpStatus.OK);
+		}catch(OrganizationDoesNotExistsException | ResourceRequestNotExistsException notExistsException){
 			return new ResponseEntity<List<ResourceRequest>>(HttpStatus.NO_CONTENT);
-		} else {
-			return new ResponseEntity<List<ResourceRequest>>(list, HttpStatus.OK);
+		}catch(Exception ex){
+			return new ResponseEntity<List<ResourceRequest>>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
-	
+
 	/**
 	 * Method to get requests by status
 	 * @param status : status of the requests
@@ -227,14 +234,14 @@ public class ResourceRequestController {
 	 */
 	@RequestMapping(value = "/getRequestByStatus/{status}/{organizationName}", method = RequestMethod.GET)
 	public ResponseEntity<List<ResourceRequest>> viewResourceRequestByStatus(@PathVariable String status , @PathVariable String organizationName) {
-		
-		
-		List<ResourceRequest> list = this.resourceRequestService.getResourceRequestByStatus(status,organizationName);
-		if(list.isEmpty()) {
 
+		try{
+			List<ResourceRequest> resourceRequestList = this.resourceRequestService.getResourceRequestByStatus(status,organizationName);
+			return new ResponseEntity<List<ResourceRequest>>(resourceRequestList, HttpStatus.OK);
+		}catch(ResourceRequestNotExistsException resourceRequestNotExistsException){
 			return new ResponseEntity<List<ResourceRequest>>(HttpStatus.NO_CONTENT);
-		} else {
-			return new ResponseEntity<List<ResourceRequest>>(list, HttpStatus.OK);
+		}catch(Exception ex){
+			return new ResponseEntity<List<ResourceRequest>>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
 }

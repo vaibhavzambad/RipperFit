@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ripperfit.CustomExceptions.DepartmentDoesNotExistsException;
+import com.ripperfit.CustomExceptions.DesignationAlreadyPresentException;
+import com.ripperfit.CustomExceptions.DesignationsDoesNotExistsException;
+import com.ripperfit.CustomExceptions.OrganizationDoesNotExistsException;
 import com.ripperfit.model.Department;
 import com.ripperfit.model.Designation;
 import com.ripperfit.model.Organization;
@@ -78,7 +82,7 @@ public class DesignationController {
 	public void setDepartmentService(DepartmentService departmentService) {
 		this.departmentService = departmentService;
 	}
-	
+
 	/**
 	 * Method to add a new designation in organization
 	 * @param designation : Designation object to be added
@@ -87,16 +91,16 @@ public class DesignationController {
 	@RequestMapping(value="/addDesignation",method=RequestMethod.POST)
 	public ResponseEntity<Void> addDesignation(@RequestBody Designation designation){
 
-		int result = this.designationService.addDesignation(designation, designation.getOrganization());
-		if(result == 1) {
-			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-		} else if(result == 2) {
+		try{
+			this.designationService.addDesignation(designation, designation.getOrganization());
 			return new ResponseEntity<Void>(HttpStatus.CREATED);
-		} else {
+		}catch(DesignationAlreadyPresentException designationAlreadyPresentException){
+			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+		}catch(Exception ex){
 			return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
-	
+
 	/**
 	 * Method to get a designation of a particular organization by name of designation
 	 * @param designationName : name of designation
@@ -105,16 +109,18 @@ public class DesignationController {
 	 */
 	@RequestMapping(value="/getDesignationByName/{designationName}/{organizationId}",method=RequestMethod.GET)
 	public ResponseEntity<Designation> getDesignationByName(@PathVariable("designationName") String designationName , @PathVariable("organizationId") String organizationId){
-		Organization organization = this.organizationService.getOrganizationById(Integer.parseInt(organizationId));
 
-		Designation designation = this.designationService.getDesignationInAnOrganization(designationName,organization);
-		if(designation != null){
+		try{
+			Organization organization = this.organizationService.getOrganizationById(Integer.parseInt(organizationId));
+			Designation designation = this.designationService.getDesignationInAnOrganization(designationName,organization);
 			return new ResponseEntity<Designation>(designation,HttpStatus.OK);
-		}else{
+		}catch(OrganizationDoesNotExistsException | DesignationsDoesNotExistsException notExistsException){
 			return new ResponseEntity<Designation>(HttpStatus.NO_CONTENT);
+		}catch(Exception ex){
+			return new ResponseEntity<Designation>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
-	
+
 	/**
 	 * Method to get a designation by its Id
 	 * @param designationId : id of designation to be found
@@ -123,25 +129,34 @@ public class DesignationController {
 	@RequestMapping(value="/getDesignationById/{designationId}",method=RequestMethod.GET)
 	public ResponseEntity<Designation> getDesignationById(@PathVariable("designationId") int designationId)
 	{
-		
-		Designation designation = this.designationService.getDesignationById(designationId);
-		if(designation != null){
+
+		try{
+			Designation designation = this.designationService.getDesignationById(designationId);
 			return new ResponseEntity<Designation>(designation,HttpStatus.OK);
-		}else{
+		}catch(DesignationsDoesNotExistsException designationsDoesNotExistsException){
 			return new ResponseEntity<Designation>(HttpStatus.NO_CONTENT);
+		}catch(Exception ex){
+			return new ResponseEntity<Designation>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
-	
+
 	/**
 	 * Method to update level of existing designations after adding a new designation
 	 * @param designation : Designation which is added
 	 * @return ResponseEntity with no object
+	 * @throws Exception 
 	 */
 	@RequestMapping(value="/updateLevels",method=RequestMethod.PUT)
-	public ResponseEntity<Void> updateDesignationLevels(@RequestBody Designation designation){
+	public ResponseEntity<Void> updateDesignationLevels(@RequestBody Designation designation) throws Exception{
 
-		this.designationService.updateDesignationLevels(designation);
-		return new ResponseEntity<Void>(HttpStatus.OK);
+		try{
+			this.designationService.updateDesignationLevels(designation);
+			return new ResponseEntity<Void>(HttpStatus.OK);
+		}catch(DesignationsDoesNotExistsException designationsDoesNotExistsException){
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		}catch(Exception ex){
+			return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
+		}
 	}
 
 	/**
@@ -152,12 +167,14 @@ public class DesignationController {
 	@RequestMapping(value = "/getDesignations/{organizationId}", method = RequestMethod.GET)
 	public ResponseEntity<List<Designation>> getDesignations(@PathVariable("organizationId") int organizationId) {
 
-		Organization organization = this.organizationService.getOrganizationById(organizationId);
-		List<Designation> list = this.designationService.getAllDesignationsInAnOrganization(organization);
-		if(list.isEmpty()) {
+		try{
+			Organization organization = this.organizationService.getOrganizationById(organizationId);
+			List<Designation> designationList = this.designationService.getAllDesignationsInAnOrganization(organization);
+			return new ResponseEntity<List<Designation>>(designationList, HttpStatus.OK);
+		}catch(OrganizationDoesNotExistsException | DesignationsDoesNotExistsException notExistsException){
 			return new ResponseEntity<List<Designation>>(HttpStatus.NO_CONTENT);
-		} else {
-			return new ResponseEntity<List<Designation>>(list, HttpStatus.OK);
+		}catch(Exception ex){
+			return new ResponseEntity<List<Designation>>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
 
@@ -169,15 +186,17 @@ public class DesignationController {
 	@RequestMapping(value = "/getDesignationsByDepartment/{departmentId}", method = RequestMethod.GET)
 	public ResponseEntity<List<Designation>> getDesignationsByDepartment(@PathVariable("departmentId") int departmentId) {
 
-		Department department = this.departmentService.getDepartmentById(departmentId);
-		List<Designation> list = this.designationService.getDesignationsInDepartment(department);
-		if(list.isEmpty()) {
-			return new ResponseEntity<List<Designation>>(HttpStatus.NO_CONTENT);
-		} else {
+		try{
+			Department department = this.departmentService.getDepartmentById(departmentId);
+			List<Designation> list = this.designationService.getDesignationsInDepartment(department);
 			return new ResponseEntity<List<Designation>>(list, HttpStatus.OK);
+		}catch(DepartmentDoesNotExistsException | DesignationsDoesNotExistsException notExistsException){
+			return new ResponseEntity<List<Designation>>(HttpStatus.NO_CONTENT);
+		}catch(Exception ex){
+			return new ResponseEntity<List<Designation>>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
-	
+
 	/**
 	 * Method to update a designation of organization
 	 * @param designation : designation object to be updated
@@ -186,7 +205,13 @@ public class DesignationController {
 	@RequestMapping(value = "/updateDesignation", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@RequestBody Designation designation) {
 
-		this.designationService.updateDesignation(designation);
-		return new ResponseEntity<Void>(HttpStatus.OK);
+		try{
+			this.designationService.updateDesignation(designation);
+			return new ResponseEntity<Void>(HttpStatus.OK);
+		}catch(DesignationsDoesNotExistsException designationsDoesNotExistsException){
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		}catch(Exception ex){
+			return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
+		}
 	}
 }

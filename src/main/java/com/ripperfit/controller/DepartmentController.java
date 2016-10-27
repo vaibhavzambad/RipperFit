@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ripperfit.CustomExceptions.DepartmentAlreadyPresentException;
+import com.ripperfit.CustomExceptions.DepartmentDoesNotExistsException;
+import com.ripperfit.CustomExceptions.OrganizationDoesNotExistsException;
 import com.ripperfit.model.Department;
 import com.ripperfit.model.Organization;
 import com.ripperfit.service.DepartmentService;
@@ -25,7 +28,7 @@ public class DepartmentController {
 
 	private DepartmentService departmentService;
 	private OrganizationService organizationService;
-	
+
 	/**
 	 * Getter method to get department service object
 	 * @return : DepartmentService object
@@ -33,7 +36,7 @@ public class DepartmentController {
 	public DepartmentService getDepartmentService() {
 		return departmentService;
 	}
-	
+
 	/**
 	 * Method to set DepartmentService object
 	 * @param departmentService : DepartmentService object
@@ -67,15 +70,16 @@ public class DepartmentController {
 	@RequestMapping(value = "/getDepartments", method = RequestMethod.GET)
 	public ResponseEntity<List<Department>> getDepartments() {
 
-		List<Department> list = this.departmentService.getAllDepartment();
-		if(list.isEmpty()) {
-
-			return new ResponseEntity<List<Department>>(HttpStatus.NO_CONTENT);
-		} else {
+		try{
+			List<Department> list = this.departmentService.getAllDepartment();
 			return new ResponseEntity<List<Department>>(list, HttpStatus.OK);
+		}catch(DepartmentDoesNotExistsException departmentDoesNotExistsException){
+			return new ResponseEntity<List<Department>>(HttpStatus.NO_CONTENT);
+		}catch(Exception ex){
+			return new ResponseEntity<List<Department>>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
-	
+
 	/**
 	 * Method to add new department in organization
 	 * @param department : Department object to be added
@@ -83,12 +87,13 @@ public class DepartmentController {
 	 */
 	@RequestMapping(value="/addDepartment",method = RequestMethod.POST)
 	public ResponseEntity<Void> addDepartment(@RequestBody Department department){
-		int result = this.departmentService.addDepartmentByOrganization(department, department.getOrganization());
-		if(result == 1) {
-			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-		} else if(result == 2) {
+
+		try{
+			this.departmentService.addDepartmentByOrganization(department, department.getOrganization());
 			return new ResponseEntity<Void>(HttpStatus.CREATED);
-		} else {
+		}catch(DepartmentAlreadyPresentException departmentAlreadyPresentException){
+			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+		}catch(Exception ex){
 			return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
@@ -101,14 +106,16 @@ public class DepartmentController {
 	@RequestMapping(value = "/getDepartmentById/{departmentId}", method = RequestMethod.GET)
 	public ResponseEntity<Department> getDepartmentById(@PathVariable("departmentId") int departmentId) {
 
-		Department department = this.departmentService.getDepartmentById(departmentId);
-		if (department != null) {
+		try{
+			Department department = this.departmentService.getDepartmentById(departmentId);
 			return new ResponseEntity<Department>(department,HttpStatus.OK);
-		} else {
+		}catch(DepartmentDoesNotExistsException departmentDoesNotExistsException){
 			return new ResponseEntity<Department>(HttpStatus.NO_CONTENT);
+		}catch(Exception ex){
+			return new ResponseEntity<Department>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
-	
+
 	/**
 	 * Method to update a department by organization
 	 * @param department : department object to be updated
@@ -117,8 +124,14 @@ public class DepartmentController {
 	@RequestMapping(value = "/updateDepartment", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@RequestBody Department department) {
 
-		this.departmentService.updateDepartment(department);
-		return new ResponseEntity<Void>(HttpStatus.OK);
+		try{
+			this.departmentService.updateDepartment(department);
+			return new ResponseEntity<Void>(HttpStatus.OK);
+		}catch(DepartmentDoesNotExistsException departmentDoesNotExistsException){
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		}catch(Exception ex){
+			return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
+		}
 	}
 
 	/**
@@ -128,16 +141,18 @@ public class DepartmentController {
 	 */
 	@RequestMapping(value = "/getAllDepartmentsInAnOrganization/{organizationId}", method = RequestMethod.GET)
 	public ResponseEntity<List<Department>> getAllDepartmentsInAnOrganization(@PathVariable("organizationId") int organizationId) {
-
+		
+		try{
 		Organization organization = this.organizationService.getOrganizationById(organizationId);
-		List<Department> list = this.departmentService.getAllDepartmentsInAnOrganization(organization);
-		if(list.isEmpty()) {
+		List<Department> departmentList = this.departmentService.getAllDepartmentsInAnOrganization(organization);
+		return new ResponseEntity<List<Department>>(departmentList, HttpStatus.OK);
+		}catch(OrganizationDoesNotExistsException | DepartmentDoesNotExistsException notExistsException){
 			return new ResponseEntity<List<Department>>(HttpStatus.NO_CONTENT);
-		} else {
-			return new ResponseEntity<List<Department>>(list, HttpStatus.OK);
+		}catch(Exception ex){
+			return new ResponseEntity<List<Department>>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
-	
+
 	/**
 	 * Method to get particular department by its name
 	 * @param departmentName : name of that department
@@ -146,14 +161,15 @@ public class DepartmentController {
 	 */
 	@RequestMapping(value = "/getDepartmentByName/{departmentName}/{organizationId}", method = RequestMethod.GET)
 	public ResponseEntity<Department> getOrganizationByName( @PathVariable("departmentName") String departmentName , @PathVariable("organizationId") String organizationId) {
-
+		
+		try{
 		Organization organization = this.organizationService.getOrganizationById(Integer.parseInt(organizationId));
 		Department department = this.departmentService.getDepartmentInAnOrganization(departmentName, organization);
-		if(department == null) {
-
+		return new ResponseEntity<Department>(department, HttpStatus.OK);
+		}catch(OrganizationDoesNotExistsException | DepartmentDoesNotExistsException notExistsException){
 			return new ResponseEntity<Department>(HttpStatus.NO_CONTENT);
-		} else {
-			return new ResponseEntity<Department>(department, HttpStatus.OK);
+		}catch(Exception ex){
+			return new ResponseEntity<Department>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
 }

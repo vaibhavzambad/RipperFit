@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ripperfit.CustomExceptions.OrganizationAlreadyPresentException;
+import com.ripperfit.CustomExceptions.OrganizationDoesNotExistsException;
 import com.ripperfit.model.Organization;
 import com.ripperfit.service.OrganizationService;
 
@@ -37,7 +39,7 @@ public class OrganizationController {
 	public void setOrganizationService(OrganizationService organizationService) {
 		this.organizationService = organizationService;
 	}
-	
+
 	/**
 	 * Method to get all organizations
 	 * @return ResponseEntity with list of Organization objects
@@ -45,16 +47,16 @@ public class OrganizationController {
 	@RequestMapping(value = "/getAllOrganizations", method = RequestMethod.GET)
 	public ResponseEntity<List<Organization>> getAllOrganizations() {
 
-		List<Organization> organizationList = this.organizationService.getAllOrganizations();
-
-		if(organizationList.isEmpty()) {
-
-			return new ResponseEntity<List<Organization>>(HttpStatus.NO_CONTENT);
-		} else {
+		try{
+			List<Organization> organizationList = this.organizationService.getAllOrganizations();
 			return new ResponseEntity<List<Organization>>(organizationList, HttpStatus.OK);
+		}catch(OrganizationDoesNotExistsException organizationDoesNotExistsException){
+			return new ResponseEntity<List<Organization>>(HttpStatus.NO_CONTENT);
+		}catch(Exception ex){
+			return new ResponseEntity<List<Organization>>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}	
-	
+
 	/**
 	 * Method to add a new organization
 	 * @param organization : Organization object to be added
@@ -63,16 +65,16 @@ public class OrganizationController {
 	@RequestMapping(value = "/addOrganization", method = RequestMethod.POST)
 	public ResponseEntity<Void> addOrganization(@RequestBody Organization organization) {
 
-		int result = this.organizationService.addOrganization(organization);
-		if(result == 1) {
-			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-		} else if(result == 2) {
+		try{
+			this.organizationService.addOrganization(organization);
 			return new ResponseEntity<Void>(HttpStatus.CREATED);
-		} else {
+		}catch(OrganizationAlreadyPresentException organizationAlreadyPresentException){
+			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+		}catch(Exception ex){
 			return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
-	
+
 	/**
 	 * Method to get a particular organization by its name
 	 * @param organizationName : name of organization
@@ -80,13 +82,14 @@ public class OrganizationController {
 	 */
 	@RequestMapping(value = "/getOrganizationByName/{organizationName}", method = RequestMethod.GET)
 	public ResponseEntity<Organization> getOrganizationByName( @PathVariable("organizationName") String organizationName) {
-
+		
+		try{
 		Organization organization = this.organizationService.getOrganizationByName(organizationName);
-		if(organization == null) {
-
+		return new ResponseEntity<Organization>(organization, HttpStatus.OK);
+		}catch(OrganizationDoesNotExistsException organizationDoesNotExistsException){
 			return new ResponseEntity<Organization>(HttpStatus.NO_CONTENT);
-		} else {
-			return new ResponseEntity<Organization>(organization, HttpStatus.OK);
+		}catch(Exception ex){
+			return new ResponseEntity<Organization>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
 }

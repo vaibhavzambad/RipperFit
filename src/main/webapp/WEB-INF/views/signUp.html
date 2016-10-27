@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<!-- Logo in Title Bar -->
-  <link rel="icon" href="resources/img/rippericon.png" type="image/png" sizes="16x16">
 
+<!-- Logo in Title Bar -->
+<link rel="icon" href="resources/img/rippericon.png" type="image/png"
+	sizes="16x16">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SignUp RipperFit</title>
@@ -15,6 +16,7 @@
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
 </head>
 
 <body ng-app="RipperFit">
@@ -28,7 +30,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#"><b>RipperFit</b></a>
+				<a class="navbar-brand" href="/RipperFit"><b>RipperFit</b></a>
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse"
@@ -42,11 +44,13 @@
 			<!-- /.navbar-collapse -->
 		</div>
 	</div>
-	<div class="container" style="margin-top: 70px;">
+
+	<div class="container" style="margin-top: 50px;">
 		<div class="col-xs-2"></div>
 		<div class="col-xs-8">
 			<h3 class="text-center">Sign up now</h3>
 			<hr />
+			<div style="height: 20px;"></div>
 			<form name="userForm" ng-submit="getFormDetails(user)"
 				ng-controller="signUpCtrl">
 				<div class="row">
@@ -56,12 +60,15 @@
 							type="text" name="fname" placeholder="First name"
 							class="form-control" ng-model="user.firstName" required /> <span
 							ng-show="userForm.fname.$invalid && !userForm.fname.$pristine"
-							class="help-block">You First name is required.</span>
+							class="help-block">First name is required.</span>
 					</div>
-					<div class="col-xs-6 form-group">
+					<div class="col-xs-6 form-group"
+						ng-class="{ 'has-error' : userForm.lname.$invalid && !userForm.lname.$pristine }">
 						<label for="lname" class="sr-only">Last name</label> <input
 							type="text" name="lname" placeholder="Last name"
-							class="form-control" ng-model="user.lastName" />
+							class="form-control" ng-model="user.lastName" required /> <span
+							ng-show="userForm.lname.$invalid && !userForm.lname.$pristine"
+							class="help-block">Last name is required.</span>
 					</div>
 				</div>
 				<div class="row">
@@ -126,56 +133,52 @@
 				<div class="row">
 					<div class="col-xs-6 form-group" class="sr-only">
 						<label for="form-organization" class="sr-only">Organization</label>
-						<select class="form-control"  id="selectOrganization"
+						<select class="form-control" id="selectOrganization"
 							ng-init="getOrganizations()" ng-model="user.organization"
 							ng-options="organization as organization.organizationName for organization in organizationDetails"
-							ng-change="getDesignations(user.organization)" >
-							
+							ng-change="getDesignations(user.organization)">
+
 							<option value="" disabled selected hidden>Organization</option>
-							
-						</select> <a class="btn btn-link" ng-click="createOrganization()">If others</a>
+
+						</select> <a class="btn btn-link" ng-click="createOrganization()">If
+							others</a>
 						<p class="help-block organization"></p>
 					</div>
 					<div class="col-xs-6 form-group">
 						<label for="form-designation" class="sr-only">Designation</label>
 						<select class="form-control" id="form-designation"
 							ng-model="user.designation"
-							ng-options="designation as designation.designationName for designation in designationDetails "
-							>
+							ng-options="designation as designation.designationName for designation in designationDetails ">
 							<option value="" disabled selected hidden>Designation</option>
 						</select>
 						<p class="help-block designation"></p>
 					</div>
 				</div>
 				<div class="col-xs-12 form-group">
-						<label for="form-designation" class="sr-only">organization</label>
-						<input
-							type="text" name="organization" placeholder="Enter Organization name"
-							class="form-control hidden" id="inputOrganization" ng-model="user.organization" required /> <span
-							ng-show="userForm.organization.$invalid && !userForm.organization.$pristine"
-							class="help-block">Organization is required.</span>
-						<p class="help-block designation"></p>
-					</div>
-				<button type="submit" class="btn btn-primary"
-					>Submit</button>
-				<br/>
-				<br/>
-				<div style="color:red;" id="message"></div>
+					<label for="form-designation" class="sr-only">organization</label>
+					<input type="text" name="organization"
+						placeholder="Enter Organization name" class="form-control hidden"
+						id="inputOrganization" ng-model="user.organization" required /> <span
+						ng-show="userForm.organization.$invalid && !userForm.organization.$pristine"
+						class="help-block">Organization is required.</span>
+					<p class="help-block designation"></p>
+				</div>
+				<button type="submit" class="btn btn-primary">Submit</button>
+				<br /> <br />
+				<div style="color: red;" id="message"></div>
 			</form>
 		</div>
 	</div>
-	<!-- <footer class="footer text-center"
-		style="position: absolute; bottom: 0 !important; width: 100%; background-color: #f8f8f8; border-top: 1.5px solid #e7e7e7; padding: 17px">
-		<p style="margin: 0;">
-			&copy;2016 RipperFit. All Rights Reserved| Designed by <b>VARAAS</b>
-		</p>
-	</footer> -->
+	<div style="text-align:center" ng-include="'footer.html'"></div>
+	
 	<!-- Javascript -->
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<!-- <script src="resources/js/jquery.backstretch.min.js"></script> -->
+	<script src="resources/js/applications.js"></script>
 	<script src="resources/js/controllers.js"></script>
+	<script src="resources/js/controllers/signUpCtrl.js"></script>
+
 </body>
 </html>

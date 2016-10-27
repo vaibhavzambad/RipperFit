@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ripperfit.CustomExceptions.CommentDoesNotExistsException;
+import com.ripperfit.CustomExceptions.ResourceRequestNotExistsException;
 import com.ripperfit.model.Comments;
 import com.ripperfit.model.ResourceRequest;
 import com.ripperfit.service.CommentsService;
@@ -86,14 +88,19 @@ public class CommentController {
 	@RequestMapping(value = "/getCommentByRequestId/{requestId}", method = RequestMethod.GET)
 	public ResponseEntity<List<Comments>> getCommentByRequestId(@PathVariable("requestId") int requestId) {
 
-		ResourceRequest resourceRequest = this.resourceRequestService.getResourceRequestById(requestId);
+		try{
+			ResourceRequest resourceRequest = this.resourceRequestService.getResourceRequestById(requestId);
+			List<Comments> commentList  = this.commentsService.getCommentByRequestId(resourceRequest);
+			if(commentList.isEmpty()) {
+				return new ResponseEntity<List<Comments>>(HttpStatus.NO_CONTENT);
+			} else {
 
-		List<Comments> commentList  = this.commentsService.getCommentByRequestId(resourceRequest);
-		if(commentList.isEmpty()) {
+				return new ResponseEntity<List<Comments>>(commentList, HttpStatus.OK);
+			}
+		}catch(ResourceRequestNotExistsException | CommentDoesNotExistsException notExistsException){
 			return new ResponseEntity<List<Comments>>(HttpStatus.NO_CONTENT);
-		} else {
-
-			return new ResponseEntity<List<Comments>>(commentList, HttpStatus.OK);
+		}catch(Exception ex){
+			return new ResponseEntity<List<Comments>>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
 

@@ -1,4 +1,5 @@
-<div class="navbar navbar-default navbar-fixed-top">
+<div class="navbar navbar-default navbar-fixed-top"
+	ng-controller="headerCtrl">
 	<div class="container-fluid ">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed"
@@ -8,35 +9,37 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#"><b>RipperFit</b></a>
+			<a class="navbar-brand" href="#/Home"><i
+				class="fa fa-futbol-o top-icon" id="logo-icon" aria-hidden="true">
+			</i><b> RipperFit</b></a>
 		</div>
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#"><i class="fa fa-tachometer"
+				<li><a href="#/Home"><i class="fa fa-tachometer"
 						aria-hidden="true">&nbsp</i> DashBoard</a></li>
-				<li><a href="#"><i class="fa fa-play" aria-hidden="true">&nbsp</i>
-						Getting Started</a></li>
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
+				<li class="dropdown"><a href="" class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true"
 					aria-expanded="false"><span class="glyphicon glyphicon-tasks"
 						style="top: 3px; right: -7px;">&nbsp</span> My Actions<span
 						class="sr-only">(current)</span> <span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li><a href="#/admin/viewRequest">Requests</a></li>
-						<li><a href="#">Resources</a></li>
-						<li><a href="#/admin/viewEmployee">Crew</a></li>
-						<li><a href="#/admin/viewRole">Positions</a></li>
+					<ul class="dropdown-menu" ng-if="status">
+						<li ng-repeat="user in loggedUser"><a href="{{user.href}}">{{user.text}}</a></li>
 					</ul></li>
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
+				<li class="dropdown"><a href="" class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true"
 					aria-expanded="false"><i class="fa fa-user" aria-hidden="true">&nbsp</i>
-						Admin <i class="fa fa-caret-down" aria-hidden="true"></i></a>
+						{{loggedEmployee}} <span class="caret"></span></i></a>
 					<ul class="dropdown-menu">
-						<li><a href="#">My Profile</a></li>
-						<li><a href="#">My Requests</a></li>
-						<li><a href="/RipperFit/employee/logout">Logout</a></li>
+						<li ng-repeat="userList in loggedUserList"><a
+							href="{{userList.href}}">{{userList.text}}</a></li>
+						<li><a href="#/changePassword"><i class="fa fa-cog"
+								aria-hidden="true"> </i> Change Password</a>
+						<li role="separator" class="divider"></li>
+						<li><a href="/RipperFit/employee/logout"><span
+								style="font-size: smaller;" class="glyphicon glyphicon-off"></span>
+								Logout</a></li>
 					</ul></li>
 				<li>&nbsp;&nbsp;&nbsp;</li>
 			</ul>

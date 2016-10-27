@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ripperfit.CustomExceptions.OrganizationDoesNotExistsException;
+import com.ripperfit.CustomExceptions.UserAlreadyPresentException;
+import com.ripperfit.CustomExceptions.UserNotExistsException;
 import com.ripperfit.model.Employee;
 import com.ripperfit.model.Login;
 import com.ripperfit.model.Organization;
@@ -52,7 +55,7 @@ public class UserController {
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
-	
+
 	/**
 	 * Method to get OrganizationService object
 	 * @return OrganizationService object
@@ -78,11 +81,13 @@ public class UserController {
 	@RequestMapping(value = "/getEmployeeByEmail", method = RequestMethod.GET)
 	public ResponseEntity<Employee> getEmployeeByEmail(@RequestParam String email) {
 
-		Employee employee = this.userService.getEmployeeByEmail(email);
-		if (employee != null) {
+		try{
+			Employee employee = this.userService.getEmployeeByEmail(email);
 			return new ResponseEntity<Employee>(employee,HttpStatus.OK);
-		} else {
+		}catch(UserNotExistsException userNotExistsException){
 			return new ResponseEntity<Employee>(HttpStatus.NO_CONTENT);
+		}catch(Exception ex){
+			return new ResponseEntity<Employee>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
 
@@ -94,12 +99,13 @@ public class UserController {
 	@RequestMapping(value = "/getEmployeeById", method = RequestMethod.GET)
 	public ResponseEntity<Employee> getEmployeeById(@RequestParam String Id) {
 
-		int id = Integer.parseInt(Id);
-		Employee employee = this.userService.getEmployeeById(id);
-		if (employee != null) {
+		try{
+			Employee employee = this.userService.getEmployeeById(Integer.parseInt(Id));
 			return new ResponseEntity<Employee>(employee,HttpStatus.OK);
-		} else {
+		}catch(UserNotExistsException userNotExistsException){
 			return new ResponseEntity<Employee>(HttpStatus.NO_CONTENT);
+		}catch(Exception ex){
+			return new ResponseEntity<Employee>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
 
@@ -112,16 +118,17 @@ public class UserController {
 	public ResponseEntity<Employee> login(@RequestBody Login login, HttpServletRequest request) {	
 
 		HttpSession session = request.getSession();
-		Employee employee = this.userService.login(login.getEmail(), login.getPassword());
-
-		if (employee != null) {
+		try{
+			Employee employee = this.userService.login(login.getEmail(), login.getPassword());
 			createSession(employee.getEmail(), session);
 			return new ResponseEntity<Employee>(employee, HttpStatus.ACCEPTED);
-		} else {
+		}catch(UserNotExistsException userNotExistsException){
 			return new ResponseEntity<Employee>(HttpStatus.UNAUTHORIZED);
+		}catch(Exception ex){
+			return new ResponseEntity<Employee>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
-	
+
 	/**
 	 * Method to create session of logged in user
 	 * @param email : email address of logged in user
@@ -131,8 +138,12 @@ public class UserController {
 	@RequestMapping(value = "/createSession", method = RequestMethod.GET)
 	public ResponseEntity<Void> createSession(@RequestParam String email,HttpSession session) {	
 
-		session.setAttribute("email", email);
-		return new ResponseEntity<Void>(HttpStatus.OK);
+		try{
+			session.setAttribute("email", email);
+			return new ResponseEntity<Void>(HttpStatus.OK);
+		}catch(Exception ex){
+			return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
+		}
 
 	}
 
@@ -148,17 +159,17 @@ public class UserController {
 		if(employee.getLastName() == null){
 			employee.setLastName("");
 		}
-		int result = this.userService.registerEmployee(employee);
-		if(result == 1) {
-			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-		} else if(result == 2) {
+		try{
+			this.userService.registerEmployee(employee);
 			createSession(employee.getEmail(), session);
 			return new ResponseEntity<Void>(HttpStatus.CREATED);
-		} else {
+		}catch(UserAlreadyPresentException userAlreadyPresentException){
+			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+		}catch(Exception ex){
 			return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
-	
+
 	/**
 	 * Method for register user through social login
 	 * @param employee : Employee object to be logged
@@ -172,22 +183,23 @@ public class UserController {
 		login.setEmail(employee.getEmail());
 		employee.setPassword(passwordGenerator());
 		login.setPassword(employee.getPassword());
-		int result = this.userService.registerEmployee(employee);
-		if(result == 1) {
+		try{
+			this.userService.registerEmployee(employee);
+			createSession(login.getEmail(), session);
+			return new ResponseEntity<Login>(login,HttpStatus.CREATED);
+		}catch(UserAlreadyPresentException userAlreadyPresentException){
 			return new ResponseEntity<Login>(HttpStatus.CONFLICT);
-		} else if(result == 2) {
-			createSession(employee.getEmail(), session);
-			return new ResponseEntity<Login>(login, HttpStatus.CREATED);
-		} else {
+		}catch(Exception ex){
 			return new ResponseEntity<Login>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
-	
+
 	/**
 	 * Method to generate random password of 6 digits for social login and forget password services
 	 * @return : String
 	 */
 	public String passwordGenerator() {
+
 		final String ALPHA_NUMERIC_STRING = "abcdefghijklmnopqrstuvwxyz0123456789";
 		StringBuilder builder = new StringBuilder();
 		int count = 6;
@@ -205,8 +217,15 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/updateEmployee", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@RequestBody Employee employee) {
-		this.userService.updateUser(employee);
-		return new ResponseEntity<Void>(HttpStatus.OK);
+
+		try{
+			this.userService.updateUser(employee);
+			return new ResponseEntity<Void>(HttpStatus.OK);
+		}catch(UserNotExistsException userNotExistsException){
+			return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
+		}catch(Exception ex){
+			return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
+		}
 	}
 
 	/**
@@ -222,7 +241,7 @@ public class UserController {
 		session.invalidate();
 		httpResponse.sendRedirect("/RipperFit/");
 	}
-	
+
 	/**
 	 * Method to get all employees of an organization by organization id
 	 * @param organizationId : Id of organization
@@ -231,15 +250,17 @@ public class UserController {
 	@RequestMapping(value = "/getEmployeesByOrganizationId/{organizationId}", method = RequestMethod.GET)
 	public ResponseEntity<List<Employee>> getEmployeesByOrganizationId(@PathVariable("organizationId") int organizationId) {
 
-		Organization organization = this.organizationService.getOrganizationById(organizationId);
-		List<Employee> list = this.userService.getAllEmployeesInAnOrganization(organization);
-		if(list.isEmpty()) {
+		try{
+			Organization organization = this.organizationService.getOrganizationById(organizationId);
+			List<Employee> employeeList = this.userService.getAllEmployeesInAnOrganization(organization);
+			return new ResponseEntity<List<Employee>>(employeeList, HttpStatus.OK);
+		}catch(OrganizationDoesNotExistsException | UserNotExistsException notExistsException){
 			return new ResponseEntity<List<Employee>>(HttpStatus.NO_CONTENT);
-		} else {
-			return new ResponseEntity<List<Employee>>(list, HttpStatus.OK);
+		}catch(Exception ex){
+			return new ResponseEntity<List<Employee>>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
-	
+
 	/**
 	 * Method to get current logged in employee
 	 * @param request : HttpServletRequest object
@@ -248,11 +269,17 @@ public class UserController {
 	@RequestMapping(value="/getCurrentEmployeeObject",method = RequestMethod.GET)
 	public ResponseEntity<Employee> getCurrentEmployeeObject(HttpServletRequest request){
 
-		HttpSession session = request.getSession();
-		Employee employee = this.userService.getEmployeeByEmail((String) session.getAttribute("email"));
-		return new ResponseEntity<Employee>(employee, HttpStatus.OK);
+		try{
+			HttpSession session = request.getSession();
+			Employee employee = this.userService.getEmployeeByEmail((String) session.getAttribute("email"));
+			return new ResponseEntity<Employee>(employee, HttpStatus.OK);
+		}catch(UserNotExistsException userNotExistsException){
+			return new ResponseEntity<Employee>(HttpStatus.NO_CONTENT);
+		}catch(Exception ex){
+			return new ResponseEntity<Employee>(HttpStatus.SERVICE_UNAVAILABLE);
+		}
 	}
-	
+
 	/**
 	 * Method to change password
 	 * @param oldPassword : previous password
@@ -263,17 +290,23 @@ public class UserController {
 	@RequestMapping(value="/changePassword",method=RequestMethod.POST)
 	public ResponseEntity<Employee> changePassword(@RequestParam String oldPassword,@RequestParam String newPassword,HttpServletRequest request){
 
-		HttpSession session = request.getSession();
-		Employee employee = this.userService.getEmployeeByEmail((String) session.getAttribute("email"));
-		if(oldPassword.equals(employee.getPassword())){
+		try{
+			HttpSession session = request.getSession();
+			Employee employee = this.userService.getEmployeeByEmail((String) session.getAttribute("email"));
+			if(oldPassword.equals(employee.getPassword())){
 
-			employee.setPassword(newPassword);
-			this.userService.updateUser(employee);
-			return new ResponseEntity<Employee>(HttpStatus.OK);
+				employee.setPassword(newPassword);
+				this.userService.updateUser(employee);
+				return new ResponseEntity<Employee>(HttpStatus.OK);
+			}
+			return new ResponseEntity<Employee>(HttpStatus.NOT_ACCEPTABLE);
+		}catch(UserNotExistsException userNotExistsException){
+			return new ResponseEntity<Employee>(HttpStatus.NO_CONTENT);
+		}catch(Exception ex){
+			return new ResponseEntity<Employee>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
-		return new ResponseEntity<Employee>(HttpStatus.NOT_ACCEPTABLE);
 	}
-	
+
 	/**
 	 * Method to get employees have to be approved
 	 * @param request : HttpServletRequest object
@@ -282,17 +315,19 @@ public class UserController {
 	@RequestMapping(value="/getEmployeeApprove",method=RequestMethod.GET)
 	public ResponseEntity<List<Employee>> viewAllRequestsForApprove(HttpServletRequest request) {	
 
-		HttpSession session = request.getSession();
-		String email = (String) session.getAttribute("email");
-		Employee employee = this.userService.getEmployeeByEmail(email);
-		List<Employee> list = this.userService.getEmployeeApprove(employee);
-		if(list.isEmpty()) {
+		try{
+			HttpSession session = request.getSession();
+			String email = (String) session.getAttribute("email");
+			Employee employee = this.userService.getEmployeeByEmail(email);
+			List<Employee> employeeList = this.userService.getEmployeeApprove(employee);
+			return new ResponseEntity<List<Employee>>(employeeList, HttpStatus.OK);
+		}catch(UserNotExistsException userNotExistsException){
 			return new ResponseEntity<List<Employee>>(HttpStatus.NO_CONTENT);
-		} else {
-			return new ResponseEntity<List<Employee>>(list, HttpStatus.OK);
+		}catch(Exception ex){
+			return new ResponseEntity<List<Employee>>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
-	
+
 	/**
 	 * Method to get new password if user forgot
 	 * @param email : email address of user
@@ -301,16 +336,18 @@ public class UserController {
 	@RequestMapping(value="/forgetPassword",method=RequestMethod.PUT)
 	public ResponseEntity<Map<String, String>> forgetPassword(@RequestBody String email){
 
-		String pass= passwordGenerator();
-		Employee employee = userService.getEmployeeByEmail(email);
-		if(employee == null) {
-			return new ResponseEntity<Map<String, String>>(HttpStatus.BAD_REQUEST);
+		try{
+			String pass= passwordGenerator();
+			Employee employee = userService.getEmployeeByEmail(email);
+			employee.setPassword(pass);
+			this.userService.updateUser(employee);
+			Map<String, String> response = new HashMap<String, String>(); 
+			response.put("pass", pass);
+			return new ResponseEntity<Map<String, String>>(response, HttpStatus.OK);
+		}catch(UserNotExistsException userNotExistsException){
+			return new ResponseEntity<Map<String, String>>(HttpStatus.NO_CONTENT);
+		}catch(Exception ex){
+			return new ResponseEntity<Map<String, String>>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
-		employee.setPassword(pass);
-		this.userService.updateUser(employee);
-
-		Map<String, String> response = new HashMap<String, String>(); 
-		response.put("pass", pass);
-		return new ResponseEntity<Map<String, String>>(response, HttpStatus.OK);
 	}
 }

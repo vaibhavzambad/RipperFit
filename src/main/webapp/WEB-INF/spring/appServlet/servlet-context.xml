@@ -49,7 +49,7 @@
 		<beans:property name="url"
 			value="jdbc:mysql://localhost:3306/ripper_fit" />
 		<beans:property name="username" value="root" />
-		<beans:property name="password" value="" />
+		<beans:property name="password" value="root" />
 	</beans:bean>
 
 	<!-- Hibernate 4 SessionFactory Bean definition. All beans are defined -->
@@ -79,42 +79,42 @@
 	</beans:bean>
 
 	<!-- Dao Beans -->
-	<beans:bean id="userDao" class="com.ripperfit.dao.UserDao">
+	<beans:bean id="userDao" class="com.ripperfit.dao.UserDaoImpl">
 		<beans:property name="sessionFactory"
 			ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
 
-	<beans:bean id="resourceDao" class="com.ripperfit.dao.ResourceDao">
+	<beans:bean id="resourceDao" class="com.ripperfit.dao.ResourceDaoImpl">
 		<beans:property name="sessionFactory"
 			ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
 
-	<beans:bean id="resourceRequestDao" class="com.ripperfit.dao.ResourceRequestDao">
+	<beans:bean id="resourceRequestDao" class="com.ripperfit.dao.ResourceRequestDaoImpl">
 		<beans:property name="sessionFactory"
 			ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
 
-	<beans:bean id="designationDao" class="com.ripperfit.dao.DesignationDao">
+	<beans:bean id="designationDao" class="com.ripperfit.dao.DesignationDaoImpl">
 		<beans:property name="sessionFactory"
 			ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
 	
-	<beans:bean id="organizationDao" class="com.ripperfit.dao.OrganizationDao">
+	<beans:bean id="organizationDao" class="com.ripperfit.dao.OrganizationDaoImpl">
 		<beans:property name="sessionFactory"
 			ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
 	
-	<beans:bean id="approveeRequestDao" class="com.ripperfit.dao.ApproveeRequestDao">
+	<beans:bean id="approveeRequestDao" class="com.ripperfit.dao.ApproveeRequestDaoImpl">
 		<beans:property name="sessionFactory"
 			ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
 	
-	<beans:bean id="departmentDao" class="com.ripperfit.dao.DepartmentDao">
+	<beans:bean id="departmentDao" class="com.ripperfit.dao.DepartmentDaoImpl">
 		<beans:property name="sessionFactory"
 			ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
 	
-	<beans:bean id="commentDao" class="com.ripperfit.dao.CommentDao">
+	<beans:bean id="commentDao" class="com.ripperfit.dao.CommentDaoImpl">
 		<beans:property name="sessionFactory"
 			ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>

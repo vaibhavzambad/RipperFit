@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ripperfit.CustomExceptions.UserNotExistsException;
 import com.ripperfit.model.Employee;
 import com.ripperfit.model.Login;
 import com.ripperfit.service.UserService;
@@ -64,16 +65,24 @@ public class MailUtility {
 	 * method to send the mail on social signUp
 	 * @param login : an object containing email and password
 	 * @return : ResponseEntity Object
+	 * @throws Exception 
 	 */
 	@RequestMapping(value = "registrationMail", method = RequestMethod.POST)
 	public ResponseEntity<Void> registrationMail(@RequestBody Login login) {
 
-		String subject = "Welcome to ripperFit";
-		String body = emailTemplate(login.getEmail());
-		sendMail(subject, body, login.getEmail());
-		return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
+		try {
+			String subject = "Welcome to ripperFit";
+			String body="";
+			body = emailTemplate(login.getEmail());
+			sendMail(subject, body, login.getEmail());
+			return new ResponseEntity<Void>(HttpStatus.OK);
+		} catch (UserNotExistsException userNotExistsException) {
+			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+		}catch(Exception exception){
+			return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
+		}
 	}
-	
+
 	/**
 	 * method to send the mail on custom signUp
 	 * @param email : email address
@@ -82,53 +91,64 @@ public class MailUtility {
 	@RequestMapping(value = "registrationMailOnSignUp", method = RequestMethod.POST)
 	public ResponseEntity<Void> registrationMailOnSignUp(@RequestBody String email) {
 
-		String subject = "Welcome to ripperFit";
-		String body = emailTemplate(email);
-		sendMail(subject, body, email);
-		return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
+		try{
+			String subject = "Welcome to ripperFit";
+			String body = emailTemplate(email);
+			sendMail(subject, body, email);
+			return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
+		}catch (UserNotExistsException userNotExistsException) {
+			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+		}catch(Exception exception){
+			return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
+		}
 	}
 
 	/**
+	 * @throws MessagingException 
 	 * method to send the mail
 	 * @param subject : subject of the mail
 	 * @param body : body of the mail
 	 * @param receiver : email address of the receiver
+	 * @throws  
 	 */
-	public void sendMail(String subject, String body, String receiver) {
+	public void sendMail(String subject, String body, String receiver) throws MessagingException {
 
-		MimeMessage message = mailSender.createMimeMessage(); 
 		try {
+			MimeMessage message = mailSender.createMimeMessage(); 
 			MimeMessageHelper helper = new MimeMessageHelper(message, true);
 			helper.setTo(receiver);  
 			helper.setSubject(subject);
 			helper.setText(body, true);
-
+			mailSender.send(message);
 		} catch (MessagingException e) {
-			e.printStackTrace();
+			throw e;
 		}
-		// sends the e-mail
-		mailSender.send(message);
 	}
 
 	/**
 	 * method to create an email template
 	 * @param email : email address
 	 * @return : mail body
+	 * @throws Exception 
 	 */
-	public String emailTemplate(String email) {
+	public String emailTemplate(String email) throws Exception {
 
-		Employee employee = userService.getEmployeeByEmail(email);
-		String gender = "";
-		if(employee.getGender().equalsIgnoreCase("male")) {
-			gender = "Mr.";
-		} else {
-			gender = "Miss";
+		try {
+			Employee employee = userService.getEmployeeByEmail(email);
+			String gender = "";
+			if(employee.getGender().equalsIgnoreCase("male")) {
+				gender = "Mr.";
+			} else {
+				gender = "Miss";
+			}
+			String body = "<div><h1>Welcome To The RipperFit!!!</h1><p><b>Hi "+gender+" "+employee.getFirstName()+" "+employee.getLastName()+"</b>, welcome to  RipperFit Inc. Great to have you on board.</p>"
+					+ "</div><hr /><br /><br /><div>Email : <b>"+email+"</b><br />Password: <b>"+employee.getPassword()+"</b></div><br /><br /><hr />"
+					+ "<div><p><h4>Great to have you on borad "+gender+" "+employee.getFirstName()+" "+employee.getLastName()+"</h4></p><p>RipperFit Inc, <br />"
+					+ "Metacube Software Pvt. Ltd., <br />Jaipur, Rajasthan-302022</p><p><b>Powered By <span>VARAAS<span><b></p></div>";
+
+			return body;
+		} catch (UserNotExistsException e) {
+			throw e;
 		}
-		String body = "<div><h1>Welcome To The RipperFit!!!</h1><p><b>Hi "+gender+" "+employee.getFirstName()+" "+employee.getLastName()+"</b>, welcome to  RipperFit Inc. Great to have you on board.</p>"
-				+ "</div><hr /><br /><br /><div>Email : <b>"+email+"</b><br />Password: <b>"+employee.getPassword()+"</b></div><br /><br /><hr />"
-				+ "<div><p><h4>Great to have you on borad "+gender+" "+employee.getFirstName()+" "+employee.getLastName()+"</h4></p><p>RipperFit Inc, <br />"
-				+ "Metacube Software Pvt. Ltd., <br />Jaipur, Rajasthan-302022</p><p><b>Powered By <span>VARAAS<span><b></p></div>";
-
-		return body;
 	}
 }

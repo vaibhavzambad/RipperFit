@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ripperfit.CustomExceptions.ResourceRequestNotExistsException;
 import com.ripperfit.dao.ApproveeRequestDao;
 import com.ripperfit.model.ApproveRequest;
 import com.ripperfit.model.Employee;
@@ -32,17 +33,24 @@ public class ApproveeRequestService {
 	}
 
 	@Transactional
-	public List<ResourceRequest> getResourceRequestListByForwardToId(Employee employeeToForward){
-		
-		List<ResourceRequest> resourceRequestList = this.approveeRequestDao.getResourceRequestListByForwardToId(employeeToForward);
-		return resourceRequestList;
-	}
-	
-	@Transactional
-	public ApproveRequest getApproveeRequestByApproveeId(Employee employee){
-		
-		ApproveRequest approveeRequest = this.approveeRequestDao.getApproveeRequestByApproveeId(employee);
-		return approveeRequest;
+	public List<ResourceRequest> getResourceRequestListByForwardToId(Employee employeeToForward) throws Exception{
+		try{
+			List<ResourceRequest> resourceRequestList = this.approveeRequestDao.getResourceRequestListByForwardToId(employeeToForward);
+			if(resourceRequestList.isEmpty()){
+				throw new ResourceRequestNotExistsException("Resource Request Does Not Exists");
+			}
+			return resourceRequestList;
+		}catch(Exception ex){
+			throw ex;
+		}
 	}
 
+	@Transactional
+	public ApproveRequest getApproveeRequestByApproveeId(Employee employee){
+		try{
+			return this.approveeRequestDao.getApproveeRequestByApproveeId(employee);
+		}catch(Exception ex){
+			throw ex;
+		}
+	}
 }

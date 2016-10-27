@@ -1,8 +1,9 @@
-<div class="container" style="margin-top: 100px;">
-	<h2>
-		<strong>Approve Employee</strong>
+<div class="container" style="margin-top: 50px;">
+	<h2 class="text-center">
+		<strong>Approve Employees</strong>
 	</h2>
 	<br>
+	<div style="height: 20px"></div>
 	<table class="table table-bordered table-responsive"
 		ng-controller="approveEmpCtrl" id="table">
 		<thead>
@@ -11,7 +12,6 @@
 				<th>EmployeeName</th>
 				<th>Email</th>
 				<th>Designation</th>
-
 				<th>Actions</th>
 			</tr>
 		</thead>
@@ -21,12 +21,9 @@
 				<td>{{emp.firstName +" "+emp.lastName}}</td>
 				<td>{{emp.email}}</td>
 				<td>{{emp.designation.designationName}}</td>
-
 				<td><a class="btn" ng-click="forwardEmployee($index,emp)">
 						<i class="fa fa-thumbs-o-up"></i>
-				</a>
-				<!-- <td><input type=button ng-click="forwardRequest(request)" value="Approve"/> </td> -->
-				<!-- <td><input type=button ng-click="rejectRequest(request)" value="Reject"/> </td> -->
+				</a></td>
 			</tr>
 		</tbody>
 	</table>

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ripperfit.CustomExceptions.OrganizationDoesNotExistsException;
+import com.ripperfit.CustomExceptions.ResourceRequestNotExistsException;
 import com.ripperfit.dao.ApproveeRequestDao;
 import com.ripperfit.dao.DepartmentDao;
 import com.ripperfit.dao.DesignationDao;
@@ -41,7 +43,7 @@ public class ResourceRequestService {
 
 	@Autowired
 	private DepartmentDao departmentDao;
-	
+
 	@Autowired
 	private OrganizationDao organizationDao;
 
@@ -128,7 +130,7 @@ public class ResourceRequestService {
 	public void setDepartmentDao(DepartmentDao departmentDao) {
 		this.departmentDao = departmentDao;
 	}
-	
+
 
 	/**
 	 * @return the organizationDao
@@ -163,6 +165,13 @@ public class ResourceRequestService {
 		}
 		else {
 			employeeToForward = resourceRequest.getEmployee().getEmployee();
+			if(employeeToForward == null){
+				Organization organization = employee.getOrganization();
+				Department department = this.departmentDao.getHelpdeskDepartmentByOrganization(organization);
+				Designation designation = this.designationDao.getDesignationByDepartment(department);
+				Employee helpDeskEmployee = this.userDao.getEmployeeByDesignation(designation);
+				employeeToForward = helpDeskEmployee;
+			}
 		}
 		ApproveRequest approveeRequest = new ApproveRequest();
 		approveeRequest.setResourceRequest(resourceRequest);
@@ -175,63 +184,93 @@ public class ResourceRequestService {
 	/**
 	 * method to delete resource request
 	 * @param request : Resource Request object
+	 * @throws Exception 
 	 */
 	@Transactional
-	public boolean deleteResourceRequestById(int requestId) {
+	public boolean deleteResourceRequestById(int requestId) throws Exception {
 
-		ResourceRequest resourceRequest = this.resourceRequestDao.getResourceRequestById(requestId);
-		boolean result = false;
-
-		if(resourceRequest != null){
-			this.resourceRequestDao.deleteRequestById(requestId);
-			result = true;
+		try{
+			if(this.resourceRequestDao.getResourceRequestById(requestId) == null){
+				throw new ResourceRequestNotExistsException("Resource Request Not Exists");
+			}
+			return this.resourceRequestDao.deleteRequestById(requestId);
+		}catch(Exception ex){
+			throw ex;
 		}
-
-		return result;
 	}
 
 	/**
 	 * method to view all resource requests made by an employee
 	 * @param emp : Employee who wants to view his/her resource requests
 	 * @return : list of resource requests
+	 * @throws Exception 
 	 */
 	@Transactional
-	public List<ResourceRequest> getResourceRequestByEmployeeId(Employee employee) {
+	public List<ResourceRequest> getResourceRequestByEmployeeId(Employee employee) throws Exception {
 
-		List<ResourceRequest> resourceRequestListByEmployee = this.resourceRequestDao.getRequestByEmployeeId(employee);
-		return resourceRequestListByEmployee;
+		try{
+			List<ResourceRequest> resourceRequestListByEmployee = this.resourceRequestDao.getRequestByEmployeeId(employee);
+			if(resourceRequestListByEmployee.isEmpty()){
+				throw new ResourceRequestNotExistsException("Resource Request Not Exists");
+			}
+			return resourceRequestListByEmployee;
+		}catch(Exception ex){
+			throw ex;
+		}
 	}
 
 	@Transactional
-	public ResourceRequest getResourceRequestById(int requestId){
+	public ResourceRequest getResourceRequestById(int requestId) throws Exception{
 
-		ResourceRequest resourceRequest = this.resourceRequestDao.getResourceRequestById(requestId);
-		return resourceRequest;
+		try{
+			ResourceRequest resourceRequest = this.resourceRequestDao.getResourceRequestById(requestId);
+			if(resourceRequest == null){
+				throw new ResourceRequestNotExistsException("Resource Request Not Exists");
+			}
+			return resourceRequest;
+		}catch(Exception ex){
+			throw ex;
+		}
 	}
 
 	/**
 	 * method to view all resource requests
 	 * only for admin and helpdesk
 	 * @return : list of resource requests
+	 * @throws Exception 
 	 */
 	@Transactional
-	public List<ResourceRequest> getAllResourceRequest() {
+	public List<ResourceRequest> getAllResourceRequest() throws Exception {
 
-		List<ResourceRequest> resourceRequestList= this.resourceRequestDao.getAllRequests();
-		return resourceRequestList;
+		try{
+			List<ResourceRequest> resourceRequestList= this.resourceRequestDao.getAllRequests();
+			if(resourceRequestList.isEmpty()){
+				throw new ResourceRequestNotExistsException("Resource Request Not Exists");
+			}
+			return resourceRequestList;
+		}catch(Exception ex){
+			throw ex;
+		}
 	}
 
 	@Transactional
-	public int getCurrentApprovalLevelByRequestId(int requestId){
+	public int getCurrentApprovalLevelByRequestId(int requestId) throws Exception{
 
-		int currentApprovalLevel = this.resourceRequestDao.getCurrentApprovalLevel(requestId);
-		return currentApprovalLevel;
+		try{
+			ResourceRequest resourceRequest = this.resourceRequestDao.getResourceRequestById(requestId);
+			if(resourceRequest == null){
+				throw new ResourceRequestNotExistsException("Resource Request Not Exists");
+			}
+			return this.resourceRequestDao.getCurrentApprovalLevel(requestId);
+		}catch(Exception ex){
+			throw ex;
+		}
+
 	}
 
 	@Transactional
-	public void updateResourceRequest(ResourceRequest request){
-
-		this.resourceRequestDao.updateResourceRequest(request);
+	public void updateResourceRequest(ResourceRequest request) throws Exception{
+			this.resourceRequestDao.updateResourceRequest(request);
 	}
 
 	/**
@@ -243,30 +282,41 @@ public class ResourceRequestService {
 	 */
 	@Transactional
 	public List<ResourceRequest> getAllRequestsInAnOrganizationForHelpdesk(Organization organization){
-		
+
 		Department helpdeskDepartment = this.departmentDao.getHelpdeskDepartmentByOrganization(organization);
 		Designation helpdeskDesignation = this.designationDao.getDesignationByDepartment(helpdeskDepartment);
 		Employee helpDesk = this.userDao.getEmployeeByDesignation(helpdeskDesignation);
-		
+
 		Department adminDepartment = this.departmentDao.getAdminDepartmentByOrganization(organization);
 		Designation adminDesignation = this.designationDao.getDesignationByDepartment(adminDepartment);
 		Employee admin = this.userDao.getEmployeeByDesignation(adminDesignation);
-		
+
 		List<ResourceRequest> requestForHelpdesk = this.approveeRequestDao.getResourceRequestListByForwardToId(admin);
 		List<ResourceRequest> requestForAdmin = this.approveeRequestDao.getResourceRequestListByForwardToId(helpDesk);
-		
+
 		requestForHelpdesk.removeAll(requestForAdmin);
 		requestForHelpdesk.addAll(requestForAdmin);
-		
+
 		return requestForHelpdesk;
 	}
-	
-	
+
+
 	@Transactional
-	public List<ResourceRequest> getResourceRequestByStatus(String status , String organizationName){
-		
-		Organization organization = organizationDao.getOrganizationByName(organizationName);
-		List<ResourceRequest> resourceRequests = this.resourceRequestDao.getResourceRequestByStatus(status,organization);
-		return resourceRequests;
+	public List<ResourceRequest> getResourceRequestByStatus(String status , String organizationName) throws Exception{
+
+		try{
+			Organization organization = organizationDao.getOrganizationByName(organizationName);
+			if(organization == null){
+				throw new OrganizationDoesNotExistsException("Organization does not exists");
+			}
+			List<ResourceRequest> resourceRequestList = this.resourceRequestDao.getResourceRequestByStatus(status,organization);
+			if(resourceRequestList.isEmpty()){
+				throw new ResourceRequestNotExistsException("Resource request not exists");
+			}
+			return resourceRequestList;
+		}catch(Exception ex){
+			throw ex;
+		}
+
 	}
 }
