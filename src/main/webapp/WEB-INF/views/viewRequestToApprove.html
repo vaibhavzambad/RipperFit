@@ -12,18 +12,20 @@
 				<th>Resource</th>
 				<th>Request Date</th>
 				<th>Status</th>
-				<th>Actions</th>
+				<th> </th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr ng-repeat="request in requestsToApprove">
-				<td ng-click="clickable(request.requestId)">{{$index+1}}</td>
-				<td ng-click="clickable(request.requestId)">{{request.employee.firstName
+				<td>{{$index+1}}</td>
+				<td>{{request.employee.firstName
 					+" "+request.employee.lastName}}</td>
-				<td ng-click="clickable(request.requestId)">{{request.resource.resourceName}}</td>
-				<td ng-click="clickable(request.requestId)">{{request.requestDate}}</td>
-				<td ng-click="clickable(request.requestId)"><span
+				<td>{{request.resource.resourceName}}</td>
+				<td>{{request.requestDate}}</td>
+				<td><span
 					class="label label-{{request.color}}">{{request.status}}</span></td>
+				<td ng-click="clickable(request.requestId)"><a class="btn btn-link">Details</a></td>
 				<td><a class="btn" ng-click="forwardRequest(request)"> <i
 						class="fa fa-thumbs-o-up"></i></a>&nbsp<a class="btn"
 					ng-click="rejectRequest(request)"> <i

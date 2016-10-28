@@ -60,7 +60,7 @@
 							type="text" name="fname" placeholder="First name"
 							class="form-control" ng-model="user.firstName" required /> <span
 							ng-show="userForm.fname.$invalid && !userForm.fname.$pristine"
-							class="help-block">First name is required.</span>
+							class="help-block" required>First name is required.</span>
 					</div>
 					<div class="col-xs-6 form-group"
 						ng-class="{ 'has-error' : userForm.lname.$invalid && !userForm.lname.$pristine }">
@@ -68,7 +68,7 @@
 							type="text" name="lname" placeholder="Last name"
 							class="form-control" ng-model="user.lastName" required /> <span
 							ng-show="userForm.lname.$invalid && !userForm.lname.$pristine"
-							class="help-block">Last name is required.</span>
+							class="help-block" required>Last name is required.</span>
 					</div>
 				</div>
 				<div class="row">

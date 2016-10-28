@@ -63,14 +63,14 @@
 				<form name="userForm" ng-submit="login(user)">
 					<div class="form-group"
 						ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
-						<label>Email</label> <input type="email" name="email"
+						<label class="sr-only" >Email</label> <input type="email" name="email"
 							placeholder="Email" class="form-control" ng-model="user.email">
 						<p ng-show="userForm.email.$invalid && !userForm.email.$pristine"
 							class="help-block">Enter a valid email.</p>
 					</div>
 					<div class="form-group"
 						ng-class="{'has-error': userForm.password.$invalid && !userForm.password.$pristine}">
-						<label for="password">Password</label> <input type="password"
+						<label for="password" class="sr-only">Password</label> <input type="password"
 							id="password" name="password" placeholder="Password"
 							ng-minlength="6" class="form-control" ng-model="user.password"
 							ng-required> <span class="help-block"

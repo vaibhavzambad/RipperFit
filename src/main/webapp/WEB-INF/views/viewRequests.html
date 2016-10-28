@@ -2,8 +2,19 @@
 	<h2 class="text-center">
 		<strong>Request Pool</strong>
 	</h2>
-	<br /> <br /> <input class="inputBox" type="text" name="name"
-		value="" placeholder="Search Request By Status" ng-model="search" />
+	<br /> <br /> <!-- <input class="inputBox" type="text" name="name"
+		value="" placeholder="Search Request By Status" ng-model="search" /> -->
+	<select class="inputBox"
+		name="name" value="" ng-model="search" style="width:20%;">
+		<option value="" disabled selected hidden>Search Request By Status</option>
+		<option value=""> All </option>
+		<option value="pending"> Pending </option>
+		<option value="rejected"> Rejected </option>
+		<option value="running"> Running </option>
+		<option value="completed"> Completed </option>
+		</select>
+	<br/>
+	<br/>
 	<table class="table table-striped table-hover table-responsive "
 		ng-controller="getLocationCtrl" id="table">
 		<thead>
@@ -13,18 +24,20 @@
 				<th>Resource</th>
 				<th>Request Date</th>
 				<th>Status</th>
+				<th> </th>
 				<th></th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr ng-repeat="request in requests | filter:search">
-				<td ng-click="clickable(request.requestId)">{{$index+1}}</td>
-				<td ng-click="clickable(request.requestId)">{{request.employee.firstName
+				<td>{{$index+1}}</td>
+				<td>{{request.employee.firstName
 					+" "+request.employee.lastName}}</td>
-				<td ng-click="clickable(request.requestId)">{{request.resource.resourceName}}</td>
-				<td ng-click="clickable(request.requestId)">{{request.requestDate}}</td>
-				<td ng-click="clickable(request.requestId)"><span
+				<td>{{request.resource.resourceName}}</td>
+				<td>{{request.requestDate}}</td>
+				<td><span
 					class="label label-{{request.color}}">{{request.status}}</span></td>
+				<td ng-click="clickable(request.requestId)"><a class="btn btn-link">Details</a></td>
 				<td><a ng-if="edit" class="btn"
 					href="#/editRequest/{{request.requestId}}"> <i
 						class="fa fa-pencil"></i></a>&nbsp&nbsp <a
